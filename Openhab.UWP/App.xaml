@@ -1,0 +1,41 @@
+﻿<Application x:Class="Openhab.UWP.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:Openhab.UWP.Controls"
+             xmlns:converters="using:Openhab.UWP.Converters"
+             xmlns:local="using:Openhab.UWP"
+             xmlns:model="using:Openhab.Model"
+             xmlns:viewModel="using:Openhab.ViewModel"
+             RequestedTheme="Light">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/DefaultTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <viewModel:ViewModelLocator x:Key="Locator" />
+            <converters:StateToBoolConverter x:Key="StateToBoolConverter" />
+
+            <DataTemplate x:Key="FrameTemplate">
+                <controls:FrameWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
+            <DataTemplate x:Key="SwitchTemplate">
+                <controls:SwitchWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
+            <DataTemplate x:Key="SliderTemplate">
+                <controls:SliderWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
+            <DataTemplate x:Key="TextItemTemplate">
+                <controls:TextWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
+            <converters:WidgetTemplateSelector x:Key="WidgetTemplateSelector"
+                                               FrameTemplate="{StaticResource FrameTemplate}"
+                                               SliderTemplate="{StaticResource SliderTemplate}"
+                                               SwitchTemplate="{StaticResource SwitchTemplate}"
+                                               TextTemplate="{StaticResource TextItemTemplate}" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,12 @@
+﻿{
+  "dependencies": {
+    "Newtonsoft.Json": "9.0.1"
+  },
+  "frameworks": {
+    ".NETPortable,Version=v4.6,Profile=Profile44": {}
+  },
+  "supports": {},
+  "runtimes": {
+    "win": {}
+  }
+}

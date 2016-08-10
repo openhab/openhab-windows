@@ -1,0 +1,21 @@
+﻿<local:WidgetBase x:Class="Openhab.UWP.Controls.FrameWidget"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:local="using:Openhab.UWP.Controls"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  d:DesignHeight="300"
+                  d:DesignWidth="400"
+                  mc:Ignorable="d">
+
+    <StackPanel Margin="8, 4, 8, 4" Background="{StaticResource OpenHABLightGreyBrush}">
+        <local:ImageLabel IconPath="{x:Bind Widget.IconPath, Mode=OneWay}" LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
+        <Border Height="2"
+                HorizontalAlignment="Stretch"
+                BorderBrush="Black"
+                BorderThickness="2" />
+        <ItemsControl IsTapEnabled="False"
+                      ItemTemplateSelector="{StaticResource WidgetTemplateSelector}"
+                      ItemsSource="{x:Bind Widget.Children}" />
+    </StackPanel>
+</local:WidgetBase>
