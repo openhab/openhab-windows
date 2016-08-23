@@ -31,10 +31,15 @@
                 <controls:TextWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
 
+            <DataTemplate x:Key="ImageItemTemplate">
+                <controls:ImageWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
             <converters:WidgetTemplateSelector x:Key="WidgetTemplateSelector"
                                                FrameTemplate="{StaticResource FrameTemplate}"
                                                SliderTemplate="{StaticResource SliderTemplate}"
                                                SwitchTemplate="{StaticResource SwitchTemplate}"
+                                               ImageTemplate="{StaticResource ImageItemTemplate}"
                                                TextTemplate="{StaticResource TextItemTemplate}" />
         </ResourceDictionary>
     </Application.Resources>

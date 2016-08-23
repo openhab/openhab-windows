@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HABCore.cs" />
+    <Compile Include="OpenHABCommands.cs" />
     <Compile Include="OpenHABException.cs" />
     <Compile Include="OpenHABHttpClient.cs" />
     <Compile Include="OpenHABVersion.cs" />

@@ -22,6 +22,8 @@ namespace Openhab.UWP.Converters
                 case "text":
                 case "numberitem":
                     return TextTemplate;
+                case "image":
+                    return ImageTemplate;
                 default:
                     return FrameTemplate;
             }
@@ -31,5 +33,6 @@ namespace Openhab.UWP.Converters
         public DataTemplate SwitchTemplate { get; set; }
         public DataTemplate SliderTemplate { get; set; }
         public DataTemplate TextTemplate { get; set; }
+        public DataTemplate ImageTemplate { get; set; }
     }
 }

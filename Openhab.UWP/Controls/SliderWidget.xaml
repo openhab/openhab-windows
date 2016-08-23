@@ -9,7 +9,7 @@
     <Grid Margin="8, 4, 8, 4" Background="{StaticResource OpenHABLightGreyBrush}">
         <local:ImageLabel IconPath="{x:Bind Widget.IconPath, Mode=OneWay}" LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
         <Slider Width="200"
-                HorizontalAlignment="Right"
+                HorizontalAlignment="Right" ValueChanged="Slider_OnValueChanged"
                 Value="{x:Bind Widget.Item.State}" />
     </Grid>
 </local:WidgetBase>

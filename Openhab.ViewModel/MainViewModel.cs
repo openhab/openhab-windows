@@ -1,9 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Messaging;
 using Openhab.Core;
 using Openhab.Core.SDK;
 using Openhab.Model;
+using Openhab.Model.Messages;
 
 namespace Openhab.ViewModel
 {
@@ -41,9 +43,15 @@ namespace Openhab.ViewModel
         {
             _openHabsdk = openHabsdk;
 
+            Messenger.Default.Register<TriggerCommandMessage>(this, async msg => await TriggerCommand(msg));
 #pragma warning disable 4014
             LoadData();
 #pragma warning restore 4014
+        }
+
+        private async Task TriggerCommand(TriggerCommandMessage message)
+        {
+            await _openHabsdk.SendCommand(message.Item, message.Command);
         }
 
         // ReSharper disable once UnusedMethodReturnValue.Local

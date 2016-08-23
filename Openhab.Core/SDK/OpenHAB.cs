@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Newtonsoft.Json;
@@ -74,6 +76,30 @@ namespace Openhab.Core.SDK
                 }
 
                 return JsonConvert.DeserializeObject<List<OpenHABWidget>>(resultString); //V2 = JSON
+            }
+            catch (ArgumentNullException ex)
+            {
+                throw new OpenHABException("Invalid call", ex);
+            }
+        }
+
+        public async Task SendCommand(OpenHABItem item, string command)
+        {
+            try
+            {
+                var client = OpenHABHttpClient.Client();
+
+                var content = new StringContent(command);
+                var result = await client.PostAsync(item.Link, content);
+
+                if (!result.IsSuccessStatusCode)
+                {
+                    throw new OpenHABException($"{result.StatusCode} received from server");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new OpenHABException("Invalid call", ex);
             }
             catch (ArgumentNullException ex)
             {

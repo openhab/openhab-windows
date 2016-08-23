@@ -26,5 +26,13 @@ namespace Openhab.Core.SDK
         /// <param name="version">The version of OpenHAB running on the server</param>
         /// <returns>A list of items in the selected sitemap</returns>
         Task<ICollection<OpenHABWidget>> LoadItemsFromSitemap(OpenHABSitemap sitemap, OpenHABVersion version);
+
+        /// <summary>
+        /// Sends a command to an item
+        /// </summary>
+        /// <param name="item">The item</param>
+        /// <param name="command">The Command</param>
+        /// <returns></returns>
+        Task SendCommand(OpenHABItem item, string command);
     }
 }

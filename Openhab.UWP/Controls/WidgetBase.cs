@@ -7,7 +7,7 @@ namespace Openhab.UWP.Controls
     public class WidgetBase : UserControl
     {
         public static readonly DependencyProperty WidgetProperty = DependencyProperty.Register(
-            "Widget", typeof(OpenHABWidget), typeof(WidgetBase), new PropertyMetadata(default(OpenHABWidget)));
+            nameof(Widget), typeof(OpenHABWidget), typeof(WidgetBase), new PropertyMetadata(default(OpenHABWidget)));
 
         public OpenHABWidget Widget
         {

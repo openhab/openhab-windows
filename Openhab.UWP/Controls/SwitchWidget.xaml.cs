@@ -1,4 +1,8 @@
-﻿// The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
+﻿using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using GalaSoft.MvvmLight.Messaging;
+using Openhab.Core;
+using Openhab.Model.Messages;
 
 namespace Openhab.UWP.Controls
 {
@@ -7,6 +11,11 @@ namespace Openhab.UWP.Controls
         public SwitchWidget()
         {
             InitializeComponent();
+        }
+
+        private void ToggleSwitch_OnToggled(object sender, RoutedEventArgs e)
+        {
+            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, ((ToggleSwitch)sender).IsOn ? OpenHABCommands.OnCommand : OpenHABCommands.OffCommand));
         }
     }
 }

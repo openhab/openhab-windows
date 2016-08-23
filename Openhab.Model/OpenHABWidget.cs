@@ -5,14 +5,12 @@ namespace Openhab.Model
 {
     public class OpenHABWidget
     {
+
         public string Id { get; set; }
         public string Label { get; set; }
         public string Icon { get; set; }
 
-        public string IconPath
-        {
-            get { return $"http://jarvis:8080/images/{Icon}.png"; }
-        }
+        public string IconPath => $"http://jarvis:8080/images/{Icon}.png";
 
         public string Type { get; set; }
         public string Url { get; set; }
@@ -47,6 +45,7 @@ namespace Openhab.Model
                 Label = startNode.Element("label")?.Value;
                 State = startNode.Element("state")?.Value;
                 Icon = startNode.Element("icon")?.Value;
+                Url = startNode.Element("url")?.Value;
 
                 ParseItem(startNode.Element("item"));
                 ParseChildren(startNode);

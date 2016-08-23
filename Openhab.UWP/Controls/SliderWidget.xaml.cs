@@ -1,4 +1,7 @@
-﻿// The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
+﻿using System.Globalization;
+using Windows.UI.Xaml.Controls.Primitives;
+using GalaSoft.MvvmLight.Messaging;
+using Openhab.Model.Messages;
 
 namespace Openhab.UWP.Controls
 {
@@ -7,6 +10,11 @@ namespace Openhab.UWP.Controls
         public SliderWidget()
         {
             InitializeComponent();
+        }
+
+        private void Slider_OnValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, e.NewValue.ToString(CultureInfo.InvariantCulture)));
         }
     }
 }
