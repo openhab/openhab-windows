@@ -11,8 +11,8 @@
     <AssemblyName>Openhab.UWP</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -180,16 +180,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Openhab.Core\Openhab.Core.csproj">
-      <Project>{6343b081-3dba-4b2c-8753-bda703e06bdc}</Project>
-      <Name>Openhab.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Openhab.Model\Openhab.Model.csproj">
       <Project>{ef183b7e-76e2-4dea-b14c-9718a9cb1d2b}</Project>
       <Name>Openhab.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\Openhab.ViewModel\Openhab.ViewModel.csproj">
-      <Project>{724C8F11-1F46-4A73-B058-686DDEF4AB96}</Project>
+      <Project>{724c8f11-1f46-4a73-b058-686ddef4ab96}</Project>
       <Name>Openhab.ViewModel</Name>
     </ProjectReference>
   </ItemGroup>
