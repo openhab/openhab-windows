@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
-using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using GalaSoft.MvvmLight.Messaging;
 using Openhab.Model.Messages;
 
@@ -12,9 +13,9 @@ namespace Openhab.UWP.Controls
             InitializeComponent();
         }
 
-        private void Slider_OnValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        private void Slider_OnPointerCaptureLost(object sender, PointerRoutedEventArgs e)
         {
-            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, e.NewValue.ToString(CultureInfo.InvariantCulture)));
+            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, ((Slider) sender)?.Value.ToString(CultureInfo.InvariantCulture)));
         }
     }
 }
