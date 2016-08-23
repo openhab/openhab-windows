@@ -180,6 +180,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Openhab.Core\Openhab.Core.csproj">
+      <Project>{6343b081-3dba-4b2c-8753-bda703e06bdc}</Project>
+      <Name>Openhab.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Openhab.Model\Openhab.Model.csproj">
       <Project>{ef183b7e-76e2-4dea-b14c-9718a9cb1d2b}</Project>
       <Name>Openhab.Model</Name>
