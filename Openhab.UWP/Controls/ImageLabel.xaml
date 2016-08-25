@@ -16,7 +16,7 @@
                Source="{x:Bind IconPath, Mode=OneWay}" />
         <TextBlock x:Name="Label"
                    Margin="8, 0, 0, 0"
-                   VerticalAlignment="Center"
+                   VerticalAlignment="Top"
                    Style="{StaticResource SubtitleTextBlockStyle}"
                    Text="{x:Bind LabelText, Mode=OneWay}"
                    TextWrapping="Wrap" />

@@ -11,8 +11,8 @@
 
     <Grid Margin="8, 4, 8, 4" Background="{StaticResource OpenHABLightGreyBrush}">
         <local:ImageLabel IconPath="{x:Bind Widget.IconPath, Mode=OneWay}" LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
-        <Image Width="200" Height="200"
+        <Image x:Name="CameraImage" Width="200" Height="200" Stretch="UniformToFill"
                 HorizontalAlignment="Right"
-                Source="{x:Bind Widget.Url}" />
+                Source="{x:Bind CameraBitmapImage, Mode=OneWay}" />
     </Grid>
 </local:WidgetBase>

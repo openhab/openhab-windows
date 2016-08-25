@@ -11,6 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Openhab.Core", "Openhab.Cor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Openhab.ViewModel", "Openhab.ViewModel\Openhab.ViewModel.csproj", "{724C8F11-1F46-4A73-B058-686DDEF4AB96}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{6D9E45E3-F3C1-4A9D-A62D-72DDBA11C31B}"
+	ProjectSection(SolutionItems) = preProject
+		Libs\MJPEGDecoderWinRTLib.dll = Libs\MJPEGDecoderWinRTLib.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
