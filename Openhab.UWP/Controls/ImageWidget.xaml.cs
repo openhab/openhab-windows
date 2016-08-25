@@ -1,6 +1,7 @@
 ﻿using System;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using MJPEGDecoderWinRTLib;
 
@@ -66,6 +67,12 @@ namespace Openhab.UWP.Controls
         private void mjpegDecoder_Error(object sender, ErrorEventArgs e)
         {
             //ErrorMsg = e.Message;
+        }
+
+        private async void ImageWidget_OnTapped(object sender, TappedRoutedEventArgs e)
+        {
+            CameraViewDialog.MinWidth = CameraBitmapImage.PixelWidth;
+            await CameraViewDialog.ShowAsync();
         }
     }
 }
