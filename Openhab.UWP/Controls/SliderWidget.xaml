@@ -5,11 +5,55 @@
                   xmlns:local="using:Openhab.UWP.Controls"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   mc:Ignorable="d">
-
     <Grid Margin="8, 4, 8, 4" Background="{StaticResource OpenHABLightGreyBrush}">
-        <local:ImageLabel IconPath="{x:Bind Widget.IconPath, Mode=OneWay}" LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
-        <Slider Width="200"
-                HorizontalAlignment="Right" PointerCaptureLost="Slider_OnPointerCaptureLost"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AdaptiveStates">
+                <VisualState x:Name="DefaultState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="548" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TheSlider.Width" Value="200" />
+                        <Setter Target="TheSlider.(Grid.Row)" Value="0" />
+                        <Setter Target="TheSlider.(Grid.RowSpan)" Value="2" />
+                        <Setter Target="TheSlider.(Grid.Column)" Value="1" />
+                        <Setter Target="TitleAndIcon.(Grid.Row)" Value="0" />
+                        <Setter Target="TitleAndIcon.(Grid.RowSpan)" Value="2" />
+                        <Setter Target="TitleAndIcon.(Grid.Column)" Value="0" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TheSlider.Width" Value="4000" />
+                        <Setter Target="TitleAndIcon.(Grid.Row)" Value="0" />
+                        <Setter Target="TitleAndIcon.(Grid.ColumSpan)" Value="2" />
+                        <Setter Target="TitleAndIcon.(Grid.Column)" Value="0" />
+                        <Setter Target="TheSlider.(Grid.Row)" Value="1" />
+                        <Setter Target="TheSlider.(Grid.ColumSpan)" Value="2" />
+                        <Setter Target="TheSlider.(Grid.Column)" Value="1" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <local:ImageLabel x:Name="TitleAndIcon"
+                          IconPath="{x:Bind Widget.IconPath, Mode=OneWay}"
+                          LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
+        <Slider HorizontalAlignment="Right"
+                x:Name="TheSlider"
+                PointerCaptureLost="Slider_OnPointerCaptureLost"
                 Value="{x:Bind Widget.Item.State}" />
     </Grid>
 </local:WidgetBase>

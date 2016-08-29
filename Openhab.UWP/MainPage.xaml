@@ -20,18 +20,19 @@
 
         <DataTemplate x:Key="NavMenuItemTemplate" x:DataType="model:OpenHABSitemap">
             <StackPanel Orientation="Horizontal">
-                <Image x:Name="image"
-                       Width="35"
+                <Image Width="35"
                        Height="35"
+                       x:Name="image"
                        Source="/Assets/openhab.png" />
-                <TextBlock x:Name="textBlock"
-                           Margin="12,0,0,0"
+                <TextBlock Margin="12,0,0,0"
                            VerticalAlignment="Center"
+                           x:Name="textBlock"
                            Style="{StaticResource FlyoutPickerTitleTextBlockStyle}"
                            Text="{x:Bind Name, Mode=OneWay}"
                            TextWrapping="Wrap" />
             </StackPanel>
         </DataTemplate>
+
     </Page.Resources>
 
 
@@ -41,7 +42,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="80" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <Border Grid.ColumnSpan="2"
@@ -52,12 +53,12 @@
             </Border.Background>
         </Border>
 
-        <ToggleButton x:Name="TogglePaneButton"
-                      Grid.Row="0"
+        <ToggleButton Grid.Row="0"
                       Grid.Column="0"
-                      Width="75"
+                      Width="48"
                       HorizontalAlignment="Center"
                       VerticalAlignment="Stretch"
+                      x:Name="TogglePaneButton"
                       Foreground="White"
                       IsChecked="{Binding IsPaneOpen,
                                           ElementName=SitemapSplitView,
@@ -71,15 +72,14 @@
                    Margin="0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
+                   x:Name="SitemapTitle"
                    Foreground="White"
                    Style="{StaticResource TitleTextBlockStyle}"
-                   Text="Main Menu"
+                   Text="{x:Bind Vm.SelectedSitemap.Label, Mode=OneWay}"
                    TextWrapping="Wrap" />
-        <SplitView x:Name="SitemapSplitView"
-                   Grid.Row="1"
+        <SplitView Grid.Row="1"
                    Grid.ColumnSpan="2"
-                   CompactPaneLength="60"
-                   DisplayMode="CompactInline"
+                   x:Name="SitemapSplitView"
                    IsPaneOpen="False"
                    OpenPaneLength="200">
             <SplitView.Pane>
@@ -97,5 +97,27 @@
                               ItemsSource="{x:Bind Vm.SelectedSitemap.Widgets, Mode=OneWay}" />
             </ScrollViewer>
         </SplitView>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AdaptiveStates">
+                <VisualState x:Name="DefaultState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="548" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SitemapSplitView.DisplayMode" Value="CompactInline" />
+                        <Setter Target="SitemapSplitView.CompactPaneLength" Value="60" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SitemapSplitView.DisplayMode" Value="CompactOverlay" />
+                        <Setter Target="SitemapSplitView.CompactPaneLength" Value="0" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>

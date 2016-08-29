@@ -7,7 +7,7 @@ namespace Openhab.Core
     {
         private static HttpClient _client;
 
-        public static string BaseUrl { get; set; } = "http://jarvis:8080";
+        public static string BaseUrl { get; set; } = "http://192.168.1.7:8080";
 
         public static HttpClient Client()
         {

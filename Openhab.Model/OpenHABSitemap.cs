@@ -8,7 +8,7 @@ namespace Openhab.Model
         private ICollection<OpenHABWidget> _widgets;
         public string Name { get; set; }
         public string Label { get; set; }
-        public string Link { get; set; }
+        public string Link { get; set; } 
         public string Icon { get; set; }
         public string HomepageLink { get; set; }
         public bool Leaf { get; set; }
