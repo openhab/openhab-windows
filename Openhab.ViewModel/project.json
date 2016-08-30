@@ -9,9 +9,6 @@
     "Microsoft.NETCore.Portable.Compatibility": "1.0.1"
   },
   "frameworks": {
-    "netstandard1.4": {
-      "imports": [ "portable-net45+wpa81+wp8+win8" ]
-    }
-  },
-  "runtimes": { "win": {} }
+    "netstandard1.4": {}
+  }
 }

@@ -1,7 +1,7 @@
 ﻿using Windows.UI.Xaml.Controls;
 using Openhab.ViewModel;
 
-namespace Openhab.UWP
+namespace Openhab.UWP.View
 {
     public sealed partial class MainPage : Page
     {
