@@ -1,0 +1,32 @@
+﻿<local:WidgetBase x:Class="OpenHAB.Windows.Controls.ImageWidget"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:local="using:OpenHAB.Windows.Controls"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  d:DesignHeight="300"
+                  d:DesignWidth="400"
+                  mc:Ignorable="d">
+
+    <Grid Margin="8, 4, 8, 4"
+          Background="{StaticResource OpenHABLightGreyBrush}"
+          Tapped="ImageWidget_OnTapped">
+        <local:ImageLabel IconPath="{x:Bind Widget.IconPath, Mode=OneWay}" LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
+        <Image Width="200"
+               Height="200"
+               HorizontalAlignment="Right"
+               Source="{x:Bind CameraBitmapImage, Mode=OneWay}"
+               Stretch="UniformToFill" />
+
+        <ContentDialog x:Name="CameraViewDialog"
+                       IsPrimaryButtonEnabled="True"
+                       PrimaryButtonText="Close"
+                       Title="{x:Bind Widget.Label}">
+            <Grid>
+                <Image HorizontalAlignment="Right"
+                       Source="{x:Bind CameraBitmapImage, Mode=OneWay}"
+                       Stretch="Uniform" />
+            </Grid>
+        </ContentDialog>
+    </Grid>
+</local:WidgetBase>

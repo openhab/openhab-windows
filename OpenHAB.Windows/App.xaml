@@ -1,0 +1,46 @@
+﻿<Application x:Class="OpenHAB.Windows.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:OpenHAB.Windows.Controls"
+             xmlns:converters="using:OpenHAB.Windows.Converters"
+             xmlns:local="using:OpenHAB.Windows"
+             xmlns:model="using:OpenHAB.Core.Model"
+             xmlns:viewModel="using:OpenHAB.Windows.ViewModel"
+             RequestedTheme="Light">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/DefaultTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <viewModel:ViewModelLocator x:Key="Locator" />
+            <converters:StateToBoolConverter x:Key="StateToBoolConverter" />
+
+            <DataTemplate x:Key="FrameTemplate">
+                <controls:FrameWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
+            <DataTemplate x:Key="SwitchTemplate">
+                <controls:SwitchWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
+            <DataTemplate x:Key="SliderTemplate">
+                <controls:SliderWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
+            <DataTemplate x:Key="TextItemTemplate">
+                <controls:TextWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
+            <DataTemplate x:Key="ImageItemTemplate">
+                <controls:ImageWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
+            <converters:WidgetTemplateSelector x:Key="WidgetTemplateSelector"
+                                               FrameTemplate="{StaticResource FrameTemplate}"
+                                               ImageTemplate="{StaticResource ImageItemTemplate}"
+                                               SliderTemplate="{StaticResource SliderTemplate}"
+                                               SwitchTemplate="{StaticResource SwitchTemplate}"
+                                               TextTemplate="{StaticResource TextItemTemplate}" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

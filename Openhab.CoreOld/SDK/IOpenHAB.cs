@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using OpenHAB.Core.Model;
+using Openhab.Model;
 
-namespace OpenHAB.Core.SDK
+namespace Openhab.Core.SDK
 {
     public interface IOpenHAB
     {

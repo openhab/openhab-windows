@@ -1,4 +1,4 @@
-﻿namespace OpenHAB.Core
+﻿namespace Openhab.Core
 {
     public enum OpenHABVersion
     {

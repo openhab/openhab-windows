@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 
-namespace OpenHAB.Core
+namespace Openhab.Core
 {
     public sealed class OpenHABHttpClient
     {

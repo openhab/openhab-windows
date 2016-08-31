@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenHAB.Core
+namespace Openhab.Core
 {
     public class OpenHABException : Exception
     {

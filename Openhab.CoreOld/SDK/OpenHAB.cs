@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Newtonsoft.Json;
-using OpenHAB.Core.Model;
+using Openhab.Model;
 
-namespace OpenHAB.Core.SDK
+namespace Openhab.Core.SDK
 {
     public class OpenHAB : IOpenHAB
     {
