@@ -13,6 +13,12 @@ namespace OpenHAB.Windows.Controls
         private static void IconChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             var control = dependencyObject as ImageLabel;
+
+            if (control == null)
+            {
+                return;
+            }
+
             control.Icon.Source = new BitmapImage(new Uri(control.IconPath));
         }
 
@@ -28,6 +34,12 @@ namespace OpenHAB.Windows.Controls
         private static void TextChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             var control = dependencyObject as ImageLabel;
+
+            if (control == null)
+            {
+                return;
+            }
+
             control.Label.Text = control.LabelText;
         }
 
@@ -36,6 +48,7 @@ namespace OpenHAB.Windows.Controls
             get { return (string) GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
+
         public ImageLabel()
         {
             InitializeComponent();

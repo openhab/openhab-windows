@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using OpenHAB.Core.Model;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using OpenHAB.Core.Model;
 
 namespace OpenHAB.Windows.Controls
 {
@@ -17,8 +17,8 @@ namespace OpenHAB.Windows.Controls
             set { SetValue(WidgetProperty, value); }
         }
 
-
         public event PropertyChangedEventHandler PropertyChanged;
+
         internal void RaisePropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

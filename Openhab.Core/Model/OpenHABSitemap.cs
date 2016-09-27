@@ -3,27 +3,69 @@ using System.Xml.Linq;
 
 namespace OpenHAB.Core.Model
 {
+    /// <summary>
+    /// A class that represents an OpenHAB sitemap
+    /// </summary>
     public class OpenHABSitemap : ObservableBase
     {
         private ICollection<OpenHABWidget> _widgets;
+
+        /// <summary>
+        /// Gets or sets the name of the OpenHAB sitemap
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the label of the OpenHAB sitemap
+        /// </summary>
         public string Label { get; set; }
-        public string Link { get; set; } 
+
+        /// <summary>
+        /// Gets or sets the link of the OpenHAB sitemap
+        /// </summary>
+        public string Link { get; set; }
+
+        /// <summary>
+        /// Gets or sets the icon of the OpenHAB sitemap
+        /// </summary>
         public string Icon { get; set; }
+
+        /// <summary>
+        /// Gets or sets the url of the OpenHAB sitemap
+        /// </summary>
         public string HomepageLink { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the sitemap is a leaf
+        /// </summary>
         public bool Leaf { get; set; }
 
+        /// <summary>
+        /// Gets or sets a collection of widgets of the OpenHAB sitemap
+        /// </summary>
         public ICollection<OpenHABWidget> Widgets
         {
-            get { return _widgets; }
+            get
+            {
+                return _widgets;
+            }
+
             set
             {
-                if (Equals(value, _widgets)) return;
+                if (Equals(value, _widgets))
+                {
+                    return;
+                }
+
                 _widgets = value;
                 OnPropertyChanged();
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OpenHABSitemap"/> class.
+        /// </summary>
+        /// <param name="startNode">The XML from the OpenHAB server that represents this OpenHAB item</param>
         public OpenHABSitemap(XElement startNode)
         {
             ParseNode(startNode);
@@ -38,7 +80,7 @@ namespace OpenHAB.Core.Model
                 Link = startNode.Element("link")?.Value;
                 Icon = startNode.Element("icon")?.Value;
 
-                var homePage= startNode.Element("homepage");
+                var homePage = startNode.Element("homepage");
                 HomepageLink = homePage?.Element("link")?.Value;
                 Leaf = homePage?.Element("leaf")?.Value == "true";
             }

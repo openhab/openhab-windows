@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -8,8 +9,21 @@ using OpenHAB.Core.Model;
 
 namespace OpenHAB.Core.SDK
 {
+    /// <summary>
+    /// The main SDK implementation of the connection to OpenHAB
+    /// </summary>
     public class OpenHAB : IOpenHAB
     {
+        /// <summary>
+        /// Get the url of the current OpenHAB connection
+        /// </summary>
+        /// <returns>the url of the current OpenHAB connection</returns>
+        public string GetServerLink()
+        {
+            return string.Empty;
+        }
+
+        /// <inheritdoc />
         public async Task<OpenHABVersion> GetOpenHABVersion()
         {
             try
@@ -23,6 +37,7 @@ namespace OpenHAB.Core.SDK
             }
         }
 
+        /// <inheritdoc />
         public async Task<ICollection<OpenHABSitemap>> LoadSiteMaps(OpenHABVersion version)
         {
             try
@@ -35,7 +50,8 @@ namespace OpenHAB.Core.SDK
 
                 string resultString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                if (version == OpenHABVersion.One) // V1 = xml
+                // V1 = xml
+                if (version == OpenHABVersion.One)
                 {
                     var sitemaps = new List<OpenHABSitemap>();
                     XDocument xml = XDocument.Parse(resultString);
@@ -48,7 +64,8 @@ namespace OpenHAB.Core.SDK
                     return sitemaps;
                 }
 
-                return JsonConvert.DeserializeObject<List<OpenHABSitemap>>(resultString); //V2 = JSON
+                // V2 = JSON
+                return JsonConvert.DeserializeObject<List<OpenHABSitemap>>(resultString);
             }
             catch (ArgumentNullException ex)
             {
@@ -56,6 +73,7 @@ namespace OpenHAB.Core.SDK
             }
         }
 
+        /// <inheritdoc />
         public async Task<ICollection<OpenHABWidget>> LoadItemsFromSitemap(OpenHABSitemap sitemap, OpenHABVersion version)
         {
             try
@@ -68,13 +86,15 @@ namespace OpenHAB.Core.SDK
 
                 string resultString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                if (version == OpenHABVersion.One) // V1 = xml
+                // V1 = xml
+                if (version == OpenHABVersion.One)
                 {
                     var widgets = ParseWidgets(resultString);
                     return widgets;
                 }
 
-                return JsonConvert.DeserializeObject<List<OpenHABWidget>>(resultString); //V2 = JSON
+                // V2 = JSON
+                return JsonConvert.DeserializeObject<List<OpenHABWidget>>(resultString);
             }
             catch (ArgumentNullException ex)
             {
@@ -82,12 +102,12 @@ namespace OpenHAB.Core.SDK
             }
         }
 
+        /// <inheritdoc />
         public async Task SendCommand(OpenHABItem item, string command)
         {
             try
             {
                 var client = OpenHABHttpClient.Client();
-
                 var content = new StringContent(command);
                 var result = await client.PostAsync(item.Link, content);
 
@@ -108,15 +128,9 @@ namespace OpenHAB.Core.SDK
 
         private ICollection<OpenHABWidget> ParseWidgets(string resultString)
         {
-            var widgets = new List<OpenHABWidget>();
-            XDocument xml = XDocument.Parse(resultString);
-            foreach (XElement xElement in xml.Element("sitemap").Element("homepage").Elements("widget"))
-            {
-                var widget = new OpenHABWidget(xElement);
-                widgets.Add(widget);
-            }
+            var xml = XDocument.Parse(resultString);
 
-            return widgets;
+            return xml.Element("sitemap").Element("homepage").Elements("widget").Select(xElement => new OpenHABWidget(xElement)).ToList();
         }
     }
 }

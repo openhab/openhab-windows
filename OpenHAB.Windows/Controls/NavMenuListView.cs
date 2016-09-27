@@ -26,6 +26,7 @@ namespace OpenHAB.Windows.Controls
     public class NavMenuListView : ListView
     {
         private SplitView _splitViewHost;
+
         public event EventHandler MenuItemsUpdated;
 
         public NavMenuListView()
@@ -43,18 +44,20 @@ namespace OpenHAB.Windows.Controls
                     parent = VisualTreeHelper.GetParent(parent);
                 }
 
-                if (parent != null)
+                if (parent == null)
                 {
-                    _splitViewHost = parent as SplitView;
-
-                    _splitViewHost.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (sender, args) =>
-                    {
-                        OnPaneToggled();
-                    });
-
-                    // Call once to ensure we're in the correct state
-                    OnPaneToggled();
+                    return;
                 }
+
+                _splitViewHost = parent as SplitView;
+
+                _splitViewHost.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (sender, args) =>
+                {
+                    OnPaneToggled();
+                });
+
+                // Call once to ensure we're in the correct state
+                OnPaneToggled();
             };
         }
 
@@ -76,7 +79,7 @@ namespace OpenHAB.Windows.Controls
         /// Mark the <paramref name="item"/> as selected and ensures everything else is not.
         /// If the <paramref name="item"/> is null then everything is unselected.
         /// </summary>
-        /// <param name="item"></param>
+        /// <param name="item">The selected menu item</param>
         public void SetSelectedItem(ListViewItem item)
         {
             int index = -1;
@@ -85,9 +88,20 @@ namespace OpenHAB.Windows.Controls
                 index = IndexFromContainer(item);
             }
 
+            if (Items == null)
+            {
+                return;
+            }
+
             for (int i = 0; i < Items.Count; i++)
             {
                 var lvi = (ListViewItem)ContainerFromIndex(i);
+
+                if (lvi == null)
+                {
+                    continue;
+                }
+
                 if (i != index)
                 {
                     lvi.IsSelected = false;
@@ -112,9 +126,9 @@ namespace OpenHAB.Windows.Controls
 
         /// <summary>
         /// Custom keyboarding logic to enable movement via the arrow keys without triggering selection 
-        /// until a 'Space' or 'Enter' key is pressed. 
+        /// until a 'Space' or 'Enter' key is pressed.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Routed event args</param>
         protected override void OnKeyDown(KeyRoutedEventArgs e)
         {
             var focusedItem = FocusManager.GetFocusedElement();
@@ -140,42 +154,28 @@ namespace OpenHAB.Windows.Controls
                     if (item != null)
                     {
                         var currentItem = item;
+
+                        if (Items == null)
+                        {
+                            return;
+                        }
+
                         bool onlastitem = IndexFromContainer(currentItem) == Items.Count - 1;
                         bool onfirstitem = IndexFromContainer(currentItem) == 0;
 
                         if (!shiftKeyDown)
                         {
-                            if (onlastitem)
-                            {
-                                TryMoveFocus(FocusNavigationDirection.Next);
-                            }
-                            else
-                            {
-                                TryMoveFocus(FocusNavigationDirection.Down);
-                            }
+                            TryMoveFocus(onlastitem ? FocusNavigationDirection.Next : FocusNavigationDirection.Down);
                         }
-                        else // Shift + Tab
+                        else
                         {
-                            if (onfirstitem)
-                            {
-                                TryMoveFocus(FocusNavigationDirection.Previous);
-                            }
-                            else
-                            {
-                                TryMoveFocus(FocusNavigationDirection.Up);
-                            }
+                            // Shift + Tab
+                            TryMoveFocus(onfirstitem ? FocusNavigationDirection.Previous : FocusNavigationDirection.Up);
                         }
                     }
                     else if (focusedItem is Control)
                     {
-                        if (!shiftKeyDown)
-                        {
-                            TryMoveFocus(FocusNavigationDirection.Down);
-                        }
-                        else // Shift + Tab
-                        {
-                            TryMoveFocus(FocusNavigationDirection.Up);
-                        }
+                        TryMoveFocus(!shiftKeyDown ? FocusNavigationDirection.Down : FocusNavigationDirection.Up);
                     }
 
                     e.Handled = true;
@@ -197,7 +197,7 @@ namespace OpenHAB.Windows.Controls
         /// <summary>
         /// This method is a work-around until the bug in FocusManager.TryMoveFocus is fixed.
         /// </summary>
-        /// <param name="direction"></param>
+        /// <param name="direction">Navigated direction</param>
         private void TryMoveFocus(FocusNavigationDirection direction)
         {
             if (direction == FocusNavigationDirection.Next || direction == FocusNavigationDirection.Previous)
@@ -214,7 +214,9 @@ namespace OpenHAB.Windows.Controls
         public bool SetActiveItem(object item)
         {
             if (_splitViewHost == null)
+            {
                 return false;
+            }
 
             var itemContainer = ContainerFromItem(item);
             InvokeItem(itemContainer);
@@ -238,10 +240,8 @@ namespace OpenHAB.Windows.Controls
                 _splitViewHost.DisplayMode == SplitViewDisplayMode.Overlay))
             {
                 _splitViewHost.IsPaneOpen = false;
-                if (focusedItem is ListViewItem)
-                {
-                    ((ListViewItem)focusedItem).Focus(FocusState.Programmatic);
-                }
+                var item = focusedItem as ListViewItem;
+                item?.Focus(FocusState.Programmatic);
             }
         }
 
@@ -251,6 +251,11 @@ namespace OpenHAB.Windows.Controls
         /// </summary>
         private void OnPaneToggled()
         {
+            if (ItemsPanelRoot == null)
+            {
+                return;
+            }
+
             if (_splitViewHost.IsPaneOpen)
             {
                 ItemsPanelRoot.ClearValue(WidthProperty);

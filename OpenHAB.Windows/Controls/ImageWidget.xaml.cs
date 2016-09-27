@@ -1,9 +1,9 @@
 ﻿using System;
+using MJPEGDecoderWinRTLib;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
-using MJPEGDecoderWinRTLib;
 
 namespace OpenHAB.Windows.Controls
 {
@@ -14,10 +14,18 @@ namespace OpenHAB.Windows.Controls
 
         public BitmapImage CameraBitmapImage
         {
-            get { return _cameraBitmapImage; }
+            get
+            {
+                return _cameraBitmapImage;
+            }
+
             set
             {
-                if (_cameraBitmapImage == value) return;
+                if (_cameraBitmapImage == value)
+                {
+                    return;
+                }
+
                 _cameraBitmapImage = value;
                 RaisePropertyChanged();
             }
@@ -35,36 +43,36 @@ namespace OpenHAB.Windows.Controls
             CameraBitmapImage = new BitmapImage();
 
             // Register listener methods
-            _mjpegDecoder.FrameReady += mjpegDecoder_FrameReady;
-            _mjpegDecoder.Error += mjpegDecoder_Error;
+            _mjpegDecoder.FrameReady += MjpegDecoder_FrameReady;
+            _mjpegDecoder.Error += MjpegDecoder_Error;
 
             // Construct Http Uri
             string requestUri = "http://jarvis:8888";
-            
+
             // Tell MJPEGDecoder to connect to the IP camera, parse the mjpeg stream, and 
             // report the received image frames.
             await _mjpegDecoder.ParseStreamAsync(requestUri, "", "");
         }
 
-        private async void mjpegDecoder_FrameReady(object sender, FrameReadyEventArgs e)
+        private async void MjpegDecoder_FrameReady(object sender, FrameReadyEventArgs e)
         {
             // Copy the received FrameBuffer to an InMemoryRandomAccessStream.
             using (InMemoryRandomAccessStream ms = new InMemoryRandomAccessStream())
             {
-
                 using (DataWriter writer = new DataWriter(ms.GetOutputStreamAt(0)))
                 {
                     writer.WriteBytes(e.FrameBuffer);
                     await writer.StoreAsync();
                 }
+
                 // Update source of CameraBitmap with the memory stream
                 CameraBitmapImage.SetSource(ms);
             }
         }
 
-        private void mjpegDecoder_Error(object sender, ErrorEventArgs e)
+        private void MjpegDecoder_Error(object sender, ErrorEventArgs e)
         {
-            //ErrorMsg = e.Message;
+            // ErrorMsg = e.Message;
         }
 
         private async void ImageWidget_OnTapped(object sender, TappedRoutedEventArgs e)

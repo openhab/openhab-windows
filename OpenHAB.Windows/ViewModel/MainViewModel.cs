@@ -24,7 +24,11 @@ namespace OpenHAB.Windows.ViewModel
 
         public OpenHABSitemap SelectedSitemap
         {
-            get { return _selectedSitemap; }
+            get
+            {
+                return _selectedSitemap;
+            }
+
             set
             {
                 if (Set(ref _selectedSitemap, value))
@@ -54,15 +58,13 @@ namespace OpenHAB.Windows.ViewModel
             await _openHabsdk.SendCommand(message.Item, message.Command);
         }
 
-        // ReSharper disable once UnusedMethodReturnValue.Local
         private async Task LoadData()
         {
-           _version = await _openHabsdk.GetOpenHABVersion();
+            _version = await _openHabsdk.GetOpenHABVersion();
             var sitemaps = await _openHabsdk.LoadSiteMaps(_version);
             Sitemaps = new ObservableCollection<OpenHABSitemap>(sitemaps);
         }
 
-        // ReSharper disable once UnusedMethodReturnValue.Local
         private async Task LoadWidgets()
         {
             SelectedSitemap.Widgets = await _openHabsdk.LoadItemsFromSitemap(SelectedSitemap, _version);

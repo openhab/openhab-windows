@@ -1,6 +1,6 @@
 ﻿using System;
-using Windows.UI.Xaml.Data;
 using OpenHAB.Core.Model;
+using Windows.UI.Xaml.Data;
 
 namespace OpenHAB.Windows.Converters
 {

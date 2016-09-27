@@ -4,6 +4,9 @@ using OpenHAB.Core.Model;
 
 namespace OpenHAB.Core.SDK
 {
+    /// <summary>
+    /// The main SDK interface to OpenHAB
+    /// </summary>
     public interface IOpenHAB
     {
         /// <summary>
@@ -32,7 +35,6 @@ namespace OpenHAB.Core.SDK
         /// </summary>
         /// <param name="item">The item</param>
         /// <param name="command">The Command</param>
-        /// <returns></returns>
         Task SendCommand(OpenHABItem item, string command);
     }
 }

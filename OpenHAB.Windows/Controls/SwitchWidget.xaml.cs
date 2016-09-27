@@ -1,8 +1,8 @@
-﻿using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using GalaSoft.MvvmLight.Messaging;
+﻿using GalaSoft.MvvmLight.Messaging;
 using OpenHAB.Core;
 using OpenHAB.Core.Messages;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace OpenHAB.Windows.Controls
 {

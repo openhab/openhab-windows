@@ -1,18 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace OpenHAB.Core
+﻿namespace OpenHAB.Core
 {
+    /// <summary>
+    /// Class used for analytics
+    /// </summary>
     public class HABCore
     {
+        /// <summary>
+        /// The name of the tracker
+        /// </summary>
         public enum TrackerName
         {
-            // ReSharper disable once InconsistentNaming
-            APP_TRACKER // Tracker used only in this app.
+            /// <summary>
+            /// Tracker used only in this app.
+            /// </summary>
+            AppTracker
         }
 
-        //TODO: analytics
+        // TODO: analytics
     }
 }
