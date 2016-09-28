@@ -13,6 +13,7 @@ development environment. openHAB Windows app is developed using Visual Studio 20
 - During install, make sure to select UWP SDK 10586 and SDK 14393
 - Check out the latest code from github
 - Open the project in Visual Studio (File -> Open, Project/Solution)
+- Rebuild the solution to fetch all missing NuGet packages
 
 You are ready to contribute!
 
