@@ -4,6 +4,10 @@ Want to hack on openHAB Windows? Awesome! Here are instructions to get you
 started. They are probably not perfect, please let us know if anything
 feels wrong or incomplete.
 
+## Windows SDK
+
+Test your code with SDK 10586 (November update) and SDK 14393 (Anniversary Update)
+
 ## Naming conventions
 
 We are following the coding guidelines of [.NET Core Foundational libraries](https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/coding-style.md). 
