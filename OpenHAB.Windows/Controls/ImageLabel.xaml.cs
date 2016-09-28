@@ -5,8 +5,14 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace OpenHAB.Windows.Controls
 {
+    /// <summary>
+    /// Control that represents an image with a label
+    /// </summary>
     public sealed partial class ImageLabel : UserControl
     {
+        /// <summary>
+        /// Bindable property for the control icon
+        /// </summary>
         public static readonly DependencyProperty IconPathProperty = DependencyProperty.Register(
             "IconPath", typeof(string), typeof(ImageLabel), new PropertyMetadata(default(string), IconChangedCallback));
 
@@ -22,14 +28,29 @@ namespace OpenHAB.Windows.Controls
             control.Icon.Source = new BitmapImage(new Uri(control.IconPath));
         }
 
+        /// <summary>
+        /// Gets or sets the IconPath
+        /// </summary>
         public string IconPath
         {
-            get { return (string) GetValue(IconPathProperty); }
+            get { return (string)GetValue(IconPathProperty); }
             set { SetValue(IconPathProperty, value); }
         }
 
+        /// <summary>
+        /// Bindable property for the label
+        /// </summary>
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
             "Text", typeof(string), typeof(ImageLabel), new PropertyMetadata(default(string), TextChangedCallback));
+
+        /// <summary>
+        /// Gets or sets the label
+        /// </summary>
+        public string LabelText
+        {
+            get { return (string)GetValue(TextProperty); }
+            set { SetValue(TextProperty, value); }
+        }
 
         private static void TextChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
@@ -43,12 +64,9 @@ namespace OpenHAB.Windows.Controls
             control.Label.Text = control.LabelText;
         }
 
-        public string LabelText
-        {
-            get { return (string) GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
-        }
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageLabel"/> class.
+        /// </summary>
         public ImageLabel()
         {
             InitializeComponent();

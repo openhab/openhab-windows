@@ -14,21 +14,27 @@ namespace OpenHAB.Windows.Controls
     /// </summary>
     /// <remarks>
     /// This class handles the following:
-    /// 1. Sizes the panel that hosts the items so they fit in the hosting pane.  Otherwise, the keyboard 
+    /// 1. Sizes the panel that hosts the items so they fit in the hosting pane.  Otherwise, the keyboard
     ///    may appear cut off on one side b/c the Pane clips instead of affecting layout.
     /// 2. Provides a single selection experience where keyboard focus can move without changing selection.
     ///    Both the 'Space' and 'Enter' keys will trigger selection.  The up/down arrow keys can move
     ///    keyboard focus without triggering selection.  This is different than the default behavior when
     ///    SelectionMode == Single.  The default behavior for a ListView in single selection requires using
-    ///    the Ctrl + arrow key to move keyboard focus without triggering selection.  Users won't expect 
+    ///    the Ctrl + arrow key to move keyboard focus without triggering selection.  Users won't expect
     ///    this type of keyboarding model on the nav menu.
     /// </remarks>
     public class NavMenuListView : ListView
     {
         private SplitView _splitViewHost;
 
+        /// <summary>
+        /// Event that fires whenever menu items are updated
+        /// </summary>
         public event EventHandler MenuItemsUpdated;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NavMenuListView"/> class.
+        /// </summary>
         public NavMenuListView()
         {
             SelectionMode = ListViewSelectionMode.Single;
@@ -61,6 +67,7 @@ namespace OpenHAB.Windows.Controls
             };
         }
 
+        /// <inheritdoc/>
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -113,6 +120,7 @@ namespace OpenHAB.Windows.Controls
             }
         }
 
+        /// <inheritdoc/>
         protected override void OnItemsChanged(object e)
         {
             base.OnItemsChanged(e);
@@ -125,7 +133,7 @@ namespace OpenHAB.Windows.Controls
         public event EventHandler<ListViewItem> ItemInvoked;
 
         /// <summary>
-        /// Custom keyboarding logic to enable movement via the arrow keys without triggering selection 
+        /// Custom keyboarding logic to enable movement via the arrow keys without triggering selection
         /// until a 'Space' or 'Enter' key is pressed.
         /// </summary>
         /// <param name="e">Routed event args</param>
@@ -211,6 +219,11 @@ namespace OpenHAB.Windows.Controls
             }
         }
 
+        /// <summary>
+        /// Sets a menu item as the active one
+        /// </summary>
+        /// <param name="item">the item</param>
+        /// <returns>true when the item was set as active</returns>
         public bool SetActiveItem(object item)
         {
             if (_splitViewHost == null)

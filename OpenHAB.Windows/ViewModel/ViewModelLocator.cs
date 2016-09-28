@@ -5,10 +5,16 @@ using OpenHAB.Core.SDK;
 
 namespace OpenHAB.Windows.ViewModel
 {
+    /// <summary>
+    /// Locator object to bind the views to the viewmodels
+    /// </summary>
     public class ViewModelLocator : IDisposable
     {
         private IUnityContainer _container;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ViewModelLocator"/> class.
+        /// </summary>
         public ViewModelLocator()
         {
             _container = new UnityContainer();
@@ -28,8 +34,12 @@ namespace OpenHAB.Windows.ViewModel
             _container.RegisterType<MainViewModel>();
         }
 
+        /// <summary>
+        /// Gets the MainViewModel for binding a View's DataContext
+        /// </summary>
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
 
+        /// <inheritdoc />
         public void Dispose()
         {
             _container.Dispose();

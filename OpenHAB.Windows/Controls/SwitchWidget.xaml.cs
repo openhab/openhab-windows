@@ -6,8 +6,14 @@ using Windows.UI.Xaml.Controls;
 
 namespace OpenHAB.Windows.Controls
 {
+    /// <summary>
+    /// Widget control that represents an OpenHAB switch
+    /// </summary>
     public sealed partial class SwitchWidget : WidgetBase
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SwitchWidget"/> class.
+        /// </summary>
         public SwitchWidget()
         {
             InitializeComponent();

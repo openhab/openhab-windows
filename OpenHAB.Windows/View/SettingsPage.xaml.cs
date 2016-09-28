@@ -3,10 +3,13 @@
 namespace OpenHAB.Windows.View
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// In this page users can set their connection to the OpenHAB server
     /// </summary>
     public sealed partial class SettingsPage : Page
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SettingsPage"/> class.
+        /// </summary>
         public SettingsPage()
         {
             InitializeComponent();

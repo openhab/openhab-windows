@@ -9,6 +9,9 @@ using OpenHAB.Core.SDK;
 
 namespace OpenHAB.Windows.ViewModel
 {
+    /// <summary>
+    /// Collects and formats all the data for starting the app
+    /// </summary>
     public class MainViewModel : ViewModelBase
     {
         private readonly IOpenHAB _openHabsdk;
@@ -16,12 +19,18 @@ namespace OpenHAB.Windows.ViewModel
         private OpenHABSitemap _selectedSitemap;
         private OpenHABVersion _version;
 
+        /// <summary>
+        /// Gets or sets a collection of OpenHAB sitemaps
+        /// </summary>
         public ObservableCollection<OpenHABSitemap> Sitemaps
         {
             get { return _sitemaps; }
             set { Set(ref _sitemaps, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the sitemap currently selected by the user
+        /// </summary>
         public OpenHABSitemap SelectedSitemap
         {
             get
@@ -43,6 +52,10 @@ namespace OpenHAB.Windows.ViewModel
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainViewModel"/> class.
+        /// </summary>
+        /// <param name="openHabsdk">The OpenHAB SDK object</param>
         public MainViewModel(IOpenHAB openHabsdk)
         {
             _openHabsdk = openHabsdk;

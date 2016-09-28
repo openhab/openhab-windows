@@ -35,6 +35,7 @@ namespace OpenHAB.Core.SDK
         /// </summary>
         /// <param name="item">The item</param>
         /// <param name="command">The Command</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task SendCommand(OpenHABItem item, string command);
     }
 }

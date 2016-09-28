@@ -7,11 +7,17 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace OpenHAB.Windows.Controls
 {
+    /// <summary>
+    /// Widget control that represents an OpenHAB Image
+    /// </summary>
     public sealed partial class ImageWidget : WidgetBase
     {
         private BitmapImage _cameraBitmapImage;
         private MJPEGDecoder _mjpegDecoder;
 
+        /// <summary>
+        /// Gets or sets the camera bitmapimage
+        /// </summary>
         public BitmapImage CameraBitmapImage
         {
             get
@@ -31,6 +37,9 @@ namespace OpenHAB.Windows.Controls
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageWidget"/> class.
+        /// </summary>
         public ImageWidget()
         {
             InitializeComponent();
@@ -49,9 +58,9 @@ namespace OpenHAB.Windows.Controls
             // Construct Http Uri
             string requestUri = "http://jarvis:8888";
 
-            // Tell MJPEGDecoder to connect to the IP camera, parse the mjpeg stream, and 
+            // Tell MJPEGDecoder to connect to the IP camera, parse the mjpeg stream, and
             // report the received image frames.
-            await _mjpegDecoder.ParseStreamAsync(requestUri, "", "");
+            await _mjpegDecoder.ParseStreamAsync(requestUri, string.Empty, string.Empty);
         }
 
         private async void MjpegDecoder_FrameReady(object sender, FrameReadyEventArgs e)

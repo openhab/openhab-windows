@@ -145,7 +145,7 @@ namespace OpenHAB.Core.Model
         {
             foreach (XElement childNode in startNode.Elements("widget"))
             {
-                var widget = new OpenHABWidget(childNode) {Parent = this};
+                var widget = new OpenHABWidget(childNode) { Parent = this };
                 Children.Add(widget);
             }
         }

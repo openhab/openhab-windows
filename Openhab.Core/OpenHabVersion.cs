@@ -9,6 +9,7 @@
         /// OpenHAB V1
         /// </summary>
         One,
+
         /// <summary>
         /// OpenHAB V2
         /// </summary>
