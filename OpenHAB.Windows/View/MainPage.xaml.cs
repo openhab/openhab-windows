@@ -1,4 +1,4 @@
-﻿using OpenHAB.Windows.ViewModel;
+﻿using OpenHAB.Core.ViewModel;
 using Windows.UI.Xaml.Controls;
 
 namespace OpenHAB.Windows.View

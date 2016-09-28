@@ -5,6 +5,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Newtonsoft.Json;
+using OpenHAB.Core.Common;
+using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Model;
 
 namespace OpenHAB.Core.SDK
@@ -14,13 +16,25 @@ namespace OpenHAB.Core.SDK
     /// </summary>
     public class OpenHAB : IOpenHAB
     {
+        private readonly ISettingsService _settingsService;
+
         /// <summary>
-        /// Get the url of the current OpenHAB connection
+        /// Initializes a new instance of the <see cref="OpenHAB"/> class.
         /// </summary>
-        /// <returns>the url of the current OpenHAB connection</returns>
-        public string GetServerLink()
+        /// <param name="settingsService">The service to fetch the settings</param>
+        public OpenHAB(ISettingsService settingsService)
         {
-            return string.Empty;
+            _settingsService = settingsService;
+            var settings = _settingsService.Load();
+            OpenHABHttpClient.BaseUrl = settings.OpenHABUrl;
+        }
+
+        /// <inheritdoc />
+        public void ResetConnection()
+        {
+            var settings = _settingsService.Load();
+            OpenHABHttpClient.BaseUrl = settings.OpenHABUrl;
+            OpenHABHttpClient.ResetClient();
         }
 
         /// <inheritdoc />
@@ -28,7 +42,7 @@ namespace OpenHAB.Core.SDK
         {
             try
             {
-                var result = await OpenHABHttpClient.Client().GetAsync("rest/bindings").ConfigureAwait(false);
+                var result = await OpenHABHttpClient.Client().GetAsync(Constants.Api.ServerVersion).ConfigureAwait(false);
                 return !result.IsSuccessStatusCode ? OpenHABVersion.One : OpenHABVersion.Two;
             }
             catch (ArgumentNullException ex)
@@ -42,7 +56,7 @@ namespace OpenHAB.Core.SDK
         {
             try
             {
-                var result = await OpenHABHttpClient.Client().GetAsync("rest/sitemaps").ConfigureAwait(false);
+                var result = await OpenHABHttpClient.Client().GetAsync(Constants.Api.Sitemaps).ConfigureAwait(false);
                 if (!result.IsSuccessStatusCode)
                 {
                     throw new OpenHABException($"{result.StatusCode} received from server");

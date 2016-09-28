@@ -1,9 +1,11 @@
 ﻿using System;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
+using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.SDK;
+using OpenHAB.Core.Services;
 
-namespace OpenHAB.Windows.ViewModel
+namespace OpenHAB.Core.ViewModel
 {
     /// <summary>
     /// Locator object to bind the views to the viewmodels
@@ -26,18 +28,25 @@ namespace OpenHAB.Windows.ViewModel
 
         private void RegisterServices()
         {
-            _container.RegisterType<IOpenHAB, Core.SDK.OpenHAB>();
+            _container.RegisterType<IOpenHAB, SDK.OpenHAB>();
+            _container.RegisterType<ISettingsService, SettingsService>();
         }
 
         private void RegisterViewModels()
         {
             _container.RegisterType<MainViewModel>();
+            _container.RegisterType<SettingsViewModel>();
         }
 
         /// <summary>
         /// Gets the MainViewModel for binding a View's DataContext
         /// </summary>
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
+
+        /// <summary>
+        /// Gets the SettingsViewModel for binding a View's DataContext
+        /// </summary>
+        public SettingsViewModel Settings => ServiceLocator.Current.GetInstance<SettingsViewModel>();
 
         /// <inheritdoc />
         public void Dispose()

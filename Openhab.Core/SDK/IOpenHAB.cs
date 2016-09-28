@@ -37,5 +37,10 @@ namespace OpenHAB.Core.SDK
         /// <param name="command">The Command</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task SendCommand(OpenHABItem item, string command);
+
+        /// <summary>
+        /// Reset the connection to the OpenHAB server after changing the settings in the app
+        /// </summary>
+        void ResetConnection();
     }
 }

@@ -117,20 +117,29 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Constants.cs" />
+    <Compile Include="Contracts\Services\ISettingsService.cs" />
     <Compile Include="HABCore.cs" />
+    <Compile Include="Messages\PersistSettingsMessage.cs" />
+    <Compile Include="Messages\SettingsUpdatedMessage.cs" />
     <Compile Include="Messages\TriggerCommandMessage.cs" />
     <Compile Include="Model\ObservableBase.cs" />
     <Compile Include="Model\OpenHABCommand.cs" />
     <Compile Include="Model\OpenHABItem.cs" />
     <Compile Include="Model\OpenHABSitemap.cs" />
     <Compile Include="Model\OpenHABWidget.cs" />
-    <Compile Include="OpenHABCommands.cs" />
-    <Compile Include="OpenHABException.cs" />
-    <Compile Include="OpenHABHttpClient.cs" />
-    <Compile Include="OpenHabVersion.cs" />
+    <Compile Include="Model\Settings.cs" />
+    <Compile Include="Model\OpenHABCommands.cs" />
+    <Compile Include="Model\OpenHABException.cs" />
+    <Compile Include="Common\OpenHABHttpClient.cs" />
+    <Compile Include="Model\OpenHabVersion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SDK\IOpenHAB.cs" />
     <Compile Include="SDK\OpenHAB.cs" />
+    <Compile Include="Services\SettingsService.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\SettingsViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelLocator.cs" />
     <EmbeddedResource Include="Properties\OpenHAB.Core.rd.xml" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

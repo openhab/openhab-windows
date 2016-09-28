@@ -1,13 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Messaging;
-using OpenHAB.Core;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.SDK;
 
-namespace OpenHAB.Windows.ViewModel
+namespace OpenHAB.Core.ViewModel
 {
     /// <summary>
     /// Collects and formats all the data for starting the app
@@ -60,7 +58,12 @@ namespace OpenHAB.Windows.ViewModel
         {
             _openHabsdk = openHabsdk;
 
-            Messenger.Default.Register<TriggerCommandMessage>(this, async msg => await TriggerCommand(msg));
+            MessengerInstance.Register<SettingsUpdatedMessage>(this, async msg =>
+            {
+                _openHabsdk.ResetConnection();
+                await LoadData();
+            });
+            MessengerInstance.Register<TriggerCommandMessage>(this, async msg => await TriggerCommand(msg));
 #pragma warning disable 4014
             LoadData();
 #pragma warning restore 4014

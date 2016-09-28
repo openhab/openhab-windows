@@ -3,9 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="using:OpenHAB.Windows.Controls"
              xmlns:converters="using:OpenHAB.Windows.Converters"
-             xmlns:local="using:OpenHAB.Windows"
-             xmlns:model="using:OpenHAB.Core.Model"
-             xmlns:viewModel="using:OpenHAB.Windows.ViewModel"
+             xmlns:viewModel="using:OpenHAB.Core.ViewModel"
              RequestedTheme="Light">
     <Application.Resources>
         <ResourceDictionary>

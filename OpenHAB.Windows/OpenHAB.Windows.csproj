@@ -126,9 +126,6 @@
     <Compile Include="Converters\ObjectToSitemapConverter.cs" />
     <Compile Include="Converters\StateToBoolConverter.cs" />
     <Compile Include="Converters\WidgetTemplateSelector.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\SettingsViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
