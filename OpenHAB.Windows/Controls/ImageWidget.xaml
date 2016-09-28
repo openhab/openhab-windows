@@ -11,7 +11,7 @@
     <Grid Margin="8, 4, 8, 4"
           Background="{StaticResource OpenHABLightGreyBrush}"
           Tapped="ImageWidget_OnTapped">
-        <local:ImageLabel IconPath="{x:Bind Widget.IconPath, Mode=OneWay}" LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
+        <local:ImageLabel IconPath="{x:Bind Widget.Icon, Mode=OneWay, Converter={StaticResource IconToPathConverter}}" LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
         <Image Width="200"
                Height="200"
                HorizontalAlignment="Right"

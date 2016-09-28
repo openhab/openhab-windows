@@ -10,7 +10,7 @@
                   mc:Ignorable="d">
 
     <Grid Margin="8, 4, 8, 4" Background="{StaticResource OpenHABLightGreyBrush}">
-        <local:ImageLabel IconPath="{x:Bind Widget.IconPath, Mode=OneWay}" LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
+        <local:ImageLabel IconPath="{x:Bind Widget.Icon, Mode=OneWay, Converter={StaticResource IconToPathConverter}}" LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
         <ToggleSwitch HorizontalAlignment="Right"
                       IsOn="{x:Bind Widget.Item.State, Converter={StaticResource StateToBoolConverter}, Mode=TwoWay}"
                       Toggled="ToggleSwitch_OnToggled" />

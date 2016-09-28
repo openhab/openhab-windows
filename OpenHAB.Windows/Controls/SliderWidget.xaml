@@ -49,7 +49,7 @@
         </VisualStateManager.VisualStateGroups>
 
         <local:ImageLabel x:Name="TitleAndIcon"
-                          IconPath="{x:Bind Widget.IconPath, Mode=OneWay}"
+                          IconPath="{x:Bind Widget.Icon, Mode=OneWay, Converter={StaticResource IconToPathConverter}}"
                           LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
         <Slider HorizontalAlignment="Right"
                 x:Name="TheSlider"

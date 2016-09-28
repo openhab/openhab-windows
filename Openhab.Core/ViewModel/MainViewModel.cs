@@ -40,7 +40,7 @@ namespace OpenHAB.Core.ViewModel
             {
                 if (Set(ref _selectedSitemap, value))
                 {
-                    if (_selectedSitemap.Widgets == null)
+                    if (_selectedSitemap?.Widgets == null)
                     {
 #pragma warning disable 4014
                         LoadWidgets();

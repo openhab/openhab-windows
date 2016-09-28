@@ -123,6 +123,7 @@
       <DependentUpon>TextWidget.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WidgetBase.cs" />
+    <Compile Include="Converters\IconToPathConverter.cs" />
     <Compile Include="Converters\ObjectToSitemapConverter.cs" />
     <Compile Include="Converters\StateToBoolConverter.cs" />
     <Compile Include="Converters\WidgetTemplateSelector.cs" />

@@ -24,11 +24,6 @@ namespace OpenHAB.Core.Model
         public string Icon { get; set; }
 
         /// <summary>
-        /// Gets the IconPath of the OpenHAB widget
-        /// </summary>
-        public string IconPath => $"http://OpenHab.GetServerLink():8080/images/{Icon}.png";
-
-        /// <summary>
         /// Gets or sets the Type of the OpenHAB widget
         /// </summary>
         public string Type { get; set; }
