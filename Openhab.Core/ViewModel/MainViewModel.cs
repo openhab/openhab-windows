@@ -60,7 +60,7 @@ namespace OpenHAB.Core.ViewModel
 
             MessengerInstance.Register<SettingsUpdatedMessage>(this, async msg =>
             {
-                _openHabsdk.ResetConnection();
+                await _openHabsdk.ResetConnection();
                 await LoadData();
             });
             MessengerInstance.Register<TriggerCommandMessage>(this, async msg => await TriggerCommand(msg));
@@ -76,6 +76,7 @@ namespace OpenHAB.Core.ViewModel
 
         private async Task LoadData()
         {
+            await _openHabsdk.ResetConnection();
             _version = await _openHabsdk.GetOpenHABVersion();
             var sitemaps = await _openHabsdk.LoadSiteMaps(_version);
             Sitemaps = new ObservableCollection<OpenHABSitemap>(sitemaps);
