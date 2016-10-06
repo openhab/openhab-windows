@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Linq;
+using Newtonsoft.Json;
 
 namespace OpenHAB.Core.Model
 {
@@ -106,7 +107,16 @@ namespace OpenHAB.Core.Model
         /// <summary>
         /// Gets or sets the Children of the OpenHAB widget
         /// </summary>
+        [JsonProperty(PropertyName = "widgets")]
         public ICollection<OpenHABWidget> Children { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OpenHABWidget"/> class.
+        /// </summary>
+        public OpenHABWidget()
+        {
+            Children = new List<OpenHABWidget>();
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenHABWidget"/> class.

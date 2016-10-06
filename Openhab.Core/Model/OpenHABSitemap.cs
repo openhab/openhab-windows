@@ -65,6 +65,13 @@ namespace OpenHAB.Core.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenHABSitemap"/> class.
         /// </summary>
+        public OpenHABSitemap()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OpenHABSitemap"/> class.
+        /// </summary>
         /// <param name="startNode">The XML from the OpenHAB server that represents this OpenHAB item</param>
         public OpenHABSitemap(XElement startNode)
         {

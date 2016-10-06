@@ -22,6 +22,11 @@
         public sealed class Api
         {
             /// <summary>
+            /// Url used for Demo mode
+            /// </summary>
+            public const string DemoModeUrl = "http://demo.openhab.org:8080/";
+
+            /// <summary>
             /// The call to determine the OpenHAB version
             /// </summary>
             public const string ServerVersion = "rest/bindings";
