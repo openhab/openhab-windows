@@ -9,6 +9,8 @@ namespace OpenHAB.Core.Model
     /// </summary>
     public class OpenHABWidget
     {
+        private string _icon;
+
         /// <summary>
         /// Gets or sets the ID of the OpenHAB widget
         /// </summary>
@@ -22,7 +24,11 @@ namespace OpenHAB.Core.Model
         /// <summary>
         /// Gets or sets the Icon of the OpenHAB widget
         /// </summary>
-        public string Icon { get; set; }
+        public string Icon
+        {
+            get { return _icon ?? string.Empty; }
+            set { _icon = value; }
+        }
 
         /// <summary>
         /// Gets or sets the Type of the OpenHAB widget
@@ -77,17 +83,17 @@ namespace OpenHAB.Core.Model
         /// <summary>
         /// Gets or sets the IconColor of the OpenHAB widget
         /// </summary>
-        public int IconColor { get; set; }
+        public string IconColor { get; set; }
 
         /// <summary>
         /// Gets or sets the LabelColor of the OpenHAB widget
         /// </summary>
-        public int LabelColor { get; set; }
+        public string LabelColor { get; set; }
 
         /// <summary>
         /// Gets or sets the ValueColor of the OpenHAB widget
         /// </summary>
-        public int ValueColor { get; set; }
+        public string ValueColor { get; set; }
 
         /// <summary>
         /// Gets or sets the Encoding of the OpenHAB widget

@@ -34,7 +34,7 @@ namespace OpenHAB.Windows.Controls
         public string IconPath
         {
             get { return (string)GetValue(IconPathProperty); }
-            set { SetValue(IconPathProperty, value); }
+            set { SetValue(IconPathProperty, value ?? string.Empty); }
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace OpenHAB.Windows.Controls
         public string LabelText
         {
             get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
+            set { SetValue(TextProperty, value ?? string.Empty); }
         }
 
         private static void TextChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)

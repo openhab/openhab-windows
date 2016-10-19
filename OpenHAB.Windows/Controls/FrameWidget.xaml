@@ -14,8 +14,8 @@
                 HorizontalAlignment="Stretch"
                 BorderBrush="Black"
                 BorderThickness="2" />
-        <ItemsControl IsTapEnabled="False"
-                      ItemTemplateSelector="{StaticResource WidgetTemplateSelector}"
-                      ItemsSource="{x:Bind Widget.Children}" />
+        <ListView IsTapEnabled="False"
+                  ItemTemplateSelector="{StaticResource WidgetTemplateSelector}"
+                  ItemsSource="{x:Bind Widget.Children, Mode=OneWay}" />
     </StackPanel>
 </local:WidgetBase>

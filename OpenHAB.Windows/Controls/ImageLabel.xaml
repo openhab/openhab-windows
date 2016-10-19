@@ -9,14 +9,13 @@
              mc:Ignorable="d">
 
     <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-        <Image Width="45"
+        <Image x:Name="Icon"
+               Width="45"
                Height="45"
-               VerticalAlignment="Top"
-               x:Name="Icon"
-               Source="{x:Bind IconPath, Mode=OneWay}" />
-        <TextBlock Margin="8, 0, 0, 0"
+               VerticalAlignment="Top" />
+        <TextBlock x:Name="Label"
+                   Margin="8, 0, 0, 0"
                    VerticalAlignment="Top"
-                   x:Name="Label"
                    Style="{StaticResource SubtitleTextBlockStyle}"
                    Text="{x:Bind LabelText, Mode=OneWay}"
                    TextWrapping="Wrap" />

@@ -19,13 +19,13 @@
 
         <DataTemplate x:Key="NavMenuItemTemplate" x:DataType="model:OpenHABSitemap">
             <StackPanel Orientation="Horizontal">
-                <Image Width="35"
+                <Image x:Name="image"
+                       Width="35"
                        Height="35"
-                       x:Name="image"
                        Source="/Assets/openhab.png" />
-                <TextBlock Margin="12,0,0,0"
+                <TextBlock x:Name="textBlock"
+                           Margin="12,0,0,0"
                            VerticalAlignment="Center"
-                           x:Name="textBlock"
                            Style="{StaticResource FlyoutPickerTitleTextBlockStyle}"
                            Text="{x:Bind Name, Mode=OneWay}"
                            TextWrapping="Wrap" />
@@ -61,6 +61,81 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
+        <Border Grid.ColumnSpan="2"
+                BorderBrush="Black"
+                BorderThickness="1">
+            <Border.Background>
+                <SolidColorBrush Color="{StaticResource OpenHABLightOrange}" />
+            </Border.Background>
+        </Border>
+
+        <ToggleButton x:Name="TogglePaneButton"
+                      Grid.Row="0"
+                      Grid.Column="0"
+                      Width="48"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Stretch"
+                      Foreground="White"
+                      IsChecked="{Binding IsPaneOpen,
+                                          ElementName=SitemapSplitView,
+                                          Mode=TwoWay}"
+                      Style="{StaticResource SplitViewTogglePaneButtonStyle}"
+                      TabIndex="1"
+                      ToolTipService.ToolTip="Menu"
+                      d:LayoutOverrides="TopPosition, BottomPosition" />
+        <TextBlock x:Name="SitemapTitle"
+                   Grid.Row="0"
+                   Grid.Column="1"
+                   Margin="0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Foreground="White"
+                   Style="{StaticResource TitleTextBlockStyle}"
+                   Text="{x:Bind Vm.SelectedSitemap.Label, Mode=OneWay}"
+                   TextWrapping="Wrap" />
+        <SplitView x:Name="SitemapSplitView"
+                   Grid.Row="1"
+                   Grid.ColumnSpan="2"
+                   IsPaneOpen="False"
+                   OpenPaneLength="200">
+            <SplitView.Pane>
+                <Grid HorizontalAlignment="Left">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <controls:NavMenuListView ItemTemplate="{StaticResource NavMenuItemTemplate}"
+                                              ItemsSource="{x:Bind Vm.Sitemaps, Mode=OneWay}"
+                                              SelectedItem="{x:Bind Vm.SelectedSitemap, Converter={StaticResource ObjectToSitemapConverter}, Mode=TwoWay}" />
+                </Grid>
+            </SplitView.Pane>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition x:Name="MasterColumn" Width="1*" />
+                    <ColumnDefinition x:Name="DetailColumn" Width="1*" />
+                </Grid.ColumnDefinitions>
+                <ScrollViewer>
+                    <ListView x:Name="MasterListView"
+                              IsTapEnabled="True"
+                              ItemContainerTransitions="{x:Null}"
+                              ItemTemplateSelector="{StaticResource WidgetTemplateSelector}"
+                              ItemsSource="{x:Bind Vm.SelectedSitemap.Widgets, Mode=OneWay}" />
+                </ScrollViewer>
+
+                <ContentPresenter x:Name="DetailContentPresenter"
+                                  Grid.Column="1"
+                                  BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}"
+                                  BorderThickness="1,0,0,0"
+                                  Content="{x:Bind MasterListView.SelectedItem, Mode=OneWay}"
+                                  Padding="24,0">
+                    <ContentPresenter.ContentTransitions>
+                        <!--  Empty by default. See MasterListView_ItemClick  -->
+                        <TransitionCollection />
+                    </ContentPresenter.ContentTransitions>
+                </ContentPresenter>
+            </Grid>
+        </SplitView>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveStates">
                 <VisualState x:Name="DefaultState">
@@ -83,62 +158,6 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <Border Grid.ColumnSpan="2"
-                BorderBrush="Black"
-                BorderThickness="1">
-            <Border.Background>
-                <SolidColorBrush Color="{StaticResource OpenHABLightOrange}" />
-            </Border.Background>
-        </Border>
-
-        <ToggleButton Grid.Row="0"
-                      Grid.Column="0"
-                      Width="48"
-                      HorizontalAlignment="Center"
-                      VerticalAlignment="Stretch"
-                      x:Name="TogglePaneButton"
-                      Foreground="White"
-                      IsChecked="{Binding IsPaneOpen,
-                                          ElementName=SitemapSplitView,
-                                          Mode=TwoWay}"
-                      Style="{StaticResource SplitViewTogglePaneButtonStyle}"
-                      TabIndex="1"
-                      ToolTipService.ToolTip="Menu"
-                      d:LayoutOverrides="TopPosition, BottomPosition" />
-        <TextBlock Grid.Row="0"
-                   Grid.Column="1"
-                   Margin="0"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Center"
-                   x:Name="SitemapTitle"
-                   Foreground="White"
-                   Style="{StaticResource TitleTextBlockStyle}"
-                   Text="{x:Bind Vm.SelectedSitemap.Label, Mode=OneWay}"
-                   TextWrapping="Wrap" />
-        <SplitView Grid.Row="1"
-                   Grid.ColumnSpan="2"
-                   x:Name="SitemapSplitView"
-                   IsPaneOpen="False"
-                   OpenPaneLength="200">
-            <SplitView.Pane>
-                <Grid HorizontalAlignment="Left">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <controls:NavMenuListView ItemTemplate="{StaticResource NavMenuItemTemplate}"
-                                              ItemsSource="{x:Bind Vm.Sitemaps, Mode=OneWay}"
-                                              SelectedItem="{x:Bind Vm.SelectedSitemap, Converter={StaticResource ObjectToSitemapConverter}, Mode=TwoWay}" />
-                </Grid>
-            </SplitView.Pane>
-
-            <ScrollViewer>
-                <ItemsControl x:Name="listView"
-                              IsTapEnabled="False"
-                              ItemTemplateSelector="{StaticResource WidgetTemplateSelector}"
-                              ItemsSource="{x:Bind Vm.SelectedSitemap.Widgets, Mode=OneWay}" />
-            </ScrollViewer>
-        </SplitView>
     </Grid>
 </Page>
 
