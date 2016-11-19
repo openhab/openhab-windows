@@ -8,14 +8,38 @@
                   d:DesignWidth="400"
                   mc:Ignorable="d">
 
-    <StackPanel Margin="8, 4, 8, 4" Background="{StaticResource OpenHABLightGreyBrush}">
+    <local:WidgetBase.Resources>
+        <Style TargetType="GridViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+        </Style>
+    </local:WidgetBase.Resources>
+
+    <StackPanel>
         <local:ImageLabel IconPath="{x:Bind Widget.Icon, Mode=OneWay, Converter={StaticResource IconToPathConverter}}" LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
-        <Border Height="2"
-                HorizontalAlignment="Stretch"
-                BorderBrush="Black"
-                BorderThickness="2" />
-        <ListView IsTapEnabled="False"
+        <GridView IsItemClickEnabled="True"
+                  IsSwipeEnabled="True"
+                  ItemClick="OnItemClick"
                   ItemTemplateSelector="{StaticResource WidgetTemplateSelector}"
-                  ItemsSource="{x:Bind Widget.Children, Mode=OneWay}" />
+                  ItemsSource="{x:Bind Widget.Children, Mode=OneWay}"
+                  SelectionMode="None">
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VariableSizedWrapGrid MaximumRowsOrColumns="2" />
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+        </GridView>
     </StackPanel>
+
+
+    <!--<StackPanel Margin="8, 4, 8, 4" Background="{StaticResource OpenHABLightGreyBrush}">
+        <local:ImageLabel IconPath="{x:Bind Widget.Icon, Mode=OneWay, Converter={StaticResource IconToPathConverter}}"
+                          LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
+
+        <ItemsControl IsTapEnabled="False"
+                      Margin="0, 8, 0, 0"
+                      ItemTemplateSelector="{StaticResource WidgetTemplateSelector}"
+                      ItemsSource="{x:Bind Widget.Children, Mode=OneWay}" />
+    </StackPanel>-->
 </local:WidgetBase>

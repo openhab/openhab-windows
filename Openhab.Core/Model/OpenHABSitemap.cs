@@ -41,6 +41,11 @@ namespace OpenHAB.Core.Model
         public bool Leaf { get; set; }
 
         /// <summary>
+        /// Gets or sets the title of the sitemap
+        /// </summary>
+        public string Title { get; set; }
+
+        /// <summary>
         /// Gets or sets a collection of widgets of the OpenHAB sitemap
         /// </summary>
         public ICollection<OpenHABWidget> Widgets

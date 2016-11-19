@@ -119,16 +119,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Constants.cs" />
+    <Compile Include="Common\ObservableCollectionExtensions.cs" />
     <Compile Include="Contracts\Services\ISettingsService.cs" />
     <Compile Include="HABCore.cs" />
     <Compile Include="Messages\PersistSettingsMessage.cs" />
     <Compile Include="Messages\SettingsUpdatedMessage.cs" />
     <Compile Include="Messages\TriggerCommandMessage.cs" />
+    <Compile Include="Messages\WidgetClickedMessage.cs" />
     <Compile Include="Model\ObservableBase.cs" />
     <Compile Include="Model\OpenHABCommand.cs" />
     <Compile Include="Model\OpenHABItem.cs" />
     <Compile Include="Model\OpenHABSitemap.cs" />
     <Compile Include="Model\OpenHABWidget.cs" />
+    <Compile Include="Model\OpenHABWidgetMapping.cs" />
     <Compile Include="Model\Settings.cs" />
     <Compile Include="Model\OpenHABCommands.cs" />
     <Compile Include="Model\OpenHABException.cs" />

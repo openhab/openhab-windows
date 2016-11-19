@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Xml.Linq;
 using Newtonsoft.Json;
 
@@ -10,6 +11,7 @@ namespace OpenHAB.Core.Model
     public class OpenHABWidget
     {
         private string _icon;
+        private string _label;
 
         /// <summary>
         /// Gets or sets the ID of the OpenHAB widget
@@ -19,7 +21,35 @@ namespace OpenHAB.Core.Model
         /// <summary>
         /// Gets or sets the Label of the OpenHAB widget
         /// </summary>
-        public string Label { get; set; }
+        public string Label
+        {
+            get
+            {
+                return _label;
+            }
+
+            set
+            {
+                if (value.Trim() == string.Empty)
+                {
+                    _label = value;
+                    return;
+                }
+
+                var parts = value.Split(new string[] { "[", "]" }, StringSplitOptions.RemoveEmptyEntries);
+                _label = parts[0];
+
+                if (parts.Length > 1)
+                {
+                    Value = parts[1];
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the Value of the widget
+        /// </summary>
+        public string Value { get; set; }
 
         /// <summary>
         /// Gets or sets the Icon of the OpenHAB widget
@@ -115,6 +145,17 @@ namespace OpenHAB.Core.Model
         /// </summary>
         [JsonProperty(PropertyName = "widgets")]
         public ICollection<OpenHABWidget> Children { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Mapping of the OpenHAB widget
+        /// </summary>
+        public ICollection<OpenHABWidgetMapping> Mappings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the linked page when available
+        /// </summary>
+        public OpenHABSitemap LinkedPage { get; set; }
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenHABWidget"/> class.

@@ -18,6 +18,10 @@
                 <controls:FrameWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
 
+            <DataTemplate x:Key="PageLinkTemplate">
+                <controls:PageLinkWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
             <DataTemplate x:Key="SwitchTemplate">
                 <controls:SwitchWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
@@ -37,6 +41,7 @@
             <converters:WidgetTemplateSelector x:Key="WidgetTemplateSelector"
                                                FrameTemplate="{StaticResource FrameTemplate}"
                                                ImageTemplate="{StaticResource ImageItemTemplate}"
+                                               PageLinkTemplate="{StaticResource PageLinkTemplate}"
                                                SliderTemplate="{StaticResource SliderTemplate}"
                                                SwitchTemplate="{StaticResource SwitchTemplate}"
                                                TextTemplate="{StaticResource TextItemTemplate}" />
