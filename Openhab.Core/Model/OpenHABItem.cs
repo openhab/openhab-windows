@@ -36,6 +36,13 @@ namespace OpenHAB.Core.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenHABItem"/> class.
         /// </summary>
+        public OpenHABItem()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OpenHABItem"/> class.
+        /// </summary>
         /// <param name="startNode">The XML from the OpenHAB server that represents this OpenHAB item</param>
         public OpenHABItem(XElement startNode)
         {

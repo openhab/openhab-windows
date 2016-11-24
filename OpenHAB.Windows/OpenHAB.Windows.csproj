@@ -116,6 +116,9 @@
     <Compile Include="Controls\SliderWidget.xaml.cs">
       <DependentUpon>SliderWidget.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PageLinkWidget.xaml.cs">
+      <DependentUpon>PageLinkWidget.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SwitchWidget.xaml.cs">
       <DependentUpon>SwitchWidget.xaml</DependentUpon>
     </Compile>
@@ -123,10 +126,13 @@
       <DependentUpon>TextWidget.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WidgetBase.cs" />
+    <Compile Include="Converters\IconToBitmapConverter.cs" />
     <Compile Include="Converters\IconToPathConverter.cs" />
     <Compile Include="Converters\ObjectToSitemapConverter.cs" />
+    <Compile Include="Converters\ReverseBoolConverter.cs" />
     <Compile Include="Converters\StateToBoolConverter.cs" />
     <Compile Include="Converters\WidgetTemplateSelector.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -142,6 +148,7 @@
     <None Include="Openhab.UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\background.jpg" />
     <Content Include="Assets\openhab.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
@@ -170,6 +177,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\SliderWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\PageLinkWidget.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

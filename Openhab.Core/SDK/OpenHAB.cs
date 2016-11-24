@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Microsoft.Toolkit.Uwp;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Model;
@@ -107,7 +108,8 @@ namespace OpenHAB.Core.SDK
                 }
 
                 // V2 = JSON
-                return JsonConvert.DeserializeObject<List<OpenHABWidget>>(resultString);
+                var jsonObject = JObject.Parse(resultString);
+                return JsonConvert.DeserializeObject<List<OpenHABWidget>>(jsonObject["homepage"]["widgets"].ToString());
             }
             catch (ArgumentNullException ex)
             {
@@ -153,6 +155,12 @@ namespace OpenHAB.Core.SDK
 
         private async Task SetValidUrl(Settings settings)
         {
+            if (settings.IsRunningInDemoMode != null && settings.IsRunningInDemoMode.Value)
+            {
+                OpenHABHttpClient.BaseUrl = Constants.Api.DemoModeUrl;
+                return;
+            }
+
             if (ConnectionHelper.IsInternetOnMeteredConnection)
             {
                 if (settings.OpenHABRemoteUrl.Trim() == string.Empty)

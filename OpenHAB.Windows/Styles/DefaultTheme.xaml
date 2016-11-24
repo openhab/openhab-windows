@@ -1,11 +1,13 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="using:OpenHAB.Windows.Styles"
-                    xmlns:model="using:Openhab.Model">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
     <Color x:Key="OpenHABLightOrange">#FFFF5722</Color>
     <Color x:Key="OpenHABLightGrey">#EEEEEE</Color>
 
     <SolidColorBrush x:Key="OpenHABLightGreyBrush" Color="{StaticResource OpenHABLightGrey}" />
+    <SolidColorBrush x:Key="OpenHABLightOrangeBrush" Color="{StaticResource OpenHABLightOrange}" />
+
+    <SolidColorBrush x:Key="OpenHABSplitviewBrush">#344040</SolidColorBrush>
+    <SolidColorBrush x:Key="OpenHABLightColor">#C0C0C0</SolidColorBrush>
 
     <Style x:Key="SplitViewTogglePaneButtonStyle" TargetType="ToggleButton">
         <Setter Property="FontSize" Value="20" />

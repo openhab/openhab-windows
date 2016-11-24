@@ -1,4 +1,9 @@
-﻿namespace OpenHAB.Windows.Controls
+﻿using Windows.UI.Xaml.Controls;
+using GalaSoft.MvvmLight.Messaging;
+using OpenHAB.Core.Messages;
+using OpenHAB.Core.Model;
+
+namespace OpenHAB.Windows.Controls
 {
     /// <summary>
     /// Widget control that represents an OpenHAB frame
@@ -11,6 +16,11 @@
         public FrameWidget()
         {
             InitializeComponent();
+        }
+
+        private void OnItemClick(object sender, ItemClickEventArgs e)
+        {
+            Messenger.Default.Send(new WidgetClickedMessage(e.ClickedItem as OpenHABWidget));
         }
     }
 }
