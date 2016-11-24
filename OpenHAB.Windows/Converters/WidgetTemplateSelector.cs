@@ -1,4 +1,5 @@
-﻿using OpenHAB.Core.Model;
+﻿using System.Linq;
+using OpenHAB.Core.Model;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -14,21 +15,18 @@ namespace OpenHAB.Windows.Converters
         {
             var widget = item as OpenHABWidget;
 
-            if (widget == null)
+            switch (GetItemViewType(widget))
             {
-                return FrameTemplate;
-            }
-
-            switch (widget.Type.ToLower())
-            {
+                case "group":
+                    return PageLinkTemplate;
                 case "frame":
                     return FrameTemplate;
                 case "switch":
                     return SwitchTemplate;
                 case "slider":
                     return SliderTemplate;
+                case "datetime":
                 case "text":
-                case "numberitem":
                     return TextTemplate;
                 case "image":
                     return ImageTemplate;
@@ -41,6 +39,11 @@ namespace OpenHAB.Windows.Converters
         /// Gets or sets the template for a Frame control
         /// </summary>
         public DataTemplate FrameTemplate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the template for a Pagelink control
+        /// </summary>
+        public DataTemplate PageLinkTemplate { get; set; }
 
         /// <summary>
         /// Gets or sets the template for a Switch control
@@ -61,5 +64,104 @@ namespace OpenHAB.Windows.Converters
         /// Gets or sets the template for a Image control
         /// </summary>
         public DataTemplate ImageTemplate { get; set; }
+
+
+        private string GetItemViewType(OpenHABWidget openHABWidget)
+        {
+            if (openHABWidget.Type.Equals("Frame"))
+            {
+                return "frame";
+            }
+
+            if (openHABWidget.Type.Equals("Group"))
+            {
+                return "group";
+            }
+
+            if (openHABWidget.Type.Equals("Switch"))
+            {
+                if (openHABWidget.Mappings.Any())
+                {
+                    return "sectionswitch";
+                }
+
+                if (openHABWidget.Item != null)
+                {
+                    if (openHABWidget.Item.Type != null)
+                    {
+                        // RollerShutterItem changed to RollerShutter in later builds of OH2
+                        if ("RollershutterItem".Equals(openHABWidget.Item.Type) ||
+                            "Rollershutter".Equals(openHABWidget.Item.Type) ||
+                            "Rollershutter".Equals(openHABWidget.Item.GroupType))
+                        {
+                            return "rollershutter";
+                        }
+
+                        return "switch";
+                    }
+
+                    return "switch";
+                }
+
+                return "switch";
+            }
+
+            if (openHABWidget.Type.Equals("Text"))
+            {
+                return "text";
+            }
+
+            if (openHABWidget.Type.Equals("Slider"))
+            {
+                return "slider";
+            }
+
+            if (openHABWidget.Type.Equals("Image"))
+            {
+                return "image";
+            }
+
+            if (openHABWidget.Type.Equals("Selection"))
+            {
+                return "selection";
+            }
+
+            if (openHABWidget.Type.Equals("Setpoint"))
+            {
+                return "setpoint";
+            }
+
+            if (openHABWidget.Type.Equals("Chart"))
+            {
+                return "chart";
+            }
+
+            if (openHABWidget.Type.Equals("Video"))
+            {
+                if (openHABWidget.Encoding != null)
+                {
+                    if (openHABWidget.Encoding.Equals("mjpeg"))
+                    {
+                        return "video_mjpeg";
+                    }
+
+                    return "video";
+                }
+
+                return "video";
+            }
+
+            if (openHABWidget.Type.Equals("Webview"))
+            {
+                return "web";
+            }
+
+            if (openHABWidget.Type.Equals("Colorpicker"))
+            {
+                return "color";
+            }
+
+            return "generic";
+        }
     }
 }

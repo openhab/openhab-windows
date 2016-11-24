@@ -1,5 +1,8 @@
 ﻿using OpenHAB.Core.ViewModel;
 using Windows.UI.Xaml.Controls;
+using GalaSoft.MvvmLight.Messaging;
+using OpenHAB.Core.Messages;
+using OpenHAB.Core.Model;
 
 namespace OpenHAB.Windows.View
 {
@@ -19,6 +22,11 @@ namespace OpenHAB.Windows.View
         public MainPage()
         {
             InitializeComponent();
+        }
+
+        private void MasterListView_OnItemClick(object sender, ItemClickEventArgs e)
+        {
+            Messenger.Default.Send(new WidgetClickedMessage(e.ClickedItem as OpenHABWidget));
         }
     }
 }

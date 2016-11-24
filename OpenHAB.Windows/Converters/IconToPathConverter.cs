@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Practices.ServiceLocation;
+using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts.Services;
 using Windows.UI.Xaml.Data;
 
@@ -13,9 +14,10 @@ namespace OpenHAB.Windows.Converters
         /// <inheritdoc/>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            string serverUrl = ServiceLocator.Current.GetInstance<ISettingsService>().Load().OpenHABUrl;
+            var settings = ServiceLocator.Current.GetInstance<ISettingsService>().Load();
+            var serverUrl = settings.IsRunningInDemoMode.Value ? Constants.Api.DemoModeUrl : settings.OpenHABUrl;
 
-            return $"{serverUrl}/images/{value}.png";
+            return $"{serverUrl}icon/{value}?state=UNDEF&format=png";
         }
 
         /// <inheritdoc/>

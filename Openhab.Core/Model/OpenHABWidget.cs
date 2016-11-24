@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Xml.Linq;
+using Newtonsoft.Json;
 
 namespace OpenHAB.Core.Model
 {
@@ -8,6 +10,9 @@ namespace OpenHAB.Core.Model
     /// </summary>
     public class OpenHABWidget
     {
+        private string _icon;
+        private string _label;
+
         /// <summary>
         /// Gets or sets the ID of the OpenHAB widget
         /// </summary>
@@ -16,12 +21,44 @@ namespace OpenHAB.Core.Model
         /// <summary>
         /// Gets or sets the Label of the OpenHAB widget
         /// </summary>
-        public string Label { get; set; }
+        public string Label
+        {
+            get
+            {
+                return _label;
+            }
+
+            set
+            {
+                if (value.Trim() == string.Empty)
+                {
+                    _label = value;
+                    return;
+                }
+
+                var parts = value.Split(new string[] { "[", "]" }, StringSplitOptions.RemoveEmptyEntries);
+                _label = parts[0];
+
+                if (parts.Length > 1)
+                {
+                    Value = parts[1];
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the Value of the widget
+        /// </summary>
+        public string Value { get; set; }
 
         /// <summary>
         /// Gets or sets the Icon of the OpenHAB widget
         /// </summary>
-        public string Icon { get; set; }
+        public string Icon
+        {
+            get { return _icon ?? string.Empty; }
+            set { _icon = value; }
+        }
 
         /// <summary>
         /// Gets or sets the Type of the OpenHAB widget
@@ -76,17 +113,17 @@ namespace OpenHAB.Core.Model
         /// <summary>
         /// Gets or sets the IconColor of the OpenHAB widget
         /// </summary>
-        public int IconColor { get; set; }
+        public string IconColor { get; set; }
 
         /// <summary>
         /// Gets or sets the LabelColor of the OpenHAB widget
         /// </summary>
-        public int LabelColor { get; set; }
+        public string LabelColor { get; set; }
 
         /// <summary>
         /// Gets or sets the ValueColor of the OpenHAB widget
         /// </summary>
-        public int ValueColor { get; set; }
+        public string ValueColor { get; set; }
 
         /// <summary>
         /// Gets or sets the Encoding of the OpenHAB widget
@@ -106,7 +143,27 @@ namespace OpenHAB.Core.Model
         /// <summary>
         /// Gets or sets the Children of the OpenHAB widget
         /// </summary>
+        [JsonProperty(PropertyName = "widgets")]
         public ICollection<OpenHABWidget> Children { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Mapping of the OpenHAB widget
+        /// </summary>
+        public ICollection<OpenHABWidgetMapping> Mappings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the linked page when available
+        /// </summary>
+        public OpenHABSitemap LinkedPage { get; set; }
+
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OpenHABWidget"/> class.
+        /// </summary>
+        public OpenHABWidget()
+        {
+            Children = new List<OpenHABWidget>();
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenHABWidget"/> class.
