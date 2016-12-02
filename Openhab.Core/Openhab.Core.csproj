@@ -141,6 +141,7 @@
     <Compile Include="SDK\IOpenHAB.cs" />
     <Compile Include="SDK\OpenHAB.cs" />
     <Compile Include="Services\SettingsService.cs" />
+    <Compile Include="Services\WidgetNavigationService.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />

@@ -1,11 +1,12 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.SDK;
+using OpenHAB.Core.Services;
 
 namespace OpenHAB.Core.ViewModel
 {
@@ -78,6 +79,7 @@ namespace OpenHAB.Core.ViewModel
         /// <param name="openHabsdk">The OpenHAB SDK object</param>
         public MainViewModel(IOpenHAB openHabsdk)
         {
+            CurrentWidgets = new ObservableCollection<OpenHABWidget>();
             _openHabsdk = openHabsdk;
 
             MessengerInstance.Register<SettingsUpdatedMessage>(this, async msg =>
@@ -108,7 +110,7 @@ namespace OpenHAB.Core.ViewModel
         private async Task LoadWidgets()
         {
             SelectedSitemap.Widgets = await _openHabsdk.LoadItemsFromSitemap(SelectedSitemap, _version);
-            CurrentWidgets = new ObservableCollection<OpenHABWidget>(SelectedSitemap.Widgets);
+            SetWidgetsOnScreen(SelectedSitemap.Widgets);
         }
 
         private void OnWidgetClicked(OpenHABWidget widget)
@@ -119,8 +121,23 @@ namespace OpenHAB.Core.ViewModel
                 return;
             }
 
+            WidgetNavigationService.Navigate(SelectedWidget);
+            SetWidgetsOnScreen(SelectedWidget?.LinkedPage?.Widgets);
+        }
+
+        /// <summary>
+        /// Navigate backwards between linkedpages
+        /// </summary>
+        public void WidgetGoBack()
+        {
+            OpenHABWidget widget = WidgetNavigationService.GoBack();
+            SetWidgetsOnScreen(widget != null ? widget.LinkedPage.Widgets : SelectedSitemap.Widgets);
+        }
+
+        private void SetWidgetsOnScreen(ICollection<OpenHABWidget> widgets)
+        {
             CurrentWidgets.Clear();
-            CurrentWidgets.AddRange(SelectedWidget?.LinkedPage?.Widgets);
+            CurrentWidgets.AddRange(widgets);
         }
     }
 }
