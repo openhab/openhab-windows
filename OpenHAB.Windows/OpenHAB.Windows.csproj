@@ -113,6 +113,7 @@
       <DependentUpon>ImageWidget.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\NavMenuListView.cs" />
+    <Compile Include="Controls\RadialSlider.cs" />
     <Compile Include="Controls\SliderWidget.xaml.cs">
       <DependentUpon>SliderWidget.xaml</DependentUpon>
     </Compile>
@@ -191,6 +192,10 @@
     <Page Include="Controls\TextWidget.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -22,9 +22,10 @@
                           IconPath="{x:Bind Widget.Icon, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
                           LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
 
-        <Grid Grid.Column="1" Margin="0, 0, 12, 0"
+        <Grid Grid.Column="1"
               Width="100"
               Height="100"
+              Margin="0, 0, 12, 0"
               HorizontalAlignment="Center"
               VerticalAlignment="Center"
               BorderBrush="{StaticResource OpenHABSplitviewBrush}"
