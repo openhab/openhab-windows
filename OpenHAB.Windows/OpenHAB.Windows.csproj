@@ -120,6 +120,9 @@
     <Compile Include="Controls\PageLinkWidget.xaml.cs">
       <DependentUpon>PageLinkWidget.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RollershutterWidget.xaml.cs">
+      <DependentUpon>RollershutterWidget.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SwitchWidget.xaml.cs">
       <DependentUpon>SwitchWidget.xaml</DependentUpon>
     </Compile>
@@ -182,6 +185,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\PageLinkWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RollershutterWidget.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

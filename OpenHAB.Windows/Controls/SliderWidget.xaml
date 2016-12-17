@@ -30,10 +30,10 @@
                             MinAngle="-150"
                             ScaleBrush="{StaticResource OpenHABSplitviewBrush}"
                             ScaleWidth="10"
-                            StepSize="1"
+                            StepSize="1" ValueChanged="RadialSlider_OnValueChanged"
                             TrailBrush="{StaticResource OpenHABLightOrangeBrush}"
                             ValueBrush="Black"
-                            Value="{x:Bind Widget.Item.State, Mode=TwoWay}" />
+                            Value="{x:Bind Widget.Item.State}" />
         <!--<Slider x:Name="TheSlider"
                 Grid.ColumnSpan="2"
                 VerticalAlignment="Center"

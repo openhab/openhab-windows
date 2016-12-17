@@ -19,6 +19,8 @@ namespace OpenHAB.Windows.Controls
     [TemplatePart(Name = ValueTextPartName, Type = typeof(TextBlock))]
     public class RadialSlider : Control
     {
+        public event EventHandler ValueChanged;
+
         /// <summary>
         /// Identifies the optional StepSize property.
         /// </summary>
@@ -366,6 +368,8 @@ namespace OpenHAB.Windows.Controls
                     valueText.Text = percentageRing.Value.ToString(percentageRing.ValueStringFormat);
                 }
             }
+
+            percentageRing.ValueChanged?.Invoke(percentageRing, EventArgs.Empty);
         }
 
         private static void OnInteractivityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

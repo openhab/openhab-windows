@@ -1,8 +1,7 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using GalaSoft.MvvmLight.Messaging;
 using OpenHAB.Core.Messages;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 
 namespace OpenHAB.Windows.Controls
 {
@@ -19,9 +18,14 @@ namespace OpenHAB.Windows.Controls
             InitializeComponent();
         }
 
-        private void Slider_OnPointerCaptureLost(object sender, PointerRoutedEventArgs e)
+        private void RadialSlider_OnValueChanged(object sender, EventArgs e)
         {
-            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, ((Slider)sender)?.Value.ToString(CultureInfo.InvariantCulture)));
+            if (Widget == null)
+            {
+                return;
+            }
+
+            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, ((RadialSlider)sender)?.Value.ToString(CultureInfo.InvariantCulture)));
         }
     }
 }

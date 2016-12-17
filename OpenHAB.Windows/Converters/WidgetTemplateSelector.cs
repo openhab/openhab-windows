@@ -23,6 +23,8 @@ namespace OpenHAB.Windows.Converters
                     return FrameTemplate;
                 case "switch":
                     return SwitchTemplate;
+                case "rollershutter":
+                    return SwitchTemplate;
                 case "slider":
                     return SliderTemplate;
                 case "datetime":
@@ -39,6 +41,11 @@ namespace OpenHAB.Windows.Converters
         /// Gets or sets the template for a Frame control
         /// </summary>
         public DataTemplate FrameTemplate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the template for a rollershutter control
+        /// </summary>
+        public DataTemplate RollershutterTemplate { get; set; }
 
         /// <summary>
         /// Gets or sets the template for a Pagelink control
@@ -80,7 +87,7 @@ namespace OpenHAB.Windows.Converters
 
             if (openHABWidget.Type.Equals("Switch"))
             {
-                if (openHABWidget.Mappings.Any())
+                if (openHABWidget.Mappings != null && openHABWidget.Mappings.Any())
                 {
                     return "sectionswitch";
                 }
