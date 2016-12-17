@@ -19,6 +19,7 @@
     <StackPanel>
         <!--<local:ImageLabel IconPath="{x:Bind Widget.Icon, Mode=OneWay, Converter={StaticResource IconToPathConverter}}" LabelText="{x:Bind Widget.Label, Mode=OneWay}" />-->
         <TextBlock Foreground="{StaticResource OpenHABSplitviewBrush}" Text="{x:Bind Widget.Label, Mode=OneWay}" />
+        <local:ImageLabel IconPath="{x:Bind Widget.Icon, Mode=OneWay, Converter={StaticResource IconToPathConverter}}" LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
         <GridView IsItemClickEnabled="True"
                   IsSwipeEnabled="True"
                   ItemClick="OnItemClick"

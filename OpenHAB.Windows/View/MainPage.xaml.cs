@@ -40,5 +40,10 @@ namespace OpenHAB.Windows.View
         {
             Messenger.Default.Send(new WidgetClickedMessage(e.ClickedItem as OpenHABWidget));
         }
+
+        private void MasterListView_OnItemClick(object sender, ItemClickEventArgs e)
+        {
+            Messenger.Default.Send(new WidgetClickedMessage(e.ClickedItem as OpenHABWidget));
+        }
     }
 }

@@ -123,6 +123,7 @@
     <Compile Include="Controls\RollershutterWidget.xaml.cs">
       <DependentUpon>RollershutterWidget.xaml</DependentUpon>
     </Compile>
+
     <Compile Include="Controls\SwitchWidget.xaml.cs">
       <DependentUpon>SwitchWidget.xaml</DependentUpon>
     </Compile>

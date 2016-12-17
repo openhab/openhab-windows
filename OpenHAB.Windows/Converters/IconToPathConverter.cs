@@ -24,7 +24,7 @@ namespace OpenHAB.Windows.Converters
                 return $"{serverUrl}icon/{value}?state=UNDEF&format=png";
             }
 
-            return $"{serverUrl}/images/{value}.png";
+            return $"{serverUrl}icon/{value}?state=UNDEF&format=png";
         }
 
         /// <inheritdoc/>

@@ -12,15 +12,10 @@ namespace OpenHAB.Windows.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var settingsService = ServiceLocator.Current.GetInstance<ISettingsService>();
-            var settings = settingsService.Load();
+            var settings = ServiceLocator.Current.GetInstance<ISettingsService>().Load();
             var serverUrl = settings.IsRunningInDemoMode.Value ? Constants.Api.DemoModeUrl : settings.OpenHABUrl;
 
-            string url = string.Empty;
-            url = settingsService.ServerVersion == OpenHABVersion.Two ?
-                $"{serverUrl}icon/{value}?state=UNDEF&format=png" :
-                $"{serverUrl}/images/{value}.png";
-
+            var url = $"{serverUrl}icon/{value}?state=UNDEF&format=png";
             return new BitmapImage(new Uri(url));
         }
 
