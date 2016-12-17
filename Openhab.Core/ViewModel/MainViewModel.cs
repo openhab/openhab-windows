@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.SDK;
@@ -49,7 +48,8 @@ namespace OpenHAB.Core.ViewModel
                     if (_selectedSitemap?.Widgets == null)
                     {
 #pragma warning disable 4014
-                        LoadWidgets();#pragma warning restore 4014
+                        LoadWidgets();
+#pragma warning restore 4014
                     }
                 }
             }
@@ -87,6 +87,7 @@ namespace OpenHAB.Core.ViewModel
                 await _openHabsdk.ResetConnection();
                 await LoadData();
             });
+
             MessengerInstance.Register<TriggerCommandMessage>(this, async msg => await TriggerCommand(msg));
             MessengerInstance.Register<WidgetClickedMessage>(this, msg => OnWidgetClicked(msg.Widget));
 #pragma warning disable 4014
@@ -120,6 +121,7 @@ namespace OpenHAB.Core.ViewModel
             {
                 return;
             }
+
             WidgetNavigationService.Navigate(SelectedWidget);
             SetWidgetsOnScreen(SelectedWidget?.LinkedPage?.Widgets);
         }

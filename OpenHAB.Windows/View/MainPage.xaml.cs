@@ -1,12 +1,10 @@
-﻿using Windows.UI.Core;
-using Windows.UI.ViewManagement;
-using OpenHAB.Core.ViewModel;
-using Windows.UI.Xaml.Controls;
-using GalaSoft.MvvmLight.Messaging;
-using Microsoft.Practices.ServiceLocation;
+﻿using GalaSoft.MvvmLight.Messaging;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.Services;
+using OpenHAB.Core.ViewModel;
+using Windows.UI.Core;
+using Windows.UI.Xaml.Controls;
 
 namespace OpenHAB.Windows.View
 {
@@ -34,11 +32,6 @@ namespace OpenHAB.Windows.View
             };
 
             SystemNavigationManager.GetForCurrentView().BackRequested += (sender, args) => Vm.WidgetGoBack();
-        }
-
-        private void MasterListView_OnItemClick(object sender, ItemClickEventArgs e)
-        {
-            Messenger.Default.Send(new WidgetClickedMessage(e.ClickedItem as OpenHABWidget));
         }
 
         private void MasterListView_OnItemClick(object sender, ItemClickEventArgs e)
