@@ -9,17 +9,17 @@ namespace OpenHAB.Windows.Controls
     /// <summary>
     /// Widget control that represents an OpenHAB switch
     /// </summary>
-    public sealed partial class SwitchWidget : WidgetBase
+    public sealed partial class RollershutterWidget : WidgetBase
     {
         /// <summary>
         /// Property to bind the toggle state to
         /// </summary>
         public static readonly DependencyProperty IsOnProperty = DependencyProperty.Register(
-            "IsOn", typeof(bool), typeof(SwitchWidget), new PropertyMetadata(default(bool), PropertyChangedCallback));
+            "IsOn", typeof(bool), typeof(RollershutterWidget), new PropertyMetadata(default(bool), PropertyChangedCallback));
 
         private static void PropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            ((SwitchWidget)dependencyObject).OnToggle();
+            ((RollershutterWidget)dependencyObject).OnToggle();
         }
 
         /// <summary>
@@ -32,9 +32,9 @@ namespace OpenHAB.Windows.Controls
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SwitchWidget"/> class.
+        /// Initializes a new instance of the <see cref="RollershutterWidget"/> class.
         /// </summary>
-        public SwitchWidget()
+        public RollershutterWidget()
         {
             InitializeComponent();
         }

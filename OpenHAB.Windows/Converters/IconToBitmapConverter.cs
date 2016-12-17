@@ -2,6 +2,7 @@
 using Microsoft.Practices.ServiceLocation;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts.Services;
+using OpenHAB.Core.Model;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media.Imaging;
 

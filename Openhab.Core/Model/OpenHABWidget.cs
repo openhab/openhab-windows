@@ -36,7 +36,7 @@ namespace OpenHAB.Core.Model
                     return;
                 }
 
-                var parts = value.Split(new string[] { "[", "]" }, StringSplitOptions.RemoveEmptyEntries);
+                var parts = value.Split(new[] { "[", "]" }, StringSplitOptions.RemoveEmptyEntries);
                 _label = parts[0];
 
                 if (parts.Length > 1)
@@ -155,7 +155,6 @@ namespace OpenHAB.Core.Model
         /// Gets or sets the linked page when available
         /// </summary>
         public OpenHABSitemap LinkedPage { get; set; }
-
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenHABWidget"/> class.

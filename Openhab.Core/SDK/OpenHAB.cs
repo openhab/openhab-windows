@@ -43,7 +43,8 @@ namespace OpenHAB.Core.SDK
             try
             {
                 var result = await OpenHABHttpClient.Client().GetAsync(Constants.Api.ServerVersion).ConfigureAwait(false);
-                return !result.IsSuccessStatusCode ? OpenHABVersion.One : OpenHABVersion.Two;
+                _settingsService.ServerVersion = !result.IsSuccessStatusCode ? OpenHABVersion.One : OpenHABVersion.Two;
+                return _settingsService.ServerVersion;
             }
             catch (ArgumentNullException ex)
             {

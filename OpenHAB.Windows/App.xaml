@@ -26,6 +26,10 @@
                 <controls:SwitchWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
 
+            <DataTemplate x:Key="RollershutterTemplate">
+                <controls:RollershutterWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
             <DataTemplate x:Key="SliderTemplate">
                 <controls:SliderWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
@@ -42,6 +46,7 @@
                                                FrameTemplate="{StaticResource FrameTemplate}"
                                                ImageTemplate="{StaticResource ImageItemTemplate}"
                                                PageLinkTemplate="{StaticResource PageLinkTemplate}"
+                                               RollershutterTemplate="{StaticResource RollershutterTemplate}"
                                                SliderTemplate="{StaticResource SliderTemplate}"
                                                SwitchTemplate="{StaticResource SwitchTemplate}"
                                                TextTemplate="{StaticResource TextItemTemplate}" />

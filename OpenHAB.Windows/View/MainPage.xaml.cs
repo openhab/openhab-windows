@@ -1,8 +1,10 @@
-﻿using OpenHAB.Core.ViewModel;
-using Windows.UI.Xaml.Controls;
-using GalaSoft.MvvmLight.Messaging;
+﻿using GalaSoft.MvvmLight.Messaging;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
+using OpenHAB.Core.Services;
+using OpenHAB.Core.ViewModel;
+using Windows.UI.Core;
+using Windows.UI.Xaml.Controls;
 
 namespace OpenHAB.Windows.View
 {
@@ -22,6 +24,14 @@ namespace OpenHAB.Windows.View
         public MainPage()
         {
             InitializeComponent();
+            Vm.CurrentWidgets.CollectionChanged += (sender, args) =>
+            {
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = WidgetNavigationService.CanGoBack
+                    ? AppViewBackButtonVisibility.Visible
+                    : AppViewBackButtonVisibility.Collapsed;
+            };
+
+            SystemNavigationManager.GetForCurrentView().BackRequested += (sender, args) => Vm.WidgetGoBack();
         }
 
         private void MasterListView_OnItemClick(object sender, ItemClickEventArgs e)

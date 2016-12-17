@@ -113,12 +113,17 @@
       <DependentUpon>ImageWidget.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\NavMenuListView.cs" />
+    <Compile Include="Controls\RadialSlider.cs" />
     <Compile Include="Controls\SliderWidget.xaml.cs">
       <DependentUpon>SliderWidget.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\PageLinkWidget.xaml.cs">
       <DependentUpon>PageLinkWidget.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RollershutterWidget.xaml.cs">
+      <DependentUpon>RollershutterWidget.xaml</DependentUpon>
+    </Compile>
+
     <Compile Include="Controls\SwitchWidget.xaml.cs">
       <DependentUpon>SwitchWidget.xaml</DependentUpon>
     </Compile>
@@ -184,6 +189,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\RollershutterWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\SwitchWidget.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -191,6 +200,10 @@
     <Page Include="Controls\TextWidget.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
