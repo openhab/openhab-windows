@@ -42,11 +42,16 @@
                 <controls:ImageWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
 
+            <DataTemplate x:Key="SectionSwitchTemplate">
+                <controls:SectionSwitchWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
             <converters:WidgetTemplateSelector x:Key="WidgetTemplateSelector"
                                                FrameTemplate="{StaticResource FrameTemplate}"
                                                ImageTemplate="{StaticResource ImageItemTemplate}"
                                                PageLinkTemplate="{StaticResource PageLinkTemplate}"
                                                RollershutterTemplate="{StaticResource RollershutterTemplate}"
+                                               SectionSwitchTemplate="{StaticResource SectionSwitchTemplate}"
                                                SliderTemplate="{StaticResource SliderTemplate}"
                                                SwitchTemplate="{StaticResource SwitchTemplate}"
                                                TextTemplate="{StaticResource TextItemTemplate}" />

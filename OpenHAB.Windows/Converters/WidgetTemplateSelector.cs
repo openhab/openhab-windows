@@ -32,6 +32,8 @@ namespace OpenHAB.Windows.Converters
                     return TextTemplate;
                 case "image":
                     return ImageTemplate;
+                case "sectionswitch":
+                    return SectionSwitchTemplate;
                 default:
                     return FrameTemplate;
             }
@@ -42,12 +44,12 @@ namespace OpenHAB.Windows.Converters
         /// </summary>
         public DataTemplate FrameTemplate { get; set; }
 
-        /// <summary>        /// Gets or sets the template for a rollershutter control
+        /// <summary>
+        /// Gets or sets the template for a rollershutter control
         /// </summary>
         public DataTemplate RollershutterTemplate { get; set; }
 
         /// <summary>
-
         /// Gets or sets the template for a Pagelink control
         /// </summary>
         public DataTemplate PageLinkTemplate { get; set; }
@@ -72,6 +74,10 @@ namespace OpenHAB.Windows.Converters
         /// </summary>
         public DataTemplate ImageTemplate { get; set; }
 
+        /// <summary>
+        /// Gets or sets the template for a section switch control
+        /// </summary>
+        public DataTemplate SectionSwitchTemplate { get; set; }
 
         private string GetItemViewType(OpenHABWidget openHABWidget)
         {
@@ -88,7 +94,6 @@ namespace OpenHAB.Windows.Converters
             if (openHABWidget.Type.Equals("Switch"))
             {
                 if (openHABWidget.Mappings != null && openHABWidget.Mappings.Any())
-
                 {
                     return "sectionswitch";
                 }

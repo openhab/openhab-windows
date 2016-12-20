@@ -123,7 +123,9 @@
     <Compile Include="Controls\RollershutterWidget.xaml.cs">
       <DependentUpon>RollershutterWidget.xaml</DependentUpon>
     </Compile>
-
+    <Compile Include="Controls\SectionSwitchWidget.xaml.cs">
+      <DependentUpon>SectionSwitchWidget.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SwitchWidget.xaml.cs">
       <DependentUpon>SwitchWidget.xaml</DependentUpon>
     </Compile>
@@ -190,6 +192,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\RollershutterWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SectionSwitchWidget.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
