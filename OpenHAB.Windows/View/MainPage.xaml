@@ -59,20 +59,6 @@
     <Page.DataContext>
         <Binding Path="Main" Source="{StaticResource Locator}" />
     </Page.DataContext>
-    <!--<Page.BottomAppBar>
-        <CommandBar>
-            <CommandBar.Content>
-                <Grid />
-            </CommandBar.Content>
-            <AppBarButton Icon="Setting" Label="settings">
-                <interactivity:Interaction.Behaviors>
-                    <core:EventTriggerBehavior EventName="Click">
-                        <core:NavigateToPageAction TargetPage="OpenHAB.Windows.View.SettingsPage" />
-                    </core:EventTriggerBehavior>
-                </interactivity:Interaction.Behaviors>
-            </AppBarButton>
-        </CommandBar>
-    </Page.BottomAppBar>-->
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -149,7 +135,11 @@
                 <GridView x:Name="MasterListView"
                           Grid.Row="1"
                           Margin="12,0,0,0"
-                          IsTapEnabled="True" IsItemClickEnabled="True" ItemClick="MasterListView_OnItemClick"
+                          VerticalAlignment="Stretch"
+                          VerticalContentAlignment="Top"
+                          IsItemClickEnabled="True"
+                          IsTapEnabled="True"
+                          ItemClick="MasterListView_OnItemClick"
                           ItemTemplateSelector="{StaticResource WidgetTemplateSelector}"
                           ItemsSource="{x:Bind Vm.CurrentWidgets, Mode=OneWay}"
                           SelectionMode="None" />
