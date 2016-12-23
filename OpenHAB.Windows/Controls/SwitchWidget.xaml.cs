@@ -37,6 +37,14 @@ namespace OpenHAB.Windows.Controls
         public SwitchWidget()
         {
             InitializeComponent();
+            Loaded += SwitchWidget_Loaded;
+        }
+
+        private void SwitchWidget_Loaded(object sender, RoutedEventArgs e)
+        {
+            IsOn = Widget.Item.State == "ON";
+
+            VisualStateManager.GoToState(this, IsOn ? "OnState" : "OffState", false);
         }
 
         private void OnToggle()
