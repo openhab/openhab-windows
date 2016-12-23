@@ -4,6 +4,9 @@
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                   xmlns:local="using:OpenHAB.Windows.Controls"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  Width="310"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
                   d:DesignHeight="300"
                   d:DesignWidth="400"
                   mc:Ignorable="d">
@@ -16,9 +19,11 @@
         </Style>
     </local:WidgetBase.Resources>
 
-    <StackPanel VerticalAlignment="Top">
+    <StackPanel VerticalAlignment="Stretch">
         <local:ImageLabel IconPath="{x:Bind Widget.Icon, Mode=OneWay, Converter={StaticResource IconToPathConverter}}" LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
-        <GridView IsItemClickEnabled="True"
+        <GridView HorizontalContentAlignment="Stretch"
+                  VerticalContentAlignment="Stretch"
+                  IsItemClickEnabled="True"
                   IsSwipeEnabled="True"
                   ItemClick="OnItemClick"
                   ItemTemplateSelector="{StaticResource WidgetTemplateSelector}"
@@ -26,7 +31,7 @@
                   SelectionMode="None">
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <VariableSizedWrapGrid MaximumRowsOrColumns="2" />
+                    <VariableSizedWrapGrid MaximumRowsOrColumns="4" />
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
         </GridView>

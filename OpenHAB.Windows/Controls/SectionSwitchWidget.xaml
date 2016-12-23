@@ -113,7 +113,6 @@
     </local:WidgetBase.Resources>
 
     <Grid Width="300"
-          Margin="8,4,8,4"
           Background="{StaticResource OpenHABLightColor}"
           CornerRadius="5">
         <Grid.RowDefinitions>

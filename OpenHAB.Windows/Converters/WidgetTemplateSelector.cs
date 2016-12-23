@@ -30,6 +30,8 @@ namespace OpenHAB.Windows.Converters
                 case "datetime":
                 case "text":
                     return TextTemplate;
+                case "color":
+                    return ColorTemplate;
                 case "image":
                     return ImageTemplate;
                 case "sectionswitch":
@@ -78,6 +80,11 @@ namespace OpenHAB.Windows.Converters
         /// Gets or sets the template for a section switch control
         /// </summary>
         public DataTemplate SectionSwitchTemplate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the template for a color picker control
+        /// </summary>
+        public DataTemplate ColorTemplate { get; set; }
 
         private string GetItemViewType(OpenHABWidget openHABWidget)
         {
