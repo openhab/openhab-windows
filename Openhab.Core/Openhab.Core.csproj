@@ -118,6 +118,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ColorHelper.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\ObservableCollectionExtensions.cs" />
     <Compile Include="Contracts\Services\ISettingsService.cs" />

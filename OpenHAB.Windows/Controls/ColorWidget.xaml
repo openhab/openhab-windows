@@ -16,18 +16,19 @@
           Background="{StaticResource OpenHABLightColor}"
           CornerRadius="5">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <local:ImageLabel VerticalAlignment="Center"
                           IconPath="{x:Bind Widget.Icon, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
                           LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
 
-        <controls:ColorPicker Grid.Column="1"
-                              Width="100"
-                              Height="100"
-                              HorizontalAlignment="Center"
-                              VerticalAlignment="Center" />
+        <local:ColorMap Grid.Column="1"
+                        Width="120"
+                        Height="120"
+                        Margin="8"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center" />
     </Grid>
 </local:WidgetBase>

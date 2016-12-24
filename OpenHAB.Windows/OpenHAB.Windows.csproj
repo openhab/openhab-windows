@@ -103,6 +103,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ChartWidget.xaml.cs">
+      <DependentUpon>ChartWidget.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ColorMap.xaml.cs">
+      <DependentUpon>ColorMap.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\FrameWidget.xaml.cs">
       <DependentUpon>FrameWidget.xaml</DependentUpon>
     </Compile>
@@ -174,6 +180,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\ChartWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ColorMap.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\FrameWidget.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
