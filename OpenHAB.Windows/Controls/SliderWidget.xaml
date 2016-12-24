@@ -8,7 +8,6 @@
 
     <Grid Width="300"
           Height="150"
-          Margin="8,4,8,4"
           Background="{StaticResource OpenHABLightColor}"
           CornerRadius="5">
         <Grid.ColumnDefinitions>
@@ -30,9 +29,10 @@
                             MinAngle="-150"
                             ScaleBrush="{StaticResource OpenHABSplitviewBrush}"
                             ScaleWidth="10"
-                            StepSize="1" ValueChanged="RadialSlider_OnValueChanged"
+                            StepSize="1"
                             TrailBrush="{StaticResource OpenHABLightOrangeBrush}"
                             ValueBrush="Black"
+                            ValueChanged="RadialSlider_OnValueChanged"
                             Value="{x:Bind Widget.Item.State}" />
         <!--<Slider x:Name="TheSlider"
                 Grid.ColumnSpan="2"

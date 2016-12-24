@@ -31,7 +31,7 @@
                   SelectionMode="None">
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <VariableSizedWrapGrid MaximumRowsOrColumns="4" />
+                    <VariableSizedWrapGrid ItemHeight="160" ItemWidth="310" />
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
         </GridView>

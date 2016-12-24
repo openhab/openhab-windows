@@ -14,12 +14,20 @@ namespace OpenHAB.Windows.Converters
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
             var widget = item as OpenHABWidget;
+            var uiElement = container as UIElement;
 
-            switch (GetItemViewType(widget))
+            if (widget == null)
+            {
+                return null;
+            }
+
+            var itemType = GetItemViewType(widget);
+            switch (itemType)
             {
                 case "group":
                     return PageLinkTemplate;
                 case "frame":
+                    VariableSizedWrapGrid.SetRowSpan(uiElement, widget.Children.Count + 1);
                     return FrameTemplate;
                 case "switch":
                     return SwitchTemplate;

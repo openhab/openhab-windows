@@ -99,7 +99,8 @@
                                               SelectedItem="{x:Bind Vm.SelectedSitemap, Converter={StaticResource ObjectToSitemapConverter}, Mode=TwoWay}" />
 
                     <StackPanel Grid.Row="2"
-                                Margin="12,0,0,4"
+                                Margin="12,0,0,8"
+                                VerticalAlignment="Bottom"
                                 Orientation="Horizontal">
                         <interactivity:Interaction.Behaviors>
                             <core:EventTriggerBehavior EventName="Tapped">
@@ -146,7 +147,9 @@
                               SelectionMode="None">
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <VariableSizedWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="4" />
+                                <VariableSizedWrapGrid ItemHeight="160"
+                                                       ItemWidth="310"
+                                                       Orientation="Horizontal" />
                             </ItemsPanelTemplate>
                         </GridView.ItemsPanel>
                     </GridView>
