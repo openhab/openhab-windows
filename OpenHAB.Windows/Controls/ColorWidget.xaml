@@ -29,6 +29,8 @@
                         Height="120"
                         Margin="8"
                         HorizontalAlignment="Right"
-                        VerticalAlignment="Center" />
+                        VerticalAlignment="Center"
+                        ColorChanged="ColorMap_OnColorChanged"
+                        Color="{x:Bind SelectedColor, Mode=TwoWay}" />
     </Grid>
 </local:WidgetBase>
