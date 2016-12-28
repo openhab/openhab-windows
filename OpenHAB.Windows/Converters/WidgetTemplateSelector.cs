@@ -32,7 +32,7 @@ namespace OpenHAB.Windows.Converters
                 case "switch":
                     return SwitchTemplate;
                 case "rollershutter":
-                    return SwitchTemplate;
+                    return RollershutterTemplate;
                 case "slider":
                     return SliderTemplate;
                 case "datetime":
