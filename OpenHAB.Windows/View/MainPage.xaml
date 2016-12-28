@@ -62,8 +62,8 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="356*" />
-            <ColumnDefinition Width="71*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="120" />
         </Grid.ColumnDefinitions>
         <Grid.Background>
             <ImageBrush ImageSource="/Assets/background.jpg" Stretch="UniformToFill" />
@@ -82,8 +82,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="227*" />
-                        <RowDefinition Height="43*" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <ToggleButton x:Name="TogglePaneButton"
                                   Grid.Row="0"
@@ -99,8 +98,9 @@
                                               ItemsSource="{x:Bind Vm.Sitemaps, Mode=OneWay}"
                                               SelectedItem="{x:Bind Vm.SelectedSitemap, Converter={StaticResource ObjectToSitemapConverter}, Mode=TwoWay}" />
 
-                    <StackPanel Grid.Row="3"
-                                Margin="12,0,0,0"
+                    <StackPanel Grid.Row="2"
+                                Margin="12,0,0,8"
+                                VerticalAlignment="Bottom"
                                 Orientation="Horizontal">
                         <interactivity:Interaction.Behaviors>
                             <core:EventTriggerBehavior EventName="Tapped">
@@ -123,7 +123,7 @@
                     </StackPanel>
                 </Grid>
             </SplitView.Pane>
-            <Grid>
+            <Grid VerticalAlignment="Stretch">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
@@ -132,21 +132,32 @@
                            FontSize="36"
                            Foreground="{StaticResource OpenHABSplitviewBrush}"
                            Text="{x:Bind Vm.SelectedSitemap.Label, Mode=OneWay}" />
-                <GridView x:Name="MasterListView"
-                          Grid.Row="1"
-                          Margin="12,0,0,0"
-                          VerticalAlignment="Stretch"
-                          VerticalContentAlignment="Top"
-                          IsItemClickEnabled="True"
-                          IsTapEnabled="True"
-                          ItemClick="MasterListView_OnItemClick"
-                          ItemTemplateSelector="{StaticResource WidgetTemplateSelector}"
-                          ItemsSource="{x:Bind Vm.CurrentWidgets, Mode=OneWay}"
-                          SelectionMode="None" />
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <GridView x:Name="MasterListView"
+                              Margin="12,0,0,0"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch"
+                              HorizontalContentAlignment="Stretch"
+                              VerticalContentAlignment="Stretch"
+                              IsItemClickEnabled="True"
+                              IsTapEnabled="True"
+                              ItemClick="MasterListView_OnItemClick"
+                              ItemTemplateSelector="{StaticResource WidgetTemplateSelector}"
+                              ItemsSource="{x:Bind Vm.CurrentWidgets, Mode=OneWay}"
+                              SelectionMode="None">
+                        <GridView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VariableSizedWrapGrid ItemHeight="160"
+                                                       ItemWidth="310"
+                                                       Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </GridView.ItemsPanel>
+                    </GridView>
+                </ScrollViewer>
             </Grid>
 
         </SplitView>
-        <Grid Grid.Column="1">
+        <!--<Grid Grid.Column="1">
             <interactivity:Interaction.Behaviors>
                 <behaviors:Blur x:Name="BlurBehavior"
                                 AutomaticallyStart="True"
@@ -155,7 +166,7 @@
                                 Value="10" />
             </interactivity:Interaction.Behaviors>
             <Grid />
-        </Grid>
+        </Grid>-->
     </Grid>
 </Page>
 

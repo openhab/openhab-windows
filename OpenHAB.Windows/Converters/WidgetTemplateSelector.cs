@@ -14,22 +14,32 @@ namespace OpenHAB.Windows.Converters
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
             var widget = item as OpenHABWidget;
+            var uiElement = container as UIElement;
 
-            switch (GetItemViewType(widget))
+            if (widget == null)
+            {
+                return null;
+            }
+
+            var itemType = GetItemViewType(widget);
+            switch (itemType)
             {
                 case "group":
                     return PageLinkTemplate;
                 case "frame":
+                    VariableSizedWrapGrid.SetRowSpan(uiElement, widget.Children.Count + 1);
                     return FrameTemplate;
                 case "switch":
                     return SwitchTemplate;
                 case "rollershutter":
-                    return SwitchTemplate;
+                    return RollershutterTemplate;
                 case "slider":
                     return SliderTemplate;
                 case "datetime":
                 case "text":
                     return TextTemplate;
+                case "color":
+                    return ColorTemplate;
                 case "image":
                     return ImageTemplate;
                 case "sectionswitch":
@@ -78,6 +88,11 @@ namespace OpenHAB.Windows.Converters
         /// Gets or sets the template for a section switch control
         /// </summary>
         public DataTemplate SectionSwitchTemplate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the template for a color picker control
+        /// </summary>
+        public DataTemplate ColorTemplate { get; set; }
 
         private string GetItemViewType(OpenHABWidget openHABWidget)
         {

@@ -19,6 +19,9 @@ namespace OpenHAB.Windows.Controls
     [TemplatePart(Name = ValueTextPartName, Type = typeof(TextBlock))]
     public class RadialSlider : Control
     {
+        /// <summary>
+        /// Triggers whenever the slider changes
+        /// </summary>
         public event EventHandler ValueChanged;
 
         /// <summary>
@@ -27,7 +30,9 @@ namespace OpenHAB.Windows.Controls
         public static readonly DependencyProperty StepSizeProperty =
             DependencyProperty.Register(nameof(StepSize), typeof(double), typeof(RadialSlider), new PropertyMetadata(0.0));
 
-        // Identifies the IsInteractive dependency property.
+        /// <summary>
+        /// Identifies the IsInteractive dependency property.
+        /// </summary>
         public static readonly DependencyProperty IsInteractiveProperty =
             DependencyProperty.Register(nameof(IsInteractive), typeof(bool), typeof(RadialSlider), new PropertyMetadata(false, OnInteractivityChanged));
 
@@ -368,8 +373,6 @@ namespace OpenHAB.Windows.Controls
                     valueText.Text = percentageRing.Value.ToString(percentageRing.ValueStringFormat);
                 }
             }
-
-            percentageRing.ValueChanged?.Invoke(percentageRing, EventArgs.Empty);
         }
 
         private static void OnInteractivityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -380,11 +383,13 @@ namespace OpenHAB.Windows.Controls
             {
                 percentageRing.Tapped += percentageRing.RadialSlider_Tapped;
                 percentageRing.ManipulationDelta += percentageRing.RadialSlider_ManipulationDelta;
+                percentageRing.ManipulationCompleted += percentageRing.PercentageRingOnManipulationCompleted;
                 percentageRing.ManipulationMode = ManipulationModes.TranslateX | ManipulationModes.TranslateY;
             }
             else
             {
                 percentageRing.Tapped -= percentageRing.RadialSlider_Tapped;
+                percentageRing.ManipulationCompleted -= percentageRing.PercentageRingOnManipulationCompleted;
                 percentageRing.ManipulationDelta -= percentageRing.RadialSlider_ManipulationDelta;
                 percentageRing.ManipulationMode = ManipulationModes.None;
             }
@@ -472,6 +477,11 @@ namespace OpenHAB.Windows.Controls
         private void RadialSlider_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
         {
             SetValueFromPoint(e.Position);
+        }
+
+        private void PercentageRingOnManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
+        {
+            ValueChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private void RadialSlider_Tapped(object sender, TappedRoutedEventArgs e)

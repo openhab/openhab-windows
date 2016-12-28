@@ -103,6 +103,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ChartWidget.xaml.cs">
+      <DependentUpon>ChartWidget.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ColorMap.xaml.cs">
+      <DependentUpon>ColorMap.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\FrameWidget.xaml.cs">
       <DependentUpon>FrameWidget.xaml</DependentUpon>
     </Compile>
@@ -129,6 +135,9 @@
     <Compile Include="Controls\SwitchWidget.xaml.cs">
       <DependentUpon>SwitchWidget.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ColorWidget.xaml.cs">
+      <DependentUpon>ColorWidget.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TextWidget.xaml.cs">
       <DependentUpon>TextWidget.xaml</DependentUpon>
     </Compile>
@@ -138,6 +147,7 @@
     <Compile Include="Converters\ObjectToSitemapConverter.cs" />
     <Compile Include="Converters\ReverseBoolConverter.cs" />
     <Compile Include="Converters\StateToBoolConverter.cs" />
+    <Compile Include="Converters\StringToDoubleConverter.cs" />
     <Compile Include="Converters\WidgetTemplateSelector.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="View\MainPage.xaml.cs">
@@ -171,6 +181,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\ChartWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ColorMap.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\FrameWidget.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -202,6 +220,10 @@
     <Page Include="Controls\SwitchWidget.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ColorWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\TextWidget.xaml">
       <SubType>Designer</SubType>

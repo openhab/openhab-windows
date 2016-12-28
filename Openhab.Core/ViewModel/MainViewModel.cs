@@ -51,6 +51,10 @@ namespace OpenHAB.Core.ViewModel
                         LoadWidgets();
 #pragma warning restore 4014
                     }
+                    else
+                    {
+                        SetWidgetsOnScreen(SelectedSitemap.Widgets);
+                    }
                 }
             }
         }

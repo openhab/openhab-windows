@@ -8,9 +8,7 @@
                   d:DesignWidth="400"
                   mc:Ignorable="d">
 
-    <Grid Margin="8, 4, 8, 4"
-          Background="{StaticResource OpenHABLightGreyBrush}"
-          Tapped="ImageWidget_OnTapped">
+    <Grid Background="{StaticResource OpenHABLightGreyBrush}" Tapped="ImageWidget_OnTapped">
         <local:ImageLabel IconPath="{x:Bind Widget.Icon, Mode=OneWay, Converter={StaticResource IconToPathConverter}}" LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
         <Image Width="200"
                Height="200"
@@ -19,9 +17,9 @@
                Stretch="UniformToFill" />
 
         <ContentDialog x:Name="CameraViewDialog"
+                       Title="{x:Bind Widget.Label}"
                        IsPrimaryButtonEnabled="True"
-                       PrimaryButtonText="Close"
-                       Title="{x:Bind Widget.Label}">
+                       PrimaryButtonText="Close">
             <Grid>
                 <Image HorizontalAlignment="Right"
                        Source="{x:Bind CameraBitmapImage, Mode=OneWay}"

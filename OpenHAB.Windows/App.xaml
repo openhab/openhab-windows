@@ -46,7 +46,12 @@
                 <controls:SectionSwitchWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
 
+            <DataTemplate x:Key="ColorTemplate">
+                <controls:ColorWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
             <converters:WidgetTemplateSelector x:Key="WidgetTemplateSelector"
+                                               ColorTemplate="{StaticResource ColorTemplate}"
                                                FrameTemplate="{StaticResource FrameTemplate}"
                                                ImageTemplate="{StaticResource ImageItemTemplate}"
                                                PageLinkTemplate="{StaticResource PageLinkTemplate}"

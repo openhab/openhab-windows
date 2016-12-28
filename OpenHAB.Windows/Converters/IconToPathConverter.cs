@@ -19,12 +19,9 @@ namespace OpenHAB.Windows.Converters
             var settings = settingsService.Load();
             var serverUrl = settings.IsRunningInDemoMode.Value ? Constants.Api.DemoModeUrl : settings.OpenHABUrl;
 
-            if (settingsService.ServerVersion == OpenHABVersion.Two)
-            {
-                return $"{serverUrl}icon/{value}?state=UNDEF&format=png";
-            }
-
-            return $"{serverUrl}icon/{value}?state=UNDEF&format=png";
+            return settingsService.ServerVersion == OpenHABVersion.Two ?
+                $"{serverUrl}icon/{value}?state=UNDEF&format=png" :
+                $"{serverUrl}images/{value}.png";
         }
 
         /// <inheritdoc/>

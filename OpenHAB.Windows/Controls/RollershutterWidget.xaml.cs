@@ -12,24 +12,9 @@ namespace OpenHAB.Windows.Controls
     public sealed partial class RollershutterWidget : WidgetBase
     {
         /// <summary>
-        /// Property to bind the toggle state to
+        /// Gets or sets a value indicating whether the switch is on or off
         /// </summary>
-        public static readonly DependencyProperty IsOnProperty = DependencyProperty.Register(
-            "IsOn", typeof(bool), typeof(RollershutterWidget), new PropertyMetadata(default(bool), PropertyChangedCallback));
-
-        private static void PropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
-        {
-            ((RollershutterWidget)dependencyObject).OnToggle();
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the toggle is on or off
-        /// </summary>
-        public bool IsOn
-        {
-            get { return (bool)GetValue(IsOnProperty); }
-            set { SetValue(IsOnProperty, value); }
-        }
+        public bool IsOn { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RollershutterWidget"/> class.
@@ -37,15 +22,24 @@ namespace OpenHAB.Windows.Controls
         public RollershutterWidget()
         {
             InitializeComponent();
+            Loaded += SwitchWidget_Loaded;
+        }
+
+        private void SwitchWidget_Loaded(object sender, RoutedEventArgs e)
+        {
+            IsOn = Widget.Item.State == "ON";
+            VisualStateManager.GoToState(this, IsOn ? "OnState" : "OffState", false);
         }
 
         private void OnToggle()
         {
-            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, IsOn ? OpenHABCommands.OnCommand : OpenHABCommands.OffCommand));
+            IsOn = !IsOn;
+            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, IsOn ? OpenHABCommands.UpCommand : OpenHABCommands.DownCommand));
         }
 
         private void OnToggle(object sender, TappedRoutedEventArgs e)
         {
+            OnToggle();
             VisualStateManager.GoToState(this, ToggleStates.CurrentState == OnState ? "OffState" : "OnState", true);
         }
     }

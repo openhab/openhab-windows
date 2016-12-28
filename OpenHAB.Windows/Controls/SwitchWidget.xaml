@@ -10,7 +10,6 @@
 
     <Grid Width="300"
           Height="150"
-          Margin="8,4,8,4"
           Background="{StaticResource OpenHABLightColor}"
           CornerRadius="5"
           Tapped="OnToggle">
@@ -56,14 +55,6 @@
         </Grid>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="ToggleStates">
-                <!--<VisualStateGroup.Transitions>
-                    <VisualTransition From="OnState"
-                                      GeneratedDuration="0:0:0.5"
-                                      To="OffState" />
-                    <VisualTransition From="OffState"
-                                      GeneratedDuration="0:0:0.5"
-                                      To="OnState" />
-                </VisualStateGroup.Transitions>-->
                 <VisualState x:Name="OnState">
                     <VisualState.Setters>
                         <Setter Target="OnBorder.(Border.Background)" Value="{StaticResource OpenHABSplitviewBrush}" />
