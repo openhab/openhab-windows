@@ -18,6 +18,10 @@
                 <controls:FrameWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
 
+            <DataTemplate x:Key="MjpegTemplate">
+                <controls:MjpegWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
             <DataTemplate x:Key="PageLinkTemplate">
                 <controls:PageLinkWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
@@ -54,6 +58,7 @@
                                                ColorTemplate="{StaticResource ColorTemplate}"
                                                FrameTemplate="{StaticResource FrameTemplate}"
                                                ImageTemplate="{StaticResource ImageItemTemplate}"
+                                               MjpegTemplate="{StaticResource MjpegTemplate}"
                                                PageLinkTemplate="{StaticResource PageLinkTemplate}"
                                                RollershutterTemplate="{StaticResource RollershutterTemplate}"
                                                SectionSwitchTemplate="{StaticResource SectionSwitchTemplate}"

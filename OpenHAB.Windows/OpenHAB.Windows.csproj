@@ -115,6 +115,9 @@
     <Compile Include="Controls\ImageLabel.xaml.cs">
       <DependentUpon>ImageLabel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MjpegWidget.xaml.cs">
+      <DependentUpon>MjpegWidget.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ImageWidget.xaml.cs">
       <DependentUpon>ImageWidget.xaml</DependentUpon>
     </Compile>
@@ -196,6 +199,10 @@
     <Page Include="Controls\ImageLabel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MjpegWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\ImageWidget.xaml">
       <SubType>Designer</SubType>

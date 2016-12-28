@@ -44,6 +44,9 @@ namespace OpenHAB.Windows.Converters
                     return ImageTemplate;
                 case "sectionswitch":
                     return SectionSwitchTemplate;
+                case "video_mjpeg":
+                case "video":
+                    return MjpegTemplate;
                 default:
                     return FrameTemplate;
             }
@@ -53,6 +56,11 @@ namespace OpenHAB.Windows.Converters
         /// Gets or sets the template for a Frame control
         /// </summary>
         public DataTemplate FrameTemplate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the template for a MJPEG video control
+        /// </summary>
+        public DataTemplate MjpegTemplate { get; set; }
 
         /// <summary>
         /// Gets or sets the template for a rollershutter control
