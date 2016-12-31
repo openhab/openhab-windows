@@ -69,7 +69,6 @@
             <ImageBrush ImageSource="/Assets/background.jpg" Stretch="UniformToFill" />
         </Grid.Background>
 
-
         <SplitView x:Name="SitemapSplitView"
                    Grid.ColumnSpan="2"
                    VerticalContentAlignment="Stretch"
@@ -77,6 +76,10 @@
                    DisplayMode="CompactOverlay"
                    IsPaneOpen="False"
                    OpenPaneLength="200">
+            <SplitView.Background>
+                <SolidColorBrush Opacity="0.4" Color="Black" />
+            </SplitView.Background>
+
             <SplitView.Pane>
                 <Grid Background="{StaticResource OpenHABSplitviewBrush}">
                     <Grid.RowDefinitions>
@@ -130,7 +133,7 @@
                 </Grid.RowDefinitions>
                 <TextBlock Margin="20,12,0,16"
                            FontSize="36"
-                           Foreground="{StaticResource OpenHABSplitviewBrush}"
+                           Foreground="White"
                            Text="{x:Bind Vm.SelectedSitemap.Label, Mode=OneWay}" />
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                     <GridView x:Name="MasterListView"
