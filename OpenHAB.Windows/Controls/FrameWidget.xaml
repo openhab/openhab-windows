@@ -24,13 +24,14 @@
     <StackPanel VerticalAlignment="Stretch">
         <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
             <Image x:Name="Icon"
-                   Width="40"
+                   Stretch="UniformToFill"
                    Height="40"
                    VerticalAlignment="Center"
                    Source="{x:Bind Widget.Icon, Mode=OneWay, Converter={StaticResource IconToBitmapConverter}}" />
             <TextBlock x:Name="Label"
-                       Margin="8" FontSize="18"
-                       Foreground="{StaticResource OpenHABSplitviewBrush}"
+                       Margin="8"
+                       FontSize="18"
+                       Foreground="White"
                        Text="{x:Bind Widget.Label, Mode=OneWay}"
                        TextWrapping="Wrap" />
         </StackPanel>
