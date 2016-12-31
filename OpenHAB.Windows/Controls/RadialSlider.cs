@@ -487,6 +487,7 @@ namespace OpenHAB.Windows.Controls
         private void RadialSlider_Tapped(object sender, TappedRoutedEventArgs e)
         {
             SetValueFromPoint(e.GetPosition(this));
+            ValueChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private void SetValueFromPoint(Point p)
