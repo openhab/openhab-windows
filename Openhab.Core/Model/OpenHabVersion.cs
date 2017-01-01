@@ -13,6 +13,11 @@
         /// <summary>
         /// OpenHAB V2
         /// </summary>
-        Two
+        Two,
+
+        /// <summary>
+        /// Used when no connection is available
+        /// </summary>
+        None
     }
 }

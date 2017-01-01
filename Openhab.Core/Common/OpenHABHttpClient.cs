@@ -34,6 +34,11 @@ namespace OpenHAB.Core.Common
 
         private static HttpClient InitClient()
         {
+            if (string.IsNullOrWhiteSpace(BaseUrl))
+            {
+                return null;
+            }
+
             return new HttpClient
             {
                 BaseAddress = new Uri(BaseUrl)

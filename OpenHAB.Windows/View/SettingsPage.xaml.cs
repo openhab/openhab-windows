@@ -21,13 +21,5 @@ namespace OpenHAB.Windows.View
         {
             InitializeComponent();
         }
-
-        private void SaveButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (Frame.CanGoBack)
-            {
-                Frame.GoBack();
-            }
-        }
     }
 }
