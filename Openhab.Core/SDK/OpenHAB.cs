@@ -42,7 +42,14 @@ namespace OpenHAB.Core.SDK
         {
             try
             {
-                var result = await OpenHABHttpClient.Client().GetAsync(Constants.Api.ServerVersion).ConfigureAwait(false);
+                var httpClient = OpenHABHttpClient.Client();
+
+                if (httpClient == null)
+                {
+                    return OpenHABVersion.None;
+                }
+
+                var result = await httpClient.GetAsync(Constants.Api.ServerVersion).ConfigureAwait(false);
                 _settingsService.ServerVersion = !result.IsSuccessStatusCode ? OpenHABVersion.One : OpenHABVersion.Two;
                 return _settingsService.ServerVersion;
             }
@@ -156,6 +163,12 @@ namespace OpenHAB.Core.SDK
 
         private async Task SetValidUrl(Settings settings)
         {
+            // no url configured yet
+            if (string.IsNullOrWhiteSpace(settings.OpenHABUrl) && string.IsNullOrWhiteSpace(settings.OpenHABRemoteUrl))
+            {
+                return;
+            }
+
             if (settings.IsRunningInDemoMode != null && settings.IsRunningInDemoMode.Value)
             {
                 OpenHABHttpClient.BaseUrl = Constants.Api.DemoModeUrl;
@@ -180,13 +193,9 @@ namespace OpenHAB.Core.SDK
                 else
                 {
                     // If remote URL is configured
-                    if (settings.OpenHABRemoteUrl.Trim() != string.Empty)
+                    if (!string.IsNullOrWhiteSpace(settings.OpenHABRemoteUrl))
                     {
                         OpenHABHttpClient.BaseUrl = settings.OpenHABRemoteUrl;
-                    }
-                    else
-                    {
-                        throw new OpenHABException("No valid url configured");
                     }
                 }
 
@@ -196,6 +205,11 @@ namespace OpenHAB.Core.SDK
 
         private async Task<bool> CheckUrlReachability(string openHABUrl)
         {
+            if (string.IsNullOrWhiteSpace(openHABUrl))
+            {
+                return false;
+            }
+
             if (!openHABUrl.EndsWith("/"))
             {
                 openHABUrl = openHABUrl + "/";

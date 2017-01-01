@@ -108,6 +108,12 @@ namespace OpenHAB.Core.ViewModel
         {
             await _openHabsdk.ResetConnection();
             _version = await _openHabsdk.GetOpenHABVersion();
+
+            if (_version == OpenHABVersion.None)
+            {
+                return;
+            }
+
             var sitemaps = await _openHabsdk.LoadSiteMaps(_version);
             Sitemaps = new ObservableCollection<OpenHABSitemap>(sitemaps);
         }

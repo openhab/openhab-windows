@@ -17,7 +17,7 @@
             <CommandBar.Content>
                 <Grid />
             </CommandBar.Content>
-            <AppBarButton Click="{x:Bind Vm.PersistSettings}"
+            <AppBarButton Command="{x:Bind Vm.SaveCommand}"
                           Icon="Save"
                           Label="save" />
         </CommandBar>
@@ -35,10 +35,10 @@
                 <SolidColorBrush Color="{StaticResource OpenHABLightOrange}" />
             </Border.Background>
 
-            <TextBlock Margin="12,6,0,6"
+            <TextBlock x:Name="SitemapTitle"
+                       Margin="12,6,0,6"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"
-                       x:Name="SitemapTitle"
                        Foreground="White"
                        Style="{StaticResource TitleTextBlockStyle}"
                        Text="Settings"
@@ -47,45 +47,58 @@
         <ScrollViewer Grid.Row="1">
             <StackPanel Margin="12,12,0,0">
                 <TextBlock Text="Demo mode" />
-                <CheckBox Margin="0,0,0,12"
+                <CheckBox x:Name="CheckBoxDemoMode"
+                          Margin="0,0,0,12"
                           HorizontalAlignment="Stretch"
                           VerticalAlignment="Stretch"
-                          x:Name="CheckBoxDemoMode"
-                          IsChecked="{x:Bind Vm.Settings.IsRunningInDemoMode, Mode=TwoWay}" />
+                          IsChecked="{Binding Settings.IsRunningInDemoMode,
+                                              Mode=TwoWay}" />
                 <TextBlock Text="OpenHAB URL" />
-                <TextBox Margin="0,0,12,12"
-                         x:Name="TextBoxUrl"
+                <TextBox x:Name="TextBoxUrl"
+                         Margin="0,0,12,12"
                          IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-                         Text="{x:Bind Vm.Settings.OpenHABUrl, Mode=TwoWay}" />
+                         Text="{Binding Settings.OpenHABUrl,
+                                        Mode=TwoWay,
+                                        UpdateSourceTrigger=PropertyChanged}" />
                 <TextBlock Text="OpenHAB Remote URl" />
-                <TextBox Margin="0,0,12,12"
-                         x:Name="TextBoxRemoteUrl"
+                <TextBox x:Name="TextBoxRemoteUrl"
+                         Margin="0,0,12,12"
                          IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-                         Text="{x:Bind Vm.Settings.OpenHABRemoteUrl, Mode=TwoWay}" />
+                         Text="{Binding Settings.OpenHABRemoteUrl,
+                                        Mode=TwoWay,
+                                        UpdateSourceTrigger=PropertyChanged}" />
                 <TextBlock Text="Username" />
-                <TextBox Margin="0,0,12,12"
-                         x:Name="TextBoxUsername"
+                <TextBox x:Name="TextBoxUsername"
+                         Margin="0,0,12,12"
                          IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-                         Text="{x:Bind Vm.Settings.Username, Mode=TwoWay}"
+                         Text="{Binding Settings.Username,
+                                        Mode=TwoWay,
+                                        UpdateSourceTrigger=PropertyChanged}"
                          TextWrapping="Wrap" />
                 <TextBlock Text="Password" />
-                <PasswordBox Margin="0,0,12,12"
-                             x:Name="TextBoxPassword"
+                <PasswordBox x:Name="TextBoxPassword"
+                             Margin="0,0,12,12"
                              IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-                             Password="{x:Bind Vm.Settings.Password, Mode=TwoWay}" />
+                             Password="{Binding Settings.Password,
+                                                Mode=TwoWay,
+                                                UpdateSourceTrigger=PropertyChanged}" />
                 <TextBlock Text="Ignore SSL certificate" />
-                <CheckBox Margin="0,0,0,12"
+                <CheckBox x:Name="CheckBoxIgnoreSSL"
+                          Margin="0,0,0,12"
                           HorizontalAlignment="Stretch"
                           VerticalAlignment="Stretch"
-                          x:Name="CheckBoxIgnoreSSL"
-                          IsChecked="{x:Bind Vm.Settings.WillIgnoreSSLCertificate, Mode=TwoWay}"
+                          IsChecked="{Binding Settings.WillIgnoreSSLCertificate,
+                                              Mode=TwoWay,
+                                              UpdateSourceTrigger=PropertyChanged}"
                           IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />
                 <TextBlock Text="Ignore SSL hostname" />
-                <CheckBox Margin="0,0,0,12"
+                <CheckBox x:Name="CheckBoxIgnoreSSLHostname"
+                          Margin="0,0,0,12"
                           HorizontalAlignment="Stretch"
                           VerticalAlignment="Stretch"
-                          x:Name="CheckBoxIgnoreSSLHostname"
-                          IsChecked="{x:Bind Vm.Settings.WillIgnoreSSLHostname, Mode=TwoWay}"
+                          IsChecked="{Binding Settings.WillIgnoreSSLHostname,
+                                              Mode=TwoWay,
+                                              UpdateSourceTrigger=PropertyChanged}"
                           IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />
             </StackPanel>
         </ScrollViewer>
