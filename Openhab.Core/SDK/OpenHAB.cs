@@ -163,13 +163,15 @@ namespace OpenHAB.Core.SDK
 
         private async Task SetValidUrl(Settings settings)
         {
+            var isRunningInDemoMode = settings.IsRunningInDemoMode != null && settings.IsRunningInDemoMode.Value;
+
             // no url configured yet
-            if (string.IsNullOrWhiteSpace(settings.OpenHABUrl) && string.IsNullOrWhiteSpace(settings.OpenHABRemoteUrl))
+            if (string.IsNullOrWhiteSpace(settings.OpenHABUrl) && string.IsNullOrWhiteSpace(settings.OpenHABRemoteUrl) && !isRunningInDemoMode)
             {
                 return;
             }
 
-            if (settings.IsRunningInDemoMode != null && settings.IsRunningInDemoMode.Value)
+            if (isRunningInDemoMode)
             {
                 OpenHABHttpClient.BaseUrl = Constants.Api.DemoModeUrl;
                 return;
