@@ -120,6 +120,11 @@ namespace OpenHAB.Core.ViewModel
 
         private async Task LoadWidgets()
         {
+            if (SelectedSitemap == null)
+            {
+                return;
+            }
+
             SelectedSitemap.Widgets = await _openHabsdk.LoadItemsFromSitemap(SelectedSitemap, _version);
             SetWidgetsOnScreen(SelectedSitemap.Widgets);
         }
