@@ -7,14 +7,12 @@
       DataContext="{Binding Settings,
                             Source={StaticResource Locator}}"
       mc:Ignorable="d">
-
     <Page.Background>
         <ImageBrush ImageSource="/Assets/background.jpg" Stretch="UniformToFill" />
     </Page.Background>
     <Page.Resources>
         <converters:ReverseBoolConverter x:Key="ReverseBoolConverter" />
     </Page.Resources>
-
 
     <Grid Margin="16">
         <Grid.RowDefinitions>
@@ -41,14 +39,14 @@
                               VerticalAlignment="Stretch"
                               IsChecked="{Binding Settings.IsRunningInDemoMode,
                                                   Mode=TwoWay}" />
-                    <TextBlock Text="openHAB URL" />
+                    <TextBlock Text="OpenHAB URL" />
                     <TextBox x:Name="TextBoxUrl"
                              Margin="0,0,12,12"
                              IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
                              Text="{Binding Settings.OpenHABUrl,
                                             Mode=TwoWay,
                                             UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBlock Text="openHAB Remote URl" />
+                    <TextBlock Text="OpenHAB Remote URl" />
                     <TextBox x:Name="TextBoxRemoteUrl"
                              Margin="0,0,12,12"
                              IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
@@ -70,7 +68,7 @@
                                  Password="{Binding Settings.Password,
                                                     Mode=TwoWay,
                                                     UpdateSourceTrigger=PropertyChanged}" />
-                    <!--<TextBlock Text="Ignore SSL certificate" />
+                    <TextBlock Text="Ignore SSL certificate" />
                     <CheckBox x:Name="CheckBoxIgnoreSSL"
                               Margin="0,0,0,12"
                               HorizontalAlignment="Stretch"
@@ -87,7 +85,7 @@
                               IsChecked="{Binding Settings.WillIgnoreSSLHostname,
                                                   Mode=TwoWay,
                                                   UpdateSourceTrigger=PropertyChanged}"
-                              IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />-->
+                              IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />
 
                     <StackPanel Margin="12"
                                 HorizontalAlignment="Right"
@@ -97,10 +95,8 @@
                                 Content="Save" />
                         <Button Click="ButtonCancel_OnClick" Content="Cancel" />
                     </StackPanel>
-                    <TextBlock FontSize="9" Text="v0.1 Beta" />
                 </StackPanel>
             </ScrollViewer>
         </Grid>
-
     </Grid>
 </Page>
