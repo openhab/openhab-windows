@@ -217,18 +217,15 @@ namespace OpenHAB.Core.SDK
                 openHABUrl = openHABUrl + "/";
             }
 
-            try
-            {
-                var client = new HttpClient();
-                var result = await client.GetAsync(openHABUrl + "rest").ConfigureAwait(false);
-                result.EnsureSuccessStatusCode();
+            var client = OpenHABHttpClient.DisposableClient();
+            var result = await client.GetAsync(openHABUrl + "rest").ConfigureAwait(false);
 
+            if (result.IsSuccessStatusCode)
+            {
                 return true;
             }
-            catch (Exception)
-            {
-                return false;
-            }
+
+            return false;
         }
     }
 }
