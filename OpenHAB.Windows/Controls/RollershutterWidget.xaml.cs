@@ -2,7 +2,6 @@
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Input;
 
 namespace OpenHAB.Windows.Controls
 {
@@ -22,25 +21,21 @@ namespace OpenHAB.Windows.Controls
         public RollershutterWidget()
         {
             InitializeComponent();
-            Loaded += SwitchWidget_Loaded;
         }
 
-        private void SwitchWidget_Loaded(object sender, RoutedEventArgs e)
+        private void ButtonUp_Click(object sender, RoutedEventArgs e)
         {
-            IsOn = Widget.Item.State == "ON";
-            VisualStateManager.GoToState(this, IsOn ? "OnState" : "OffState", false);
+            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, OpenHABCommands.UpCommand));
         }
 
-        private void OnToggle()
+        private void ButtonStop_Click(object sender, RoutedEventArgs e)
         {
-            IsOn = !IsOn;
-            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, IsOn ? OpenHABCommands.UpCommand : OpenHABCommands.DownCommand));
+            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, OpenHABCommands.StopCommand));
         }
 
-        private void OnToggle(object sender, TappedRoutedEventArgs e)
+        private void ButtonDown_Click(object sender, RoutedEventArgs e)
         {
-            OnToggle();
-            VisualStateManager.GoToState(this, ToggleStates.CurrentState == OnState ? "OffState" : "OnState", true);
+            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, OpenHABCommands.DownCommand));
         }
     }
 }
