@@ -68,7 +68,7 @@
                                  Password="{Binding Settings.Password,
                                                     Mode=TwoWay,
                                                     UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBlock Text="Ignore SSL certificate" />
+                    <!--<TextBlock Text="Ignore SSL certificate" />
                     <CheckBox x:Name="CheckBoxIgnoreSSL"
                               Margin="0,0,0,12"
                               HorizontalAlignment="Stretch"
@@ -85,7 +85,7 @@
                               IsChecked="{Binding Settings.WillIgnoreSSLHostname,
                                                   Mode=TwoWay,
                                                   UpdateSourceTrigger=PropertyChanged}"
-                              IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />
+                              IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />-->
 
                     <StackPanel Margin="12"
                                 HorizontalAlignment="Right"
