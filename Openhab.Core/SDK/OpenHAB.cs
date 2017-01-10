@@ -163,13 +163,15 @@ namespace OpenHAB.Core.SDK
 
         private async Task SetValidUrl(Settings settings)
         {
+            var isRunningInDemoMode = settings.IsRunningInDemoMode != null && settings.IsRunningInDemoMode.Value;
+
             // no url configured yet
-            if (string.IsNullOrWhiteSpace(settings.OpenHABUrl) && string.IsNullOrWhiteSpace(settings.OpenHABRemoteUrl))
+            if (string.IsNullOrWhiteSpace(settings.OpenHABUrl) && string.IsNullOrWhiteSpace(settings.OpenHABRemoteUrl) && !isRunningInDemoMode)
             {
                 return;
             }
 
-            if (settings.IsRunningInDemoMode != null && settings.IsRunningInDemoMode.Value)
+            if (isRunningInDemoMode)
             {
                 OpenHABHttpClient.BaseUrl = Constants.Api.DemoModeUrl;
                 return;
@@ -215,18 +217,15 @@ namespace OpenHAB.Core.SDK
                 openHABUrl = openHABUrl + "/";
             }
 
-            try
-            {
-                var client = new HttpClient();
-                var result = await client.GetAsync(openHABUrl + "rest").ConfigureAwait(false);
-                result.EnsureSuccessStatusCode();
+            var client = OpenHABHttpClient.DisposableClient();
+            var result = await client.GetAsync(openHABUrl + "rest").ConfigureAwait(false);
 
+            if (result.IsSuccessStatusCode)
+            {
                 return true;
             }
-            catch (Exception)
-            {
-                return false;
-            }
+
+            return false;
         }
     }
 }

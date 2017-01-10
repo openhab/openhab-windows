@@ -7,100 +7,96 @@
       DataContext="{Binding Settings,
                             Source={StaticResource Locator}}"
       mc:Ignorable="d">
-
+    <Page.Background>
+        <ImageBrush ImageSource="/Assets/background.jpg" Stretch="UniformToFill" />
+    </Page.Background>
     <Page.Resources>
         <converters:ReverseBoolConverter x:Key="ReverseBoolConverter" />
     </Page.Resources>
 
-    <Page.BottomAppBar>
-        <CommandBar>
-            <CommandBar.Content>
-                <Grid />
-            </CommandBar.Content>
-            <AppBarButton Command="{x:Bind Vm.SaveCommand}"
-                          Icon="Save"
-                          Label="save" />
-        </CommandBar>
-    </Page.BottomAppBar>
-
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Margin="16">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Border Grid.ColumnSpan="2"
-                BorderBrush="Black"
-                BorderThickness="1">
-            <Border.Background>
-                <SolidColorBrush Color="{StaticResource OpenHABLightOrange}" />
-            </Border.Background>
-
-            <TextBlock x:Name="SitemapTitle"
-                       Margin="12,6,0,6"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Center"
-                       Foreground="White"
-                       Style="{StaticResource TitleTextBlockStyle}"
-                       Text="Settings"
-                       TextWrapping="Wrap" />
-        </Border>
-        <ScrollViewer Grid.Row="1">
-            <StackPanel Margin="12,12,0,0">
-                <TextBlock Text="Demo mode" />
-                <CheckBox x:Name="CheckBoxDemoMode"
-                          Margin="0,0,0,12"
-                          HorizontalAlignment="Stretch"
-                          VerticalAlignment="Stretch"
-                          IsChecked="{Binding Settings.IsRunningInDemoMode,
-                                              Mode=TwoWay}" />
-                <TextBlock Text="OpenHAB URL" />
-                <TextBox x:Name="TextBoxUrl"
-                         Margin="0,0,12,12"
-                         IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-                         Text="{Binding Settings.OpenHABUrl,
-                                        Mode=TwoWay,
-                                        UpdateSourceTrigger=PropertyChanged}" />
-                <TextBlock Text="OpenHAB Remote URl" />
-                <TextBox x:Name="TextBoxRemoteUrl"
-                         Margin="0,0,12,12"
-                         IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-                         Text="{Binding Settings.OpenHABRemoteUrl,
-                                        Mode=TwoWay,
-                                        UpdateSourceTrigger=PropertyChanged}" />
-                <TextBlock Text="Username" />
-                <TextBox x:Name="TextBoxUsername"
-                         Margin="0,0,12,12"
-                         IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-                         Text="{Binding Settings.Username,
-                                        Mode=TwoWay,
-                                        UpdateSourceTrigger=PropertyChanged}"
-                         TextWrapping="Wrap" />
-                <TextBlock Text="Password" />
-                <PasswordBox x:Name="TextBoxPassword"
+        <TextBlock x:Name="SitemapTitle"
+                   Margin="12,6,0,6"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Foreground="White"
+                   Style="{StaticResource TitleTextBlockStyle}"
+                   Text="Settings"
+                   TextWrapping="Wrap" />
+        <Grid Grid.Row="1"
+              Background="{StaticResource OpenHABLightColor}"
+              CornerRadius="5">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="12,12,0,0">
+                    <TextBlock Text="Demo mode" />
+                    <CheckBox x:Name="CheckBoxDemoMode"
+                              Margin="0,0,0,12"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch"
+                              IsChecked="{Binding Settings.IsRunningInDemoMode,
+                                                  Mode=TwoWay}" />
+                    <TextBlock Text="OpenHAB URL" />
+                    <TextBox x:Name="TextBoxUrl"
                              Margin="0,0,12,12"
                              IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-                             Password="{Binding Settings.Password,
-                                                Mode=TwoWay,
-                                                UpdateSourceTrigger=PropertyChanged}" />
-                <TextBlock Text="Ignore SSL certificate" />
-                <CheckBox x:Name="CheckBoxIgnoreSSL"
-                          Margin="0,0,0,12"
-                          HorizontalAlignment="Stretch"
-                          VerticalAlignment="Stretch"
-                          IsChecked="{Binding Settings.WillIgnoreSSLCertificate,
-                                              Mode=TwoWay,
-                                              UpdateSourceTrigger=PropertyChanged}"
-                          IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />
-                <TextBlock Text="Ignore SSL hostname" />
-                <CheckBox x:Name="CheckBoxIgnoreSSLHostname"
-                          Margin="0,0,0,12"
-                          HorizontalAlignment="Stretch"
-                          VerticalAlignment="Stretch"
-                          IsChecked="{Binding Settings.WillIgnoreSSLHostname,
-                                              Mode=TwoWay,
-                                              UpdateSourceTrigger=PropertyChanged}"
-                          IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />
-            </StackPanel>
-        </ScrollViewer>
+                             Text="{Binding Settings.OpenHABUrl,
+                                            Mode=TwoWay,
+                                            UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock Text="OpenHAB Remote URl" />
+                    <TextBox x:Name="TextBoxRemoteUrl"
+                             Margin="0,0,12,12"
+                             IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
+                             Text="{Binding Settings.OpenHABRemoteUrl,
+                                            Mode=TwoWay,
+                                            UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock Text="Username" />
+                    <TextBox x:Name="TextBoxUsername"
+                             Margin="0,0,12,12"
+                             IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
+                             Text="{Binding Settings.Username,
+                                            Mode=TwoWay,
+                                            UpdateSourceTrigger=PropertyChanged}"
+                             TextWrapping="Wrap" />
+                    <TextBlock Text="Password" />
+                    <PasswordBox x:Name="TextBoxPassword"
+                                 Margin="0,0,12,12"
+                                 IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
+                                 Password="{Binding Settings.Password,
+                                                    Mode=TwoWay,
+                                                    UpdateSourceTrigger=PropertyChanged}" />
+                    <!--<TextBlock Text="Ignore SSL certificate" />
+                    <CheckBox x:Name="CheckBoxIgnoreSSL"
+                              Margin="0,0,0,12"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch"
+                              IsChecked="{Binding Settings.WillIgnoreSSLCertificate,
+                                                  Mode=TwoWay,
+                                                  UpdateSourceTrigger=PropertyChanged}"
+                              IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />
+                    <TextBlock Text="Ignore SSL hostname" />
+                    <CheckBox x:Name="CheckBoxIgnoreSSLHostname"
+                              Margin="0,0,0,12"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch"
+                              IsChecked="{Binding Settings.WillIgnoreSSLHostname,
+                                                  Mode=TwoWay,
+                                                  UpdateSourceTrigger=PropertyChanged}"
+                              IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />-->
+
+                    <StackPanel Margin="12"
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal">
+                        <Button Margin="0, 0, 8, 0"
+                                Command="{x:Bind Vm.SaveCommand}"
+                                Content="Save" />
+                        <Button Click="ButtonCancel_OnClick" Content="Cancel" />
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </Page>
