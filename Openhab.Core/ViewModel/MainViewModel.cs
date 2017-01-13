@@ -88,8 +88,10 @@ namespace OpenHAB.Core.ViewModel
 
             MessengerInstance.Register<SettingsUpdatedMessage>(this, async msg =>
             {
-                await _openHabsdk.ResetConnection();
-                await LoadData();
+                if (await _openHabsdk.ResetConnection())
+                {
+                    await LoadData();
+                }
             });
 
             MessengerInstance.Register<TriggerCommandMessage>(this, async msg => await TriggerCommand(msg));
