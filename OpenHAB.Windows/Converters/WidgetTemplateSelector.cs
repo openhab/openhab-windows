@@ -38,8 +38,8 @@ namespace OpenHAB.Windows.Converters
                 case "datetime":
                 case "text":
                     return TextTemplate;
-                case "color":
-                    return ColorTemplate;
+                //case "color":
+                //    return ColorTemplate;
                 case "image":
                     return ImageTemplate;
                 case "sectionswitch":
