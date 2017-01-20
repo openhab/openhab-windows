@@ -41,6 +41,7 @@ namespace OpenHAB.Core.SDK
                 return false;
             }
 
+
             OpenHABHttpClient.ResetClient();
 
             return true;
@@ -186,14 +187,15 @@ namespace OpenHAB.Core.SDK
                 return true;
             }
 
+
             if (ConnectionHelper.IsInternetOnMeteredConnection)
             {
-                if (settings.OpenHABRemoteUrl.Trim() == string.Empty)
-                {
+                if (settings.OpenHABRemoteUrl.Trim() == string.Empty)                {
                     throw new OpenHABException("No remote url configured");
                 }
 
                 OpenHABHttpClient.BaseUrl = settings.OpenHABRemoteUrl;
+
 
                 return true;
             }

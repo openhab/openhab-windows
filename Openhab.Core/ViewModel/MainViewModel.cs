@@ -52,8 +52,7 @@ namespace OpenHAB.Core.ViewModel
 #pragma warning restore 4014
                     }
                     else
-                    {
-                        SetWidgetsOnScreen(SelectedSitemap.Widgets);
+                    {                        SetWidgetsOnScreen(SelectedSitemap.Widgets);
                     }
                 }
             }
@@ -64,8 +63,7 @@ namespace OpenHAB.Core.ViewModel
         /// </summary>
         public ObservableCollection<OpenHABWidget> CurrentWidgets
         {
-            get { return _currentWidgets; }
-            set { Set(ref _currentWidgets, value); }
+            get { return _currentWidgets; }            set { Set(ref _currentWidgets, value); }
         }
 
         /// <summary>
@@ -88,6 +86,7 @@ namespace OpenHAB.Core.ViewModel
 
             MessengerInstance.Register<SettingsUpdatedMessage>(this, async msg =>
             {
+
                 if (await _openHabsdk.ResetConnection())
                 {
                     await LoadData();

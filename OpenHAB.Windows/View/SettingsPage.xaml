@@ -7,12 +7,14 @@
       DataContext="{Binding Settings,
                             Source={StaticResource Locator}}"
       mc:Ignorable="d">
+
     <Page.Background>
         <ImageBrush ImageSource="/Assets/background.jpg" Stretch="UniformToFill" />
     </Page.Background>
     <Page.Resources>
         <converters:ReverseBoolConverter x:Key="ReverseBoolConverter" />
     </Page.Resources>
+
 
     <Grid Margin="16">
         <Grid.RowDefinitions>
@@ -99,5 +101,6 @@
                 </StackPanel>
             </ScrollViewer>
         </Grid>
+
     </Grid>
 </Page>

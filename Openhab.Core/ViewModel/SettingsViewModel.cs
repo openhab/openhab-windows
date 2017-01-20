@@ -1,6 +1,7 @@
-﻿using System.Windows.Input;
+using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+
 using GalaSoft.MvvmLight.Views;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Messages;
