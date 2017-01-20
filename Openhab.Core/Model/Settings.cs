@@ -52,7 +52,15 @@
                     return;
                 }
 
-                _openHABUrl = value;
+                if (value != null && !value.EndsWith("/"))
+                {
+                    _openHABUrl = value + "/";
+                }
+                else
+                {
+                    _openHABUrl = value;
+                }
+
                 OnPropertyChanged();
             }
         }
@@ -74,7 +82,15 @@
                     return;
                 }
 
-                _openHABRemoteUrl = value;
+                if (value != null && !value.EndsWith("/"))
+                {
+                    _openHABRemoteUrl = value + "/";
+                }
+                else
+                {
+                    _openHABRemoteUrl = value;
+                }
+
                 OnPropertyChanged();
             }
         }

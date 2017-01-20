@@ -18,8 +18,20 @@
                 <controls:FrameWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
 
+            <DataTemplate x:Key="MjpegTemplate">
+                <controls:MjpegWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
+            <DataTemplate x:Key="PageLinkTemplate">
+                <controls:PageLinkWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
             <DataTemplate x:Key="SwitchTemplate">
                 <controls:SwitchWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
+            <DataTemplate x:Key="RollershutterTemplate">
+                <controls:RollershutterWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
 
             <DataTemplate x:Key="SliderTemplate">
@@ -34,9 +46,22 @@
                 <controls:ImageWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
 
+            <DataTemplate x:Key="SectionSwitchTemplate">
+                <controls:SectionSwitchWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
+            <DataTemplate x:Key="ColorTemplate">
+                <controls:ColorWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
             <converters:WidgetTemplateSelector x:Key="WidgetTemplateSelector"
+                                               ColorTemplate="{StaticResource ColorTemplate}"
                                                FrameTemplate="{StaticResource FrameTemplate}"
                                                ImageTemplate="{StaticResource ImageItemTemplate}"
+                                               MjpegTemplate="{StaticResource MjpegTemplate}"
+                                               PageLinkTemplate="{StaticResource PageLinkTemplate}"
+                                               RollershutterTemplate="{StaticResource RollershutterTemplate}"
+                                               SectionSwitchTemplate="{StaticResource SectionSwitchTemplate}"
                                                SliderTemplate="{StaticResource SliderTemplate}"
                                                SwitchTemplate="{StaticResource SwitchTemplate}"
                                                TextTemplate="{StaticResource TextItemTemplate}" />

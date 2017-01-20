@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
+using Microsoft.Practices.ServiceLocation;
+using OpenHAB.Core.Contracts.Services;
 
 namespace OpenHAB.Core.Common
 {
@@ -25,6 +28,15 @@ namespace OpenHAB.Core.Common
         }
 
         /// <summary>
+        /// Create an HttpClient instance for one-time use
+        /// </summary>
+        /// <returns>The HttpClient instance</returns>
+        public static HttpClient DisposableClient()
+        {
+            return InitClient(true);
+        }
+
+        /// <summary>
         /// Forces creation of a new client, for example when the settings in the app are updated
         /// </summary>
         public static void ResetClient()
@@ -32,12 +44,44 @@ namespace OpenHAB.Core.Common
             _client = null;
         }
 
-        private static HttpClient InitClient()
+        private static HttpClient InitClient(bool disposable = false)
         {
-            return new HttpClient
+            if (string.IsNullOrWhiteSpace(BaseUrl) && !disposable)
             {
-                BaseAddress = new Uri(BaseUrl)
-            };
+                return null;
+            }
+
+            var handler = new HttpClientHandler();
+
+            var credentials = GetCredentials();
+
+            if (credentials != null)
+            {
+                handler.Credentials = credentials;
+            }
+
+            var client = new HttpClient(handler);
+
+            if (!disposable)
+            {
+                client.BaseAddress = new Uri(BaseUrl);
+            }
+
+            return client;
+        }
+
+        private static NetworkCredential GetCredentials()
+        {
+            var settings = ServiceLocator.Current.GetInstance<ISettingsService>().Load();
+            string username = settings.Username;
+            string password = settings.Password;
+
+            if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
+            {
+                return new NetworkCredential(username, password);
+            }
+
+            return null;
         }
     }
 }

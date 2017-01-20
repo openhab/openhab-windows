@@ -1,4 +1,7 @@
-﻿using GalaSoft.MvvmLight;
+using System.Windows.Input;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+
 using GalaSoft.MvvmLight.Views;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Messages;
@@ -14,6 +17,9 @@ namespace OpenHAB.Core.ViewModel
         private readonly ISettingsService _settingsService;
         private readonly INavigationService _navigationService;
         private Settings _settings;
+        private ICommand _saveCommand;
+
+        public ICommand SaveCommand => _saveCommand ?? (_saveCommand = new RelayCommand(PersistSettings));
 
         /// <summary>
         /// Gets or sets the current user-defined settings

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Microsoft.Toolkit.Uwp;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Model;
@@ -29,11 +30,21 @@ namespace OpenHAB.Core.SDK
         }
 
         /// <inheritdoc />
-        public async Task ResetConnection()
+        public async Task<bool> ResetConnection()
         {
             var settings = _settingsService.Load();
-            await SetValidUrl(settings);
+
+            bool isValid = await SetValidUrl(settings);
+
+            if (!isValid)
+            {
+                return false;
+            }
+
+
             OpenHABHttpClient.ResetClient();
+
+            return true;
         }
 
         /// <inheritdoc />
@@ -41,8 +52,16 @@ namespace OpenHAB.Core.SDK
         {
             try
             {
-                var result = await OpenHABHttpClient.Client().GetAsync(Constants.Api.ServerVersion).ConfigureAwait(false);
-                return !result.IsSuccessStatusCode ? OpenHABVersion.One : OpenHABVersion.Two;
+                var httpClient = OpenHABHttpClient.Client();
+
+                if (httpClient == null)
+                {
+                    return OpenHABVersion.None;
+                }
+
+                var result = await httpClient.GetAsync(Constants.Api.ServerVersion).ConfigureAwait(false);
+                _settingsService.ServerVersion = !result.IsSuccessStatusCode ? OpenHABVersion.One : OpenHABVersion.Two;
+                return _settingsService.ServerVersion;
             }
             catch (ArgumentNullException ex)
             {
@@ -107,7 +126,8 @@ namespace OpenHAB.Core.SDK
                 }
 
                 // V2 = JSON
-                return JsonConvert.DeserializeObject<List<OpenHABWidget>>(resultString);
+                var jsonObject = JObject.Parse(resultString);
+                return JsonConvert.DeserializeObject<List<OpenHABWidget>>(jsonObject["homepage"]["widgets"].ToString());
             }
             catch (ArgumentNullException ex)
             {
@@ -151,42 +171,61 @@ namespace OpenHAB.Core.SDK
                     .ToList();
         }
 
-        private async Task SetValidUrl(Settings settings)
+        private async Task<bool> SetValidUrl(Settings settings)
         {
+            var isRunningInDemoMode = settings.IsRunningInDemoMode != null && settings.IsRunningInDemoMode.Value;
+
+            // no url configured yet
+            if (string.IsNullOrWhiteSpace(settings.OpenHABUrl) && string.IsNullOrWhiteSpace(settings.OpenHABRemoteUrl) && !isRunningInDemoMode)
+            {
+                return false;
+            }
+
+            if (isRunningInDemoMode)
+            {
+                OpenHABHttpClient.BaseUrl = Constants.Api.DemoModeUrl;
+                return true;
+            }
+
+
             if (ConnectionHelper.IsInternetOnMeteredConnection)
             {
-                if (settings.OpenHABRemoteUrl.Trim() == string.Empty)
-                {
+                if (settings.OpenHABRemoteUrl.Trim() == string.Empty)                {
                     throw new OpenHABException("No remote url configured");
                 }
 
                 OpenHABHttpClient.BaseUrl = settings.OpenHABRemoteUrl;
+
+
+                return true;
+            }
+
+            bool isReachable = await CheckUrlReachability(settings.OpenHABUrl).ConfigureAwait(false);
+
+            if (isReachable)
+            {
+                OpenHABHttpClient.BaseUrl = settings.OpenHABUrl;
             }
             else
             {
-                if (await CheckUrlReachability(settings.OpenHABUrl).ConfigureAwait(false))
+                // If remote URL is configured
+                if (!string.IsNullOrWhiteSpace(settings.OpenHABRemoteUrl) && await CheckUrlReachability(settings.OpenHABRemoteUrl).ConfigureAwait(false))
                 {
-                    OpenHABHttpClient.BaseUrl = settings.OpenHABUrl;
+                    OpenHABHttpClient.BaseUrl = settings.OpenHABRemoteUrl;
+                    return true;
                 }
-                else
-                {
-                    // If remote URL is configured
-                    if (settings.OpenHABRemoteUrl.Trim() != string.Empty)
-                    {
-                        OpenHABHttpClient.BaseUrl = settings.OpenHABRemoteUrl;
-                    }
-                    else
-                    {
-                        throw new OpenHABException("No valid url configured");
-                    }
-                }
-
-                OpenHABHttpClient.BaseUrl = settings.OpenHABUrl;
             }
+
+            return false;
         }
 
         private async Task<bool> CheckUrlReachability(string openHABUrl)
         {
+            if (string.IsNullOrWhiteSpace(openHABUrl))
+            {
+                return false;
+            }
+
             if (!openHABUrl.EndsWith("/"))
             {
                 openHABUrl = openHABUrl + "/";
@@ -194,16 +233,20 @@ namespace OpenHAB.Core.SDK
 
             try
             {
-                var client = new HttpClient();
+                var client = OpenHABHttpClient.DisposableClient();
                 var result = await client.GetAsync(openHABUrl + "rest").ConfigureAwait(false);
-                result.EnsureSuccessStatusCode();
 
-                return true;
+                if (result.IsSuccessStatusCode)
+                {
+                    return true;
+                }
             }
-            catch (Exception)
+            catch (InvalidOperationException)
             {
                 return false;
             }
+
+            return false;
         }
     }
 }

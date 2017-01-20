@@ -11,134 +11,152 @@
       mc:Ignorable="d">
 
     <Page.Resources>
-        <Style TargetType="ListViewItem">
+        <Style TargetType="GridViewItem">
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
         </Style>
 
         <converters:ObjectToSitemapConverter x:Key="ObjectToSitemapConverter" />
+        <converters:BoolToBackgroundColorConverter x:Key="BoolToBackgroundColorConverter" />
 
         <DataTemplate x:Key="NavMenuItemTemplate" x:DataType="model:OpenHABSitemap">
             <StackPanel Orientation="Horizontal">
-                <Image Width="35"
+                <Border Width="5"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        Background="{Binding Source={RelativeSource TemplatedParent}}" />
+                <Image x:Name="image"
+                       Width="35"
                        Height="35"
-                       x:Name="image"
+                       Margin="4,0,0,0"
                        Source="/Assets/openhab.png" />
-                <TextBlock Margin="12,0,0,0"
+                <TextBlock x:Name="textBlock"
+                           Margin="16,0,0,0"
                            VerticalAlignment="Center"
-                           x:Name="textBlock"
+                           Foreground="{StaticResource OpenHABLightColor}"
                            Style="{StaticResource FlyoutPickerTitleTextBlockStyle}"
                            Text="{x:Bind Name, Mode=OneWay}"
                            TextWrapping="Wrap" />
             </StackPanel>
         </DataTemplate>
-
     </Page.Resources>
+
     <Page.DataContext>
         <Binding Path="Main" Source="{StaticResource Locator}" />
     </Page.DataContext>
-    <Page.BottomAppBar>
-        <CommandBar>
-            <CommandBar.Content>
-                <Grid />
-            </CommandBar.Content>
-            <AppBarButton Icon="Setting" Label="settings">
-                <interactivity:Interaction.Behaviors>
-                    <core:EventTriggerBehavior EventName="Click">
-                        <core:NavigateToPageAction TargetPage="OpenHAB.Windows.View.SettingsPage" />
-                    </core:EventTriggerBehavior>
-                </interactivity:Interaction.Behaviors>
-            </AppBarButton>
-        </CommandBar>
-    </Page.BottomAppBar>
 
-
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="120" />
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="AdaptiveStates">
-                <VisualState x:Name="DefaultState">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="548" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="SitemapSplitView.DisplayMode" Value="CompactInline" />
-                        <Setter Target="SitemapSplitView.CompactPaneLength" Value="60" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="NarrowState">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="SitemapSplitView.DisplayMode" Value="CompactOverlay" />
-                        <Setter Target="SitemapSplitView.CompactPaneLength" Value="0" />
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-        <Border Grid.ColumnSpan="2"
-                BorderBrush="Black"
-                BorderThickness="1">
-            <Border.Background>
-                <SolidColorBrush Color="{StaticResource OpenHABLightOrange}" />
-            </Border.Background>
-        </Border>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Assets/background.jpg" Stretch="UniformToFill" />
+        </Grid.Background>
 
-        <ToggleButton Grid.Row="0"
-                      Grid.Column="0"
-                      Width="48"
-                      HorizontalAlignment="Center"
-                      VerticalAlignment="Stretch"
-                      x:Name="TogglePaneButton"
-                      Foreground="White"
-                      IsChecked="{Binding IsPaneOpen,
-                                          ElementName=SitemapSplitView,
-                                          Mode=TwoWay}"
-                      Style="{StaticResource SplitViewTogglePaneButtonStyle}"
-                      TabIndex="1"
-                      ToolTipService.ToolTip="Menu"
-                      d:LayoutOverrides="TopPosition, BottomPosition" />
-        <TextBlock Grid.Row="0"
-                   Grid.Column="1"
-                   Margin="0"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Center"
-                   x:Name="SitemapTitle"
-                   Foreground="White"
-                   Style="{StaticResource TitleTextBlockStyle}"
-                   Text="{x:Bind Vm.SelectedSitemap.Label, Mode=OneWay}"
-                   TextWrapping="Wrap" />
-        <SplitView Grid.Row="1"
+        <SplitView x:Name="SitemapSplitView"
                    Grid.ColumnSpan="2"
-                   x:Name="SitemapSplitView"
+                   VerticalContentAlignment="Stretch"
+                   CompactPaneLength="60"
+                   DisplayMode="CompactOverlay"
                    IsPaneOpen="False"
                    OpenPaneLength="200">
+            <SplitView.Background>
+                <SolidColorBrush Opacity="0.4" Color="Black" />
+            </SplitView.Background>
+
             <SplitView.Pane>
-                <Grid HorizontalAlignment="Left">
+                <Grid Background="{StaticResource OpenHABSplitviewBrush}">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <controls:NavMenuListView ItemTemplate="{StaticResource NavMenuItemTemplate}"
+                    <ToggleButton x:Name="TogglePaneButton"
+                                  Grid.Row="0"
+                                  Foreground="White"
+                                  IsChecked="{Binding IsPaneOpen,
+                                                      ElementName=SitemapSplitView,
+                                                      Mode=TwoWay}"
+                                  Style="{StaticResource SplitViewTogglePaneButtonStyle}"
+                                  TabIndex="1"
+                                  ToolTipService.ToolTip="Menu" />
+                    <controls:NavMenuListView Grid.Row="1"
+                                              ItemContainerStyle="{StaticResource NavMenuContainerStyle}"
+                                              ItemTemplate="{StaticResource NavMenuItemTemplate}"
                                               ItemsSource="{x:Bind Vm.Sitemaps, Mode=OneWay}"
+                                              Padding="0"
                                               SelectedItem="{x:Bind Vm.SelectedSitemap, Converter={StaticResource ObjectToSitemapConverter}, Mode=TwoWay}" />
+
+                    <StackPanel Grid.Row="2"
+                                Margin="12,0,0,8"
+                                VerticalAlignment="Bottom"
+                                Orientation="Horizontal">
+                        <interactivity:Interaction.Behaviors>
+                            <core:EventTriggerBehavior EventName="Tapped">
+                                <core:NavigateToPageAction TargetPage="OpenHAB.Windows.View.SettingsPage" />
+                            </core:EventTriggerBehavior>
+                        </interactivity:Interaction.Behaviors>
+                        <TextBlock VerticalAlignment="Center"
+                                   AutomationProperties.Name="Favorite"
+                                   FontFamily="Segoe MDL2 Assets"
+                                   FontSize="36"
+                                   Foreground="{StaticResource OpenHABLightColor}"
+                                   Text="&#xE713;" />
+                        <TextBlock x:Name="textBlock"
+                                   Margin="12,0,0,0"
+                                   VerticalAlignment="Center"
+                                   Foreground="{StaticResource OpenHABLightColor}"
+                                   Style="{StaticResource FlyoutPickerTitleTextBlockStyle}"
+                                   Text="Settings"
+                                   TextWrapping="Wrap" />
+                    </StackPanel>
                 </Grid>
             </SplitView.Pane>
-
-            <ScrollViewer>
-                <ItemsControl x:Name="listView"
-                              IsTapEnabled="False"
+            <Grid VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Margin="20,12,0,16"
+                           FontSize="36"
+                           Foreground="White"
+                           Text="{x:Bind Vm.SelectedSitemap.Label, Mode=OneWay}" />
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <GridView x:Name="MasterListView"
+                              Margin="12,0,0,0"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch"
+                              HorizontalContentAlignment="Stretch"
+                              VerticalContentAlignment="Stretch"
+                              IsItemClickEnabled="True"
+                              IsTapEnabled="True"
+                              ItemClick="MasterListView_OnItemClick"
                               ItemTemplateSelector="{StaticResource WidgetTemplateSelector}"
-                              ItemsSource="{x:Bind Vm.SelectedSitemap.Widgets, Mode=OneWay}" />
-            </ScrollViewer>
+                              ItemsSource="{x:Bind Vm.CurrentWidgets, Mode=OneWay}"
+                              SelectionMode="None">
+                        <GridView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VariableSizedWrapGrid ItemHeight="160"
+                                                       ItemWidth="310"
+                                                       Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </GridView.ItemsPanel>
+                    </GridView>
+                </ScrollViewer>
+            </Grid>
+
         </SplitView>
+        <!--<Grid Grid.Column="1">
+            <interactivity:Interaction.Behaviors>
+                <behaviors:Blur x:Name="BlurBehavior"
+                                AutomaticallyStart="True"
+                                Delay="0"
+                                Duration="10"
+                                Value="10" />
+            </interactivity:Interaction.Behaviors>
+            <Grid />
+        </Grid>-->
     </Grid>
 </Page>
 

@@ -9,6 +9,11 @@ namespace OpenHAB.Core.Contracts.Services
     public interface ISettingsService
     {
         /// <summary>
+        /// Gets or sets the version of openHAB that's running on the server
+        /// </summary>
+        OpenHABVersion ServerVersion { get; set; }
+
+        /// <summary>
         /// Persists the current settings
         /// </summary>
         /// <param name="settings">Current settings</param>

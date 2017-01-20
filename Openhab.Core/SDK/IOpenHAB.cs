@@ -42,6 +42,7 @@ namespace OpenHAB.Core.SDK
         /// Reset the connection to the OpenHAB server after changing the settings in the app
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        Task ResetConnection();
+        Task<bool> ResetConnection();
+
     }
 }

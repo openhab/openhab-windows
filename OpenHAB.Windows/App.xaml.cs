@@ -2,6 +2,10 @@
 using OpenHAB.Windows.View;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Foundation.Metadata;
+using Windows.UI;
+using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -29,8 +33,19 @@ namespace OpenHAB.Windows
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
+            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                var statusbar = StatusBar.GetForCurrentView();
+                await statusbar.ShowAsync();
+                statusbar.BackgroundColor = Color.FromArgb(255, 34, 40, 40);
+                statusbar.BackgroundOpacity = 1;
+                statusbar.ForegroundColor = Colors.White;
+            }
+
+            SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
+
             var rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
@@ -64,6 +79,11 @@ namespace OpenHAB.Windows
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
+        }
+
+        private void OnBackRequested(object sender, BackRequestedEventArgs e)
+        {
+            e.Handled = true;
         }
 
         /// <summary>

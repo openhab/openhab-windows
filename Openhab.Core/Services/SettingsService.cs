@@ -14,6 +14,9 @@ namespace OpenHAB.Core.Services
         private ApplicationDataContainer _settingsContainer;
 
         /// <inheritdoc />
+        public OpenHABVersion ServerVersion { get; set; }
+
+        /// <inheritdoc />
         public void Save(Settings settings)
         {
             EnsureSettingsContainer();
