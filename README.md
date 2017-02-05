@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/qelr6a0xjnvfm8j2?svg=true)](https://ci.appveyor.com/project/cniweb/openhab-windows)
+
 ## Introduction
 
 openHAB Windows application is a native client for openHAB. It uses REST API of openHAB to render
