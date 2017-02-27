@@ -124,6 +124,7 @@
     <Compile Include="Common\ObservableCollectionExtensions.cs" />
     <Compile Include="Contracts\Services\ISettingsService.cs" />
     <Compile Include="HABCore.cs" />
+    <Compile Include="Messages\FireErrorMessage.cs" />
     <Compile Include="Messages\PersistSettingsMessage.cs" />
     <Compile Include="Messages\SettingsUpdatedMessage.cs" />
     <Compile Include="Messages\TriggerCommandMessage.cs" />
