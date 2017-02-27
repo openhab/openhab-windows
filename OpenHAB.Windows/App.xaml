@@ -46,6 +46,10 @@
                 <controls:ImageWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
 
+            <DataTemplate x:Key="SetpoinTemplate">
+                <controls:SetpointWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
             <DataTemplate x:Key="SectionSwitchTemplate">
                 <controls:SectionSwitchWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
@@ -62,6 +66,7 @@
                                                PageLinkTemplate="{StaticResource PageLinkTemplate}"
                                                RollershutterTemplate="{StaticResource RollershutterTemplate}"
                                                SectionSwitchTemplate="{StaticResource SectionSwitchTemplate}"
+                                               SetpointTemplate="{StaticResource SetpoinTemplate}"
                                                SliderTemplate="{StaticResource SliderTemplate}"
                                                SwitchTemplate="{StaticResource SwitchTemplate}"
                                                TextTemplate="{StaticResource TextItemTemplate}" />

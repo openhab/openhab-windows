@@ -42,6 +42,8 @@ namespace OpenHAB.Windows.Converters
                 //    return ColorTemplate;
                 case "image":
                     return ImageTemplate;
+                case "setpoint":
+                    return SetpointTemplate;
                 case "sectionswitch":
                     return SectionSwitchTemplate;
                 case "video_mjpeg":
@@ -101,6 +103,11 @@ namespace OpenHAB.Windows.Converters
         /// Gets or sets the template for a color picker control
         /// </summary>
         public DataTemplate ColorTemplate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the template for a setpoint control
+        /// </summary>
+        public DataTemplate SetpointTemplate { get; set; }
 
         private string GetItemViewType(OpenHABWidget openHABWidget)
         {
