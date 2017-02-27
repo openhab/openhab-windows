@@ -29,15 +29,15 @@ namespace OpenHAB.Core.ViewModel
 
         private void RegisterServices()
         {
-            _container.RegisterType<IOpenHAB, SDK.OpenHAB>();
+            _container.RegisterType<IOpenHAB, SDK.OpenHAB>(new ContainerControlledLifetimeManager());
             _container.RegisterType<ISettingsService, SettingsService>();
-            _container.RegisterType<INavigationService, NavigationService>();
+            _container.RegisterType<INavigationService, NavigationService>(new ContainerControlledLifetimeManager());
         }
 
         private void RegisterViewModels()
         {
-            _container.RegisterType<MainViewModel>();
-            _container.RegisterType<SettingsViewModel>();
+            _container.RegisterType<MainViewModel>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<SettingsViewModel>(new ContainerControlledLifetimeManager());
         }
 
         /// <summary>

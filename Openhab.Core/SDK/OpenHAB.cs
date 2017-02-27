@@ -187,7 +187,6 @@ namespace OpenHAB.Core.SDK
                 return true;
             }
 
-
             if (ConnectionHelper.IsInternetOnMeteredConnection)
             {
                 if (settings.OpenHABRemoteUrl.Trim() == string.Empty)
@@ -196,7 +195,6 @@ namespace OpenHAB.Core.SDK
                 }
 
                 OpenHABHttpClient.BaseUrl = settings.OpenHABRemoteUrl;
-
 
                 return true;
             }
