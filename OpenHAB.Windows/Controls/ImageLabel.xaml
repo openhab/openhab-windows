@@ -10,8 +10,8 @@
     <StackPanel HorizontalAlignment="Stretch">
         <Image x:Name="Icon"
                Width="80"
-               Height="80"
-               HorizontalAlignment="Center"
+               Height="80" Margin="12, 0, 0, 0"
+               HorizontalAlignment="Left"
                VerticalAlignment="Top" />
         <TextBlock x:Name="Label"
                    Margin="8"
