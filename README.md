@@ -1,4 +1,4 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/qelr6a0xjnvfm8j2?svg=true)](https://ci.appveyor.com/project/cniweb/openhab-windows)
+[![Build status](https://ci.appveyor.com/api/projects/status/8ny86ehmdtre0opq?svg=true)](https://ci.appveyor.com/project/cniweb/openhab-windows-q4jkt)
 
 ## Introduction
 
