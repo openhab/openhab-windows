@@ -22,7 +22,10 @@ namespace OpenHAB.Windows.View
             InitializeComponent();
         }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 606ad3f74387543790d3fe4a5e6effa2fe9dadd3
         private void ButtonCancel_OnClick(object sender, RoutedEventArgs e)
         {
             Frame.GoBack();

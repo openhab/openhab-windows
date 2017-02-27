@@ -7,7 +7,10 @@
       DataContext="{Binding Settings,
                             Source={StaticResource Locator}}"
       mc:Ignorable="d">
+<<<<<<< HEAD
 
+=======
+>>>>>>> 606ad3f74387543790d3fe4a5e6effa2fe9dadd3
     <Page.Background>
         <ImageBrush ImageSource="/Assets/background.jpg" Stretch="UniformToFill" />
     </Page.Background>
@@ -15,7 +18,10 @@
         <converters:ReverseBoolConverter x:Key="ReverseBoolConverter" />
     </Page.Resources>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 606ad3f74387543790d3fe4a5e6effa2fe9dadd3
     <Grid Margin="16">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -41,6 +47,7 @@
                               VerticalAlignment="Stretch"
                               IsChecked="{Binding Settings.IsRunningInDemoMode,
                                                   Mode=TwoWay}" />
+<<<<<<< HEAD
                     <TextBlock Text="openHAB URL" />
                     <TextBox x:Name="TextBoxUrl"
                              Margin="0,0,12,12"
@@ -52,6 +59,19 @@
                     <TextBox x:Name="TextBoxRemoteUrl"
                              Margin="0,0,12,12"
                              IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
+=======
+                    <TextBlock Text="OpenHAB URL" />
+                    <TextBox x:Name="TextBoxUrl"
+                             Margin="0,0,12,12"
+                             IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
+                             Text="{Binding Settings.OpenHABUrl,
+                                            Mode=TwoWay,
+                                            UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock Text="OpenHAB Remote URl" />
+                    <TextBox x:Name="TextBoxRemoteUrl"
+                             Margin="0,0,12,12"
+                             IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
+>>>>>>> 606ad3f74387543790d3fe4a5e6effa2fe9dadd3
                              Text="{Binding Settings.OpenHABRemoteUrl,
                                             Mode=TwoWay,
                                             UpdateSourceTrigger=PropertyChanged}" />
@@ -97,10 +117,16 @@
                                 Content="Save" />
                         <Button Click="ButtonCancel_OnClick" Content="Cancel" />
                     </StackPanel>
+<<<<<<< HEAD
                     <TextBlock FontSize="9" Text="v0.1 Beta" />
                 </StackPanel>
             </ScrollViewer>
         </Grid>
 
+=======
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+>>>>>>> 606ad3f74387543790d3fe4a5e6effa2fe9dadd3
     </Grid>
 </Page>

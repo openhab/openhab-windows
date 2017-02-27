@@ -231,6 +231,7 @@ namespace OpenHAB.Core.SDK
                 openHABUrl = openHABUrl + "/";
             }
 
+<<<<<<< HEAD
             try
             {
                 var client = OpenHABHttpClient.DisposableClient();
@@ -242,8 +243,14 @@ namespace OpenHAB.Core.SDK
                 }
             }
             catch (InvalidOperationException)
+=======
+            var client = OpenHABHttpClient.DisposableClient();
+            var result = await client.GetAsync(openHABUrl + "rest").ConfigureAwait(false);
+
+            if (result.IsSuccessStatusCode)
+>>>>>>> 606ad3f74387543790d3fe4a5e6effa2fe9dadd3
             {
-                return false;
+                return true;
             }
 
             return false;
