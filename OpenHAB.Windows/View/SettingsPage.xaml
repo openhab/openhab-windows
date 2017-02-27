@@ -4,8 +4,7 @@
       xmlns:converters="using:OpenHAB.Windows.Converters"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      DataContext="{Binding Settings,
-                            Source={StaticResource Locator}}"
+      DataContext="{Binding Settings, Source={StaticResource Locator}}"
       mc:Ignorable="d">
 
     <Page.Background>
@@ -39,37 +38,28 @@
                               Margin="0,0,0,12"
                               HorizontalAlignment="Stretch"
                               VerticalAlignment="Stretch"
-                              IsChecked="{Binding Settings.IsRunningInDemoMode,
-                                                  Mode=TwoWay}" />
+                              IsChecked="{Binding Settings.IsRunningInDemoMode, Mode=TwoWay}" />
                     <TextBlock Text="openHAB URL" />
                     <TextBox x:Name="TextBoxUrl"
                              Margin="0,0,12,12"
                              IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-                             Text="{Binding Settings.OpenHABUrl,
-                                            Mode=TwoWay,
-                                            UpdateSourceTrigger=PropertyChanged}" />
+                             Text="{Binding Settings.OpenHABUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBlock Text="openHAB Remote URl" />
                     <TextBox x:Name="TextBoxRemoteUrl"
                              Margin="0,0,12,12"
                              IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-                             Text="{Binding Settings.OpenHABRemoteUrl,
-                                            Mode=TwoWay,
-                                            UpdateSourceTrigger=PropertyChanged}" />
+                             Text="{Binding Settings.OpenHABRemoteUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBlock Text="Username" />
                     <TextBox x:Name="TextBoxUsername"
                              Margin="0,0,12,12"
                              IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-                             Text="{Binding Settings.Username,
-                                            Mode=TwoWay,
-                                            UpdateSourceTrigger=PropertyChanged}"
+                             Text="{Binding Settings.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              TextWrapping="Wrap" />
                     <TextBlock Text="Password" />
                     <PasswordBox x:Name="TextBoxPassword"
                                  Margin="0,0,12,12"
                                  IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-                                 Password="{Binding Settings.Password,
-                                                    Mode=TwoWay,
-                                                    UpdateSourceTrigger=PropertyChanged}" />
+                                 Password="{Binding Settings.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <!--<TextBlock Text="Ignore SSL certificate" />
                     <CheckBox x:Name="CheckBoxIgnoreSSL"
                               Margin="0,0,0,12"
@@ -92,7 +82,7 @@
                     <StackPanel Margin="12"
                                 HorizontalAlignment="Right"
                                 Orientation="Horizontal">
-                        <Button Margin="0, 0, 8, 0"
+                        <Button Margin="0,0,8,0"
                                 Command="{x:Bind Vm.SaveCommand}"
                                 Content="Save" />
                         <Button Click="ButtonCancel_OnClick" Content="Cancel" />

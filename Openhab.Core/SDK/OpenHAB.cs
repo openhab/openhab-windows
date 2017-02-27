@@ -190,7 +190,8 @@ namespace OpenHAB.Core.SDK
 
             if (ConnectionHelper.IsInternetOnMeteredConnection)
             {
-                if (settings.OpenHABRemoteUrl.Trim() == string.Empty)                {
+                if (settings.OpenHABRemoteUrl.Trim() == string.Empty)
+                {
                     throw new OpenHABException("No remote url configured");
                 }
 
