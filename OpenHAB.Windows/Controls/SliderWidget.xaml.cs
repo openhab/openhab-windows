@@ -2,6 +2,8 @@
 using System.Globalization;
 using GalaSoft.MvvmLight.Messaging;
 using OpenHAB.Core.Messages;
+using OpenHAB.Core.Model;
+using Windows.UI.Xaml.Input;
 
 namespace OpenHAB.Windows.Controls
 {
@@ -26,6 +28,20 @@ namespace OpenHAB.Windows.Controls
             }
 
             Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, ((RadialSlider)sender)?.Value.ToString(CultureInfo.InvariantCulture)));
+        }
+
+        private void Widget_OnTapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (Widget.Item.State == "0")
+            {
+                Widget.Item.State = "100";
+                Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, "100"));
+            }
+            else
+            {
+                Widget.Item.State = "0";
+                Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, "0"));
+            }
         }
     }
 }

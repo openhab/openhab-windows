@@ -1,4 +1,5 @@
 ﻿using System.Xml.Linq;
+using GalaSoft.MvvmLight;
 using Newtonsoft.Json;
 
 namespace OpenHAB.Core.Model
@@ -6,8 +7,10 @@ namespace OpenHAB.Core.Model
     /// <summary>
     /// A class that represents an OpenHAB item
     /// </summary>
-    public class OpenHABItem
+    public class OpenHABItem : ObservableObject
     {
+        private string _state;
+
         /// <summary>
         /// Gets or sets the name of the OpenHAB item
         /// </summary>
@@ -26,7 +29,11 @@ namespace OpenHAB.Core.Model
         /// <summary>
         /// Gets or sets the state of the OpenHAB item
         /// </summary>
-        public string State { get; set; }
+        public string State
+        {
+            get { return _state; }
+            set { Set(ref _state, value); }
+        }
 
         /// <summary>
         /// Gets or sets the link of the OpenHAB item
