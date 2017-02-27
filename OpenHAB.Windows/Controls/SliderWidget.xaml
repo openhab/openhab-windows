@@ -22,7 +22,8 @@
 
         <local:ImageLabel VerticalAlignment="Center"
                           IconPath="{x:Bind Widget.Icon, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
-                          LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
+                          LabelText="{x:Bind Widget.Label, Mode=OneWay}"
+                          Tapped="Widget_OnTapped" />
 
         <local:RadialSlider Grid.Column="1"
                             Width="100"
@@ -38,6 +39,6 @@
                             TrailBrush="{StaticResource OpenHABLightOrangeBrush}"
                             ValueBrush="Black"
                             ValueChanged="RadialSlider_OnValueChanged"
-                            Value="{x:Bind Widget.Item.State, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}" />
+                            Value="{x:Bind Widget.Item.State, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}" />
     </Grid>
 </local:WidgetBase>
