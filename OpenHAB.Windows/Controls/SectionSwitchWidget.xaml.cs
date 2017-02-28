@@ -1,4 +1,10 @@
-﻿namespace OpenHAB.Windows.Controls
+﻿using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
+using GalaSoft.MvvmLight.Messaging;
+using OpenHAB.Core.Messages;
+using OpenHAB.Core.Model;
+
+namespace OpenHAB.Windows.Controls
 {
     /// <summary>
     /// Widget control that represents an OpenHAB switch
@@ -11,6 +17,12 @@
         public SectionSwitchWidget()
         {
             InitializeComponent();
+        }
+
+        private void Button_OnClick(object sender, TappedRoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, button?.Tag.ToString()));
         }
     }
 }
