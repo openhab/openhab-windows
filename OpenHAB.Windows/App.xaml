@@ -18,6 +18,10 @@
                 <controls:FrameWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
 
+            <DataTemplate x:Key="SelectionTemplate">
+                <controls:SelectionWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
             <DataTemplate x:Key="MjpegTemplate">
                 <controls:MjpegWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
@@ -66,6 +70,7 @@
                                                PageLinkTemplate="{StaticResource PageLinkTemplate}"
                                                RollershutterTemplate="{StaticResource RollershutterTemplate}"
                                                SectionSwitchTemplate="{StaticResource SectionSwitchTemplate}"
+                                               SelectionTemplate="{StaticResource SelectionTemplate}"
                                                SetpointTemplate="{StaticResource SetpoinTemplate}"
                                                SliderTemplate="{StaticResource SliderTemplate}"
                                                SwitchTemplate="{StaticResource SwitchTemplate}"

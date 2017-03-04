@@ -128,6 +128,9 @@
     </Compile>
     <Compile Include="Controls\NavMenuListView.cs" />
     <Compile Include="Controls\RadialSlider.cs" />
+    <Compile Include="Controls\SelectionWidget.xaml.cs">
+      <DependentUpon>SelectionWidget.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SetpointWidget.xaml.cs">
       <DependentUpon>SetpointWidget.xaml</DependentUpon>
     </Compile>
@@ -258,6 +261,10 @@
     <Page Include="Controls\ImageWidget.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SelectionWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\SetpointWidget.xaml">
       <Generator>MSBuild:Compile</Generator>
