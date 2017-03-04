@@ -44,6 +44,8 @@ namespace OpenHAB.Windows.Converters
                     return ImageTemplate;
                 case "setpoint":
                     return SetpointTemplate;
+                case "selection":
+                    return SelectionTemplate;
                 case "sectionswitch":
                     return SectionSwitchTemplate;
                 case "video_mjpeg":
@@ -58,6 +60,11 @@ namespace OpenHAB.Windows.Converters
         /// Gets or sets the template for a Frame control
         /// </summary>
         public DataTemplate FrameTemplate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the template for a Selection control
+        /// </summary>
+        public DataTemplate SelectionTemplate { get; set; }
 
         /// <summary>
         /// Gets or sets the template for a MJPEG video control
