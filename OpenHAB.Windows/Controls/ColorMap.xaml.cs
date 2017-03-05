@@ -230,8 +230,9 @@ namespace OpenHAB.Windows.Controls
                         WriteBgra(stream, color);
                     }
                 }
+
+                stream.Dispose();
             });
-            stream.Dispose();
             bmp.Invalidate();
         }
 
