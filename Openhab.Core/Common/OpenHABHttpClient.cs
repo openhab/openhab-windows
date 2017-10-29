@@ -52,7 +52,6 @@ namespace OpenHAB.Core.Common
             }
 
             var handler = new HttpClientHandler();
-
             var credentials = GetCredentials();
 
             if (credentials != null)
@@ -61,7 +60,6 @@ namespace OpenHAB.Core.Common
             }
 
             var client = new HttpClient(handler);
-
             if (!disposable)
             {
                 client.BaseAddress = new Uri(BaseUrl);

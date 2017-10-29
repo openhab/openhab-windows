@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Microsoft.Toolkit.Uwp;
+using Microsoft.Toolkit.Uwp.Connectivity;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OpenHAB.Core.Common;
@@ -187,7 +188,7 @@ namespace OpenHAB.Core.SDK
                 return true;
             }
 
-            if (ConnectionHelper.IsInternetOnMeteredConnection)
+            if (NetworkHelper.Instance.ConnectionInformation.IsInternetOnMeteredConnection)
             {
                 if (settings.OpenHABRemoteUrl.Trim() == string.Empty)
                 {
@@ -195,7 +196,6 @@ namespace OpenHAB.Core.SDK
                 }
 
                 OpenHABHttpClient.BaseUrl = settings.OpenHABRemoteUrl;
-
                 return true;
             }
 
