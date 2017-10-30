@@ -17,12 +17,12 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <local:ImageLabel VerticalAlignment="Center"
-                          IconPath="{x:Bind Widget.Icon, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
+                          IconPath="{x:Bind Widget, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
                           LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
 
         <StackPanel Grid.Column="1"
                     Width="100"
-                    Margin="0, 0, 12, 0"
+                    Margin="0,0,12,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     BorderBrush="{StaticResource OpenHABSplitviewBrush}"
@@ -30,11 +30,11 @@
             <Button HorizontalAlignment="Stretch"
                     Click="ButtonUp_Click"
                     Content="Up" />
-            <Button Margin="0, 4, 0, 0"
+            <Button Margin="0,4,0,0"
                     HorizontalAlignment="Stretch"
                     Click="ButtonStop_Click"
                     Content="Stop" />
-            <Button Margin="0, 4, 0, 0"
+            <Button Margin="0,4,0,0"
                     HorizontalAlignment="Stretch"
                     Click="ButtonDown_Click"
                     Content="Down" />

@@ -19,9 +19,11 @@ namespace OpenHAB.Windows.Converters
             var settings = settingsService.Load();
             var serverUrl = settings.IsRunningInDemoMode.Value ? Constants.Api.DemoModeUrl : settings.OpenHABUrl;
 
+            var widget = value as OpenHABWidget;
+
             return settingsService.ServerVersion == OpenHABVersion.Two ?
-                $"{serverUrl}icon/{value}?state=UNDEF&format=png" :
-                $"{serverUrl}images/{value}.png";
+                $"{serverUrl}icon/{widget.Icon}?state={widget.Item?.State ?? "ON"}&format=png" :
+                $"{serverUrl}images/{widget.Icon}.png";
         }
 
         /// <inheritdoc/>

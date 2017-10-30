@@ -18,7 +18,7 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <local:ImageLabel VerticalAlignment="Center"
-                          IconPath="{x:Bind Widget.Icon, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
+                          IconPath="{x:Bind Widget, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
                           LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
 
         <Grid Grid.Column="1"
