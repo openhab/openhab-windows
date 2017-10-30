@@ -133,15 +133,10 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <StackPanel Margin="20,12,0,16">
-                    <TextBlock FontSize="36"
-                               Foreground="White"
-                               Text="{x:Bind Vm.SelectedSitemap.Label, Mode=OneWay}" />
-                    <TextBlock FontSize="20"
-                               Foreground="White"
-                               Text="{x:Bind Vm.Subtitle, Mode=OneWay}" />
-                </StackPanel>
-
+                <TextBlock Margin="20,12,0,16"
+                           FontSize="36"
+                           Foreground="White"
+                           Text="{x:Bind Vm.SelectedSitemap.Label, Mode=OneWay}" />
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                     <GridView x:Name="MasterListView"
                               Margin="12,0,0,0"
@@ -175,25 +170,6 @@
                       Style="{StaticResource SplitViewTogglePaneButtonStyle}"
                       TabIndex="1"
                       ToolTipService.ToolTip="Menu" />
-
-        <Border x:Name="border"
-                Margin="0,0,0,24"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Bottom"
-                Background="{StaticResource OpenHABLightColor}"
-                RenderTransformOrigin="0.5,0.5">
-            <Border.RenderTransform>
-                <CompositeTransform TranslateY="100" />
-            </Border.RenderTransform>
-            <Border.Projection>
-                <PlaneProjection />
-            </Border.Projection>
-            <TextBlock Margin="8"
-                       FontSize="20"
-                       Foreground="Red"
-                       Text="{x:Bind Vm.ErrorMessage, Mode=OneWay}" />
-        </Border>
-
         <!--<Grid Grid.Column="1">
             <interactivity:Interaction.Behaviors>
                 <behaviors:Blur x:Name="BlurBehavior"

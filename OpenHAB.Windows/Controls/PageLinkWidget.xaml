@@ -22,14 +22,14 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <local:ImageLabel Margin="8, 0, 0, 0"
+        <local:ImageLabel Margin="8,0,0,0"
                           HorizontalAlignment="Left"
                           VerticalAlignment="Center"
-                          IconPath="{x:Bind Widget.Icon, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
+                          IconPath="{x:Bind Widget, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
                           LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
 
         <TextBlock Grid.Column="1"
-                   Margin="0, 0, 12, 0"
+                   Margin="0,0,12,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Center"
                    AutomationProperties.Name="Select"

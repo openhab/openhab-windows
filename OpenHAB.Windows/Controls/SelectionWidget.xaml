@@ -19,7 +19,7 @@
         <local:ImageLabel Margin="8,0,0,0"
                           HorizontalAlignment="Left"
                           VerticalAlignment="Center"
-                          IconPath="{x:Bind Widget.Icon, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
+                          IconPath="{x:Bind Widget, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
                           LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
 
         <ComboBox x:Name="SelectionComboBox"
