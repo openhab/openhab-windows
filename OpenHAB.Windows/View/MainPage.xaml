@@ -38,6 +38,28 @@
                            TextWrapping="Wrap" />
             </StackPanel>
         </DataTemplate>
+
+        <Storyboard x:Name="ErrorMessageStoryboard">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="border" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)">
+                <EasingDoubleKeyFrame KeyTime="0" Value="100">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase Amplitude="2" EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-100">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase Amplitude="2" EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Name="ErrorGoneStoryboard">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="border" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)">
+                <EasingDoubleKeyFrame KeyTime="0" Value="-100" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="100" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+
     </Page.Resources>
 
     <Page.DataContext>
