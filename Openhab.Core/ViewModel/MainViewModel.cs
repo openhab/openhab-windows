@@ -118,7 +118,7 @@ namespace OpenHAB.Core.ViewModel
                         await LoadData();
                     }
                 }
-                catch (HttpRequestException)
+                catch (HttpRequestException ex)
                 {
                     MessengerInstance.Send(new FireErrorMessage());
                 }
