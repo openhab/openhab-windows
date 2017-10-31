@@ -46,6 +46,5 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-
     </Grid>
 </local:WidgetBase>

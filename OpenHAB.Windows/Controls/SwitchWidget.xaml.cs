@@ -27,7 +27,15 @@ namespace OpenHAB.Windows.Controls
 
         private void SwitchWidget_Loaded(object sender, RoutedEventArgs e)
         {
-            IsOn = Widget.Item.State == "ON";
+            // Fix for slider things with a switch item
+            if (Widget.Item.State != "ON" && Widget.Item.State != "OFF" && int.TryParse(Widget.Item.State, out int state))
+            {
+                IsOn = state > 0;
+            }
+            else
+            {
+                IsOn = Widget.Item.State == "ON";
+            }
 
             VisualStateManager.GoToState(this, IsOn ? "OnState" : "OffState", false);
         }
