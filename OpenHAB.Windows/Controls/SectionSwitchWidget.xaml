@@ -24,7 +24,8 @@
                           VerticalAlignment="Center"
                           IconPath="{x:Bind Widget, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
                           LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
-        <ItemsControl Grid.Column="1"
+        <ItemsControl x:Name="SectionsList"
+                      Grid.Column="1"
                       Margin="2,2,8,2"
                       HorizontalAlignment="Center"
                       VerticalAlignment="Center"
@@ -34,10 +35,10 @@
                       ItemsSource="{x:Bind Widget.Mappings}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="model:OpenHABWidgetMapping">
-                    <Button Margin="0,0,4,4"
-                            Content="{x:Bind Label}"
-                            Tag="{x:Bind Command}"
-                            Tapped="Button_OnClick" />
+                    <ToggleButton Margin="0,0,4,4"
+                                  Content="{x:Bind Label}"
+                                  Tag="{x:Bind Command}"
+                                  Tapped="Button_OnClick" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemsPanel>

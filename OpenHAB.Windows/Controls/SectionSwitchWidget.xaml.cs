@@ -1,7 +1,14 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using System.Collections.Generic;
+using System.Linq;
+using GalaSoft.MvvmLight.Messaging;
 using OpenHAB.Core.Messages;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
+using Microsoft.Toolkit.Uwp.UI.Extensions;
+using OpenHAB.Core.Model;
+using WinRTXamlToolkit.Controls.Extensions;
 
 namespace OpenHAB.Windows.Controls
 {
@@ -16,12 +23,45 @@ namespace OpenHAB.Windows.Controls
         public SectionSwitchWidget()
         {
             InitializeComponent();
+            Loaded += SectionSwitchWidget_Loaded;
+        }
+
+        private void SectionSwitchWidget_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(Widget.Item.State))
+            {
+                return;
+            }
+
+            var currentItem = SectionsList?.Items?.SingleOrDefault(_ => ((OpenHABWidgetMapping)_).Command == Widget.Item.State);
+            ContentPresenter presenter = SectionsList?.ContainerFromItem(currentItem) as ContentPresenter;
+
+            if (presenter.GetChildren().FirstOrDefault() is ToggleButton toggleButton)
+            {
+                toggleButton.IsChecked = true;
+            }
         }
 
         private void Button_OnClick(object sender, TappedRoutedEventArgs e)
         {
-            Button button = sender as Button;
+            ToggleButton button = sender as ToggleButton;
+
+            UncheckEverything();
+            button.IsChecked = true;
+
             Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, button?.Tag.ToString()));
+        }
+
+        private void UncheckEverything()
+        {
+            foreach (var item in SectionsList.Items)
+            {
+                ContentPresenter presenter = SectionsList?.ContainerFromItem(item) as ContentPresenter;
+                if (presenter.GetChildren().FirstOrDefault() is ToggleButton toggleButton)
+                {
+                    toggleButton.IsChecked = false;
+                }
+            }
         }
     }
 }
