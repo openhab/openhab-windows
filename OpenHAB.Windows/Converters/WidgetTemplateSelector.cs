@@ -51,6 +51,8 @@ namespace OpenHAB.Windows.Converters
                 case "video_mjpeg":
                 case "video":
                     return MjpegTemplate;
+                case "chart":
+                    return ChartTemplate;
                 default:
                     return FrameTemplate;
             }
@@ -115,6 +117,11 @@ namespace OpenHAB.Windows.Converters
         /// Gets or sets the template for a setpoint control
         /// </summary>
         public DataTemplate SetpointTemplate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the template for a chart control
+        /// </summary>
+        public DataTemplate ChartTemplate { get; set; }
 
         private string GetItemViewType(OpenHABWidget openHABWidget)
         {

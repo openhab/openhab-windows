@@ -18,6 +18,10 @@
                 <controls:FrameWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
 
+            <DataTemplate x:Key="ChartTemplate">
+                <controls:ChartWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
             <DataTemplate x:Key="SelectionTemplate">
                 <controls:SelectionWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
@@ -63,6 +67,7 @@
             </DataTemplate>
 
             <converters:WidgetTemplateSelector x:Key="WidgetTemplateSelector"
+                                               ChartTemplate="{StaticResource ChartTemplate}"
                                                ColorTemplate="{StaticResource ColorTemplate}"
                                                FrameTemplate="{StaticResource FrameTemplate}"
                                                ImageTemplate="{StaticResource ImageItemTemplate}"
