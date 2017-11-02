@@ -6,21 +6,37 @@
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   mc:Ignorable="d">
 
-    <Grid Height="600"
-          Margin="8,4,8,4"
+    <Grid Width="300"
+          Height="150"
           Background="{StaticResource OpenHABLightColor}"
-          CornerRadius="5">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <local:ImageLabel VerticalAlignment="Center"
-                          IconPath="{x:Bind Widget, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
+          CornerRadius="5"
+          Tapped="ImageWidget_OnTapped">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <local:ImageLabel Grid.Column="0"
+                          IconPath="{x:Bind Widget, Mode=OneWay, Converter={StaticResource IconToPathConverter}}"
                           LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
 
-        <Image x:Name="Chart"
-               Grid.Row="1"
+        <ContentDialog x:Name="PopupDialog"
+                       Title="{x:Bind Widget.Label}"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="2"
+                       Background="{StaticResource OpenHABLightColor}"
+                       IsPrimaryButtonEnabled="True"
+                       PrimaryButtonText="Close">
+            <Image x:Name="FullImage"
+                   HorizontalAlignment="Right"
+                   Source="http://demo.openhab.org:8080/chart?groups=Weather_Chart&amp;period=w"
+                   Stretch="Uniform" />
+        </ContentDialog>
+
+        <Image x:Name="ThumbImage"
+               Grid.Column="1"
+               Margin="8"
+               HorizontalAlignment="Stretch"
+               VerticalAlignment="Stretch"
                Stretch="UniformToFill" />
     </Grid>
 </local:WidgetBase>

@@ -28,16 +28,16 @@
                        Background="{StaticResource OpenHABLightColor}"
                        IsPrimaryButtonEnabled="True"
                        PrimaryButtonText="Close">
-            <Image HorizontalAlignment="Right"
-                   Source="{x:Bind Widget.Url, Mode=OneWay}"
+            <Image x:Name="FullImage"
+                   HorizontalAlignment="Right"
                    Stretch="Uniform" />
         </ContentDialog>
 
-        <Image Grid.Column="1"
+        <Image x:Name="ThumbImage"
+               Grid.Column="1"
                Margin="8"
                HorizontalAlignment="Stretch"
                VerticalAlignment="Stretch"
-               Source="{x:Bind Widget.Url, Mode=OneWay}"
                Stretch="UniformToFill" />
     </Grid>
 </local:WidgetBase>

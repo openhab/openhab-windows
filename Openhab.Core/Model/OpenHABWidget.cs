@@ -23,10 +23,7 @@ namespace OpenHAB.Core.Model
         /// </summary>
         public string Label
         {
-            get
-            {
-                return _label;
-            }
+            get => _label;
 
             set
             {
@@ -56,8 +53,8 @@ namespace OpenHAB.Core.Model
         /// </summary>
         public string Icon
         {
-            get { return _icon ?? string.Empty; }
-            set { _icon = value; }
+            get => _icon ?? string.Empty;
+            set => _icon = value;
         }
 
         /// <summary>

@@ -22,8 +22,8 @@ namespace OpenHAB.Windows.Controls
         /// </summary>
         public OpenHABWidget Widget
         {
-            get { return (OpenHABWidget)GetValue(WidgetProperty); }
-            set { SetValue(WidgetProperty, value); }
+            get => (OpenHABWidget)GetValue(WidgetProperty);
+            set => SetValue(WidgetProperty, value);
         }
 
         /// <inheritdoc />
