@@ -30,8 +30,8 @@ namespace OpenHAB.Core.ViewModel
         /// </summary>
         public string ErrorMessage
         {
-            get { return _errorMessage; }
-            set { Set(ref _errorMessage, value); }
+            get => _errorMessage;
+            set => Set(ref _errorMessage, value);
         }
 
         /// <summary>
@@ -39,8 +39,8 @@ namespace OpenHAB.Core.ViewModel
         /// </summary>
         public string Subtitle
         {
-            get { return _subtitle; }
-            set { Set(ref _subtitle, value); }
+            get => _subtitle;
+            set => Set(ref _subtitle, value);
         }
 
         /// <summary>
@@ -48,8 +48,8 @@ namespace OpenHAB.Core.ViewModel
         /// </summary>
         public ObservableCollection<OpenHABSitemap> Sitemaps
         {
-            get { return _sitemaps; }
-            set { Set(ref _sitemaps, value); }
+            get => _sitemaps;
+            set => Set(ref _sitemaps, value);
         }
 
         /// <summary>
@@ -85,8 +85,8 @@ namespace OpenHAB.Core.ViewModel
         /// </summary>
         public ObservableCollection<OpenHABWidget> CurrentWidgets
         {
-            get { return _currentWidgets; }
-            set { Set(ref _currentWidgets, value); }
+            get => _currentWidgets;
+            set => Set(ref _currentWidgets, value);
         }
 
         /// <summary>
@@ -94,8 +94,8 @@ namespace OpenHAB.Core.ViewModel
         /// </summary>
         public OpenHABWidget SelectedWidget
         {
-            get { return _selectedWidget; }
-            set { Set(ref _selectedWidget, value); }
+            get => _selectedWidget;
+            set => Set(ref _selectedWidget, value);
         }
 
         /// <summary>
@@ -148,6 +148,7 @@ namespace OpenHAB.Core.ViewModel
 
             var sitemaps = await _openHabsdk.LoadSiteMaps(_version);
             Sitemaps = new ObservableCollection<OpenHABSitemap>(sitemaps);
+            _openHabsdk.StartItemUpdates();
         }
 
         private async Task LoadWidgets()

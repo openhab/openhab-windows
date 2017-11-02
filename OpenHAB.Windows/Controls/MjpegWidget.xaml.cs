@@ -20,10 +20,7 @@ namespace OpenHAB.Windows.Controls
         /// </summary>
         public BitmapImage CameraBitmapImage
         {
-            get
-            {
-                return _cameraBitmapImage;
-            }
+            get => _cameraBitmapImage;
 
             set
             {
@@ -46,7 +43,12 @@ namespace OpenHAB.Windows.Controls
             Loaded += OnLoaded;
         }
 
-        private async void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        {
+            SetState();
+        }
+
+        internal override async void SetState()
         {
             _mjpegDecoder = new MJPEGDecoder();
             CameraBitmapImage = new BitmapImage();

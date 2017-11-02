@@ -22,13 +22,18 @@ namespace OpenHAB.Windows.Controls
 
         private void SelectionWidget_Loaded(object sender, global::Windows.UI.Xaml.RoutedEventArgs e)
         {
+            SetState();
+        }
+
+        internal override void SetState()
+        {
             OpenHABWidgetMapping itemState = Widget?.Mappings.FirstOrDefault(_ => _.Command == Widget.Item.State);
             SelectionComboBox.SelectedItem = itemState;
         }
 
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            OpenHABWidgetMapping mapping = e.AddedItems.FirstOrDefault() as OpenHABWidgetMapping;
+            OpenHABWidgetMapping mapping = (OpenHABWidgetMapping)e.AddedItems.FirstOrDefault();
 
             if (mapping == null)
             {

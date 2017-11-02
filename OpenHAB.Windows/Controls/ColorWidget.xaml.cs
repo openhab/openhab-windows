@@ -19,10 +19,7 @@ namespace OpenHAB.Windows.Controls
         /// </summary>
         public Color SelectedColor
         {
-            get
-            {
-                return _selectedColor;
-            }
+            get => _selectedColor;
 
             set
             {
@@ -46,6 +43,11 @@ namespace OpenHAB.Windows.Controls
         }
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        {
+            SetState();
+        }
+
+        internal override void SetState()
         {
             var rgbString = Widget.Item.State.Split(',');
 

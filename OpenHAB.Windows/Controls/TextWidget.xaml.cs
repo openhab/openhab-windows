@@ -12,5 +12,9 @@
         {
             InitializeComponent();
         }
+
+        internal override void SetState()
+        {
+        }
     }
 }

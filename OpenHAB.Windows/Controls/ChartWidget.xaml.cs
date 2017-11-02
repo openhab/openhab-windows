@@ -43,13 +43,13 @@ namespace OpenHAB.Windows.Controls
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            SetImage();
+            SetState();
 
             SetSources();
             InitTimer();
         }
 
-        private void SetImage()
+        internal override void SetState()
         {
             var settings = _settingsService.Load();
             var serverUrl = settings.IsRunningInDemoMode.Value ? Constants.Api.DemoModeUrl : settings.OpenHABUrl;
@@ -77,7 +77,7 @@ namespace OpenHAB.Windows.Controls
 
         private void TimerOnTick(object sender, object o)
         {
-            SetImage();
+            SetState();
             SetSources();
         }
 

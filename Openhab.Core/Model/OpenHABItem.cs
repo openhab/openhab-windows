@@ -1,6 +1,9 @@
 ﻿using System.Xml.Linq;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Toolkit.Uwp.Helpers;
 using Newtonsoft.Json;
+using OpenHAB.Core.Messages;
 
 namespace OpenHAB.Core.Model
 {
@@ -31,8 +34,8 @@ namespace OpenHAB.Core.Model
         /// </summary>
         public string State
         {
-            get { return _state; }
-            set { Set(ref _state, value); }
+            get => _state;
+            set => Set(ref _state, value);
         }
 
         /// <summary>
@@ -45,6 +48,20 @@ namespace OpenHAB.Core.Model
         /// </summary>
         public OpenHABItem()
         {
+            Messenger.Default.Register<UpdateItemMessage>(this, HandleUpdateItemMessage);
+        }
+
+        private void HandleUpdateItemMessage(UpdateItemMessage message)
+        {
+            if (message.ItemName != Name)
+            {
+                return;
+            }
+
+            DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+            {
+                State = message.Value;
+            });
         }
 
         /// <summary>

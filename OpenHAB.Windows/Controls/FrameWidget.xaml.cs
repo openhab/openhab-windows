@@ -22,5 +22,9 @@ namespace OpenHAB.Windows.Controls
         {
             Messenger.Default.Send(new WidgetClickedMessage(e.ClickedItem as OpenHABWidget));
         }
+
+        internal override void SetState()
+        {
+        }
     }
 }

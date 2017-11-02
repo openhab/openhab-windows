@@ -1,5 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Windows.UI.Core;
 using OpenHAB.Core.Model;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -15,7 +17,7 @@ namespace OpenHAB.Windows.Controls
         /// A bindable property to bind the OpenHAB widget to the control
         /// </summary>
         public static readonly DependencyProperty WidgetProperty = DependencyProperty.Register(
-            nameof(Widget), typeof(OpenHABWidget), typeof(WidgetBase), new PropertyMetadata(default(OpenHABWidget)));
+            nameof(Widget), typeof(OpenHABWidget), typeof(WidgetBase), new PropertyMetadata(default(OpenHABWidget), PropertyChangedCallback));
 
         /// <summary>
         /// Gets or sets the OpenHAB widget
@@ -25,6 +27,35 @@ namespace OpenHAB.Windows.Controls
             get => (OpenHABWidget)GetValue(WidgetProperty);
             set => SetValue(WidgetProperty, value);
         }
+
+        private static void PropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        {
+            var widgetBase = dependencyObject as WidgetBase;
+            widgetBase?.SetPropertyChangedHandler();
+        }
+
+        private void SetPropertyChangedHandler()
+        {
+            if (Widget.Item == null)
+            {
+                return;
+            }
+
+            Widget.Item.PropertyChanged += Item_PropertyChanged;
+        }
+
+        private async void Item_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var widget = sender as OpenHABWidget;
+            if (e.PropertyName != nameof(widget.Item.State))
+            {
+                return;
+            }
+
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, SetState);
+        }
+
+        internal abstract void SetState();
 
         /// <inheritdoc />
         public event PropertyChangedEventHandler PropertyChanged;

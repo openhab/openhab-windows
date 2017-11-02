@@ -11,10 +11,26 @@ namespace OpenHAB.Windows.Controls
     /// </summary>
     public sealed partial class SwitchWidget : WidgetBase
     {
+        private bool _isOn;
+
         /// <summary>
         /// Gets or sets a value indicating whether the switch is on or off
         /// </summary>
-        public bool IsOn { get; set; }
+        public bool IsOn
+        {
+            get => _isOn;
+
+            set
+            {
+                if (_isOn == value)
+                {
+                    return;
+                }
+
+                _isOn = value;
+                RaisePropertyChanged();
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SwitchWidget"/> class.
@@ -26,6 +42,11 @@ namespace OpenHAB.Windows.Controls
         }
 
         private void SwitchWidget_Loaded(object sender, RoutedEventArgs e)
+        {
+            SetState();
+        }
+
+        internal override void SetState()
         {
             // Fix for slider things with a switch item
             if (Widget.Item.State != "ON" && Widget.Item.State != "OFF" && int.TryParse(Widget.Item.State, out int state))

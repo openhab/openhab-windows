@@ -1,5 +1,6 @@
 ﻿using System;
 using GalaSoft.MvvmLight.Ioc;
+using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
 using OpenHAB.Core.Contracts.Services;
@@ -26,6 +27,7 @@ namespace OpenHAB.Core.ViewModel
 
         private void RegisterServices()
         {
+            SimpleIoc.Default.Register(() => Messenger.Default);
             SimpleIoc.Default.Register<IOpenHAB, SDK.OpenHAB>();
             SimpleIoc.Default.Register<ISettingsService, SettingsService>();
             SimpleIoc.Default.Register<INavigationService, NavigationService>();

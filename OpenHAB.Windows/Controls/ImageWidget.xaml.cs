@@ -21,10 +21,10 @@ namespace OpenHAB.Windows.Controls
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            SetSources();
+            SetState();
         }
 
-        private void SetSources()
+        internal override void SetState()
         {
             ThumbImage.Source = new BitmapImage(
                     new Uri(Widget.Url, UriKind.Absolute))
