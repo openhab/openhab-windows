@@ -43,5 +43,9 @@ namespace OpenHAB.Windows.Controls
                 Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, "0"));
             }
         }
+
+        internal override void SetState()
+        {
+        }
     }
 }

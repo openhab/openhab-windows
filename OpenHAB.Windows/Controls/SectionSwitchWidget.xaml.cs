@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using GalaSoft.MvvmLight.Messaging;
 using OpenHAB.Core.Messages;
+using OpenHAB.Core.Model;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
-using Microsoft.Toolkit.Uwp.UI.Extensions;
-using OpenHAB.Core.Model;
 using WinRTXamlToolkit.Controls.Extensions;
 
 namespace OpenHAB.Windows.Controls
@@ -33,7 +31,13 @@ namespace OpenHAB.Windows.Controls
                 return;
             }
 
-            var currentItem = SectionsList?.Items?.SingleOrDefault(_ => ((OpenHABWidgetMapping)_).Command == Widget.Item.State);
+            SetState();
+        }
+
+        internal override void SetState()
+        {
+            UncheckEverything();
+            var currentItem = SectionsList?.Items?.SingleOrDefault(_ => ((OpenHABWidgetMapping) _).Command == Widget.Item.State);
             ContentPresenter presenter = SectionsList?.ContainerFromItem(currentItem) as ContentPresenter;
 
             if (presenter.GetChildren().FirstOrDefault() is ToggleButton toggleButton)

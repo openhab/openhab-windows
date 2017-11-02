@@ -18,8 +18,7 @@ namespace OpenHAB.Windows.Controls
 
         private static void IconChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            var control = dependencyObject as ImageLabel;
-
+            var control = (ImageLabel)dependencyObject;
             if (control == null)
             {
                 return;
@@ -33,8 +32,8 @@ namespace OpenHAB.Windows.Controls
         /// </summary>
         public string IconPath
         {
-            get { return (string)GetValue(IconPathProperty); }
-            set { SetValue(IconPathProperty, value ?? string.Empty); }
+            get => (string)GetValue(IconPathProperty);
+            set => SetValue(IconPathProperty, value ?? string.Empty);
         }
 
         /// <summary>
@@ -48,13 +47,13 @@ namespace OpenHAB.Windows.Controls
         /// </summary>
         public string LabelText
         {
-            get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value ?? string.Empty); }
+            get => (string)GetValue(TextProperty);
+            set => SetValue(TextProperty, value ?? string.Empty);
         }
 
         private static void TextChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            var control = dependencyObject as ImageLabel;
+            var control = (ImageLabel)dependencyObject;
 
             if (control == null)
             {

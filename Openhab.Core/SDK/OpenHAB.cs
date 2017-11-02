@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.Toolkit.Uwp;
+using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Toolkit.Uwp.Connectivity;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts.Services;
+using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 
 namespace OpenHAB.Core.SDK
@@ -20,14 +22,17 @@ namespace OpenHAB.Core.SDK
     public class OpenHAB : IOpenHAB
     {
         private readonly ISettingsService _settingsService;
+        private readonly IMessenger _messenger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenHAB"/> class.
         /// </summary>
         /// <param name="settingsService">The service to fetch the settings</param>
-        public OpenHAB(ISettingsService settingsService)
+        /// <param name="messenger">The messenger instance</param>
+        public OpenHAB(ISettingsService settingsService, IMessenger messenger)
         {
             _settingsService = settingsService;
+            _messenger = messenger;
         }
 
         /// <inheritdoc />
@@ -246,6 +251,36 @@ namespace OpenHAB.Core.SDK
             }
 
             return false;
+        }
+
+        /// <inheritdoc />
+        public async void StartItemUpdates()
+        {
+            await Task.Run(async () =>
+            {
+                var client = OpenHABHttpClient.Client();
+                var requestUri = Constants.Api.Events;
+                var stream = await client.GetStreamAsync(requestUri);
+
+                using (var reader = new StreamReader(stream))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        var updateEvent = reader.ReadLine();
+                        if (updateEvent?.StartsWith("data:") == true)
+                        {
+                            var data = JsonConvert.DeserializeObject<EventStreamData>(updateEvent.Remove(0, 6));
+                            if (!data.Topic.EndsWith("state"))
+                            {
+                                continue;
+                            }
+
+                            var payload = JsonConvert.DeserializeObject<EventStreamPayload>(data.Payload);
+                            _messenger.Send(new UpdateItemMessage(data.Topic.Replace("smarthome/items/", string.Empty).Replace("/state", string.Empty), payload.Value));
+                        }
+                    }
+                }
+            });
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System.Globalization;
 using GalaSoft.MvvmLight.Messaging;
 using OpenHAB.Core.Messages;
-using OpenHAB.Core.Model;
 using Windows.UI.Xaml;
 
 namespace OpenHAB.Windows.Controls
@@ -11,11 +10,6 @@ namespace OpenHAB.Windows.Controls
     /// </summary>
     public sealed partial class SetpointWidget : WidgetBase
     {
-        /// <summary>
-        /// Gets or sets a value indicating whether the switch is on or off
-        /// </summary>
-        public bool IsOn { get; set; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SetpointWidget"/> class.
         /// </summary>
@@ -50,6 +44,10 @@ namespace OpenHAB.Windows.Controls
 
             Widget.Item.State = value.ToString(CultureInfo.CurrentCulture);
             Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, value.ToString(CultureInfo.InvariantCulture)));
+        }
+
+        internal override void SetState()
+        {
         }
     }
 }
