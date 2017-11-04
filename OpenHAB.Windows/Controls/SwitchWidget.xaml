@@ -18,13 +18,13 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <local:ImageLabel VerticalAlignment="Center"
-                          IconPath="{x:Bind Widget.Icon, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
+                          IconPath="{x:Bind Widget, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
                           LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
 
         <Grid Grid.Column="1"
               Width="100"
               Height="100"
-              Margin="0, 0, 12, 0"
+              Margin="0,0,12,0"
               HorizontalAlignment="Center"
               VerticalAlignment="Center"
               BorderBrush="{StaticResource OpenHABSplitviewBrush}"
@@ -61,10 +61,10 @@
                     </VisualState.Setters>
                     <Storyboard>
                         <ColorAnimation d:IsOptimized="True"
-                                        Duration="0"
                                         Storyboard.TargetName="TextBlockOn"
                                         Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
-                                        To="White" />
+                                        To="White"
+                                        Duration="0" />
                     </Storyboard>
                 </VisualState>
                 <VisualState x:Name="OffState">
@@ -73,10 +73,10 @@
                     </VisualState.Setters>
                     <Storyboard>
                         <ColorAnimation d:IsOptimized="True"
-                                        Duration="0"
                                         Storyboard.TargetName="TextBlockOff"
                                         Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
-                                        To="White" />
+                                        To="White"
+                                        Duration="0" />
                     </Storyboard>
                 </VisualState>
             </VisualStateGroup>

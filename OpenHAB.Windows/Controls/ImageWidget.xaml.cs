@@ -1,6 +1,4 @@
 ﻿using System;
-using MJPEGDecoderWinRTLib;
-using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
@@ -12,31 +10,6 @@ namespace OpenHAB.Windows.Controls
     /// </summary>
     public sealed partial class ImageWidget : WidgetBase
     {
-        private BitmapImage _cameraBitmapImage;
-        private MJPEGDecoder _mjpegDecoder;
-
-        /// <summary>
-        /// Gets or sets the camera bitmapimage
-        /// </summary>
-        public BitmapImage CameraBitmapImage
-        {
-            get
-            {
-                return _cameraBitmapImage;
-            }
-
-            set
-            {
-                if (_cameraBitmapImage == value)
-                {
-                    return;
-                }
-
-                _cameraBitmapImage = value;
-                RaisePropertyChanged();
-            }
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageWidget"/> class.
         /// </summary>
@@ -46,48 +19,25 @@ namespace OpenHAB.Windows.Controls
             Loaded += OnLoaded;
         }
 
-        private async void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            _mjpegDecoder = new MJPEGDecoder();
-            CameraBitmapImage = new BitmapImage();
-
-            // Register listener methods
-            _mjpegDecoder.FrameReady += MjpegDecoder_FrameReady;
-            _mjpegDecoder.Error += MjpegDecoder_Error;
-
-            // Construct Http Uri
-            string requestUri = "http://jarvis:8888";
-
-            // Tell MJPEGDecoder to connect to the IP camera, parse the mjpeg stream, and
-            // report the received image frames.
-            await _mjpegDecoder.ParseStreamAsync(requestUri, string.Empty, string.Empty);
+            SetState();
         }
 
-        private async void MjpegDecoder_FrameReady(object sender, FrameReadyEventArgs e)
+        internal override void SetState()
         {
-            // Copy the received FrameBuffer to an InMemoryRandomAccessStream.
-            using (InMemoryRandomAccessStream ms = new InMemoryRandomAccessStream())
-            {
-                using (DataWriter writer = new DataWriter(ms.GetOutputStreamAt(0)))
-                {
-                    writer.WriteBytes(e.FrameBuffer);
-                    await writer.StoreAsync();
-                }
+            ThumbImage.Source = new BitmapImage(
+                    new Uri(Widget.Url, UriKind.Absolute))
+                { CreateOptions = BitmapCreateOptions.IgnoreImageCache };
 
-                // Update source of CameraBitmap with the memory stream
-                CameraBitmapImage.SetSource(ms);
-            }
-        }
-
-        private void MjpegDecoder_Error(object sender, ErrorEventArgs e)
-        {
-            // ErrorMsg = e.Message;
+            FullImage.Source = new BitmapImage(
+                    new Uri(Widget.Url, UriKind.Absolute))
+                { CreateOptions = BitmapCreateOptions.IgnoreImageCache };
         }
 
         private async void ImageWidget_OnTapped(object sender, TappedRoutedEventArgs e)
         {
-            CameraViewDialog.MinWidth = CameraBitmapImage.PixelWidth;
-            await CameraViewDialog.ShowAsync();
+            await PopupDialog.ShowAsync();
         }
     }
 }

@@ -1,1 +1,5 @@
+<<<<<<< HEAD
+D:\Projects\Openhab\openhab.windows\OpenHAB.Windows\bin\ARM\Release\Upload\OpenHAB.Windows_0.5.0.0\OpenHAB.Windows_0.5.0.0_x86_x64_arm.appxbundle
+=======
 C:\Users\nvmwy41\Source\Repos\openhab.windows\OpenHAB.Windows\AppPackages\OpenHAB.Windows_0.1.6.0\OpenHAB.Windows_0.1.6.0_x86_x64_arm.appxbundle
+>>>>>>> master

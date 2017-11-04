@@ -35,6 +35,11 @@
             /// The call to fetch the sitemaps
             /// </summary>
             public const string Sitemaps = "rest/sitemaps";
+
+            /// <summary>
+            /// The call to get an event-stream
+            /// </summary>
+            public const string Events = "rest/events";
         }
     }
 }

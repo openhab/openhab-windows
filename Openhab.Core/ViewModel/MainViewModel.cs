@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using OpenHAB.Core.Messages;
@@ -21,14 +22,34 @@ namespace OpenHAB.Core.ViewModel
         private OpenHABVersion _version;
         private ObservableCollection<OpenHABWidget> _currentWidgets;
         private OpenHABWidget _selectedWidget;
+        private string _errorMessage;
+        private string _subtitle;
+
+        /// <summary>
+        /// Gets or sets an error message to show on screen
+        /// </summary>
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set => Set(ref _errorMessage, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the subtitle of the page
+        /// </summary>
+        public string Subtitle
+        {
+            get => _subtitle;
+            set => Set(ref _subtitle, value);
+        }
 
         /// <summary>
         /// Gets or sets a collection of OpenHAB sitemaps
         /// </summary>
         public ObservableCollection<OpenHABSitemap> Sitemaps
         {
-            get { return _sitemaps; }
-            set { Set(ref _sitemaps, value); }
+            get => _sitemaps;
+            set => Set(ref _sitemaps, value);
         }
 
         /// <summary>
@@ -52,7 +73,8 @@ namespace OpenHAB.Core.ViewModel
 #pragma warning restore 4014
                     }
                     else
-                    {                        SetWidgetsOnScreen(SelectedSitemap.Widgets);
+                    {
+                        SetWidgetsOnScreen(SelectedSitemap.Widgets);
                     }
                 }
             }
@@ -63,7 +85,8 @@ namespace OpenHAB.Core.ViewModel
         /// </summary>
         public ObservableCollection<OpenHABWidget> CurrentWidgets
         {
-            get { return _currentWidgets; }            set { Set(ref _currentWidgets, value); }
+            get => _currentWidgets;
+            set => Set(ref _currentWidgets, value);
         }
 
         /// <summary>
@@ -71,8 +94,8 @@ namespace OpenHAB.Core.ViewModel
         /// </summary>
         public OpenHABWidget SelectedWidget
         {
-            get { return _selectedWidget; }
-            set { Set(ref _selectedWidget, value); }
+            get => _selectedWidget;
+            set => Set(ref _selectedWidget, value);
         }
 
         /// <summary>
@@ -81,15 +104,23 @@ namespace OpenHAB.Core.ViewModel
         /// <param name="openHabsdk">The OpenHAB SDK object</param>
         public MainViewModel(IOpenHAB openHabsdk)
         {
+            ErrorMessage = "Test";
             CurrentWidgets = new ObservableCollection<OpenHABWidget>();
             _openHabsdk = openHabsdk;
 
             MessengerInstance.Register<SettingsUpdatedMessage>(this, async msg =>
             {
-
-                if (await _openHabsdk.ResetConnection())
+                try
                 {
-                    await LoadData();
+                    ErrorMessage = "Invalid URL, check your settings";
+                    if (await _openHabsdk.ResetConnection())
+                    {
+                        await LoadData();
+                    }
+                }
+                catch (HttpRequestException ex)
+                {
+                    MessengerInstance.Send(new FireErrorMessage());
                 }
             });
 
@@ -117,6 +148,7 @@ namespace OpenHAB.Core.ViewModel
 
             var sitemaps = await _openHabsdk.LoadSiteMaps(_version);
             Sitemaps = new ObservableCollection<OpenHABSitemap>(sitemaps);
+            _openHabsdk.StartItemUpdates();
         }
 
         private async Task LoadWidgets()
@@ -138,6 +170,7 @@ namespace OpenHAB.Core.ViewModel
                 return;
             }
 
+            Subtitle = SelectedWidget.Label;
             WidgetNavigationService.Navigate(SelectedWidget);
             SetWidgetsOnScreen(SelectedWidget?.LinkedPage?.Widgets);
         }
@@ -148,6 +181,7 @@ namespace OpenHAB.Core.ViewModel
         public void WidgetGoBack()
         {
             OpenHABWidget widget = WidgetNavigationService.GoBack();
+            Subtitle = widget == null ? string.Empty : widget.Label;
             SetWidgetsOnScreen(widget != null ? widget.LinkedPage.Widgets : SelectedSitemap.Widgets);
         }
 

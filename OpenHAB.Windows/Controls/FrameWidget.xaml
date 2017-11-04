@@ -24,10 +24,10 @@
     <StackPanel VerticalAlignment="Stretch">
         <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
             <Image x:Name="Icon"
-                   Stretch="UniformToFill"
                    Height="40"
                    VerticalAlignment="Center"
-                   Source="{x:Bind Widget.Icon, Mode=OneWay, Converter={StaticResource IconToBitmapConverter}}" />
+                   Source="{x:Bind Widget.Icon, Mode=OneWay, Converter={StaticResource IconToBitmapConverter}}"
+                   Stretch="UniformToFill" />
             <TextBlock x:Name="Label"
                        Margin="8"
                        FontSize="18"
@@ -53,7 +53,7 @@
 
 
     <!--<StackPanel Margin="8, 4, 8, 4" Background="{StaticResource OpenHABLightGreyBrush}">
-        <local:ImageLabel IconPath="{x:Bind Widget.Icon, Mode=OneWay, Converter={StaticResource IconToPathConverter}}"
+        <local:ImageLabel IconPath="{x:Bind Widget, Mode=OneWay, Converter={StaticResource IconToPathConverter}}"
                           LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
 
         <ItemsControl IsTapEnabled="False"

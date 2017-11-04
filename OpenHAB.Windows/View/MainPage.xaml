@@ -28,7 +28,6 @@
                 <Image x:Name="image"
                        Width="35"
                        Height="35"
-                       Margin="4,0,0,0"
                        Source="/Assets/openhab.png" />
                 <TextBlock x:Name="textBlock"
                            Margin="16,0,0,0"
@@ -39,6 +38,28 @@
                            TextWrapping="Wrap" />
             </StackPanel>
         </DataTemplate>
+
+        <Storyboard x:Name="ErrorMessageStoryboard">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="border" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)">
+                <EasingDoubleKeyFrame KeyTime="0" Value="100">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase Amplitude="2" EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-100">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase Amplitude="2" EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Name="ErrorGoneStoryboard">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="border" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)">
+                <EasingDoubleKeyFrame KeyTime="0" Value="-100" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="100" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+
     </Page.Resources>
 
     <Page.DataContext>
@@ -57,9 +78,10 @@
         <SplitView x:Name="SitemapSplitView"
                    Grid.ColumnSpan="2"
                    VerticalContentAlignment="Stretch"
-                   CompactPaneLength="60"
+                   CompactPaneLength="0"
                    DisplayMode="CompactOverlay"
                    IsPaneOpen="False"
+                   LightDismissOverlayMode="Auto"
                    OpenPaneLength="200">
             <SplitView.Background>
                 <SolidColorBrush Opacity="0.4" Color="Black" />
@@ -72,20 +94,13 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <ToggleButton x:Name="TogglePaneButton"
-                                  Grid.Row="0"
-                                  Foreground="White"
-                                  IsChecked="{Binding IsPaneOpen,
-                                                      ElementName=SitemapSplitView,
-                                                      Mode=TwoWay}"
-                                  Style="{StaticResource SplitViewTogglePaneButtonStyle}"
-                                  TabIndex="1"
-                                  ToolTipService.ToolTip="Menu" />
+
                     <controls:NavMenuListView Grid.Row="1"
+                                              Margin="0,48,0,0"
+                                              Padding="0"
                                               ItemContainerStyle="{StaticResource NavMenuContainerStyle}"
                                               ItemTemplate="{StaticResource NavMenuItemTemplate}"
                                               ItemsSource="{x:Bind Vm.Sitemaps, Mode=OneWay}"
-                                              Padding="0"
                                               SelectedItem="{x:Bind Vm.SelectedSitemap, Converter={StaticResource ObjectToSitemapConverter}, Mode=TwoWay}" />
 
                     <StackPanel Grid.Row="2"
@@ -147,6 +162,14 @@
             </Grid>
 
         </SplitView>
+
+        <ToggleButton x:Name="TogglePaneButton"
+                      Grid.Row="0"
+                      Foreground="White"
+                      IsChecked="{Binding IsPaneOpen, ElementName=SitemapSplitView, Mode=TwoWay}"
+                      Style="{StaticResource SplitViewTogglePaneButtonStyle}"
+                      TabIndex="1"
+                      ToolTipService.ToolTip="Menu" />
         <!--<Grid Grid.Column="1">
             <interactivity:Interaction.Behaviors>
                 <behaviors:Blur x:Name="BlurBehavior"
@@ -157,6 +180,27 @@
             </interactivity:Interaction.Behaviors>
             <Grid />
         </Grid>-->
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowStates">
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SitemapSplitView.CompactPaneLength" Value="56" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SitemapSplitView.CompactPaneLength" Value="0" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>
 

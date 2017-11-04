@@ -1,7 +1,8 @@
 ﻿using System;
+using GalaSoft.MvvmLight.Ioc;
+using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
-using Microsoft.Practices.Unity;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.SDK;
 using OpenHAB.Core.Services;
@@ -13,15 +14,12 @@ namespace OpenHAB.Core.ViewModel
     /// </summary>
     public class ViewModelLocator : IDisposable
     {
-        private IUnityContainer _container;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewModelLocator"/> class.
         /// </summary>
         public ViewModelLocator()
         {
-            _container = new UnityContainer();
-            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(_container));
+            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
             RegisterServices();
             RegisterViewModels();
@@ -29,15 +27,16 @@ namespace OpenHAB.Core.ViewModel
 
         private void RegisterServices()
         {
-            _container.RegisterType<IOpenHAB, SDK.OpenHAB>();
-            _container.RegisterType<ISettingsService, SettingsService>();
-            _container.RegisterType<INavigationService, NavigationService>();
+            SimpleIoc.Default.Register(() => Messenger.Default);
+            SimpleIoc.Default.Register<IOpenHAB, SDK.OpenHAB>();
+            SimpleIoc.Default.Register<ISettingsService, SettingsService>();
+            SimpleIoc.Default.Register<INavigationService, NavigationService>();
         }
 
         private void RegisterViewModels()
         {
-            _container.RegisterType<MainViewModel>();
-            _container.RegisterType<SettingsViewModel>();
+            SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<SettingsViewModel>();
         }
 
         /// <summary>
@@ -53,8 +52,6 @@ namespace OpenHAB.Core.ViewModel
         /// <inheritdoc />
         public void Dispose()
         {
-            _container.Dispose();
-            _container = null;
         }
     }
 }

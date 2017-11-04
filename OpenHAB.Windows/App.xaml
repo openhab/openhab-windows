@@ -18,6 +18,14 @@
                 <controls:FrameWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
 
+            <DataTemplate x:Key="ChartTemplate">
+                <controls:ChartWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
+            <DataTemplate x:Key="SelectionTemplate">
+                <controls:SelectionWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
             <DataTemplate x:Key="MjpegTemplate">
                 <controls:MjpegWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
@@ -46,6 +54,10 @@
                 <controls:ImageWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
 
+            <DataTemplate x:Key="SetpoinTemplate">
+                <controls:SetpointWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
             <DataTemplate x:Key="SectionSwitchTemplate">
                 <controls:SectionSwitchWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
@@ -55,6 +67,7 @@
             </DataTemplate>
 
             <converters:WidgetTemplateSelector x:Key="WidgetTemplateSelector"
+                                               ChartTemplate="{StaticResource ChartTemplate}"
                                                ColorTemplate="{StaticResource ColorTemplate}"
                                                FrameTemplate="{StaticResource FrameTemplate}"
                                                ImageTemplate="{StaticResource ImageItemTemplate}"
@@ -62,6 +75,8 @@
                                                PageLinkTemplate="{StaticResource PageLinkTemplate}"
                                                RollershutterTemplate="{StaticResource RollershutterTemplate}"
                                                SectionSwitchTemplate="{StaticResource SectionSwitchTemplate}"
+                                               SelectionTemplate="{StaticResource SelectionTemplate}"
+                                               SetpointTemplate="{StaticResource SetpoinTemplate}"
                                                SliderTemplate="{StaticResource SliderTemplate}"
                                                SwitchTemplate="{StaticResource SwitchTemplate}"
                                                TextTemplate="{StaticResource TextItemTemplate}" />
