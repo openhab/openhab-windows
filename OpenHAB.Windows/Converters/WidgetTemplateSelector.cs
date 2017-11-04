@@ -42,17 +42,23 @@ namespace OpenHAB.Windows.Converters
                 //    return ColorTemplate;
                 case "image":
                     return ImageTemplate;
+<<<<<<< HEAD
                 case "setpoint":
                     return SetpointTemplate;
                 case "selection":
                     return SelectionTemplate;
+=======
+>>>>>>> master
                 case "sectionswitch":
                     return SectionSwitchTemplate;
                 case "video_mjpeg":
                 case "video":
                     return MjpegTemplate;
+<<<<<<< HEAD
                 case "chart":
                     return ChartTemplate;
+=======
+>>>>>>> master
                 default:
                     return FrameTemplate;
             }
@@ -64,11 +70,14 @@ namespace OpenHAB.Windows.Converters
         public DataTemplate FrameTemplate { get; set; }
 
         /// <summary>
+<<<<<<< HEAD
         /// Gets or sets the template for a Selection control
         /// </summary>
         public DataTemplate SelectionTemplate { get; set; }
 
         /// <summary>
+=======
+>>>>>>> master
         /// Gets or sets the template for a MJPEG video control
         /// </summary>
         public DataTemplate MjpegTemplate { get; set; }
@@ -113,6 +122,7 @@ namespace OpenHAB.Windows.Converters
         /// </summary>
         public DataTemplate ColorTemplate { get; set; }
 
+<<<<<<< HEAD
         /// <summary>
         /// Gets or sets the template for a setpoint control
         /// </summary>
@@ -123,6 +133,8 @@ namespace OpenHAB.Windows.Converters
         /// </summary>
         public DataTemplate ChartTemplate { get; set; }
 
+=======
+>>>>>>> master
         private string GetItemViewType(OpenHABWidget openHABWidget)
         {
             if (openHABWidget.Type.Equals("Frame"))

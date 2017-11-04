@@ -33,6 +33,11 @@ namespace OpenHAB.Windows.Controls
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the switch is on or off
+        /// </summary>
+        public bool IsOn { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SwitchWidget"/> class.
         /// </summary>
         public SwitchWidget()
