@@ -9,7 +9,7 @@ namespace OpenHAB.Core.Services
     /// </summary>
     public static class WidgetNavigationService
     {
-        private static readonly IList<OpenHABWidget> WidgetBackStack = new List<OpenHABWidget>();
+        private static readonly Stack<OpenHABWidget> WidgetBackStack = new Stack<OpenHABWidget>();
         private static OpenHABWidget _currentWidget;
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace OpenHAB.Core.Services
                 return;
             }
 
-            WidgetBackStack.Add(_currentWidget);
+            WidgetBackStack.Push(target);
             _currentWidget = target;
         }
 
@@ -38,12 +38,10 @@ namespace OpenHAB.Core.Services
         /// <returns>The previous visted widget</returns>
         public static OpenHABWidget GoBack()
         {
-            OpenHABWidget backStackEntry = WidgetBackStack.LastOrDefault();
-            WidgetBackStack.Remove(backStackEntry);
+            WidgetBackStack.Pop();
+            _currentWidget = WidgetBackStack.Count == 0 ? null : WidgetBackStack.Peek();
 
-            _currentWidget = WidgetBackStack.Count == 0 ? null : backStackEntry;
-
-            return backStackEntry;
+            return _currentWidget;
         }
     }
 }
