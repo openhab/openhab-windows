@@ -14,6 +14,11 @@
             /// The key that is used to persist settings to the Windows settings store
             /// </summary>
             public const string SettingsKey = "UserSettingsKey";
+
+            /// <summary>
+            /// The key used to store the last opened sitemap
+            /// </summary>
+            public const string SitemapKey = "SitemapKey";
         }
 
         /// <summary>

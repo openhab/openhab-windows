@@ -24,6 +24,18 @@ namespace OpenHAB.Core.Services
         }
 
         /// <inheritdoc />
+        public void SaveCurrentSitemap(string name)
+        {
+            _settingsContainer.Values[Constants.Local.SitemapKey] = name;
+        }
+
+        /// <inheritdoc />
+        public string LoadLastSitemap()
+        {
+            return _settingsContainer.Values[Constants.Local.SitemapKey].ToString();
+        }
+
+        /// <inheritdoc />
         public Settings Load()
         {
             EnsureSettingsContainer();
