@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
+using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.SDK;
@@ -24,6 +25,7 @@ namespace OpenHAB.Core.ViewModel
         private OpenHABWidget _selectedWidget;
         private string _errorMessage;
         private string _subtitle;
+        private readonly ISettingsService _settingsService;
 
         /// <summary>
         /// Gets or sets an error message to show on screen
@@ -66,6 +68,12 @@ namespace OpenHAB.Core.ViewModel
             {
                 if (Set(ref _selectedSitemap, value))
                 {
+
+                    if (_selectedSitemap != null)
+                    {
+                        _settingsService.SaveCurrentSitemap(_selectedSitemap.Name);
+                    }
+
                     if (_selectedSitemap?.Widgets == null)
                     {
 #pragma warning disable 4014
@@ -102,11 +110,12 @@ namespace OpenHAB.Core.ViewModel
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
         /// </summary>
         /// <param name="openHabsdk">The OpenHAB SDK object</param>
-        public MainViewModel(IOpenHAB openHabsdk)
+        public MainViewModel(IOpenHAB openHabsdk, ISettingsService settingsService)
         {
             ErrorMessage = "Test";
             CurrentWidgets = new ObservableCollection<OpenHABWidget>();
             _openHabsdk = openHabsdk;
+            _settingsService = settingsService;
 
             MessengerInstance.Register<SettingsUpdatedMessage>(this, async msg =>
             {
@@ -149,6 +158,20 @@ namespace OpenHAB.Core.ViewModel
             var sitemaps = await _openHabsdk.LoadSiteMaps(_version);
             Sitemaps = new ObservableCollection<OpenHABSitemap>(sitemaps);
             _openHabsdk.StartItemUpdates();
+
+            OpenLastSitemap();
+        }
+
+        private void OpenLastSitemap()
+        {
+            string sitemapName = _settingsService.LoadLastSitemap();
+
+            if (string.IsNullOrWhiteSpace(sitemapName))
+            {
+                return;
+            }
+
+            SelectedSitemap = Sitemaps.FirstOrDefault(_ => _.Name == sitemapName);
         }
 
         private async Task LoadWidgets()
