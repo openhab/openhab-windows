@@ -41,7 +41,8 @@ namespace OpenHAB.Windows.Controls
         private async Task SetLocalData()
         {
             var image = new BitmapImage();
-            await image.LoadFromBase64StringAsync(Widget.Item.State);
+            string data = Widget.Item.State.Substring(Widget.Item.State.IndexOf(',') + 1);
+            await image.LoadFromBase64StringAsync(data);
 
             ThumbImage.Source = image;
             FullImage.Source = image;
@@ -50,7 +51,6 @@ namespace OpenHAB.Windows.Controls
         private void SetUrl()
         {
             string url;
-
             if (Widget.Item != null && Widget.Item.State.StartsWith("http", StringComparison.OrdinalIgnoreCase))
             {
                 url = Widget.Item.State;
@@ -71,6 +71,11 @@ namespace OpenHAB.Windows.Controls
 
         private async void ImageWidget_OnTapped(object sender, TappedRoutedEventArgs e)
         {
+            if (Widget.LinkedPage != null)
+            {
+                return;
+            }
+
             await PopupDialog.ShowAsync();
         }
     }
