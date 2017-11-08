@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using GalaSoft.MvvmLight;
 using Newtonsoft.Json;
 
 namespace OpenHAB.Core.Model
@@ -8,7 +9,7 @@ namespace OpenHAB.Core.Model
     /// <summary>
     /// A class that represents an OpenHAB widget
     /// </summary>
-    public class OpenHABWidget
+    public class OpenHABWidget : ObservableObject
     {
         private string _icon;
         private string _label;
@@ -40,6 +41,8 @@ namespace OpenHAB.Core.Model
                 {
                     Value = parts[1];
                 }
+
+                RaisePropertyChanged();
             }
         }
 
