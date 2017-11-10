@@ -197,6 +197,19 @@ namespace OpenHAB.Core.Model
 
             ParseItem(startNode.Element("item"));
             ParseChildren(startNode);
+            ParseMappings(startNode);
+        }
+
+        private void ParseMappings(XElement startNode)
+        {
+            Mappings = new List<OpenHABWidgetMapping>();
+
+            foreach (XElement childNode in startNode.Elements("mapping"))
+            {
+                string command = childNode.Element("command")?.Value;
+                string label = childNode.Element("label")?.Value;
+                Mappings.Add(new OpenHABWidgetMapping(command, label));
+            }
         }
 
         private void ParseLinkedPage(XElement linkedPage)
