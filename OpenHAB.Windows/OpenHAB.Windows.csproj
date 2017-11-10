@@ -121,6 +121,9 @@
     <Compile Include="Controls\ImageLabel.xaml.cs">
       <DependentUpon>ImageLabel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MapViewWidget.xaml.cs">
+      <DependentUpon>MapViewWidget.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MjpegWidget.xaml.cs">
       <DependentUpon>MjpegWidget.xaml</DependentUpon>
     </Compile>
@@ -250,6 +253,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ImageLabel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MapViewWidget.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -53,6 +53,8 @@ namespace OpenHAB.Windows.Converters
                     return MjpegTemplate;
                 case "chart":
                     return ChartTemplate;
+                case "mapview":
+                    return MapViewTemplate;
                 default:
                     return FrameTemplate;
             }
@@ -122,6 +124,11 @@ namespace OpenHAB.Windows.Converters
         /// Gets or sets the template for a chart control
         /// </summary>
         public DataTemplate ChartTemplate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the template for a map view control
+        /// </summary>
+        public DataTemplate MapViewTemplate { get; set; }
 
         private string GetItemViewType(OpenHABWidget openHABWidget)
         {
@@ -216,6 +223,11 @@ namespace OpenHAB.Windows.Converters
             if (openHABWidget.Type.Equals("Colorpicker"))
             {
                 return "color";
+            }
+
+            if (openHABWidget.Type.Equals("Mapview"))
+            {
+                return "mapview";
             }
 
             return "generic";
