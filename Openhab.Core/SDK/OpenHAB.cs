@@ -260,25 +260,33 @@ namespace OpenHAB.Core.SDK
             {
                 var client = OpenHABHttpClient.Client();
                 var requestUri = Constants.Api.Events;
-                var stream = await client.GetStreamAsync(requestUri);
 
-                using (var reader = new StreamReader(stream))
+                try
                 {
-                    while (!reader.EndOfStream)
-                    {
-                        var updateEvent = reader.ReadLine();
-                        if (updateEvent?.StartsWith("data:") == true)
-                        {
-                            var data = JsonConvert.DeserializeObject<EventStreamData>(updateEvent.Remove(0, 6));
-                            if (!data.Topic.EndsWith("state"))
-                            {
-                                continue;
-                            }
+                    var stream = await client.GetStreamAsync(requestUri);
 
-                            var payload = JsonConvert.DeserializeObject<EventStreamPayload>(data.Payload);
-                            _messenger.Send(new UpdateItemMessage(data.Topic.Replace("smarthome/items/", string.Empty).Replace("/state", string.Empty), payload.Value));
+                    using (var reader = new StreamReader(stream))
+                    {
+                        while (!reader.EndOfStream)
+                        {
+                            var updateEvent = reader.ReadLine();
+                            if (updateEvent?.StartsWith("data:") == true)
+                            {
+                                var data = JsonConvert.DeserializeObject<EventStreamData>(updateEvent.Remove(0, 6));
+                                if (!data.Topic.EndsWith("state"))
+                                {
+                                    continue;
+                                }
+
+                                var payload = JsonConvert.DeserializeObject<EventStreamPayload>(data.Payload);
+                                _messenger.Send(new UpdateItemMessage(data.Topic.Replace("smarthome/items/", string.Empty).Replace("/state", string.Empty), payload.Value));
+                            }
                         }
                     }
+                }
+                catch (HttpRequestException)
+                {
+                    // running on 1.x, no event endpoint
                 }
             });
         }

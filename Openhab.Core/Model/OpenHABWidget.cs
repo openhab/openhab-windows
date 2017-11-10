@@ -188,8 +188,39 @@ namespace OpenHAB.Core.Model
             Icon = startNode.Element("icon")?.Value;
             Url = startNode.Element("url")?.Value;
 
+            XElement linkedPage = startNode.Element("linkedPage");
+
+            if (linkedPage != null)
+            {
+                ParseLinkedPage(linkedPage);
+            }
+
             ParseItem(startNode.Element("item"));
             ParseChildren(startNode);
+            ParseMappings(startNode);
+        }
+
+        private void ParseMappings(XElement startNode)
+        {
+            Mappings = new List<OpenHABWidgetMapping>();
+
+            foreach (XElement childNode in startNode.Elements("mapping"))
+            {
+                string command = childNode.Element("command")?.Value;
+                string label = childNode.Element("label")?.Value;
+                Mappings.Add(new OpenHABWidgetMapping(command, label));
+            }
+        }
+
+        private void ParseLinkedPage(XElement linkedPage)
+        {
+            LinkedPage = new OpenHABSitemap(linkedPage) { Widgets = new List<OpenHABWidget>() };
+
+            foreach (XElement childNode in linkedPage.Elements("widget"))
+            {
+                var widget = new OpenHABWidget(childNode) { Parent = this };
+                LinkedPage.Widgets.Add(widget);
+            }
         }
 
         private void ParseChildren(XElement startNode)
@@ -198,6 +229,13 @@ namespace OpenHAB.Core.Model
             {
                 var widget = new OpenHABWidget(childNode) { Parent = this };
                 Children.Add(widget);
+
+                XElement linkedPage = childNode.Element("linkedPage");
+
+                if (linkedPage != null)
+                {
+                    ParseLinkedPage(linkedPage);
+                }
             }
         }
 
