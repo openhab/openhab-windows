@@ -64,6 +64,7 @@ namespace OpenHAB.Windows.Controls
             }
 
             VisualStateManager.GoToState(this, IsOn ? "OnState" : "OffState", false);
+            RaisePropertyChanged(nameof(Widget));
         }
 
         private void OnToggle()

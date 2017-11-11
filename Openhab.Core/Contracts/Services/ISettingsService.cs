@@ -24,5 +24,17 @@ namespace OpenHAB.Core.Contracts.Services
         /// </summary>
         /// <returns>Previously saved settings</returns>
         Settings Load();
+
+        /// <summary>
+        /// Save the name of the last opened sitemap
+        /// </summary>
+        /// <param name="name">Name of the sitemap</param>
+        void SaveCurrentSitemap(string name);
+
+        /// <summary>
+        /// Loads the name of the last opened sitemap
+        /// </summary>
+        /// <returns>The name of the sitemap</returns>
+        string LoadLastSitemap();
     }
 }
