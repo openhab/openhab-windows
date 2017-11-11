@@ -1,31 +1,38 @@
-﻿using System;
-using Microsoft.Practices.ServiceLocation;
-using OpenHAB.Core.Common;
-using OpenHAB.Core.Contracts.Services;
-using Windows.UI.Xaml;
-using Windows.Devices.Geolocation;
-using System.Linq;
+﻿using OpenHAB.Windows.Extensions;
+using System;
 using System.Globalization;
-using Windows.UI.Xaml.Controls.Maps;
+using System.Linq;
+using Windows.Devices.Geolocation;
 using Windows.Foundation;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls.Maps;
+using Windows.UI.Xaml.Input;
 
 namespace OpenHAB.Windows.Controls
 {
+    /// <summary>
+    /// Widget control that represents an OpenHAB Map
+    /// </summary>
     public sealed partial class MapViewWidget : WidgetBase
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MapViewWidget"/> class.
+        /// </summary>
         public MapViewWidget()
         {
             InitializeComponent();
+            PopupDialog.AdjustSize();
             Loaded += OnLoaded;
-            //_settingsService = ServiceLocator.Current.GetInstance<ISettingsService>();
-
-            //TODO: Glenn add MapService Token
-            //MapView.MapServiceToken = "";
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             SetState();
+        }
+
+        private async void OnTapped(object sender, TappedRoutedEventArgs e)
+        {
+            await PopupDialog.ShowAsync();
         }
 
         internal override void SetState()
@@ -38,7 +45,7 @@ namespace OpenHAB.Windows.Controls
                     double latitude = double.Parse(latLong[0], CultureInfo.InvariantCulture);
                     double longitude = double.Parse(latLong[1], CultureInfo.InvariantCulture);
 
-                    MapView.Center = new Geopoint(new BasicGeoposition() { Latitude = latitude, Longitude = longitude });
+                    MapView.Center = MapViewFull.Center = new Geopoint(new BasicGeoposition() { Latitude = latitude, Longitude = longitude });
 
                     MapIcon mapIcon = new MapIcon();
                     mapIcon.Location = MapView.Center;
@@ -46,6 +53,7 @@ namespace OpenHAB.Windows.Controls
                     mapIcon.ZIndex = 0;
 
                     MapView.MapElements.Add(mapIcon);
+                    MapViewFull.MapElements.Add(mapIcon);
                 }
             }
         }
