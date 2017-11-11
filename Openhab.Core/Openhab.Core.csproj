@@ -130,6 +130,7 @@
     <Compile Include="Messages\TriggerCommandMessage.cs" />
     <Compile Include="Messages\UpdateItemMessage.cs" />
     <Compile Include="Messages\WidgetClickedMessage.cs" />
+    <Compile Include="Model\Enums.cs" />
     <Compile Include="Model\EventStreamData.cs" />
     <Compile Include="Model\EventStreamPayload.cs" />
     <Compile Include="Model\ObservableBase.cs" />
