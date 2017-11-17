@@ -22,6 +22,11 @@ namespace OpenHAB.Windows.Controls
         {
             InitializeComponent();
             PopupDialog.AdjustSize();
+
+#if RELEASE
+            MapView.MapServiceToken = Don't forget to set the Bing Maps keys!;
+            MapViewFull.MapServiceToken = Don't forget to set the Bing Maps keys!;
+#endif
             Loaded += OnLoaded;
         }
 
