@@ -121,6 +121,9 @@
     <Compile Include="Controls\ImageLabel.xaml.cs">
       <DependentUpon>ImageLabel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MapViewWidget.xaml.cs">
+      <DependentUpon>MapViewWidget.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MjpegWidget.xaml.cs">
       <DependentUpon>MjpegWidget.xaml</DependentUpon>
     </Compile>
@@ -165,6 +168,7 @@
     <Compile Include="Converters\StateToBoolConverter.cs" />
     <Compile Include="Converters\StringToDoubleConverter.cs" />
     <Compile Include="Converters\WidgetTemplateSelector.cs" />
+    <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -250,6 +254,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ImageLabel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MapViewWidget.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

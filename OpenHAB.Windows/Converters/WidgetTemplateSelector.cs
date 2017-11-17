@@ -24,35 +24,38 @@ namespace OpenHAB.Windows.Converters
             var itemType = GetItemViewType(widget);
             switch (itemType)
             {
-                case "group":
+                //case WidgetTypeEnum.Color:
+                //    return ColorTemplate;
+                //    break;
+                case WidgetTypeEnum.Group:
                     return PageLinkTemplate;
-                case "frame":
+                case WidgetTypeEnum.Frame:
                     VariableSizedWrapGrid.SetRowSpan(uiElement, widget.Children.Count + 1);
                     return FrameTemplate;
-                case "switch":
+                case WidgetTypeEnum.Switch:
                     return SwitchTemplate;
-                case "rollershutter":
-                    return RollershutterTemplate;
-                case "slider":
-                    return SliderTemplate;
-                case "datetime":
-                case "text":
-                    return TextTemplate;
-                //case "color":
-                //    return ColorTemplate;
-                case "image":
-                    return ImageTemplate;
-                case "setpoint":
-                    return SetpointTemplate;
-                case "selection":
-                    return SelectionTemplate;
-                case "sectionswitch":
+                case WidgetTypeEnum.SectionSwitch:
                     return SectionSwitchTemplate;
-                case "video_mjpeg":
-                case "video":
-                    return MjpegTemplate;
-                case "chart":
+                case WidgetTypeEnum.RollerShutter:
+                    return RollershutterTemplate;
+                case WidgetTypeEnum.Slider:
+                    return SliderTemplate;
+                case WidgetTypeEnum.DateTime:
+                case WidgetTypeEnum.Text:
+                    return TextTemplate;
+                case WidgetTypeEnum.Image:
+                    return ImageTemplate;
+                case WidgetTypeEnum.Selection:
+                    return SelectionTemplate;
+                case WidgetTypeEnum.Setpoint:
+                    return SetpointTemplate;
+                case WidgetTypeEnum.Chart:
                     return ChartTemplate;
+                case WidgetTypeEnum.Video:
+                case WidgetTypeEnum.VideoMjpeg:
+                    return MjpegTemplate;
+                case WidgetTypeEnum.Mapview:
+                    return MapViewTemplate;
                 default:
                     return FrameTemplate;
             }
@@ -123,23 +126,18 @@ namespace OpenHAB.Windows.Converters
         /// </summary>
         public DataTemplate ChartTemplate { get; set; }
 
-        private string GetItemViewType(OpenHABWidget openHABWidget)
+        /// <summary>
+        /// Gets or sets the template for a map view control
+        /// </summary>
+        public DataTemplate MapViewTemplate { get; set; }
+
+        private WidgetTypeEnum GetItemViewType(OpenHABWidget openHABWidget)
         {
-            if (openHABWidget.Type.Equals("Frame"))
-            {
-                return "frame";
-            }
-
-            if (openHABWidget.Type.Equals("Group"))
-            {
-                return "group";
-            }
-
             if (openHABWidget.Type.Equals("Switch"))
             {
                 if (openHABWidget.Mappings != null && openHABWidget.Mappings.Any())
                 {
-                    return "sectionswitch";
+                    return WidgetTypeEnum.SectionSwitch;
                 }
 
                 if (openHABWidget.Item != null)
@@ -151,46 +149,16 @@ namespace OpenHAB.Windows.Converters
                             "Rollershutter".Equals(openHABWidget.Item.Type) ||
                             "Rollershutter".Equals(openHABWidget.Item.GroupType))
                         {
-                            return "rollershutter";
+                            return WidgetTypeEnum.RollerShutter;
                         }
 
-                        return "switch";
+                        return WidgetTypeEnum.Switch;
                     }
 
-                    return "switch";
+                    return WidgetTypeEnum.Switch;
                 }
 
-                return "switch";
-            }
-
-            if (openHABWidget.Type.Equals("Text"))
-            {
-                return "text";
-            }
-
-            if (openHABWidget.Type.Equals("Slider"))
-            {
-                return "slider";
-            }
-
-            if (openHABWidget.Type.Equals("Image"))
-            {
-                return "image";
-            }
-
-            if (openHABWidget.Type.Equals("Selection"))
-            {
-                return "selection";
-            }
-
-            if (openHABWidget.Type.Equals("Setpoint"))
-            {
-                return "setpoint";
-            }
-
-            if (openHABWidget.Type.Equals("Chart"))
-            {
-                return "chart";
+                return WidgetTypeEnum.Switch;
             }
 
             if (openHABWidget.Type.Equals("Video"))
@@ -199,26 +167,25 @@ namespace OpenHAB.Windows.Converters
                 {
                     if (openHABWidget.Encoding.Equals("mjpeg"))
                     {
-                        return "video_mjpeg";
+                        return WidgetTypeEnum.VideoMjpeg;
                     }
 
-                    return "video";
+                    return WidgetTypeEnum.Video;
                 }
 
-                return "video";
+                return WidgetTypeEnum.Video;
             }
 
-            if (openHABWidget.Type.Equals("Webview"))
+            try
             {
-                return "web";
+                return Enum<WidgetTypeEnum>.Parse(openHABWidget.Type);
             }
-
-            if (openHABWidget.Type.Equals("Colorpicker"))
+            catch (System.Exception ex)
             {
-                return "color";
+                return WidgetTypeEnum.Generic;
             }
 
-            return "generic";
+            return WidgetTypeEnum.Generic;
         }
     }
 }
