@@ -38,6 +38,10 @@
                 <controls:SwitchWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
 
+            <DataTemplate x:Key="MapViewTemplate">
+                <controls:MapViewWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
             <DataTemplate x:Key="RollershutterTemplate">
                 <controls:RollershutterWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
@@ -79,6 +83,7 @@
                                                SetpointTemplate="{StaticResource SetpoinTemplate}"
                                                SliderTemplate="{StaticResource SliderTemplate}"
                                                SwitchTemplate="{StaticResource SwitchTemplate}"
+                                               MapViewTemplate="{StaticResource MapViewTemplate}"
                                                TextTemplate="{StaticResource TextItemTemplate}" />
         </ResourceDictionary>
     </Application.Resources>
