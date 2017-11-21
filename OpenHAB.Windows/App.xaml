@@ -42,6 +42,10 @@
                 <controls:MapViewWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
 
+            <DataTemplate x:Key="WebViewTemplate">
+                <controls:WebViewWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
+
             <DataTemplate x:Key="RollershutterTemplate">
                 <controls:RollershutterWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
@@ -84,6 +88,7 @@
                                                SliderTemplate="{StaticResource SliderTemplate}"
                                                SwitchTemplate="{StaticResource SwitchTemplate}"
                                                MapViewTemplate="{StaticResource MapViewTemplate}"
+                                               WebViewTemplate="{StaticResource WebViewTemplate}"
                                                TextTemplate="{StaticResource TextItemTemplate}" />
         </ResourceDictionary>
     </Application.Resources>

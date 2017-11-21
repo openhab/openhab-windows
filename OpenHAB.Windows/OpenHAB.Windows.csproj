@@ -159,6 +159,9 @@
     <Compile Include="Controls\TextWidget.xaml.cs">
       <DependentUpon>TextWidget.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\WebViewWidget.xaml.cs">
+      <DependentUpon>WebViewWidget.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\WidgetBase.cs" />
     <Compile Include="Converters\BoolToBackgroundColorConverter.cs" />
     <Compile Include="Converters\IconToBitmapConverter.cs" />
@@ -302,6 +305,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\TextWidget.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WebViewWidget.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

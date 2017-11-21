@@ -56,6 +56,8 @@ namespace OpenHAB.Windows.Converters
                     return MjpegTemplate;
                 case WidgetTypeEnum.Mapview:
                     return MapViewTemplate;
+                case WidgetTypeEnum.Webview:
+                    return WebViewTemplate;
                 default:
                     return FrameTemplate;
             }
@@ -130,6 +132,11 @@ namespace OpenHAB.Windows.Converters
         /// Gets or sets the template for a map view control
         /// </summary>
         public DataTemplate MapViewTemplate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the template for a web view control
+        /// </summary>
+        public DataTemplate WebViewTemplate { get; set; }
 
         private WidgetTypeEnum GetItemViewType(OpenHABWidget openHABWidget)
         {
