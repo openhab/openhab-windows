@@ -208,6 +208,7 @@ namespace OpenHAB.Core.SDK
             if (isReachable)
             {
                 OpenHABHttpClient.BaseUrl = settings.OpenHABUrl;
+                return true;
             }
             else
             {
@@ -245,6 +246,10 @@ namespace OpenHAB.Core.SDK
                 }
             }
             catch (InvalidOperationException)
+            {
+                return false;
+            }
+            catch (System.Net.Http.HttpRequestException)
             {
                 return false;
             }
