@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
-using Microsoft.Practices.ServiceLocation;
+using GalaSoft.MvvmLight.Ioc;
 using OpenHAB.Core.Contracts.Services;
+
 
 namespace OpenHAB.Core.Common
 {
@@ -70,7 +71,7 @@ namespace OpenHAB.Core.Common
 
         private static NetworkCredential GetCredentials()
         {
-            var settings = ServiceLocator.Current.GetInstance<ISettingsService>().Load();
+            var settings = SimpleIoc.Default.GetInstance<ISettingsService>().Load();
             string username = settings.Username;
             string password = settings.Password;
 

@@ -310,12 +310,10 @@ namespace OpenHAB.Windows.Controls
                 }
 
                 var middleOfScale = Radius - percentageRing.ScaleWidth / 2;
-                var valueText = percentageRing.GetTemplateChild(ValueTextPartName) as TextBlock;
                 percentageRing.ValueAngle = percentageRing.ValueToAngle(percentageRing.Value);
 
                 // Trail
-                var trail = percentageRing.GetTemplateChild(TrailPartName) as Path;
-                if (trail != null)
+                if (percentageRing.GetTemplateChild(TrailPartName) is Path trail)
                 {
                     if (percentageRing.ValueAngle > percentageRing.NormalizedMinAngle)
                     {
@@ -368,7 +366,7 @@ namespace OpenHAB.Windows.Controls
                 }
 
                 // Value Text
-                if (valueText != null)
+                if (percentageRing.GetTemplateChild(ValueTextPartName) is TextBlock valueText)
                 {
                     valueText.Text = percentageRing.Value.ToString(percentageRing.ValueStringFormat);
                 }
@@ -406,8 +404,7 @@ namespace OpenHAB.Windows.Controls
 
             percentageRing.UpdateNormalizedAngles();
 
-            var scale = percentageRing.GetTemplateChild(ScalePartName) as Path;
-            if (scale != null)
+            if (percentageRing.GetTemplateChild(ScalePartName) is Path scale)
             {
                 if (percentageRing.NormalizedMaxAngle - percentageRing.NormalizedMinAngle == 360)
                 {
