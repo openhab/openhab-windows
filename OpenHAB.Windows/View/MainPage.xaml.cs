@@ -66,5 +66,15 @@ namespace OpenHAB.Windows.View
         {
             Messenger.Default.Send(new WidgetClickedMessage(e.ClickedItem as OpenHABWidget));
         }
+
+        private void ToggleSettingsButton_Checked(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(OpenHAB.Windows.View.SettingsPage), null);
+        }
+
+        private void MasterListView_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
