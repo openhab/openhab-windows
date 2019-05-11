@@ -29,11 +29,12 @@
                    Text="Settings"
                    TextWrapping="Wrap" />
         <Grid Grid.Row="1"
-              Background="{StaticResource OpenHABLightColor}"
-              CornerRadius="5">
+              Background="{StaticResource OpenHABLightGreyBrush}"
+              CornerRadius="2">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel Margin="12,12,0,0">
-                    <TextBlock Text="Demo mode" />
+                    <TextBlock Text="Demo mode" 
+                               Margin="0,0,0,0"/>
                     <CheckBox x:Name="CheckBoxDemoMode"
                               Margin="0,0,0,12"
                               HorizontalAlignment="Stretch"
