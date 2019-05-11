@@ -30,7 +30,7 @@
                    TextWrapping="Wrap" />
         <Grid Grid.Row="1"
               Background="{StaticResource OpenHABLightGreyBrush}"
-              CornerRadius="2">
+              CornerRadius="6">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel Margin="12,12,0,0">
                     <TextBlock Text="Demo mode" 

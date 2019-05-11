@@ -106,12 +106,12 @@
 
 
                     <TextBlock x:Name="openHabTextBlock"
+                                    Margin="0,15,0,0"
                                     Grid.Row="1"
-                                    VerticalAlignment="Center"
                                     HorizontalAlignment="Center"
                                     Foreground="{StaticResource OpenHABLightColor}"
                                     Style="{StaticResource FlyoutPickerTitleTextBlockStyle}"
-                                    Text="OpenHab"
+                                    Text="Sitemaps"
                                     TextWrapping="Wrap" />
                     
                     <StackPanel Grid.Row="2"
