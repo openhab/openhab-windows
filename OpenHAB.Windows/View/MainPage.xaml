@@ -118,12 +118,12 @@
                                    FontSize="36"
                                    Foreground="{StaticResource OpenHABLightColor}"
                                    Text="&#xE713;" />
-                        <TextBlock x:Name="textBlock"
+						<TextBlock x:Uid="SettingsHeader"
+								   x:Name="textBlock"
                                    Margin="12,0,0,0"
                                    VerticalAlignment="Center"
                                    Foreground="{StaticResource OpenHABLightColor}"
                                    Style="{StaticResource FlyoutPickerTitleTextBlockStyle}"
-                                   Text="Settings"
                                    TextWrapping="Wrap" />
                     </StackPanel>
                 </Grid>
