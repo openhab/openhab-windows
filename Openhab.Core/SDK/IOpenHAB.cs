@@ -48,5 +48,10 @@ namespace OpenHAB.Core.SDK
         /// Starts listening to server events
         /// </summary>
         void StartItemUpdates();
+
+        /// <summary>Checks the URL reachability.</summary>
+        /// <param name="openHABUrl">  OpenHAB host URL.</param>
+        /// <returns>>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        Task<bool> CheckUrlReachability(string openHABUrl);
     }
 }
