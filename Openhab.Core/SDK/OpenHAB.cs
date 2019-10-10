@@ -195,7 +195,8 @@ namespace OpenHAB.Core.SDK
 
             if (NetworkHelper.Instance.ConnectionInformation.IsInternetOnMeteredConnection)
             {
-                if (settings.OpenHABRemoteUrl.Trim() == string.Empty)                {
+                if (settings.OpenHABRemoteUrl.Trim() == string.Empty)
+                {
                     throw new OpenHABException("No remote url configured");
                 }
 
@@ -222,7 +223,7 @@ namespace OpenHAB.Core.SDK
             return false;
         }
 
-        private async Task<bool> CheckUrlReachability(string openHABUrl)
+        public async Task<bool> CheckUrlReachability(string openHABUrl)
         {
             if (string.IsNullOrWhiteSpace(openHABUrl))
             {
@@ -245,6 +246,10 @@ namespace OpenHAB.Core.SDK
                 }
             }
             catch (InvalidOperationException)
+            {
+                return false;
+            }
+            catch (HttpRequestException)
             {
                 return false;
             }
