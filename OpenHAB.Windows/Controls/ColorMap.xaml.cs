@@ -4,7 +4,6 @@ using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using OpenHAB.Core.Common;
 using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Input;

@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.Practices.ServiceLocation;
+using GalaSoft.MvvmLight.Ioc;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Model;
@@ -15,7 +15,7 @@ namespace OpenHAB.Windows.Converters
         /// <inheritdoc/>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var settingsService = ServiceLocator.Current.GetInstance<ISettingsService>();
+            var settingsService = SimpleIoc.Default.GetInstance<ISettingsService>();
             var settings = settingsService.Load();
             var serverUrl = settings.IsRunningInDemoMode.Value ? Constants.Api.DemoModeUrl : settings.OpenHABUrl;
 

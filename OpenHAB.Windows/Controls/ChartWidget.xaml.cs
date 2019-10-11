@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.Practices.ServiceLocation;
+using GalaSoft.MvvmLight.Ioc;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts.Services;
 using Windows.UI.Xaml;
@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Media.Imaging;
 namespace OpenHAB.Windows.Controls
 {
     /// <summary>
-    /// Widget control that represents an OpenHAB slider
+    /// Widget control that represents an OpenHAB chart
     /// </summary>
     public sealed partial class ChartWidget : WidgetBase
     {
@@ -38,7 +38,7 @@ namespace OpenHAB.Windows.Controls
         {
             InitializeComponent();
             Loaded += OnLoaded;
-            _settingsService = ServiceLocator.Current.GetInstance<ISettingsService>();
+            _settingsService = SimpleIoc.Default.GetInstance<ISettingsService>();
         }
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
