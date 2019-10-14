@@ -12,6 +12,8 @@
         private string _password;
         private bool? _willIgnoreSSLCertificate;
         private bool? _willIgnoreSSLHostname;
+        private string _remoteUsername;
+        private string _remotePassword;
 
         /// <summary>
         /// Gets or sets a value indicating whether the app is currently running in demo mode
@@ -96,7 +98,7 @@
         }
 
         /// <summary>
-        /// Gets or sets the username for the OpenHAB server connection
+        /// Gets or sets the username for the local OpenHAB server connection
         /// </summary>
         public string Username
         {
@@ -118,7 +120,7 @@
         }
 
         /// <summary>
-        /// Gets or sets the password for the OpenHAB connection
+        /// Gets or sets the password for the local OpenHAB connection
         /// </summary>
         public string Password
         {
@@ -135,6 +137,50 @@
                 }
 
                 _password = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the username for the remote OpenHAB server connection
+        /// </summary>
+        public string RemoteUsername
+        {
+            get
+            {
+                return _remoteUsername;
+            }
+
+            set
+            {
+                if (_remoteUsername == value)
+                {
+                    return;
+                }
+
+                _remoteUsername = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the password for the remote OpenHAB connection
+        /// </summary>
+        public string RemotePassword
+        {
+            get
+            {
+                return _remotePassword;
+            }
+
+            set
+            {
+                if (_remotePassword == value)
+                {
+                    return;
+                }
+
+                _remotePassword = value;
                 OnPropertyChanged();
             }
         }

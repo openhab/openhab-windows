@@ -122,6 +122,7 @@
     <Compile Include="Common\ColorHelper.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\ObservableCollectionExtensions.cs" />
+    <Compile Include="Common\OpenHABHttpClientType.cs" />
     <Compile Include="Contracts\Services\ISettingsService.cs" />
     <Compile Include="HABCore.cs" />
     <Compile Include="Messages\FireErrorMessage.cs" />
