@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using Microsoft.Practices.ServiceLocation;
+using CommonServiceLocator;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Model;
@@ -18,7 +18,7 @@ namespace OpenHAB.Windows.Converters
         {
             var settingsService = ServiceLocator.Current.GetInstance<ISettingsService>();
             var settings = settingsService.Load();
-            var serverUrl = settings.IsRunningInDemoMode.Value ? Constants.Api.DemoModeUrl : settings.OpenHABUrl;
+            var serverUrl = settings.IsRunningInDemoMode.Value ? Core.Common.Constants.Api.DemoModeUrl : settings.OpenHABUrl;
 
             var widget = value as OpenHABWidget;
 
