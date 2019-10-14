@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.Practices.ServiceLocation;
+using CommonServiceLocator;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts.Services;
 using Windows.UI.Xaml;
@@ -52,7 +52,7 @@ namespace OpenHAB.Windows.Controls
         internal override void SetState()
         {
             var settings = _settingsService.Load();
-            var serverUrl = settings.IsRunningInDemoMode.Value ? Constants.Api.DemoModeUrl : settings.OpenHABUrl;
+            var serverUrl = settings.IsRunningInDemoMode.Value ? Core.Common.Constants.Api.DemoModeUrl : settings.OpenHABUrl;
 
             if (!serverUrl.EndsWith("/"))
             {

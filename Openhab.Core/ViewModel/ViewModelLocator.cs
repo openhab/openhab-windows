@@ -1,8 +1,8 @@
 ﻿using System;
+using CommonServiceLocator;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
-using Microsoft.Practices.ServiceLocation;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.SDK;
 using OpenHAB.Core.Services;

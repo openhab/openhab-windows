@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
-using Microsoft.Practices.ServiceLocation;
+using CommonServiceLocator;
 using OpenHAB.Core.Contracts.Services;
 
 namespace OpenHAB.Core.Common
