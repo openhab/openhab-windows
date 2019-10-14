@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using Microsoft.Practices.ServiceLocation;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts.Services;
@@ -21,8 +22,16 @@ namespace OpenHAB.Windows.Converters
 
             var widget = value as OpenHABWidget;
 
+            var state = widget.Item?.State ?? "ON";
+
+            var regMatch = Regex.Match(state, @"\d+");
+            if (regMatch.Success)
+            {
+                state = regMatch.Value;
+            }
+
             return settingsService.ServerVersion == OpenHABVersion.Two ?
-                $"{serverUrl}icon/{widget.Icon}?state={widget.Item?.State ?? "ON"}&format=png" :
+                $"{serverUrl}icon/{widget.Icon}?state={state}&format=png" :
                 $"{serverUrl}images/{widget.Icon}.png";
         }
 
