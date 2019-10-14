@@ -23,6 +23,7 @@ namespace OpenHAB.Core.SDK
     {
         private readonly ISettingsService _settingsService;
         private readonly IMessenger _messenger;
+        private OpenHABHttpClientType _connectionType;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenHAB"/> class.
@@ -47,7 +48,6 @@ namespace OpenHAB.Core.SDK
                 return false;
             }
 
-
             OpenHABHttpClient.ResetClient();
 
             return true;
@@ -58,7 +58,7 @@ namespace OpenHAB.Core.SDK
         {
             try
             {
-                var httpClient = OpenHABHttpClient.Client();
+                var httpClient = OpenHABHttpClient.Client(_connectionType);
 
                 if (httpClient == null)
                 {
@@ -80,7 +80,7 @@ namespace OpenHAB.Core.SDK
         {
             try
             {
-                var result = await OpenHABHttpClient.Client().GetAsync(Constants.Api.Sitemaps).ConfigureAwait(false);
+                var result = await OpenHABHttpClient.Client(_connectionType).GetAsync(Constants.Api.Sitemaps).ConfigureAwait(false);
                 if (!result.IsSuccessStatusCode)
                 {
                     throw new OpenHABException($"{result.StatusCode} received from server");
@@ -116,7 +116,7 @@ namespace OpenHAB.Core.SDK
         {
             try
             {
-                var result = await OpenHABHttpClient.Client().GetAsync(sitemap.Link).ConfigureAwait(false);
+                var result = await OpenHABHttpClient.Client(_connectionType).GetAsync(sitemap.Link).ConfigureAwait(false);
                 if (!result.IsSuccessStatusCode)
                 {
                     throw new OpenHABException($"{result.StatusCode} received from server");
@@ -146,7 +146,7 @@ namespace OpenHAB.Core.SDK
         {
             try
             {
-                var client = OpenHABHttpClient.Client();
+                var client = OpenHABHttpClient.Client(_connectionType);
                 var content = new StringContent(command);
                 var result = await client.PostAsync(item.Link, content);
 
@@ -201,21 +201,23 @@ namespace OpenHAB.Core.SDK
                 }
 
                 OpenHABHttpClient.BaseUrl = settings.OpenHABRemoteUrl;
+                _connectionType = OpenHABHttpClientType.Remote;
                 return true;
             }
 
-            bool isReachable = await CheckUrlReachability(settings.OpenHABUrl).ConfigureAwait(false);
-
+            bool isReachable = await CheckUrlReachability(settings.OpenHABUrl, OpenHABHttpClientType.Local).ConfigureAwait(false);
             if (isReachable)
             {
                 OpenHABHttpClient.BaseUrl = settings.OpenHABUrl;
+                _connectionType = OpenHABHttpClientType.Local;
             }
             else
             {
                 // If remote URL is configured
-                if (!string.IsNullOrWhiteSpace(settings.OpenHABRemoteUrl) && await CheckUrlReachability(settings.OpenHABRemoteUrl).ConfigureAwait(false))
+                if (!string.IsNullOrWhiteSpace(settings.OpenHABRemoteUrl) && await CheckUrlReachability(settings.OpenHABRemoteUrl, OpenHABHttpClientType.Remote).ConfigureAwait(false))
                 {
                     OpenHABHttpClient.BaseUrl = settings.OpenHABRemoteUrl;
+                    _connectionType = OpenHABHttpClientType.Remote;
                     return true;
                 }
             }
@@ -223,7 +225,8 @@ namespace OpenHAB.Core.SDK
             return false;
         }
 
-        public async Task<bool> CheckUrlReachability(string openHABUrl)
+        /// <inheritdoc/>
+        public async Task<bool> CheckUrlReachability(string openHABUrl, OpenHABHttpClientType connectionType)
         {
             if (string.IsNullOrWhiteSpace(openHABUrl))
             {
@@ -237,7 +240,7 @@ namespace OpenHAB.Core.SDK
 
             try
             {
-                var client = OpenHABHttpClient.DisposableClient();
+                var client = OpenHABHttpClient.DisposableClient(connectionType);
                 var result = await client.GetAsync(openHABUrl + "rest").ConfigureAwait(false);
 
                 if (result.IsSuccessStatusCode)
@@ -262,7 +265,7 @@ namespace OpenHAB.Core.SDK
         {
             await Task.Run(async () =>
             {
-                var client = OpenHABHttpClient.Client();
+                var client = OpenHABHttpClient.Client(_connectionType);
                 var requestUri = Constants.Api.Events;
 
                 try

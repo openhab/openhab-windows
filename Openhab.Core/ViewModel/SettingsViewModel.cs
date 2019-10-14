@@ -93,7 +93,7 @@ namespace OpenHAB.Core.ViewModel
         }
 
         /// <summary>
-        /// Save the user defined settings to the UWP settings storage
+        /// Save the user defined settings to the UWP settings storage.
         /// </summary>
         public void PersistSettings()
         {
@@ -126,7 +126,7 @@ namespace OpenHAB.Core.ViewModel
             string url = parameter.ToString();
 
             LocalUrlState = OpenHABUrlState.Unknown;
-            if (await _openHabsdk.CheckUrlReachability(url))
+            if (await _openHabsdk.CheckUrlReachability(url, Common.OpenHABHttpClientType.Local))
             {
                 LocalUrlState = OpenHABUrlState.OK;
             }
@@ -148,7 +148,7 @@ namespace OpenHAB.Core.ViewModel
             string url = parameter.ToString();
 
             RemoteUrlState = OpenHABUrlState.Unknown;
-            if (await _openHabsdk.CheckUrlReachability(url))
+            if (await _openHabsdk.CheckUrlReachability(url, Common.OpenHABHttpClientType.Remote))
             {
                 RemoteUrlState = OpenHABUrlState.OK;
             }

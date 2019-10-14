@@ -7,44 +7,44 @@ using OpenHAB.Core.Contracts.Services;
 namespace OpenHAB.Core.Common
 {
     /// <summary>
-    /// A sealed class that holds the instance of HttpClient for this lifetimescope
+    /// A sealed class that holds the instance of HttpClient for this lifetimescope.
     /// </summary>
     public sealed class OpenHABHttpClient
     {
         private static HttpClient _client;
 
         /// <summary>
-        /// Gets or sets the connection URL
+        /// Gets or sets the connection URL.
         /// </summary>
         public static string BaseUrl { get; set; }
 
         /// <summary>
-        /// Fetch the HttpClient instance
+        /// Fetch the HttpClient instance.
         /// </summary>
         /// <returns>The HttpClient instance</returns>
-        public static HttpClient Client()
+        public static HttpClient Client(OpenHABHttpClientType connectionType)
         {
-            return _client ?? (_client = InitClient());
+            return _client ?? (_client = InitClient(connectionType));
         }
 
         /// <summary>
-        /// Create an HttpClient instance for one-time use
+        /// Create an HttpClient instance for one-time use.
         /// </summary>
-        /// <returns>The HttpClient instance</returns>
-        public static HttpClient DisposableClient()
+        /// <returns>The HttpClient instance.</returns>
+        public static HttpClient DisposableClient(OpenHABHttpClientType connectionType)
         {
-            return InitClient(true);
+            return InitClient(connectionType, true);
         }
 
         /// <summary>
-        /// Forces creation of a new client, for example when the settings in the app are updated
+        /// Forces creation of a new client, for example when the settings in the app are updated.
         /// </summary>
         public static void ResetClient()
         {
             _client = null;
         }
 
-        private static HttpClient InitClient(bool disposable = false)
+        private static HttpClient InitClient(OpenHABHttpClientType connectionType, bool disposable = false)
         {
             if (string.IsNullOrWhiteSpace(BaseUrl) && !disposable)
             {
@@ -52,7 +52,7 @@ namespace OpenHAB.Core.Common
             }
 
             var handler = new HttpClientHandler();
-            var credentials = GetCredentials();
+            var credentials = GetCredentials(connectionType);
 
             if (credentials != null)
             {
@@ -68,11 +68,11 @@ namespace OpenHAB.Core.Common
             return client;
         }
 
-        private static NetworkCredential GetCredentials()
+        private static NetworkCredential GetCredentials(OpenHABHttpClientType connectionType)
         {
             var settings = ServiceLocator.Current.GetInstance<ISettingsService>().Load();
-            string username = settings.Username;
-            string password = settings.Password;
+            string username = connectionType == OpenHABHttpClientType.Local ? settings.Username : settings.RemoteUsername;
+            string password = connectionType == OpenHABHttpClientType.Local ? settings.Password : settings.RemotePassword;
 
             if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
             {
