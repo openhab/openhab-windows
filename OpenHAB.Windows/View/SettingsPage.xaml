@@ -46,6 +46,7 @@
 					<RowDefinition Height="Auto" />
 					<RowDefinition Height="Auto" />
 					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
 				</Grid.RowDefinitions>
 				<StackPanel Grid.Column="0"
 							Grid.Row="0">
@@ -66,7 +67,6 @@
 					<TextBox x:Uid="LocalUrl"
 							 x:Name="TextBoxUrl"
 							 Margin="0,0,12,12"
-							 MinWidth="300"
 							 IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
 							 Text="{Binding Settings.OpenHABUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 						<Interactivity:Interaction.Behaviors>
@@ -97,24 +97,6 @@
 								  FontFamily="{StaticResource SymbolThemeFontFamily}"
 								  Glyph="{Binding Path=LocalUrlState, Converter={StaticResource OpenHabUrlStateToGlyph}, Mode=TwoWay}" />
 					</StackPanel>
-					<!--<TextBlock Text="Ignore SSL certificate" />
-					<CheckBox x:Name="CheckBoxIgnoreSSL"
-							  Margin="0,0,0,12"
-							  HorizontalAlignment="Stretch"
-							  VerticalAlignment="Stretch"
-							  IsChecked="{Binding Settings.WillIgnoreSSLCertificate,
-												  Mode=TwoWay,
-												  UpdateSourceTrigger=PropertyChanged}"
-							  IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />
-					<TextBlock Text="Ignore SSL hostname" />
-					<CheckBox x:Name="CheckBoxIgnoreSSLHostname"
-							  Margin="0,0,0,12"
-							  HorizontalAlignment="Stretch"
-							  VerticalAlignment="Stretch"
-							  IsChecked="{Binding Settings.WillIgnoreSSLHostname,
-												  Mode=TwoWay,
-												  UpdateSourceTrigger=PropertyChanged}"
-							  IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />-->
 				</StackPanel>
 				<StackPanel Grid.Column="1"
 							Grid.Row="1"
@@ -126,7 +108,6 @@
 					<TextBox x:Uid="RemoteUrl"
 							 x:Name="TextBoxRemoteUrl"
 							 Margin="0,0,12,12"
-							 MinWidth="300"
 							 IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
 							 Text="{Binding Settings.OpenHABRemoteUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 						<Interactivity:Interaction.Behaviors>
@@ -170,8 +151,33 @@
 					</StackPanel>
 				</StackPanel>
 				<StackPanel Grid.Column="0"
-							Grid.ColumnSpan="2"
 							Grid.Row="2"
+							Margin="0,12,0,0">
+					<TextBlock x:Uid="ConnectionSettings"
+							   FontSize="24"
+							   Margin="0,0,0,10" />
+					<TextBlock x:Uid="IgnoreSSLCertErrors"/>
+					<CheckBox x:Name="CheckBoxIgnoreSSL"
+							  Margin="0,0,0,12"
+							  HorizontalAlignment="Stretch"
+							  VerticalAlignment="Stretch"
+							  IsChecked="{Binding Settings.WillIgnoreSSLCertificate,
+												  Mode=TwoWay,
+												  UpdateSourceTrigger=PropertyChanged}"
+							  IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />
+					<TextBlock x:Uid="IgnoreSSLCertHostErrors" />
+					<CheckBox x:Name="CheckBoxIgnoreSSLHostname"
+							  Margin="0,0,0,12"
+							  HorizontalAlignment="Stretch"
+							  VerticalAlignment="Stretch"
+							  IsChecked="{Binding Settings.WillIgnoreSSLHostname,
+												  Mode=TwoWay,
+												  UpdateSourceTrigger=PropertyChanged}"
+							  IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />
+				</StackPanel>
+				<StackPanel Grid.Column="0"
+							Grid.ColumnSpan="2"
+							Grid.Row="3"
 							HorizontalAlignment="Right"
 							Orientation="Horizontal">
 					<Button x:Uid="SaveButton"
@@ -181,10 +187,11 @@
 							Click="ButtonCancel_OnClick" />
 				</StackPanel>
 				<StackPanel Grid.Column="0"
-							Grid.Row="3"
+							Grid.Row="4"
 							Orientation="Horizontal">
-					<TextBlock x:Uid="AppVersion"  />
-					<TextBlock Margin="10,0,0,0" Text="{Binding Path=Version}" />
+					<TextBlock x:Uid="AppVersion" />
+					<TextBlock Margin="10,0,0,0"
+							   Text="{Binding Path=Version}" />
 				</StackPanel>
 			</Grid>
 		</ScrollViewer>

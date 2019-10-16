@@ -126,8 +126,17 @@
   <data name="ConnectionCheck.Text" xml:space="preserve">
     <value>Connection Check:</value>
   </data>
+  <data name="ConnectionSettings.Text" xml:space="preserve">
+    <value>Connection Settings</value>
+  </data>
   <data name="DemoModeHeader.Text" xml:space="preserve">
     <value>Demo mode</value>
+  </data>
+  <data name="IgnoreSSLCertErrors.Text" xml:space="preserve">
+    <value>Ignore SSL certificate errors</value>
+  </data>
+  <data name="IgnoreSSLCertHostErrors.Text" xml:space="preserve">
+    <value>Ignore SSL hostname errors</value>
   </data>
   <data name="LocalSettings.Text" xml:space="preserve">
     <value>Local Settings</value>
