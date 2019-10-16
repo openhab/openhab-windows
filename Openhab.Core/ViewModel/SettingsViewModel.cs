@@ -1,5 +1,4 @@
 using System;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -9,6 +8,7 @@ using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.SDK;
+using Windows.ApplicationModel;
 
 namespace OpenHAB.Core.ViewModel
 {
@@ -45,7 +45,7 @@ namespace OpenHAB.Core.ViewModel
         /// Gets the command for remote url check.
         /// </summary>
         /// <value>The remote URL check command.</value>
-        public ICommand RemoteUrlCheckCommand => _remoteUrlCheckCommand ?? (_remoteUrlCheckCommand = new RelayCommand<object>(CheckRemoteUrl));
+        public ICommand RemoteUrlCheckCommand => _remoteUrlCheckCommand ?? (_remoteUrlCheckCommand = new RelayCommand(CheckRemoteUrl));
 
         /// <summary>
         /// Gets or sets the current user-defined settings
@@ -74,6 +74,20 @@ namespace OpenHAB.Core.ViewModel
         {
             get => _remoteUrlState;
             set => Set(ref _remoteUrlState, value);
+        }
+
+        public string Version
+        {
+            get
+            {
+                Version version = new Version(
+                    Package.Current.Id.Version.Major,
+                    Package.Current.Id.Version.Minor,
+                    Package.Current.Id.Version.Build,
+                    Package.Current.Id.Version.Revision);
+
+                return version.ToString();
+            }
         }
 
         /// <summary>
@@ -111,7 +125,7 @@ namespace OpenHAB.Core.ViewModel
         private void UrlChecks()
         {
             CheckLocalUrl(_settings.OpenHABUrl);
-            CheckRemoteUrl(_settings.OpenHABRemoteUrl);
+            CheckRemoteUrl();
         }
 
 #pragma warning disable S3168 // "async" methods should not return "void"
@@ -126,7 +140,7 @@ namespace OpenHAB.Core.ViewModel
             string url = parameter.ToString();
 
             LocalUrlState = OpenHABUrlState.Unknown;
-            if (await _openHabsdk.CheckUrlReachability(url, Common.OpenHABHttpClientType.Local))
+            if (await _openHabsdk.CheckUrlReachability(url, Settings, Common.OpenHABHttpClientType.Local))
             {
                 LocalUrlState = OpenHABUrlState.OK;
             }
@@ -136,19 +150,17 @@ namespace OpenHAB.Core.ViewModel
             }
         }
 
-#pragma warning disable S3168 // "async" methods should not return "void"
-        private async void CheckRemoteUrl(object parameter)
-#pragma warning restore S3168 // "async" methods should not return "void"
+        private async void CheckRemoteUrl()
         {
-            if (parameter == null)
+            if (string.IsNullOrEmpty(Settings.OpenHABRemoteUrl) &&
+                string.IsNullOrEmpty(Settings.RemoteUsername) &&
+                string.IsNullOrEmpty(Settings.RemotePassword))
             {
                 return;
             }
 
-            string url = parameter.ToString();
-
             RemoteUrlState = OpenHABUrlState.Unknown;
-            if (await _openHabsdk.CheckUrlReachability(url, Common.OpenHABHttpClientType.Remote))
+            if (await _openHabsdk.CheckUrlReachability(Settings.OpenHABRemoteUrl, Settings, Common.OpenHABHttpClientType.Remote))
             {
                 RemoteUrlState = OpenHABUrlState.OK;
             }

@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using CommonServiceLocator;
 using OpenHAB.Core.Contracts.Services;
+using OpenHAB.Core.Model;
 
 namespace OpenHAB.Core.Common
 {
@@ -12,6 +13,7 @@ namespace OpenHAB.Core.Common
     public sealed class OpenHABHttpClient
     {
         private static HttpClient _client;
+        private static Settings _settings;
 
         /// <summary>
         /// Gets or sets the connection URL.
@@ -22,8 +24,9 @@ namespace OpenHAB.Core.Common
         /// Fetch the HttpClient instance.
         /// </summary>
         /// <returns>The HttpClient instance</returns>
-        public static HttpClient Client(OpenHABHttpClientType connectionType)
+        public static HttpClient Client(OpenHABHttpClientType connectionType, Settings settings)
         {
+            _settings = settings;
             return _client ?? (_client = InitClient(connectionType));
         }
 
@@ -31,8 +34,9 @@ namespace OpenHAB.Core.Common
         /// Create an HttpClient instance for one-time use.
         /// </summary>
         /// <returns>The HttpClient instance.</returns>
-        public static HttpClient DisposableClient(OpenHABHttpClientType connectionType)
+        public static HttpClient DisposableClient(OpenHABHttpClientType connectionType, Settings settings)
         {
+            _settings = settings;
             return InitClient(connectionType, true);
         }
 
@@ -70,9 +74,8 @@ namespace OpenHAB.Core.Common
 
         private static NetworkCredential GetCredentials(OpenHABHttpClientType connectionType)
         {
-            var settings = ServiceLocator.Current.GetInstance<ISettingsService>().Load();
-            string username = connectionType == OpenHABHttpClientType.Local ? settings.Username : settings.RemoteUsername;
-            string password = connectionType == OpenHABHttpClientType.Local ? settings.Password : settings.RemotePassword;
+            string username = connectionType == OpenHABHttpClientType.Local ? _settings.Username : _settings.RemoteUsername;
+            string password = connectionType == OpenHABHttpClientType.Local ? _settings.Password : _settings.RemotePassword;
 
             if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
             {

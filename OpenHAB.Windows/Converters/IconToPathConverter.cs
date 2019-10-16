@@ -18,7 +18,7 @@ namespace OpenHAB.Windows.Converters
         {
             var settingsService = ServiceLocator.Current.GetInstance<ISettingsService>();
             var settings = settingsService.Load();
-            var serverUrl = settings.IsRunningInDemoMode.Value ? Core.Common.Constants.Api.DemoModeUrl : settings.OpenHABUrl;
+            var serverUrl = Core.Common.OpenHABHttpClient.BaseUrl;
 
             var widget = value as OpenHABWidget;
 

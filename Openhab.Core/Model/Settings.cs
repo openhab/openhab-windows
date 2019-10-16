@@ -1,7 +1,7 @@
 ﻿namespace OpenHAB.Core.Model
 {
     /// <summary>
-    /// Class that holds all the OpenHAB Windows app settings
+    /// Class that holds all the OpenHAB Windows app settings.
     /// </summary>
     public class Settings : ObservableBase
     {
@@ -16,7 +16,7 @@
         private string _remotePassword;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the app is currently running in demo mode
+        /// Gets or sets a value indicating whether the app is currently running in demo mode.
         /// </summary>
         public bool? IsRunningInDemoMode
         {
@@ -38,7 +38,7 @@
         }
 
         /// <summary>
-        /// Gets or sets the url to the OpenHAB server
+        /// Gets or sets the url to the OpenHAB server.
         /// </summary>
         public string OpenHABUrl
         {
@@ -54,7 +54,7 @@
                     return;
                 }
 
-                if (value != null && !value.EndsWith("/"))
+                if (!string.IsNullOrEmpty(value) && !value.EndsWith("/"))
                 {
                     _openHABUrl = value + "/";
                 }
@@ -68,7 +68,7 @@
         }
 
         /// <summary>
-        /// Gets or sets the url to the OpenHAB remote url
+        /// Gets or sets the url to the OpenHAB remote url.
         /// </summary>
         public string OpenHABRemoteUrl
         {
@@ -84,7 +84,7 @@
                     return;
                 }
 
-                if (value != null && !value.EndsWith("/"))
+                if (!string.IsNullOrEmpty(value) && !value.EndsWith("/"))
                 {
                     _openHABRemoteUrl = value + "/";
                 }
@@ -98,7 +98,7 @@
         }
 
         /// <summary>
-        /// Gets or sets the username for the local OpenHAB server connection
+        /// Gets or sets the username for the local OpenHAB server connection.
         /// </summary>
         public string Username
         {
@@ -120,7 +120,7 @@
         }
 
         /// <summary>
-        /// Gets or sets the password for the local OpenHAB connection
+        /// Gets or sets the password for the local OpenHAB connection.
         /// </summary>
         public string Password
         {
@@ -142,7 +142,7 @@
         }
 
         /// <summary>
-        /// Gets or sets the username for the remote OpenHAB server connection
+        /// Gets or sets the username for the remote OpenHAB server connection.
         /// </summary>
         public string RemoteUsername
         {
@@ -164,7 +164,7 @@
         }
 
         /// <summary>
-        /// Gets or sets the password for the remote OpenHAB connection
+        /// Gets or sets the password for the remote OpenHAB connection.
         /// </summary>
         public string RemotePassword
         {
@@ -186,7 +186,7 @@
         }
 
         /// <summary>
-        ///  Gets or sets a value indicating whether the app will ignore the SSL certificate
+        ///  Gets or sets a value indicating whether the app will ignore the SSL certificate.
         /// </summary>
         public bool? WillIgnoreSSLCertificate
         {
@@ -208,7 +208,7 @@
         }
 
         /// <summary>
-        ///  Gets or sets a value indicating whether the app will ignore the SSL hostname
+        ///  Gets or sets a value indicating whether the app will ignore the SSL hostname.
         /// </summary>
         public bool? WillIgnoreSSLHostname
         {

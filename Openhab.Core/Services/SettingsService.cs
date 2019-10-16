@@ -7,7 +7,7 @@ using Windows.Storage;
 namespace OpenHAB.Core.Services
 {
     /// <summary>
-    /// Service that handles all settings operations
+    /// Service that handles all settings operations.
     /// </summary>
     public class SettingsService : ISettingsService
     {
