@@ -16,8 +16,7 @@ namespace OpenHAB.Windows.Converters
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             var settingsService = ServiceLocator.Current.GetInstance<ISettingsService>();
-            var settings = settingsService.Load();
-            var serverUrl = settings.IsRunningInDemoMode.Value ? Core.Common.Constants.Api.DemoModeUrl : settings.OpenHABUrl;
+            var serverUrl = Core.Common.OpenHABHttpClient.BaseUrl;
 
             string url = settingsService.ServerVersion == OpenHABVersion.Two ? $"{serverUrl}icon/{value}?state=UNDEF&format=png" : $"{serverUrl}images/{value}.png";
 

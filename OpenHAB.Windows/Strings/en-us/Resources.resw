@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppVersion.Text" xml:space="preserve">
+    <value>OpenHab App Version:</value>
+  </data>
   <data name="CancelButton.Content" xml:space="preserve">
     <value>Cancel</value>
+  </data>
+  <data name="ConnectionCheck.Text" xml:space="preserve">
+    <value>Connection Check:</value>
   </data>
   <data name="DemoModeHeader.Text" xml:space="preserve">
     <value>Demo mode</value>
