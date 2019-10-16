@@ -76,6 +76,10 @@ namespace OpenHAB.Core.ViewModel
             set => Set(ref _remoteUrlState, value);
         }
 
+        /// <summary>
+        /// Gets the app version number.
+        /// </summary>
+        /// <value>The version number.</value>
         public string Version
         {
             get

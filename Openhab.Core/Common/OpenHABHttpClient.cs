@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using CommonServiceLocator;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Model;
@@ -18,7 +20,10 @@ namespace OpenHAB.Core.Common
         /// <summary>
         /// Gets or sets the connection URL.
         /// </summary>
-        public static string BaseUrl { get; set; }
+        public static string BaseUrl
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Fetch the HttpClient instance.
@@ -56,6 +61,12 @@ namespace OpenHAB.Core.Common
             }
 
             var handler = new HttpClientHandler();
+
+            if (_settings.WillIgnoreSSLCertificate.HasValue && _settings.WillIgnoreSSLHostname.HasValue)
+            {
+                handler.ServerCertificateCustomValidationCallback = CheckValidationResult;
+            }
+
             var credentials = GetCredentials(connectionType);
 
             if (credentials != null)
@@ -83,6 +94,32 @@ namespace OpenHAB.Core.Common
             }
 
             return null;
+        }
+
+        private static bool CheckValidationResult(HttpRequestMessage message, X509Certificate2 certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+        {
+            bool result = true;
+            if (sslPolicyErrors == SslPolicyErrors.None)
+            {
+                return result;
+            }
+
+            if (sslPolicyErrors.HasFlag(SslPolicyErrors.RemoteCertificateChainErrors))
+            {
+                result &= _settings.WillIgnoreSSLCertificate.Value;
+            }
+
+            if (sslPolicyErrors.HasFlag(SslPolicyErrors.RemoteCertificateNameMismatch))
+            {
+                result &= _settings.WillIgnoreSSLHostname.Value;
+            }
+
+            if (sslPolicyErrors.HasFlag(SslPolicyErrors.RemoteCertificateNotAvailable))
+            {
+                result = false;
+            }
+
+            return result;
         }
     }
 }
