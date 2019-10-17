@@ -8,11 +8,8 @@
                   d:DesignWidth="300"
                   mc:Ignorable="d">
 
-    <Grid Width="300"
-          Height="150"
-          Background="{StaticResource OpenHABLightColor}"
-          CornerRadius="5"
-          Tapped="OnTapped">
+	<Grid Style="{StaticResource Widget}"
+		  Tapped="OnTapped">
 
         <WebView x:Name="WebView">
             <WebView.RenderTransform>

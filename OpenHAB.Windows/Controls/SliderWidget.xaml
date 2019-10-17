@@ -11,10 +11,7 @@
         <converters:StringToDoubleConverter x:Key="StringToDoubleConverter" />
     </local:WidgetBase.Resources>
 
-    <Grid Width="300"
-          Height="150"
-          Background="{StaticResource OpenHABLightColor}"
-          CornerRadius="5">
+	<Grid Style="{StaticResource Widget}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="1*" />

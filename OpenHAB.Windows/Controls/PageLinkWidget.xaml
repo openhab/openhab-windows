@@ -13,10 +13,7 @@
         <converters:IconToBitmapConverter x:Key="IconToBitmapConverter" />
     </local:WidgetBase.Resources>
 
-    <Grid Width="300"
-          Height="150"
-          Background="{StaticResource OpenHABLightColor}"
-          CornerRadius="5">
+	<Grid Style="{StaticResource Widget}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
