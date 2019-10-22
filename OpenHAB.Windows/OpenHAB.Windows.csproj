@@ -166,6 +166,7 @@
       <DependentUpon>WebViewWidget.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WidgetBase.cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\BoolToBackgroundColorConverter.cs" />
     <Compile Include="Converters\IconToBitmapConverter.cs" />
     <Compile Include="Converters\IconToPathConverter.cs" />

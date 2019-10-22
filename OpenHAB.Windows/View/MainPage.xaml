@@ -9,7 +9,11 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:model="using:OpenHAB.Core.Model"
       mc:Ignorable="d">
-
+    <Page.Background>
+        <ImageBrush ImageSource="/Assets/background.jpg"
+                    Stretch="UniformToFill" />
+    </Page.Background>
+    
     <Page.Resources>
         <Style TargetType="GridViewItem">
             <Setter Property="HorizontalContentAlignment"
@@ -21,6 +25,7 @@
         <converters:ObjectToSitemapConverter x:Key="ObjectToSitemapConverter" />
         <converters:BoolToBackgroundColorConverter x:Key="BoolToBackgroundColorConverter" />
         <converters:CollectionZeroToVisibilityConverter x:Key="ZeroToVisibility" />
+        <converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 
         <DataTemplate x:Key="NavMenuItemTemplate"
                       x:DataType="model:OpenHABSitemap">
@@ -93,11 +98,6 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="120" />
         </Grid.ColumnDefinitions>
-        <Grid.Background>
-            <ImageBrush ImageSource="/Assets/background.jpg"
-                        Stretch="UniformToFill" />
-        </Grid.Background>
-
         <SplitView x:Name="SitemapSplitView"
                    Grid.ColumnSpan="2"
                    VerticalContentAlignment="Stretch"
@@ -128,7 +128,7 @@
                                               ItemsSource="{x:Bind Vm.Sitemaps, Mode=OneWay}"
                                               SelectedItem="{x:Bind Vm.SelectedSitemap, Converter={StaticResource ObjectToSitemapConverter}, Mode=TwoWay}" />
                     <TextBlock Grid.Row="1"
-                               Margin="10,60,10,0"
+                               Margin="10,100,10,0"
                                x:Uid="NoItemsOrOpenHabNotAvailable"
                                Visibility="{x:Bind Vm.Sitemaps, Converter={StaticResource ZeroToVisibility}, Mode=TwoWay}"
                                TextWrapping="Wrap"
@@ -194,8 +194,19 @@
                         </GridView.ItemsPanel>
                     </GridView>
                 </ScrollViewer>
+                <Grid Grid.Row="1"
+                      Margin="100"
+                      Padding="50"
+                      Background="{StaticResource OpenHABLightColor}"
+                      Visibility="{x:Bind Vm.IsDataLoading, Converter={StaticResource BoolToVisibilityConverter}, Mode=TwoWay}">
+                    <ProgressRing MaxHeight="350"
+                                  IsActive="True"
+                                  VerticalAlignment="Stretch"
+                                  VerticalContentAlignment="Center"
+                                  HorizontalAlignment="Stretch"
+                                  HorizontalContentAlignment="Center" />
+                </Grid>
             </Grid>
-
         </SplitView>
 
         <ToggleButton x:Name="TogglePaneButton"
