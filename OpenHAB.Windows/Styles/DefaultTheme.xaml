@@ -25,6 +25,14 @@
 						TintColor="Silver"
 						AlwaysUseFallback="False" />
 
+	<Style x:Key="HeaderText"
+		   TargetType="TextBlock">
+		<Setter Property="Foreground"
+				Value="{StaticResource OpenHABMenuColor}" />
+		<Setter Property="FontSize"
+				Value="24" />
+	</Style>
+	
 	<Style x:Key="Widget"
 		   TargetType="Grid">
 		<Setter Property="Width"
@@ -581,7 +589,7 @@
 										<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
 																	   Storyboard.TargetProperty="Foreground">
 											<DiscreteObjectKeyFrame KeyTime="0"
-																	Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
+																	Value="{StaticResource OpenHABLightOrangeBrush}" />
 										</ObjectAnimationUsingKeyFrames>
 									</Storyboard>
 								</VisualState>

@@ -175,6 +175,7 @@
     <Compile Include="Converters\StateToBoolConverter.cs" />
     <Compile Include="Converters\StringToDoubleConverter.cs" />
     <Compile Include="Converters\WidgetTemplateSelector.cs" />
+    <Compile Include="Converters\CollectionZeroToVisibilityConverter.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="View\MainPage.xaml.cs">

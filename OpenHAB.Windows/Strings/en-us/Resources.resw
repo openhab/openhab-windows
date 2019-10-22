@@ -147,6 +147,9 @@
   <data name="LocalUrlHeader.Text" xml:space="preserve">
     <value>openHAB URL</value>
   </data>
+  <data name="NoItemsOrOpenHabNotAvailable.Text" xml:space="preserve">
+    <value>No sitemaps available or OpenHAB server is not reachable.</value>
+  </data>
   <data name="PasswordHeader.Text" xml:space="preserve">
     <value>Password</value>
   </data>
