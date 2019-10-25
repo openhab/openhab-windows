@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Data;
 namespace OpenHAB.Windows.Converters
 {
     /// <summary>
-    /// Converts an OpenHAB widget icon to a full path
+    /// Converts an OpenHAB widget icon to a full path.
     /// </summary>
     public class IconToPathConverter : IValueConverter
     {
@@ -17,8 +17,7 @@ namespace OpenHAB.Windows.Converters
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             var settingsService = ServiceLocator.Current.GetInstance<ISettingsService>();
-            var settings = settingsService.Load();
-            var serverUrl = Core.Common.OpenHABHttpClient.BaseUrl;
+            var serverUrl = OpenHABHttpClient.BaseUrl;
 
             var widget = value as OpenHABWidget;
 

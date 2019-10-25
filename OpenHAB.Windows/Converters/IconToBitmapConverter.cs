@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Media.Imaging;
 namespace OpenHAB.Windows.Converters
 {
     /// <summary>
-    /// Converts an icon path to a bitmap object
+    /// Converts an icon path to a bitmap object.
     /// </summary>
     public class IconToBitmapConverter : IValueConverter
     {
