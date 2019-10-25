@@ -7,7 +7,7 @@ using Windows.Storage;
 namespace OpenHAB.Core.Services
 {
     /// <summary>
-    /// Service that handles all settings operations
+    /// Service that handles all settings operations.
     /// </summary>
     public class SettingsService : ISettingsService
     {
@@ -32,7 +32,12 @@ namespace OpenHAB.Core.Services
         /// <inheritdoc />
         public string LoadLastSitemap()
         {
-            return _settingsContainer.Values[Constants.Local.SitemapKey].ToString();
+            if (!_settingsContainer.Values.TryGetValue(Constants.Local.SitemapKey, out object sitemapKey))
+            {
+                return null;
+            }
+
+            return sitemapKey.ToString();
         }
 
         /// <inheritdoc />

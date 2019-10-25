@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using OpenHAB.Core.Common;
 using OpenHAB.Core.Model;
 
 namespace OpenHAB.Core.SDK
@@ -48,5 +49,12 @@ namespace OpenHAB.Core.SDK
         /// Starts listening to server events
         /// </summary>
         void StartItemUpdates();
+
+        /// <summary>Checks the URL reachability.</summary>
+        /// <param name="openHABUrl">  OpenHAB host URL.</param>
+        /// <param name="settings">Applicaiton settings.</param>
+        /// <param name="connectionType">Defines if the connection is local or remote.</param>
+        /// <returns>>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        Task<bool> CheckUrlReachability(string openHABUrl, Settings settings, OpenHABHttpClientType connectionType);
     }
 }
