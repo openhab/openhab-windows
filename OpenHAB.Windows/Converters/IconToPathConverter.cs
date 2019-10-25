@@ -1,5 +1,6 @@
 ﻿using System;
-using Microsoft.Practices.ServiceLocation;
+using System.Text.RegularExpressions;
+using CommonServiceLocator;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Model;
@@ -17,12 +18,20 @@ namespace OpenHAB.Windows.Converters
         {
             var settingsService = ServiceLocator.Current.GetInstance<ISettingsService>();
             var settings = settingsService.Load();
-            var serverUrl = settings.IsRunningInDemoMode.Value ? Constants.Api.DemoModeUrl : settings.OpenHABUrl;
+            var serverUrl = Core.Common.OpenHABHttpClient.BaseUrl;
 
             var widget = value as OpenHABWidget;
 
+            var state = widget.Item?.State ?? "ON";
+
+            var regMatch = Regex.Match(state, @"\d+");
+            if (regMatch.Success)
+            {
+                state = regMatch.Value;
+            }
+
             return settingsService.ServerVersion == OpenHABVersion.Two ?
-                $"{serverUrl}icon/{widget.Icon}?state={widget.Item?.State ?? "ON"}&format=png" :
+                $"{serverUrl}icon/{widget.Icon}?state={state}&format=png" :
                 $"{serverUrl}images/{widget.Icon}.png";
         }
 
