@@ -1,7 +1,7 @@
 ﻿namespace OpenHAB.Core.Model
 {
     /// <summary>
-    /// Reflects the State for an url check
+    /// Reflects the State for an url check.
     /// </summary>
     public enum OpenHABUrlState
     {
@@ -15,9 +15,9 @@
         /// </summary>
         Failed,
 
-        /// <summary> 
+        /// <summary>
         /// State is unknown
         /// </summary>
-        Unknown
+        Unknown,
     }
 }

@@ -19,7 +19,9 @@ namespace OpenHAB.Windows.Extensions
                 dialog.MinHeight = 400;
             }
             else
+            {
                 dialog.MinWidth = dialog.MinHeight = 300;
+            }
         }
     }
 }

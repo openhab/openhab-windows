@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Media.Imaging;
 namespace OpenHAB.Windows.Controls
 {
     /// <summary>
-    /// Widget control that represents an OpenHAB slider
+    /// Widget control that represents an OpenHAB slider.
     /// </summary>
     public sealed partial class ChartWidget : WidgetBase
     {
@@ -19,7 +19,7 @@ namespace OpenHAB.Windows.Controls
         private string _chartUri;
 
         /// <summary>
-        /// Gets or sets the assembled URI for the chart
+        /// Gets or sets the assembled URI for the chart.
         /// </summary>
         public string ChartUri
         {

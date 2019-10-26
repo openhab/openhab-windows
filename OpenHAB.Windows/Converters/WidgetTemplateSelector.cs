@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Controls;
 namespace OpenHAB.Windows.Converters
 {
     /// <summary>
-    /// TemplateSelector that determines what widget needs to be shown in the UI
+    /// TemplateSelector that determines what widget needs to be shown in the UI.
     /// </summary>
     public class WidgetTemplateSelector : DataTemplateSelector
     {
@@ -64,77 +64,77 @@ namespace OpenHAB.Windows.Converters
         }
 
         /// <summary>
-        /// Gets or sets the template for a Frame control
+        /// Gets or sets the template for a Frame control.
         /// </summary>
         public DataTemplate FrameTemplate { get; set; }
 
         /// <summary>
-        /// Gets or sets the template for a Selection control
+        /// Gets or sets the template for a Selection control.
         /// </summary>
         public DataTemplate SelectionTemplate { get; set; }
 
         /// <summary>
-        /// Gets or sets the template for a MJPEG video control
+        /// Gets or sets the template for a MJPEG video control.
         /// </summary>
         public DataTemplate MjpegTemplate { get; set; }
 
         /// <summary>
-        /// Gets or sets the template for a rollershutter control
+        /// Gets or sets the template for a rollershutter control.
         /// </summary>
         public DataTemplate RollershutterTemplate { get; set; }
 
         /// <summary>
-        /// Gets or sets the template for a Pagelink control
+        /// Gets or sets the template for a Pagelink control.
         /// </summary>
         public DataTemplate PageLinkTemplate { get; set; }
 
         /// <summary>
-        /// Gets or sets the template for a Switch control
+        /// Gets or sets the template for a Switch control.
         /// </summary>
         public DataTemplate SwitchTemplate { get; set; }
 
         /// <summary>
-        /// Gets or sets the template for a Slider control
+        /// Gets or sets the template for a Slider control.
         /// </summary>
         public DataTemplate SliderTemplate { get; set; }
 
         /// <summary>
-        /// Gets or sets the template for a Text control
+        /// Gets or sets the template for a Text control.
         /// </summary>
         public DataTemplate TextTemplate { get; set; }
 
         /// <summary>
-        /// Gets or sets the template for a Image control
+        /// Gets or sets the template for a Image control.
         /// </summary>
         public DataTemplate ImageTemplate { get; set; }
 
         /// <summary>
-        /// Gets or sets the template for a section switch control
+        /// Gets or sets the template for a section switch control.
         /// </summary>
         public DataTemplate SectionSwitchTemplate { get; set; }
 
         /// <summary>
-        /// Gets or sets the template for a color picker control
+        /// Gets or sets the template for a color picker control.
         /// </summary>
         public DataTemplate ColorTemplate { get; set; }
 
         /// <summary>
-        /// Gets or sets the template for a setpoint control
+        /// Gets or sets the template for a setpoint control.
         /// </summary>
         public DataTemplate SetpointTemplate { get; set; }
 
         /// <summary>
-        /// Gets or sets the template for a chart control
+        /// Gets or sets the template for a chart control.
         /// </summary>
         public DataTemplate ChartTemplate { get; set; }
 
         /// <summary>
-        /// Gets or sets the template for a map view control
+        /// Gets or sets the template for a map view control.
         /// </summary>
         public DataTemplate MapViewTemplate { get; set; }
 
         /// <summary>
-        /// Gets or sets the template for a web view control
+        /// Gets or sets the template for a web view control.
         /// </summary>
         public DataTemplate WebViewTemplate { get; set; }
 
@@ -191,8 +191,6 @@ namespace OpenHAB.Windows.Converters
             {
                 return WidgetTypeEnum.Generic;
             }
-
-            return WidgetTypeEnum.Generic;
         }
     }
 }

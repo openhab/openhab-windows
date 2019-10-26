@@ -10,7 +10,7 @@ using OpenHAB.Core.Services;
 namespace OpenHAB.Core.ViewModel
 {
     /// <summary>
-    /// Locator object to bind the views to the viewmodels
+    /// Locator object to bind the views to the viewmodels.
     /// </summary>
     public class ViewModelLocator : IDisposable
     {
@@ -40,12 +40,12 @@ namespace OpenHAB.Core.ViewModel
         }
 
         /// <summary>
-        /// Gets the MainViewModel for binding a View's DataContext
+        /// Gets the MainViewModel for binding a View's DataContext.
         /// </summary>
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
 
         /// <summary>
-        /// Gets the SettingsViewModel for binding a View's DataContext
+        /// Gets the SettingsViewModel for binding a View's DataContext.
         /// </summary>
         public SettingsViewModel Settings => ServiceLocator.Current.GetInstance<SettingsViewModel>();
 

@@ -9,7 +9,6 @@ namespace OpenHAB.Windows.Converters
     /// </summary>
     public class BooleanToVisibilityConverter : IValueConverter
     {
-
         /// <summary>
         /// Converts the specified value.
         /// </summary>

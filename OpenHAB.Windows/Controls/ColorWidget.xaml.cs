@@ -8,14 +8,14 @@ using Windows.UI.Xaml;
 namespace OpenHAB.Windows.Controls
 {
     /// <summary>
-    /// Widget control that represents an OpenHAB text
+    /// Widget control that represents an OpenHAB text.
     /// </summary>
     public sealed partial class ColorWidget : WidgetBase
     {
         private Color _selectedColor;
 
         /// <summary>
-        /// Gets or sets the color currently selected in the colorpicker widget
+        /// Gets or sets the color currently selected in the colorpicker widget.
         /// </summary>
         public Color SelectedColor
         {

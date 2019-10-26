@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Input;
 namespace OpenHAB.Windows.Controls
 {
     /// <summary>
-    /// Widget control that represents an OpenHab WebView
+    /// Widget control that represents an OpenHab WebView.
     /// </summary>
     public sealed partial class WebViewWidget : WidgetBase
     {

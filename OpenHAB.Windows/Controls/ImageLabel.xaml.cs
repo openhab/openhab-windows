@@ -6,12 +6,12 @@ using Windows.UI.Xaml.Media.Imaging;
 namespace OpenHAB.Windows.Controls
 {
     /// <summary>
-    /// Control that represents an image with a label
+    /// Control that represents an image with a label.
     /// </summary>
     public sealed partial class ImageLabel : UserControl
     {
         /// <summary>
-        /// Bindable property for the control icon
+        /// Bindable property for the control icon.
         /// </summary>
         public static readonly DependencyProperty IconPathProperty = DependencyProperty.Register(
             "IconPath", typeof(string), typeof(ImageLabel), new PropertyMetadata(default(string), IconChangedCallback));
@@ -28,7 +28,7 @@ namespace OpenHAB.Windows.Controls
         }
 
         /// <summary>
-        /// Gets or sets the IconPath
+        /// Gets or sets the IconPath.
         /// </summary>
         public string IconPath
         {
@@ -37,13 +37,13 @@ namespace OpenHAB.Windows.Controls
         }
 
         /// <summary>
-        /// Bindable property for the label
+        /// Bindable property for the label.
         /// </summary>
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
             "Text", typeof(string), typeof(ImageLabel), new PropertyMetadata(default(string), TextChangedCallback));
 
         /// <summary>
-        /// Gets or sets the label
+        /// Gets or sets the label.
         /// </summary>
         public string LabelText
         {

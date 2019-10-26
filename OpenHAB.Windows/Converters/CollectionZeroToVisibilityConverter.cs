@@ -8,7 +8,7 @@ namespace OpenHAB.Windows.Converters
     /// <summary>
     /// Converts zero to visibility type (0 = Visibility.Visible, else Visibility.Collapsed).
     /// </summary>
-    /// <seealso cref="Windows.UI.Xaml.Data.IValueConverter" />
+    /// <seealso cref="IValueConverter" />
     public class CollectionZeroToVisibilityConverter : IValueConverter
     {
         /// <inheritdoc/>

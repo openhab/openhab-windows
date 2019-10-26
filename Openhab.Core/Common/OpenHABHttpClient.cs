@@ -28,7 +28,7 @@ namespace OpenHAB.Core.Common
         /// <summary>
         /// Fetch the HttpClient instance.
         /// </summary>
-        /// <returns>The HttpClient instance</returns>
+        /// <returns>The HttpClient instance.</returns>
         public static HttpClient Client(OpenHABHttpClientType connectionType, Settings settings)
         {
             _settings = settings;

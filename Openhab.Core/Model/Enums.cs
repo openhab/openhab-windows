@@ -3,11 +3,11 @@
 namespace OpenHAB.Core.Model
 {
     /// <summary>
-    /// Now you can use Generics to have cleaner code when enum parsing!
+    /// Now you can use Generics to have cleaner code when enum parsing!.
     /// </summary>
-    /// <typeparam name="T">Enum type</typeparam>
+    /// <typeparam name="T">Enum type.</typeparam>
     /// <example>
-    /// CT.Organ organNewParse = Enum<CT.Organ>.Parse("LENS");
+    /// CT.Organ organNewParse = Enum.<CT.Organ>.Parse("LENS");
     /// </example>
     public static class Enum<T>
     {
@@ -18,7 +18,7 @@ namespace OpenHAB.Core.Model
     }
 
     /// <summary>
-    /// All different Widget Types
+    /// All different Widget Types.
     /// </summary>
     public enum WidgetTypeEnum
     {
@@ -110,6 +110,6 @@ namespace OpenHAB.Core.Model
         /// <summary>
         /// Generic
         /// </summary>
-        Generic
+        Generic,
     }
 }

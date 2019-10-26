@@ -1,7 +1,7 @@
-﻿using OpenHAB.Windows.Extensions;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Linq;
+using OpenHAB.Windows.Extensions;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.UI.Xaml;
@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Input;
 namespace OpenHAB.Windows.Controls
 {
     /// <summary>
-    /// Widget control that represents an OpenHAB Map
+    /// Widget control that represents an OpenHAB Map.
     /// </summary>
     public sealed partial class MapViewWidget : WidgetBase
     {
@@ -42,10 +42,10 @@ namespace OpenHAB.Windows.Controls
 
         internal override void SetState()
         {
-            if(!string.IsNullOrEmpty(Widget.Item.State))
+            if (!string.IsNullOrEmpty(Widget.Item.State))
             {
                 var latLong = Widget.Item.State.Split(',');
-                if (latLong?.Count() == 2)
+                if (latLong?.Length == 2)
                 {
                     double latitude = double.Parse(latLong[0], CultureInfo.InvariantCulture);
                     double longitude = double.Parse(latLong[1], CultureInfo.InvariantCulture);

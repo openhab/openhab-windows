@@ -6,12 +6,12 @@ using Windows.UI.Xaml;
 namespace OpenHAB.Windows.Controls
 {
     /// <summary>
-    /// Widget control that represents an OpenHAB switch
+    /// Widget control that represents an OpenHAB switch.
     /// </summary>
     public sealed partial class RollershutterWidget : WidgetBase
     {
         /// <summary>
-        /// Gets or sets a value indicating whether the switch is on or off
+        /// Gets or sets a value indicating whether the switch is on or off.
         /// </summary>
         public bool IsOn { get; set; }
 

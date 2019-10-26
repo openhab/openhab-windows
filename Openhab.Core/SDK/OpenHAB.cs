@@ -28,8 +28,8 @@ namespace OpenHAB.Core.SDK
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenHAB"/> class.
         /// </summary>
-        /// <param name="settingsService">The service to fetch the settings</param>
-        /// <param name="messenger">The messenger instance</param>
+        /// <param name="settingsService">The service to fetch the settings.</param>
+        /// <param name="messenger">The messenger instance.</param>
         public OpenHAB(ISettingsService settingsService, IMessenger messenger)
         {
             _settingsService = settingsService;

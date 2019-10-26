@@ -13,7 +13,7 @@ using Windows.ApplicationModel;
 namespace OpenHAB.Core.ViewModel
 {
     /// <summary>
-    /// Collects and formats all the data for user defined settings
+    /// Collects and formats all the data for user defined settings.
     /// </summary>
     public class SettingsViewModel : ViewModelBase
     {
@@ -48,7 +48,7 @@ namespace OpenHAB.Core.ViewModel
         public ICommand RemoteUrlCheckCommand => _remoteUrlCheckCommand ?? (_remoteUrlCheckCommand = new RelayCommand(CheckRemoteUrl));
 
         /// <summary>
-        /// Gets or sets the current user-defined settings
+        /// Gets or sets the current user-defined settings.
         /// </summary>
         public Settings Settings
         {

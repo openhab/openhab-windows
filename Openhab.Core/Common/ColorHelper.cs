@@ -5,7 +5,7 @@ using Windows.UI;
 namespace OpenHAB.Core.Common
 {
     /// <summary>
-    /// Helper methods for Color
+    /// Helper methods for Color.
     /// </summary>
     public static class ColorHelper
     {
@@ -14,10 +14,10 @@ namespace OpenHAB.Core.Common
         /// <summary>
         /// Converts an HSL color value to RGB.
         /// Input: Vector4 ( X: [0.0, 1.0], Y: [0.0, 1.0], Z: [0.0, 1.0], W: [0.0, 1.0] )
-        /// Output: Color ( R: [0, 255], G: [0, 255], B: [0, 255], A: [0, 255] )
+        /// Output: Color ( R: [0, 255], G: [0, 255], B: [0, 255], A: [0, 255] ).
         /// </summary>
-        /// <param name="hsl">Vector4 defining X = h, Y = s, Z = l, W = a. Ranges [0, 1.0]</param>
-        /// <returns>RGBA Color. Ranges [0, 255]</returns>
+        /// <param name="hsl">Vector4 defining X = h, Y = s, Z = l, W = a. Ranges [0, 1.0].</param>
+        /// <returns>RGBA Color. Ranges [0, 255].</returns>
         public static Color FromHSL(Vector4 hsl)
         {
             float r, g, b;
@@ -28,11 +28,11 @@ namespace OpenHAB.Core.Common
             }
             else
             {
-                var q = hsl.Z < 0.5f ? hsl.Z * (1.0f + hsl.Y) : hsl.Z + hsl.Y - hsl.Z * hsl.Y;
-                var p = 2.0f * hsl.Z - q;
-                r = HueToRgb(p, q, hsl.X + 1.0f / 3.0f);
+                var q = hsl.Z < 0.5f ? hsl.Z * (1.0f + hsl.Y) : hsl.Z + hsl.Y - (hsl.Z * hsl.Y);
+                var p = (2.0f * hsl.Z) - q;
+                r = HueToRgb(p, q, hsl.X + (1.0f / 3.0f));
                 g = HueToRgb(p, q, hsl.X);
-                b = HueToRgb(p, q, hsl.X - 1.0f / 3.0f);
+                b = HueToRgb(p, q, hsl.X - (1.0f / 3.0f));
             }
 
             return Color.FromArgb((byte)(hsl.W * 255), (byte)(r * 255), (byte)(g * 255), (byte)(b * 255));
@@ -41,18 +41,38 @@ namespace OpenHAB.Core.Common
         // Helper for HslToRgba
         private static float HueToRgb(float p, float q, float t)
         {
-            if (t < 0.0f) t += 1.0f;
-            if (t > 1.0f) t -= 1.0f;
-            if (t < 1.0f / 6.0f) return p + (q - p) * 6.0f * t;
-            if (t < 1.0f / 2.0f) return q;
-            if (t < 2.0f / 3.0f) return p + (q - p) * (2.0f / 3.0f - t) * 6.0f;
+            if (t < 0.0f)
+            {
+                t += 1.0f;
+            }
+
+            if (t > 1.0f)
+            {
+                t -= 1.0f;
+            }
+
+            if (t < 1.0f / 6.0f)
+            {
+                return p + ((q - p) * 6.0f * t);
+            }
+
+            if (t < 1.0f / 2.0f)
+            {
+                return q;
+            }
+
+            if (t < 2.0f / 3.0f)
+            {
+                return p + ((q - p) * ((2.0f / 3.0f) - t) * 6.0f);
+            }
+
             return p;
         }
 
         /// <summary>
         /// Converts an RGB color value to HSL.
         /// Input: Color ( R: [0, 255], G: [0, 255], B: [0, 255], A: [0, 255] )
-        /// Output: Vector4 ( X: [0.0, 1.0], Y: [0.0, 1.0], Z: [0.0, 1.0], W: [0.0, 1.0] )
+        /// Output: Vector4 ( X: [0.0, 1.0], Y: [0.0, 1.0], Z: [0.0, 1.0], W: [0.0, 1.0] ).
         /// </summary>
         /// <param name="rgba"></param>
         /// <returns></returns>
@@ -69,25 +89,34 @@ namespace OpenHAB.Core.Common
             h = s = l = (max + min) / 2.0f;
 
             if (max == min)
+            {
                 h = s = 0.0f;
-
+            }
             else
             {
                 float delta = max - min;
                 s = (l > 0.5f) ? delta / (2.0f - max - min) : delta / (max + min);
 
                 if (r > g && r > b)
+                {
                     h = (g - b) / delta;
-
+                }
                 else if (g > b)
-                    h = (b - r) / delta + 2.0f;
-
+                {
+                    h = ((b - r) / delta) + 2.0f;
+                }
                 else
-                    h = (r - g) / delta + 4.0f;
+                {
+                    h = ((r - g) / delta) + 4.0f;
+                }
 
                 h /= 6.0f;
             }
-            if (h < 0) h += 1f;
+
+            if (h < 0)
+            {
+                h += 1f;
+            }
 
             return new Vector4(h, s, l, rgba.A / 255.0f);
         }
@@ -95,7 +124,6 @@ namespace OpenHAB.Core.Common
         #region HSV
 
         // from http://stackoverflow.com/a/1626175/62857
-
         public static Vector4 ToHSV(Color color)
         {
             double hue;
@@ -110,7 +138,7 @@ namespace OpenHAB.Core.Common
             int max = Math.Max(rgba.R, Math.Max(rgba.G, rgba.B));
             int min = Math.Min(rgba.R, Math.Min(rgba.G, rgba.B));
 
-            //hue = color.GetHue();
+            // hue = color.GetHue();
             var hsl = ToHSL(rgba);
             hue = hsl.X;
 

@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Data;
 namespace OpenHAB.Windows.Converters
 {
     /// <summary>
-    /// Reverses the value of a boolean
+    /// Reverses the value of a boolean.
     /// </summary>
     public class ReverseBoolConverter : IValueConverter
     {

@@ -5,12 +5,12 @@ using Windows.UI.Xaml.Controls;
 namespace OpenHAB.Windows.View
 {
     /// <summary>
-    /// In this page users can set their connection to the OpenHAB server
+    /// In this page users can set their connection to the OpenHAB server.
     /// </summary>
     public sealed partial class SettingsPage : Page
     {
         /// <summary>
-        /// Gets the datacontext, for use in compiled bindings
+        /// Gets the datacontext, for use in compiled bindings.
         /// </summary>
         public SettingsViewModel Vm => DataContext as SettingsViewModel;
 
