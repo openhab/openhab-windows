@@ -9,17 +9,26 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:model="using:OpenHAB.Core.Model"
       mc:Ignorable="d">
-
+    <Page.Background>
+        <ImageBrush ImageSource="/Assets/background.jpg"
+                    Stretch="UniformToFill" />
+    </Page.Background>
+    
     <Page.Resources>
         <Style TargetType="GridViewItem">
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment"
+                    Value="Stretch" />
+            <Setter Property="VerticalContentAlignment"
+                    Value="Stretch" />
         </Style>
 
         <converters:ObjectToSitemapConverter x:Key="ObjectToSitemapConverter" />
         <converters:BoolToBackgroundColorConverter x:Key="BoolToBackgroundColorConverter" />
+        <converters:CollectionZeroToVisibilityConverter x:Key="ZeroToVisibility" />
+        <converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 
-        <DataTemplate x:Key="NavMenuItemTemplate" x:DataType="model:OpenHABSitemap">
+        <DataTemplate x:Key="NavMenuItemTemplate"
+                      x:DataType="model:OpenHABSitemap">
             <StackPanel Orientation="Horizontal">
                 <Border Width="5"
                         HorizontalAlignment="Left"
@@ -32,38 +41,56 @@
                 <TextBlock x:Name="textBlock"
                            Margin="16,0,0,0"
                            VerticalAlignment="Center"
-                           Foreground="{StaticResource OpenHABLightColor}"
+                           Foreground="{StaticResource OpenHABMenuColor}"
                            Style="{StaticResource FlyoutPickerTitleTextBlockStyle}"
                            Text="{x:Bind Name, Mode=OneWay}"
                            TextWrapping="Wrap" />
             </StackPanel>
         </DataTemplate>
 
+        <DataTemplate x:Key="NavMenuHeaderTemplate">
+            <TextBlock x:Name="textBlock"
+                       Margin="5,0,0,10"
+                       VerticalAlignment="Center"
+                       Style="{StaticResource HeaderText}"
+                       Foreground="{StaticResource OpenHABMenuColor}"
+                       Text="{Binding }" />
+        </DataTemplate>
+
         <Storyboard x:Name="ErrorMessageStoryboard">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="border" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)">
-                <EasingDoubleKeyFrame KeyTime="0" Value="100">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="border"
+                                           Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)">
+                <EasingDoubleKeyFrame KeyTime="0"
+                                      Value="100">
                     <EasingDoubleKeyFrame.EasingFunction>
-                        <BackEase Amplitude="2" EasingMode="EaseOut" />
+                        <BackEase Amplitude="2"
+                                  EasingMode="EaseOut" />
                     </EasingDoubleKeyFrame.EasingFunction>
                 </EasingDoubleKeyFrame>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-100">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"
+                                      Value="-100">
                     <EasingDoubleKeyFrame.EasingFunction>
-                        <BackEase Amplitude="2" EasingMode="EaseOut" />
+                        <BackEase Amplitude="2"
+                                  EasingMode="EaseOut" />
                     </EasingDoubleKeyFrame.EasingFunction>
                 </EasingDoubleKeyFrame>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Name="ErrorGoneStoryboard">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="border" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)">
-                <EasingDoubleKeyFrame KeyTime="0" Value="-100" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="100" />
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="border"
+                                           Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)">
+                <EasingDoubleKeyFrame KeyTime="0"
+                                      Value="-100" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"
+                                      Value="100" />
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
 
     </Page.Resources>
 
     <Page.DataContext>
-        <Binding Path="Main" Source="{StaticResource Locator}" />
+        <Binding Path="Main"
+                 Source="{StaticResource Locator}" />
     </Page.DataContext>
 
     <Grid>
@@ -71,10 +98,6 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="120" />
         </Grid.ColumnDefinitions>
-        <Grid.Background>
-            <ImageBrush ImageSource="/Assets/background.jpg" Stretch="UniformToFill" />
-        </Grid.Background>
-
         <SplitView x:Name="SitemapSplitView"
                    Grid.ColumnSpan="2"
                    VerticalContentAlignment="Stretch"
@@ -84,7 +107,8 @@
                    LightDismissOverlayMode="Auto"
                    OpenPaneLength="200">
             <SplitView.Background>
-                <SolidColorBrush Opacity="0.4" Color="Black" />
+                <SolidColorBrush Opacity="0.2"
+                                 Color="Black" />
             </SplitView.Background>
 
             <SplitView.Pane>
@@ -94,14 +118,22 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-
                     <controls:NavMenuListView Grid.Row="1"
                                               Margin="0,48,0,0"
                                               Padding="0"
+                                              HeaderTemplate="{StaticResource NavMenuHeaderTemplate}"
+                                              Header="Sitemaps"
                                               ItemContainerStyle="{StaticResource NavMenuContainerStyle}"
                                               ItemTemplate="{StaticResource NavMenuItemTemplate}"
                                               ItemsSource="{x:Bind Vm.Sitemaps, Mode=OneWay}"
                                               SelectedItem="{x:Bind Vm.SelectedSitemap, Converter={StaticResource ObjectToSitemapConverter}, Mode=TwoWay}" />
+                    <TextBlock Grid.Row="1"
+                               Margin="10,100,10,0"
+                               x:Uid="NoItemsOrOpenHabNotAvailable"
+                               Visibility="{x:Bind Vm.Sitemaps, Converter={StaticResource ZeroToVisibility}, Mode=TwoWay}"
+                               TextWrapping="Wrap"
+                               Foreground="{StaticResource OpenHABMenuColor}"
+                               Style="{StaticResource FlyoutPickerTitleTextBlockStyle}" />
 
                     <StackPanel Grid.Row="2"
                                 Margin="12,0,0,8"
@@ -116,19 +148,21 @@
                                    AutomationProperties.Name="Favorite"
                                    FontFamily="Segoe MDL2 Assets"
                                    FontSize="36"
-                                   Foreground="{StaticResource OpenHABLightColor}"
+                                   Foreground="{StaticResource OpenHABMenuColor}"
                                    Text="&#xE713;" />
 						<TextBlock x:Uid="SettingsHeader"
 								   x:Name="textBlock"
                                    Margin="12,0,0,0"
                                    VerticalAlignment="Center"
-                                   Foreground="{StaticResource OpenHABLightColor}"
+                                   Foreground="{StaticResource OpenHABMenuColor}"
                                    Style="{StaticResource FlyoutPickerTitleTextBlockStyle}"
                                    TextWrapping="Wrap" />
                     </StackPanel>
                 </Grid>
             </SplitView.Pane>
-            <Grid VerticalAlignment="Stretch">
+            <Grid x:Name="MainContentGrid"
+                  Margin="35,0,0,0"
+                  VerticalAlignment="Stretch">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
@@ -137,7 +171,8 @@
                            FontSize="36"
                            Foreground="White"
                            Text="{x:Bind Vm.SelectedSitemap.Label, Mode=OneWay}" />
-                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer Grid.Row="1"
+                              VerticalScrollBarVisibility="Auto">
                     <GridView x:Name="MasterListView"
                               Margin="12,0,0,0"
                               HorizontalAlignment="Stretch"
@@ -159,8 +194,19 @@
                         </GridView.ItemsPanel>
                     </GridView>
                 </ScrollViewer>
+                <Grid Grid.Row="1"
+                      Margin="100"
+                      Padding="50"
+                      Background="{StaticResource OpenHABLightColor}"
+                      Visibility="{x:Bind Vm.IsDataLoading, Converter={StaticResource BoolToVisibilityConverter}, Mode=TwoWay}">
+                    <ProgressRing MaxHeight="350"
+                                  IsActive="True"
+                                  VerticalAlignment="Stretch"
+                                  VerticalContentAlignment="Center"
+                                  HorizontalAlignment="Stretch"
+                                  HorizontalContentAlignment="Center" />
+                </Grid>
             </Grid>
-
         </SplitView>
 
         <ToggleButton x:Name="TogglePaneButton"
@@ -188,8 +234,14 @@
                         <AdaptiveTrigger MinWindowWidth="720" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="SitemapSplitView.CompactPaneLength" Value="56" />
-                        <Setter Target="SitemapLabel.Margin" Value="20,12,0,16" />
+                        <Setter Target="SitemapSplitView.CompactPaneLength"
+                                Value="56" />
+                        <Setter Target="SitemapLabel.Margin"
+                                Value="20,12,0,16" />
+                        <Setter Target="SitemapSplitView.DisplayMode"
+                                Value="Inline" />
+                        <Setter Target="SitemapSplitView.IsPaneOpen"
+                                Value="True" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="NarrowState">
@@ -197,8 +249,14 @@
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="SitemapSplitView.CompactPaneLength" Value="0" />
-                        <Setter Target="SitemapLabel.Margin" Value="40,12,0,16" />
+                        <Setter Target="SitemapSplitView.CompactPaneLength"
+                                Value="0" />
+                        <Setter Target="SitemapLabel.Margin"
+                                Value="40,12,0,16" />
+                        <Setter Target="SitemapSplitView.DisplayMode"
+                                Value="CompactOverlay" />
+                        <Setter Target="SitemapSplitView.IsPaneOpen"
+                                Value="False" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
