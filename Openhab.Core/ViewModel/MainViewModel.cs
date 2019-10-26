@@ -13,11 +13,12 @@ using OpenHAB.Core.Services;
 namespace OpenHAB.Core.ViewModel
 {
     /// <summary>
-    /// Collects and formats all the data for starting the app
+    /// Collects and formats all the data for starting the app.
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
         private readonly IOpenHAB _openHabsdk;
+        private readonly ISettingsService _settingsService;
         private ObservableCollection<OpenHABSitemap> _sitemaps;
         private OpenHABSitemap _selectedSitemap;
         private OpenHABVersion _version;
@@ -25,10 +26,10 @@ namespace OpenHAB.Core.ViewModel
         private OpenHABWidget _selectedWidget;
         private string _errorMessage;
         private string _subtitle;
-        private readonly ISettingsService _settingsService;
+        private bool _isDataLoading;
 
         /// <summary>
-        /// Gets or sets an error message to show on screen
+        /// Gets or sets an error message to show on screen.
         /// </summary>
         public string ErrorMessage
         {
@@ -37,7 +38,7 @@ namespace OpenHAB.Core.ViewModel
         }
 
         /// <summary>
-        /// Gets or sets the subtitle of the page
+        /// Gets or sets the subtitle of the page.
         /// </summary>
         public string Subtitle
         {
@@ -46,7 +47,7 @@ namespace OpenHAB.Core.ViewModel
         }
 
         /// <summary>
-        /// Gets or sets a collection of OpenHAB sitemaps
+        /// Gets or sets a collection of OpenHAB sitemaps.
         /// </summary>
         public ObservableCollection<OpenHABSitemap> Sitemaps
         {
@@ -55,7 +56,7 @@ namespace OpenHAB.Core.ViewModel
         }
 
         /// <summary>
-        /// Gets or sets the sitemap currently selected by the user
+        /// Gets or sets the sitemap currently selected by the user.
         /// </summary>
         public OpenHABSitemap SelectedSitemap
         {
@@ -68,7 +69,6 @@ namespace OpenHAB.Core.ViewModel
             {
                 if (Set(ref _selectedSitemap, value))
                 {
-
                     if (_selectedSitemap != null)
                     {
                         _settingsService.SaveCurrentSitemap(_selectedSitemap.Name);
@@ -89,7 +89,7 @@ namespace OpenHAB.Core.ViewModel
         }
 
         /// <summary>
-        /// Gets or sets the widgets currently on screen
+        /// Gets or sets the widgets currently on screen.
         /// </summary>
         public ObservableCollection<OpenHABWidget> CurrentWidgets
         {
@@ -98,7 +98,7 @@ namespace OpenHAB.Core.ViewModel
         }
 
         /// <summary>
-        /// Gets or sets the selected widget
+        /// Gets or sets the selected widget.
         /// </summary>
         public OpenHABWidget SelectedWidget
         {
@@ -107,9 +107,21 @@ namespace OpenHAB.Core.ViewModel
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether data is loaded from an OpenHAB instance.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if data wil loaded; otherwise, <c>false</c>.</value>
+        public bool IsDataLoading
+        {
+            get => _isDataLoading;
+            set => Set(ref _isDataLoading, value);
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
         /// </summary>
-        /// <param name="openHabsdk">The OpenHAB SDK object</param>
+        /// <param name="openHabsdk">The OpenHAB SDK object.</param>
+        /// <param name="settingsService">Setting service instance.</param>
         public MainViewModel(IOpenHAB openHabsdk, ISettingsService settingsService)
         {
             ErrorMessage = "Test";
@@ -147,6 +159,10 @@ namespace OpenHAB.Core.ViewModel
 
         private async Task LoadData()
         {
+            IsDataLoading = true;
+            Sitemaps = new ObservableCollection<OpenHABSitemap>();
+            SelectedSitemap = null;
+
             await _openHabsdk.ResetConnection();
             _version = await _openHabsdk.GetOpenHABVersion();
 
@@ -160,6 +176,8 @@ namespace OpenHAB.Core.ViewModel
             _openHabsdk.StartItemUpdates();
 
             OpenLastSitemap();
+
+            IsDataLoading = false;
         }
 
         private void OpenLastSitemap()
@@ -181,8 +199,13 @@ namespace OpenHAB.Core.ViewModel
                 return;
             }
 
+            CurrentWidgets.Clear();
+            IsDataLoading = true;
+
             SelectedSitemap.Widgets = await _openHabsdk.LoadItemsFromSitemap(SelectedSitemap, _version);
             SetWidgetsOnScreen(SelectedSitemap.Widgets);
+
+            IsDataLoading = false;
         }
 
         private void OnWidgetClicked(OpenHABWidget widget)
@@ -199,7 +222,7 @@ namespace OpenHAB.Core.ViewModel
         }
 
         /// <summary>
-        /// Navigate backwards between linkedpages
+        /// Navigate backwards between linkedpages.
         /// </summary>
         public void WidgetGoBack()
         {

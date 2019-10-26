@@ -168,4 +168,7 @@
   <data name="UsernameHeader.Text" xml:space="preserve">
     <value>Username</value>
   </data>
+  <data name="NoItemsOrOpenHabNotAvailable.Text" xml:space="preserve">
+    <value>No sitemaps available or OpenHAB server is not reachable.</value>
+  </data>
 </root>

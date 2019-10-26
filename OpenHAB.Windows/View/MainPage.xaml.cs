@@ -11,14 +11,14 @@ using Windows.UI.Xaml.Controls;
 namespace OpenHAB.Windows.View
 {
     /// <summary>
-    /// Startup page of the application
+    /// Startup page of the application.
     /// </summary>
     public sealed partial class MainPage : Page
     {
         private DispatcherTimer _errorMessageTimer;
 
         /// <summary>
-        /// Gets the datacontext, for use in compiled bindings
+        /// Gets the datacontext, for use in compiled bindings.
         /// </summary>
         public MainViewModel Vm => DataContext as MainViewModel;
 
