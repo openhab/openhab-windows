@@ -121,7 +121,6 @@ namespace OpenHAB.Core.Common
             return new Vector4(h, s, l, rgba.A / 255.0f);
         }
 
-        #region HSV
 
         // from http://stackoverflow.com/a/1626175/62857
         public static Vector4 ToHSV(Color color)
@@ -191,7 +190,5 @@ namespace OpenHAB.Core.Common
 
             return Color.FromArgb(255, v, p, q);
         }
-
-        #endregion
     }
 }

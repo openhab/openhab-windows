@@ -25,5 +25,12 @@ namespace OpenHAB.Core.Model
             : base(message, exception)
         {
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OpenHABException"/> class.
+        /// </summary>
+        public OpenHABException()
+        {
+        }
     }
 }

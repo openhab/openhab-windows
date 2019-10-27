@@ -148,7 +148,7 @@
     <Compile Include="Model\OpenHabVersion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SDK\IOpenHAB.cs" />
-    <Compile Include="SDK\OpenHAB.cs" />
+    <Compile Include="SDK\OpenHABClient.cs" />
     <Compile Include="Services\SettingsService.cs" />
     <Compile Include="Services\WidgetNavigationService.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -182,11 +182,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="WindowsRuntime.HttpClientFilters">
-      <HintPath>C:\Users\nvmwy41\.nuget\packages\winrthttpclienthandler\1.0.0\lib\portable-win81+wpa81\WindowsRuntime.HttpClientFilters.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

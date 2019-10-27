@@ -7,7 +7,7 @@ namespace OpenHAB.Core.Model
     /// </summary>
     /// <typeparam name="T">Enum type.</typeparam>
     /// <example>
-    /// CT.Organ organNewParse = Enum.<CT.Organ>.Parse("LENS");
+    /// CT.Organ organNewParse = Enum.Parse("LENS");.
     /// </example>
     public static class Enum<T>
     {

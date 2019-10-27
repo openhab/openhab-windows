@@ -19,18 +19,18 @@ namespace OpenHAB.Core.SDK
     /// <summary>
     /// The main SDK implementation of the connection to OpenHAB.
     /// </summary>
-    public class OpenHAB : IOpenHAB
+    public class OpenHABClient : IOpenHAB
     {
         private readonly IMessenger _messenger;
         private readonly ISettingsService _settingsService;
         private OpenHABHttpClientType _connectionType;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OpenHAB"/> class.
+        /// Initializes a new instance of the <see cref="OpenHABClient"/> class.
         /// </summary>
         /// <param name="settingsService">The service to fetch the settings.</param>
         /// <param name="messenger">The messenger instance.</param>
-        public OpenHAB(ISettingsService settingsService, IMessenger messenger)
+        public OpenHABClient(ISettingsService settingsService, IMessenger messenger)
         {
             _settingsService = settingsService;
             _messenger = messenger;
