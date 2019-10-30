@@ -23,8 +23,8 @@
                           Tapped="Widget_OnTapped" />
 
         <local:RadialSlider Grid.Column="1"
-                            Width="100"
-                            Height="100"
+                            Width="80"
+                            Height="80"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             IsInteractive="True"

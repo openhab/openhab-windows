@@ -22,8 +22,8 @@
 						  LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
 
 		<local:ColorMap Grid.Column="1"
-						Width="120"
-						Height="120"
+						Width="80"
+						Height="80"
 						Margin="8"
 						HorizontalAlignment="Right"
 						VerticalAlignment="Center"

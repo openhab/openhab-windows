@@ -4,7 +4,7 @@
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                   xmlns:local="using:OpenHAB.Windows.Controls"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                  d:DesignHeight="150"
+                  d:DesignHeight="100"
                   d:DesignWidth="300"
                   mc:Ignorable="d">
 
@@ -20,7 +20,7 @@
 
         <Grid Grid.Column="1"
               Width="100"
-              Height="100"
+              Height="80"
               Margin="0,0,12,0"
               HorizontalAlignment="Center"
               VerticalAlignment="Center"
