@@ -25,16 +25,17 @@
 					BorderBrush="{StaticResource OpenHABSplitviewBrush}"
 					BorderThickness="0">
 			<Button HorizontalAlignment="Stretch"
+                    
 					Click="ButtonUp_Click"
-					Content="Up" />
-			<Button Margin="0,4,0,0"
+					Content="Up" FontSize="12" />
+			<Button Margin="0,2,0,0"
 					HorizontalAlignment="Stretch"
 					Click="ButtonStop_Click"
-					Content="Stop" />
-			<Button Margin="0,4,0,0"
+					Content="Stop" FontSize="12" />
+			<Button Margin="0,2,0,0"
 					HorizontalAlignment="Stretch"
 					Click="ButtonDown_Click"
-					Content="Down" />
+					Content="Down" FontSize="12" />
 		</StackPanel>
 	</Grid>
 </local:WidgetBase>
