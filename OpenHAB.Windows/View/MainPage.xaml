@@ -91,8 +91,8 @@
                 <Grid Background="{StaticResource OpenHABSplitviewBrush}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <controls:NavMenuListView Grid.Row="1"
@@ -102,30 +102,53 @@
                                               ItemTemplate="{StaticResource NavMenuItemTemplate}"
                                               ItemsSource="{x:Bind Vm.Sitemaps, Mode=OneWay}"
                                               SelectedItem="{x:Bind Vm.SelectedSitemap, Converter={StaticResource ObjectToSitemapConverter}, Mode=TwoWay}" />
-
-                    <StackPanel Grid.Row="2"
-                                Margin="12,0,0,8"
-                                VerticalAlignment="Bottom"
-                                Orientation="Horizontal">
-                        <interactivity:Interaction.Behaviors>
-                            <core:EventTriggerBehavior EventName="Tapped">
-                                <core:NavigateToPageAction TargetPage="OpenHAB.Windows.View.SettingsPage" />
-                            </core:EventTriggerBehavior>
-                        </interactivity:Interaction.Behaviors>
-                        <TextBlock VerticalAlignment="Center"
-                                   AutomationProperties.Name="Favorite"
-                                   FontFamily="Segoe MDL2 Assets"
-                                   FontSize="36"
-                                   Foreground="{StaticResource OpenHABLightColor}"
-                                   Text="&#xE713;" />
-						<TextBlock x:Uid="SettingsHeader"
-								   x:Name="textBlock"
-                                   Margin="12,0,0,0"
-                                   VerticalAlignment="Center"
-                                   Foreground="{StaticResource OpenHABLightColor}"
-                                   Style="{StaticResource FlyoutPickerTitleTextBlockStyle}"
-                                   TextWrapping="Wrap" />
+                    <StackPanel Grid.Row="2" Orientation="Vertical">
+                        <StackPanel Margin="12,0,0,15"
+                                    VerticalAlignment="Bottom"
+                                    Orientation="Horizontal">
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="Tapped">
+                                    <core:InvokeCommandAction Command="{x:Bind Vm.FeedbackCommand}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                            <TextBlock VerticalAlignment="Center"
+                                       AutomationProperties.Name="Favorite"
+                                       FontFamily="Segoe MDL2 Assets"
+                                       FontSize="36"
+                                       Foreground="{StaticResource OpenHABLightColor}"
+                                       Text="&#xE939;" />
+                            <TextBlock x:Uid="FeedbackHeader"
+                                       x:Name="feedbackTextBlock"
+                                       Margin="12,0,0,0"
+                                       VerticalAlignment="Center"
+                                       Foreground="{StaticResource OpenHABLightColor}"
+                                       Style="{StaticResource FlyoutPickerTitleTextBlockStyle}"
+                                       TextWrapping="Wrap" />
+                        </StackPanel>
+                        <StackPanel Margin="12,0,0,8"
+                                    VerticalAlignment="Bottom"
+                                    Orientation="Horizontal">
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="Tapped">
+                                    <core:NavigateToPageAction TargetPage="OpenHAB.Windows.View.SettingsPage" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                            <TextBlock VerticalAlignment="Center"
+                                       AutomationProperties.Name="Favorite"
+                                       FontFamily="Segoe MDL2 Assets"
+                                       FontSize="36"
+                                       Foreground="{StaticResource OpenHABLightColor}"
+                                       Text="&#xE713;" />
+                            <TextBlock x:Uid="SettingsHeader"
+                                       x:Name="settingsTextBlock"
+                                       Margin="12,0,0,0"
+                                       VerticalAlignment="Center"
+                                       Foreground="{StaticResource OpenHABLightColor}"
+                                       Style="{StaticResource FlyoutPickerTitleTextBlockStyle}"
+                                       TextWrapping="Wrap" />
+                        </StackPanel>
                     </StackPanel>
+
                 </Grid>
             </SplitView.Pane>
             <Grid VerticalAlignment="Stretch">

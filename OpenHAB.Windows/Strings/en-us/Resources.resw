@@ -132,6 +132,9 @@
   <data name="DemoModeHeader.Text" xml:space="preserve">
     <value>Demo mode</value>
   </data>
+  <data name="FeedbackHeader.Text" xml:space="preserve">
+    <value>Feedback</value>
+  </data>
   <data name="IgnoreSSLCertErrors.Text" xml:space="preserve">
     <value>Ignore SSL certificate errors</value>
   </data>
