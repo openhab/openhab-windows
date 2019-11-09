@@ -81,12 +81,26 @@
 							 Margin="0,0,12,12"
 							 IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
 							 Text="{Binding Settings.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-							 TextWrapping="Wrap" />
+							 TextWrapping="Wrap">
+						<Interactivity:Interaction.Behaviors>
+							<Core:EventTriggerBehavior EventName="LostFocus">
+								<Core:InvokeCommandAction Command="{Binding Path=LocalUrlCheckCommand, Mode=TwoWay}"
+														  CommandParameter="{Binding ElementName=TextBoxUrl,Path=Text}" />
+							</Core:EventTriggerBehavior>
+						</Interactivity:Interaction.Behaviors>
+					</TextBox>
 					<TextBlock x:Uid="PasswordHeader" />
 					<PasswordBox x:Name="TextBoxPassword"
 								 Margin="0,0,12,12"
 								 IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-								 Password="{Binding Settings.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+								 Password="{Binding Settings.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+						<Interactivity:Interaction.Behaviors>
+							<Core:EventTriggerBehavior EventName="LostFocus">
+								<Core:InvokeCommandAction Command="{Binding Path=LocalUrlCheckCommand, Mode=TwoWay}"
+														  CommandParameter="{Binding ElementName=TextBoxUrl,Path=Text}" />
+							</Core:EventTriggerBehavior>
+						</Interactivity:Interaction.Behaviors>
+					</PasswordBox>
 					<StackPanel Orientation="Horizontal">
 						<TextBlock x:Uid="ConnectionCheck"
 								   Margin="0,0,10,0"

@@ -1,9 +1,13 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using Microsoft.Services.Store.Engagement;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
@@ -25,7 +29,10 @@ namespace OpenHAB.Core.ViewModel
         private OpenHABWidget _selectedWidget;
         private string _errorMessage;
         private string _subtitle;
+
+        private ICommand _feedbackCommand;
         private readonly ISettingsService _settingsService;
+        private readonly StoreServicesFeedbackLauncher _feedbackLauncher;
 
         /// <summary>
         /// Gets or sets an error message to show on screen
@@ -106,6 +113,21 @@ namespace OpenHAB.Core.ViewModel
             set => Set(ref _selectedWidget, value);
         }
 
+
+        /// <summary>Gets the command to open feedback app.</summary>
+        /// <value>The feedback command.</value>
+        public ICommand FeedbackCommand => _feedbackCommand ?? (_feedbackCommand = new RelayCommand(ExecuteFeedbackCommand, CanExecuteFeedbackCommand));
+
+        private bool CanExecuteFeedbackCommand()
+        {
+            return StoreServicesFeedbackLauncher.IsSupported();
+        }
+
+        private async void ExecuteFeedbackCommand()
+        {
+            await _feedbackLauncher.LaunchAsync();
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
         /// </summary>
@@ -114,8 +136,10 @@ namespace OpenHAB.Core.ViewModel
         {
             ErrorMessage = "Test";
             CurrentWidgets = new ObservableCollection<OpenHABWidget>();
+
             _openHabsdk = openHabsdk;
             _settingsService = settingsService;
+            _feedbackLauncher = StoreServicesFeedbackLauncher.GetDefault();
 
             MessengerInstance.Register<SettingsUpdatedMessage>(this, async msg =>
             {
@@ -145,7 +169,7 @@ namespace OpenHAB.Core.ViewModel
             await _openHabsdk.SendCommand(message.Item, message.Command);
         }
 
-        private async Task LoadData()
+        public async Task LoadData()
         {
             await _openHabsdk.ResetConnection();
             _version = await _openHabsdk.GetOpenHABVersion();

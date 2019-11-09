@@ -7,18 +7,19 @@ using OpenHAB.Core.ViewModel;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace OpenHAB.Windows.View
 {
     /// <summary>
-    /// Startup page of the application
+    /// Startup page of the application.
     /// </summary>
     public sealed partial class MainPage : Page
     {
         private DispatcherTimer _errorMessageTimer;
 
         /// <summary>
-        /// Gets the datacontext, for use in compiled bindings
+        /// Gets the datacontext, for use in compiled bindings.
         /// </summary>
         public MainViewModel Vm => DataContext as MainViewModel;
 
@@ -41,6 +42,13 @@ namespace OpenHAB.Windows.View
             };
 
             SystemNavigationManager.GetForCurrentView().BackRequested += (sender, args) => Vm.WidgetGoBack();
+        }
+
+        /// <inheritdoc/>
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            await Vm.LoadData();
+            base.OnNavigatedTo(e);
         }
 
         private void SetupErrorTimer()
