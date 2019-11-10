@@ -171,6 +171,10 @@ namespace OpenHAB.Core.ViewModel
 
         public async Task LoadData()
         {
+            Sitemaps?.Clear();
+            CurrentWidgets?.Clear();
+            Subtitle = null;
+
             await _openHabsdk.ResetConnection();
             _version = await _openHabsdk.GetOpenHABVersion();
 
@@ -192,6 +196,7 @@ namespace OpenHAB.Core.ViewModel
 
             if (string.IsNullOrWhiteSpace(sitemapName))
             {
+                SelectedSitemap = Sitemaps.FirstOrDefault();
                 return;
             }
 
@@ -228,6 +233,11 @@ namespace OpenHAB.Core.ViewModel
         public void WidgetGoBack()
         {
             OpenHABWidget widget = WidgetNavigationService.GoBack();
+            if (widget == null)
+            {
+                return;
+            }
+
             Subtitle = widget == null ? string.Empty : widget.Label;
             SetWidgetsOnScreen(widget != null ? widget.LinkedPage.Widgets : SelectedSitemap.Widgets);
         }
