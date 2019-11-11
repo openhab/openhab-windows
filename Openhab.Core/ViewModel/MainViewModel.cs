@@ -187,10 +187,10 @@ namespace OpenHAB.Core.ViewModel
             Sitemaps = new ObservableCollection<OpenHABSitemap>(sitemaps);
             _openHabsdk.StartItemUpdates();
 
-            OpenLastSitemap();
+            OpenLastOrDefaultSitemap();
         }
 
-        private void OpenLastSitemap()
+        private void OpenLastOrDefaultSitemap()
         {
             string sitemapName = _settingsService.LoadLastSitemap();
 
@@ -200,7 +200,11 @@ namespace OpenHAB.Core.ViewModel
                 return;
             }
 
-            SelectedSitemap = Sitemaps.FirstOrDefault(_ => _.Name == sitemapName);
+            SelectedSitemap = Sitemaps.FirstOrDefault(x => x.Name == sitemapName);
+            if (SelectedSitemap == null)
+            {
+                SelectedSitemap = Sitemaps.FirstOrDefault();
+            }
         }
 
         private async Task LoadWidgets()
