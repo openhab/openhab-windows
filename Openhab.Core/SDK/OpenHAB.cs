@@ -144,6 +144,7 @@ namespace OpenHAB.Core.SDK
                 {
                     var sitemaps = new List<OpenHABSitemap>();
                     XDocument xml = XDocument.Parse(resultString);
+
                     foreach (XElement xElement in xml.Element("sitemaps").Elements())
                     {
                         var sitemap = new OpenHABSitemap(xElement);
@@ -287,6 +288,8 @@ namespace OpenHAB.Core.SDK
             {
                 OpenHABHttpClient.BaseUrl = settings.OpenHABUrl;
                 _connectionType = OpenHABHttpClientType.Local;
+
+                return true;
             }
             else
             {
