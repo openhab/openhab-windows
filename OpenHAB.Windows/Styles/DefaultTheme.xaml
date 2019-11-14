@@ -25,6 +25,20 @@
 						TintColor="Silver"
 						AlwaysUseFallback="False" />
 
+		<media:AcrylicBrush x:Key="ErrorNotificationBackground"
+						BackgroundSource="Backdrop"
+						TintOpacity="0.5"
+						FallbackColor="{StaticResource SystemAccentColor}"
+						TintColor="Red"
+						AlwaysUseFallback="False" />
+
+	<media:AcrylicBrush x:Key="NotificationBackground"
+						BackgroundSource="Backdrop"
+						TintOpacity="0.5"
+						FallbackColor="{StaticResource SystemAccentColor}"
+						TintColor="Silver"
+						AlwaysUseFallback="False" />
+	
 	<Style x:Key="HeaderText"
 		   TargetType="TextBlock">
 		<Setter Property="Foreground"

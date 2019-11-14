@@ -1,5 +1,6 @@
 ﻿using System;
 using GalaSoft.MvvmLight.Messaging;
+using OpenHAB.Core;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.Services;
@@ -7,6 +8,7 @@ using OpenHAB.Core.ViewModel;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace OpenHAB.Windows.View
 {
@@ -29,9 +31,8 @@ namespace OpenHAB.Windows.View
         {
             InitializeComponent();
 
-            Messenger.Default.Register<FireErrorMessage>(this, msg => ShowErrorMessage());
-
-            SetupErrorTimer();
+            Messenger.Default.Register<FireErrorMessage>(this, msg => ShowErrorMessage(msg));
+            Messenger.Default.Register<FireInfoMessage>(this, msg => ShowInfoMessage(msg));
 
             Vm.CurrentWidgets.CollectionChanged += (sender, args) =>
             {
@@ -43,23 +44,38 @@ namespace OpenHAB.Windows.View
             SystemNavigationManager.GetForCurrentView().BackRequested += (sender, args) => Vm.WidgetGoBack();
         }
 
-        private void SetupErrorTimer()
+        /// <inheritdoc/>
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            _errorMessageTimer = new DispatcherTimer();
-            _errorMessageTimer.Interval = TimeSpan.FromSeconds(5);
-            _errorMessageTimer.Tick += ErrorMessageTimerOnTick;
+            await Vm.LoadData();
+            base.OnNavigatedTo(e);
         }
 
-        private void ErrorMessageTimerOnTick(object sender, object o)
+        private void ShowErrorMessage(FireErrorMessage message)
         {
-            _errorMessageTimer.Stop();
-            ErrorGoneStoryboard.Begin();
+            ErrorNotification.Show(message.ErrorMessage);
         }
 
-        private void ShowErrorMessage()
+        private void ShowInfoMessage(FireInfoMessage msg)
         {
-            ErrorMessageStoryboard.Begin();
-            _errorMessageTimer.Start();
+            string message = null;
+            switch (msg.MessageType)
+            {
+                case MessageType.NotConfigured:
+                    message = AppResources.Values.GetString("MessageNotConfigured");
+                    break;
+                case MessageType.NotReachable:
+                    message = AppResources.Values.GetString("MessagesNotReachable");
+                    break;
+                default:
+                    message = "Message not defined";
+                    break;
+            }
+
+            Dispatcher.RunAsync(CoreDispatcherPriority.Normal,() =>
+            {
+                InfoNotification.Show(message);
+            });
         }
 
         private void MasterListView_OnItemClick(object sender, ItemClickEventArgs e)

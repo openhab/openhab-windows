@@ -144,6 +144,7 @@ namespace OpenHAB.Core.SDK
                 {
                     var sitemaps = new List<OpenHABSitemap>();
                     XDocument xml = XDocument.Parse(resultString);
+
                     foreach (XElement xElement in xml.Element("sitemaps").Elements())
                     {
                         var sitemap = new OpenHABSitemap(xElement);
@@ -235,9 +236,9 @@ namespace OpenHAB.Core.SDK
                         }
                     }
                 }
-                catch (HttpRequestException)
+                catch (HttpRequestException ex)
                 {
-                    // running on 1.x, no event endpoint
+                    throw new OpenHABException("Fetching item updates failed", ex);
                 }
             });
         }
@@ -287,6 +288,8 @@ namespace OpenHAB.Core.SDK
             {
                 OpenHABHttpClient.BaseUrl = settings.OpenHABUrl;
                 _connectionType = OpenHABHttpClientType.Local;
+
+                return true;
             }
             else
             {
@@ -297,6 +300,8 @@ namespace OpenHAB.Core.SDK
                     _connectionType = OpenHABHttpClientType.Remote;
                     return true;
                 }
+
+                Messenger.Default.Send<FireInfoMessage>(new FireInfoMessage(MessageType.NotReachable));
             }
 
             return false;

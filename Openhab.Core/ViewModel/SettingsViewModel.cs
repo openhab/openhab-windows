@@ -106,7 +106,6 @@ namespace OpenHAB.Core.ViewModel
             _openHabsdk = openHabsdk;
 
             LoadSettings();
-
             UrlChecks();
         }
 
