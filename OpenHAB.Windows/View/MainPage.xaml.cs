@@ -1,5 +1,6 @@
 ﻿using System;
 using GalaSoft.MvvmLight.Messaging;
+using OpenHAB.Core;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.Services;
@@ -30,9 +31,8 @@ namespace OpenHAB.Windows.View
         {
             InitializeComponent();
 
-            Messenger.Default.Register<FireErrorMessage>(this, msg => ShowErrorMessage());
-
-            SetupErrorTimer();
+            Messenger.Default.Register<FireErrorMessage>(this, msg => ShowErrorMessage(msg));
+            Messenger.Default.Register<FireInfoMessage>(this, msg => ShowInfoMessage(msg));
 
             Vm.CurrentWidgets.CollectionChanged += (sender, args) =>
             {
@@ -51,23 +51,31 @@ namespace OpenHAB.Windows.View
             base.OnNavigatedTo(e);
         }
 
-        private void SetupErrorTimer()
+        private void ShowErrorMessage(FireErrorMessage message)
         {
-            _errorMessageTimer = new DispatcherTimer();
-            _errorMessageTimer.Interval = TimeSpan.FromSeconds(5);
-            _errorMessageTimer.Tick += ErrorMessageTimerOnTick;
+            ErrorNotification.Show(message.ErrorMessage);
         }
 
-        private void ErrorMessageTimerOnTick(object sender, object o)
+        private void ShowInfoMessage(FireInfoMessage msg)
         {
-            _errorMessageTimer.Stop();
-            ErrorGoneStoryboard.Begin();
-        }
+            string message = null;
+            switch (msg.MessageType)
+            {
+                case MessageType.NotConfigured:
+                    message = AppResources.Values.GetString("MessageNotConfigured");
+                    break;
+                case MessageType.NotReachable:
+                    message = AppResources.Values.GetString("MessagesNotReachable");
+                    break;
+                default:
+                    message = "Message not defined";
+                    break;
+            }
 
-        private void ShowErrorMessage()
-        {
-            ErrorMessageStoryboard.Begin();
-            _errorMessageTimer.Start();
+            Dispatcher.RunAsync(CoreDispatcherPriority.Normal,() =>
+            {
+                InfoNotification.Show(message);
+            });
         }
 
         private void MasterListView_OnItemClick(object sender, ItemClickEventArgs e)

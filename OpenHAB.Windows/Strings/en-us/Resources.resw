@@ -132,6 +132,9 @@
   <data name="DemoModeHeader.Text" xml:space="preserve">
     <value>Demo mode</value>
   </data>
+  <data name="ErrorMessage" xml:space="preserve">
+    <value>Ups, something go wrong</value>
+  </data>
   <data name="FeedbackHeader.Text" xml:space="preserve">
     <value>Feedback</value>
   </data>
@@ -149,6 +152,14 @@
   </data>
   <data name="LocalUrlHeader.Text" xml:space="preserve">
     <value>openHAB URL</value>
+  </data>
+  <data name="MessageNotConfigured" xml:space="preserve">
+    <value>Seems the url to your OpenHab server is not configured.
+Go to app settings (gear icon) to set the connection configuration for your OpenHab server.</value>
+  </data>
+  <data name="MessagesNotReachable" xml:space="preserve">
+    <value>OpenHab service is not reachable at the moment.
+Go to app settings (gear icon) to check the connection configuration.</value>
   </data>
   <data name="PasswordHeader.Text" xml:space="preserve">
     <value>Password</value>
