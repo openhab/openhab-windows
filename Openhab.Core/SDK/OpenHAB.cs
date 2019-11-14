@@ -236,9 +236,9 @@ namespace OpenHAB.Core.SDK
                         }
                     }
                 }
-                catch (HttpRequestException)
+                catch (HttpRequestException ex)
                 {
-                    // running on 1.x, no event endpoint
+                    throw new OpenHABException("Fetching item updates failed", ex);
                 }
             });
         }
@@ -300,6 +300,8 @@ namespace OpenHAB.Core.SDK
                     _connectionType = OpenHABHttpClientType.Remote;
                     return true;
                 }
+
+                Messenger.Default.Send<FireInfoMessage>(new FireInfoMessage(MessageType.NotReachable));
             }
 
             return false;

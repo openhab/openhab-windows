@@ -153,12 +153,13 @@ namespace OpenHAB.Core.ViewModel
                 }
                 catch (HttpRequestException ex)
                 {
-                    MessengerInstance.Send(new FireErrorMessage());
+                    MessengerInstance.Send(new FireErrorMessage(ex.Message));
                 }
             });
 
             MessengerInstance.Register<TriggerCommandMessage>(this, async msg => await TriggerCommand(msg));
             MessengerInstance.Register<WidgetClickedMessage>(this, msg => OnWidgetClicked(msg.Widget));
+
 #pragma warning disable 4014
             LoadData();
 #pragma warning restore 4014
@@ -171,23 +172,36 @@ namespace OpenHAB.Core.ViewModel
 
         public async Task LoadData()
         {
-            Sitemaps?.Clear();
-            CurrentWidgets?.Clear();
-            Subtitle = null;
-
-            await _openHabsdk.ResetConnection();
-            _version = await _openHabsdk.GetOpenHABVersion();
-
-            if (_version == OpenHABVersion.None)
+            try
             {
-                return;
+                Sitemaps?.Clear();
+                CurrentWidgets?.Clear();
+                Subtitle = null;
+
+                bool isSuccessful = await _openHabsdk.ResetConnection();
+                if (!isSuccessful)
+                {
+                    return;
+                }
+
+                _version = await _openHabsdk.GetOpenHABVersion();
+
+                if (_version == OpenHABVersion.None)
+                {
+                    MessengerInstance.Send(new FireInfoMessage(MessageType.NotConfigured));
+                    return;
+                }
+
+                var sitemaps = await _openHabsdk.LoadSiteMaps(_version);
+                Sitemaps = new ObservableCollection<OpenHABSitemap>(sitemaps);
+                _openHabsdk.StartItemUpdates();
+
+                OpenLastOrDefaultSitemap();
             }
-
-            var sitemaps = await _openHabsdk.LoadSiteMaps(_version);
-            Sitemaps = new ObservableCollection<OpenHABSitemap>(sitemaps);
-            _openHabsdk.StartItemUpdates();
-
-            OpenLastOrDefaultSitemap();
+            catch (OpenHABException ex)
+            {
+                MessengerInstance.Send(new FireErrorMessage(ex.Message));
+            }
         }
 
         private void OpenLastOrDefaultSitemap()
@@ -232,7 +246,7 @@ namespace OpenHAB.Core.ViewModel
         }
 
         /// <summary>
-        /// Navigate backwards between linkedpages
+        /// Navigate backwards between linkedpages.
         /// </summary>
         public void WidgetGoBack()
         {

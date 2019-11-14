@@ -111,6 +111,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppResources.cs" />
     <Compile Include="Controls\ChartWidget.xaml.cs">
       <DependentUpon>ChartWidget.xaml</DependentUpon>
     </Compile>
