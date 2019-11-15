@@ -34,9 +34,8 @@
 				   TextWrapping="Wrap" />
 		<ScrollViewer Grid.Row="1"
 					  VerticalScrollBarVisibility="Auto">
-			<Grid Background="{StaticResource OpenHABLightColor}"
-				  Padding="12,12,12,12"
-				  CornerRadius="5">
+			<Grid  Padding="12,12,12,12"
+				   Background="{ThemeResource OpenHABLightColor}">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition />
 					<ColumnDefinition />
@@ -170,7 +169,7 @@
 					<TextBlock x:Uid="ConnectionSettings"
 							   FontSize="24"
 							   Margin="0,0,0,10" />
-					<TextBlock x:Uid="IgnoreSSLCertErrors"/>
+					<TextBlock x:Uid="IgnoreSSLCertErrors" />
 					<CheckBox x:Name="CheckBoxIgnoreSSL"
 							  Margin="0,0,0,12"
 							  HorizontalAlignment="Stretch"

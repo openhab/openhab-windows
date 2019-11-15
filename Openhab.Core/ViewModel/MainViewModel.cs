@@ -147,6 +147,7 @@ namespace OpenHAB.Core.ViewModel
         public MainViewModel(IOpenHAB openHabsdk, ISettingsService settingsService)
         {
             ErrorMessage = "Test";
+            IsDataLoading = false;
             CurrentWidgets = new ObservableCollection<OpenHABWidget>();
 
             _openHabsdk = openHabsdk;

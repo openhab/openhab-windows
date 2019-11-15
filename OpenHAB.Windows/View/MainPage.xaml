@@ -58,35 +58,17 @@
 					   Text="{Binding }" />
 		</DataTemplate>
 
-		<Storyboard x:Name="ErrorMessageStoryboard">
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetName="border"
-										   Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)">
-				<EasingDoubleKeyFrame KeyTime="0"
-									  Value="100">
-					<EasingDoubleKeyFrame.EasingFunction>
-						<BackEase Amplitude="2"
-								  EasingMode="EaseOut" />
-					</EasingDoubleKeyFrame.EasingFunction>
-				</EasingDoubleKeyFrame>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.5"
-									  Value="-100">
-					<EasingDoubleKeyFrame.EasingFunction>
-						<BackEase Amplitude="2"
-								  EasingMode="EaseOut" />
-					</EasingDoubleKeyFrame.EasingFunction>
-				</EasingDoubleKeyFrame>
-			</DoubleAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Name="ErrorGoneStoryboard">
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetName="border"
-										   Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)">
-				<EasingDoubleKeyFrame KeyTime="0"
-									  Value="-100" />
-				<EasingDoubleKeyFrame KeyTime="0:0:0.5"
-									  Value="100" />
-			</DoubleAnimationUsingKeyFrames>
-		</Storyboard>
-
+		<DataTemplate x:Key="WaitListTemplate">
+			<StackPanel Orientation="Horizontal"
+						Padding="12">
+				<ProgressRing IsActive="True"
+							  Margin="0,0,12,0"
+							  Foreground="{ThemeResource OpenHABMenuColor}" />
+				<TextBlock Text="Loading control with wait ring"
+						   VerticalAlignment="Center"
+						   Foreground="White" />
+			</StackPanel>
+		</DataTemplate>
 	</Page.Resources>
 
 	<Page.DataContext>
@@ -116,8 +98,8 @@
 				<Grid Background="{StaticResource OpenHABSplitviewBrush}">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />
-						<RowDefinition Height="Auto" />
 						<RowDefinition Height="*" />
+						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 					<controls:NavMenuListView Grid.Row="1"
 											  Margin="0,48,0,0"
@@ -150,13 +132,13 @@
 									   AutomationProperties.Name="Favorite"
 									   FontFamily="Segoe MDL2 Assets"
 									   FontSize="36"
-									   Foreground="{StaticResource OpenHABLightColor}"
+									   Foreground="{StaticResource OpenHABMenuColor}"
 									   Text="&#xE939;" />
 							<TextBlock x:Uid="FeedbackHeader"
 									   x:Name="feedbackTextBlock"
 									   Margin="12,0,0,0"
 									   VerticalAlignment="Center"
-									   Foreground="{StaticResource OpenHABLightColor}"
+									   Foreground="{StaticResource OpenHABMenuColor}"
 									   Style="{StaticResource FlyoutPickerTitleTextBlockStyle}"
 									   TextWrapping="Wrap" />
 						</StackPanel>
@@ -172,13 +154,13 @@
 									   AutomationProperties.Name="Favorite"
 									   FontFamily="Segoe MDL2 Assets"
 									   FontSize="36"
-									   Foreground="{StaticResource OpenHABLightColor}"
+									   Foreground="{StaticResource OpenHABMenuColor}"
 									   Text="&#xE713;" />
 							<TextBlock x:Uid="SettingsHeader"
 									   x:Name="settingsTextBlock"
 									   Margin="12,0,0,0"
 									   VerticalAlignment="Center"
-									   Foreground="{StaticResource OpenHABLightColor}"
+									   Foreground="{StaticResource OpenHABMenuColor}"
 									   Style="{StaticResource FlyoutPickerTitleTextBlockStyle}"
 									   TextWrapping="Wrap" />
 						</StackPanel>
@@ -219,18 +201,6 @@
 						</GridView.ItemsPanel>
 					</GridView>
 				</ScrollViewer>
-				<Grid Grid.Row="1"
-					  Margin="100"
-					  Padding="50"
-					  Background="{StaticResource OpenHABLightColor}"
-					  Visibility="{x:Bind Vm.IsDataLoading, Converter={StaticResource BoolToVisibilityConverter}, Mode=TwoWay}">
-					<ProgressRing MaxHeight="350"
-								  IsActive="True"
-								  VerticalAlignment="Stretch"
-								  VerticalContentAlignment="Center"
-								  HorizontalAlignment="Stretch"
-								  HorizontalContentAlignment="Center" />
-				</Grid>
 			</Grid>
 		</SplitView>
 
@@ -244,6 +214,8 @@
 
 		<community:InAppNotification x:Uid="ErrorMessage"
 									 x:Name="ErrorNotification"
+									 Grid.Column="0"
+									 Grid.ColumnSpan="2"
 									 Background="{StaticResource ErrorNotificationBackground}"
 									 ShowDismissButton="True"
 									 AnimationDuration="00:00:00.1000000"
@@ -252,12 +224,28 @@
 									 StackMode="Replace" />
 
 		<community:InAppNotification x:Name="InfoNotification"
+									 Grid.Column="0"
+									 Grid.ColumnSpan="2"
 									 Background="{StaticResource NotificationBackground}"
 									 ShowDismissButton="True"
 									 AnimationDuration="00:00:00.1000000"
 									 VerticalOffset="100"
 									 HorizontalOffset="0"
 									 StackMode="Replace" />
+
+		<community:Loading x:Name="LoadingControl"
+						   Grid.Column="0"
+						   Grid.ColumnSpan="2"
+						   IsLoading="{x:Bind Vm.IsDataLoading, Mode=TwoWay}"
+						   HorizontalContentAlignment="Center"
+						   VerticalContentAlignment="Center">
+			<community:Loading.Background>
+				<SolidColorBrush Color="Black"
+								 Opacity="0.7" />
+			</community:Loading.Background>
+			<ContentControl x:Name="LoadingContentControl"
+							ContentTemplate="{StaticResource WaitListTemplate}" />
+		</community:Loading>
 
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="WindowStates">
@@ -295,4 +283,3 @@
 		</VisualStateManager.VisualStateGroups>
 	</Grid>
 </Page>
-

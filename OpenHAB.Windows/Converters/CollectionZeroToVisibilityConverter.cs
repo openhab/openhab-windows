@@ -16,7 +16,7 @@ namespace OpenHAB.Windows.Converters
         {
             if (value == null)
             {
-                return Visibility.Collapsed;
+                return Visibility.Visible;
             }
 
             ICollection numberOfElements = (ICollection)value;
