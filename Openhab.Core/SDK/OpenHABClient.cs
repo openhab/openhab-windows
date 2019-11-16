@@ -126,7 +126,7 @@ namespace OpenHAB.Core.SDK
         }
 
         /// <inheritdoc />
-        public async Task<ICollection<OpenHABSitemap>> LoadSiteMaps(OpenHABVersion version)
+        public async Task<ICollection<OpenHABSitemap>> LoadSiteMaps(OpenHABVersion version, List<Func<bool, OpenHABSitemap>> filters)
         {
             try
             {
@@ -139,10 +139,10 @@ namespace OpenHAB.Core.SDK
 
                 string resultString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
+                var sitemaps = new List<OpenHABSitemap>();
                 // V1 = xml
                 if (version == OpenHABVersion.One)
                 {
-                    var sitemaps = new List<OpenHABSitemap>();
                     XDocument xml = XDocument.Parse(resultString);
 
                     foreach (XElement xElement in xml.Element("sitemaps").Elements())
@@ -155,7 +155,13 @@ namespace OpenHAB.Core.SDK
                 }
 
                 // V2 = JSON
-                return JsonConvert.DeserializeObject<List<OpenHABSitemap>>(resultString);
+                sitemaps = JsonConvert.DeserializeObject<List<OpenHABSitemap>>(resultString);
+
+                return sitemaps.Where(sitemap => filters.ForEach(filter =>
+               {
+                   filter(sitemap)
+
+               });
             }
             catch (ArgumentNullException ex)
             {
@@ -294,7 +300,8 @@ namespace OpenHAB.Core.SDK
             else
             {
                 // If remote URL is configured
-                if (!string.IsNullOrWhiteSpace(settings.OpenHABRemoteUrl) && await CheckUrlReachability(settings.OpenHABRemoteUrl, settings, OpenHABHttpClientType.Remote).ConfigureAwait(false))
+                if (!string.IsNullOrWhiteSpace(settings.OpenHABRemoteUrl) &&
+                    await CheckUrlReachability(settings.OpenHABRemoteUrl, settings, OpenHABHttpClientType.Remote).ConfigureAwait(false))
                 {
                     OpenHABHttpClient.BaseUrl = settings.OpenHABRemoteUrl;
                     _connectionType = OpenHABHttpClientType.Remote;

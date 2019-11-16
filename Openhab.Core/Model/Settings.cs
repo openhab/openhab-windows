@@ -38,6 +38,29 @@
         }
 
         /// <summary>
+        /// Gets or sets the if the default sitemap should be hidden.
+        /// </summary>
+        /// <value>The hide default sitemap.</value>
+        public bool? HideDefaultSitemap
+        {
+            get
+            {
+                return _isRunningInDemoMode;
+            }
+
+            set
+            {
+                if (_isRunningInDemoMode == value)
+                {
+                    return;
+                }
+
+                _isRunningInDemoMode = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the url to the OpenHAB server.
         /// </summary>
         public string OpenHABUrl

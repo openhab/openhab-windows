@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
@@ -187,6 +188,11 @@ namespace OpenHAB.Core.ViewModel
         {
             try
             {
+                if (IsDataLoading)
+                {
+                    return;
+                }
+
                 IsDataLoading = true;
                 Sitemaps?.Clear();
                 CurrentWidgets?.Clear();
@@ -196,11 +202,11 @@ namespace OpenHAB.Core.ViewModel
                 if (!isSuccessful)
                 {
                     IsDataLoading = false;
+                    MessengerInstance.Send(new FireInfoMessage(MessageType.NotConfigured));
                     return;
                 }
 
                 _version = await _openHabsdk.GetOpenHABVersion();
-
                 if (_version == OpenHABVersion.None)
                 {
                     MessengerInstance.Send(new FireInfoMessage(MessageType.NotConfigured));
@@ -209,6 +215,7 @@ namespace OpenHAB.Core.ViewModel
                 }
 
                 var sitemaps = await _openHabsdk.LoadSiteMaps(_version);
+
                 Sitemaps = new ObservableCollection<OpenHABSitemap>(sitemaps);
                 _openHabsdk.StartItemUpdates();
 
@@ -217,6 +224,7 @@ namespace OpenHAB.Core.ViewModel
             }
             catch (OpenHABException ex)
             {
+                IsDataLoading = false;
                 MessengerInstance.Send(new FireErrorMessage(ex.Message));
             }
         }

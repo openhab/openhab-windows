@@ -132,7 +132,7 @@
   <data name="DemoModeHeader.Text" xml:space="preserve">
     <value>Demo mode</value>
   </data>
-  <data name="ErrorMessage" xml:space="preserve">
+  <data name="MessageError" xml:space="preserve">
     <value>Ups, something go wrong</value>
   </data>
   <data name="FeedbackHeader.Text" xml:space="preserve">
@@ -183,6 +183,12 @@ Go to app settings (gear icon) to check the connection configuration.</value>
     <value>Username</value>
   </data>
   <data name="NoItemsOrOpenHabNotAvailable.Text" xml:space="preserve">
-    <value>No sitemaps available or OpenHAB server is not reachable.</value>
+    <value>No sitemaps available</value>
+  </data>
+  <data name="AppSettings.Text" xml:space="preserve">
+    <value>App Settings</value>
+  </data>
+  <data name="HideDefaultSitemap.Text" xml:space="preserve">
+    <value>Hide default sitemap (_default)</value>
   </data>
 </root>
