@@ -85,7 +85,7 @@
 						<TextBox x:Uid="LocalUrl"
 								 x:Name="TextBoxUrl"
 								 Margin="0,0,12,12"
-								 IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
+								 IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
 								 Text="{Binding Settings.OpenHABUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 							<Interactivity:Interaction.Behaviors>
 								<Core:EventTriggerBehavior EventName="LostFocus">
@@ -97,7 +97,7 @@
 						<TextBlock x:Uid="UsernameHeader" />
 						<TextBox x:Name="TextBoxUsername"
 								 Margin="0,0,12,12"
-								 IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
+								 IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
 								 Text="{Binding Settings.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 								 TextWrapping="Wrap">
 							<Interactivity:Interaction.Behaviors>
@@ -110,7 +110,7 @@
 						<TextBlock x:Uid="PasswordHeader" />
 						<PasswordBox x:Name="TextBoxPassword"
 									 Margin="0,0,12,12"
-									 IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
+									 IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
 									 Password="{Binding Settings.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 							<Interactivity:Interaction.Behaviors>
 								<Core:EventTriggerBehavior EventName="LostFocus">
@@ -140,7 +140,7 @@
 						<TextBox x:Uid="RemoteUrl"
 								 x:Name="TextBoxRemoteUrl"
 								 Margin="0,0,12,12"
-								 IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
+								 IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
 								 Text="{Binding Settings.OpenHABRemoteUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 							<Interactivity:Interaction.Behaviors>
 								<Core:EventTriggerBehavior EventName="LostFocus">
@@ -151,7 +151,7 @@
 						<TextBlock x:Uid="UsernameHeader" />
 						<TextBox x:Name="TextBoxRemoteUsername"
 								 Margin="0,0,12,12"
-								 IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
+								 IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
 								 Text="{Binding Settings.RemoteUsername, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 								 TextWrapping="Wrap">
 							<Interactivity:Interaction.Behaviors>
@@ -163,7 +163,7 @@
 						<TextBlock x:Uid="PasswordHeader" />
 						<PasswordBox x:Name="TextBoxRemotePassword"
 									 Margin="0,0,12,12"
-									 IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
+									 IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
 									 Password="{Binding Settings.RemotePassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 							<Interactivity:Interaction.Behaviors>
 								<Core:EventTriggerBehavior EventName="LostFocus">
@@ -196,7 +196,7 @@
 								  IsChecked="{Binding Settings.WillIgnoreSSLCertificate,
 												  Mode=TwoWay,
 												  UpdateSourceTrigger=PropertyChanged}"
-								  IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />
+								  IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />
 						<TextBlock x:Uid="IgnoreSSLCertHostErrors" />
 						<CheckBox x:Name="CheckBoxIgnoreSSLHostname"
 								  Margin="0,0,0,12"
@@ -205,7 +205,7 @@
 								  IsChecked="{Binding Settings.WillIgnoreSSLHostname,
 												  Mode=TwoWay,
 												  UpdateSourceTrigger=PropertyChanged}"
-								  IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />
+								  IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />
 					</StackPanel>
 				</Grid>
 
