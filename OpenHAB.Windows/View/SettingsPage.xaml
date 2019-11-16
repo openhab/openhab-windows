@@ -26,20 +26,21 @@
 		</Grid.RowDefinitions>
 		<TextBlock x:Uid="SettingsHeader"
 				   x:Name="SettingsTitle"
-				   Margin="12,6,0,6"
+				   Margin="0,6,0,6"
 				   HorizontalAlignment="Left"
 				   VerticalAlignment="Center"
 				   Foreground="White"
-				   Style="{StaticResource TitleTextBlockStyle}"
+				   FontSize="32"
 				   TextWrapping="Wrap" />
 		<ScrollViewer Grid.Row="1"
 					  VerticalScrollBarVisibility="Auto">
 			<StackPanel Orientation="Vertical">
 
-				<StackPanel  Padding="12"
-							 Background="{ThemeResource OpenHABLightColor}">
+				<StackPanel Margin="0,0,0,25"
+							Padding="12"
+							Background="{ThemeResource OpenHABLightColor}">
 					<TextBlock x:Uid="AppSettings"
-							   FontSize="24"
+							   Style="{StaticResource TitleTextBlockStyle}"
 							   Margin="0,0,0,10" />
 					<TextBlock x:Uid="HideDefaultSitemap" />
 					<ToggleSwitch x:Name="CheckBoxHideDefaultSitemap"
@@ -49,8 +50,9 @@
 								  IsOn="{Binding Settings.HideDefaultSitemap, Mode=TwoWay}" />
 				</StackPanel>
 
-				<Grid  Padding="12"
-					   Background="{ThemeResource OpenHABLightColor}">
+				<!-- Connection Settings -->
+				<Grid Padding="12"
+					  Background="{ThemeResource OpenHABLightColor}">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition />
 						<ColumnDefinition />
@@ -60,22 +62,24 @@
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
-						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 					<StackPanel Grid.Column="0"
 								Grid.Row="0">
+						<TextBlock x:Uid="ConnectionSettings"
+								   Style="{StaticResource TitleTextBlockStyle}"
+								   Margin="0,0,0,10" />
 						<TextBlock x:Uid="DemoModeHeader" />
-						<CheckBox x:Name="CheckBoxDemoMode"
+						<ToggleSwitch x:Name="CheckBoxDemoMode"
 								  Margin="0,0,0,12"
 								  HorizontalAlignment="Stretch"
 								  VerticalAlignment="Stretch"
-								  IsChecked="{Binding Settings.IsRunningInDemoMode, Mode=TwoWay}" />
+								  IsOn="{Binding Settings.IsRunningInDemoMode, Mode=TwoWay}" />
 					</StackPanel>
 					<StackPanel Grid.Column="0"
 								Grid.Row="1"
 								Margin="0,0,10,0">
 						<TextBlock x:Uid="LocalSettings"
-								   FontSize="24"
+								   Style="{StaticResource TitleTextBlockStyle}"
 								   Margin="0,0,0,10" />
 						<TextBlock x:Uid="LocalUrlHeader" />
 						<TextBox x:Uid="LocalUrl"
@@ -130,7 +134,7 @@
 								Grid.Row="1"
 								Margin="12,0,0,0">
 						<TextBlock x:Uid="RemoteSettings"
-								   FontSize="24"
+								   Style="{StaticResource TitleTextBlockStyle}"
 								   Margin="0,0,0,10" />
 						<TextBlock x:Uid="RemoteUrlHeader" />
 						<TextBox x:Uid="RemoteUrl"
@@ -181,8 +185,8 @@
 					<StackPanel Grid.Column="0"
 								Grid.Row="2"
 								Margin="0,12,0,0">
-						<TextBlock x:Uid="ConnectionSettings"
-								   FontSize="24"
+						<TextBlock x:Uid="CertificateSettings"
+								   Style="{StaticResource TitleTextBlockStyle}"
 								   Margin="0,0,0,10" />
 						<TextBlock x:Uid="IgnoreSSLCertErrors" />
 						<CheckBox x:Name="CheckBoxIgnoreSSL"
@@ -203,9 +207,23 @@
 												  UpdateSourceTrigger=PropertyChanged}"
 								  IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />
 					</StackPanel>
+				</Grid>
+
+				<Grid Margin="0,25,0,0"
+					  Padding="12"
+					  Background="{ThemeResource OpenHABLightColor}">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
 					<StackPanel Grid.Column="0"
-								Grid.ColumnSpan="2"
-								Grid.Row="3"
+								VerticalAlignment="Center"
+								Orientation="Horizontal">
+						<TextBlock x:Uid="AppVersion" />
+						<TextBlock Margin="10,0,0,0"
+								   Text="{Binding Path=Version}" />
+					</StackPanel>
+					<StackPanel Grid.Column="1"
 								HorizontalAlignment="Right"
 								Orientation="Horizontal">
 						<Button x:Uid="SaveButton"
@@ -214,15 +232,7 @@
 						<Button x:Uid="CancelButton"
 								Click="ButtonCancel_OnClick" />
 					</StackPanel>
-					<StackPanel Grid.Column="0"
-								Grid.Row="4"
-								Orientation="Horizontal">
-						<TextBlock x:Uid="AppVersion" />
-						<TextBlock Margin="10,0,0,0"
-								   Text="{Binding Path=Version}" />
-					</StackPanel>
 				</Grid>
-
 			</StackPanel>
 		</ScrollViewer>
 	</Grid>

@@ -126,7 +126,7 @@ namespace OpenHAB.Core.SDK
         }
 
         /// <inheritdoc />
-        public async Task<ICollection<OpenHABSitemap>> LoadSiteMaps(OpenHABVersion version, List<Func<bool, OpenHABSitemap>> filters)
+        public async Task<ICollection<OpenHABSitemap>> LoadSiteMaps(OpenHABVersion version, List<Func<OpenHABSitemap, bool>> filters)
         {
             try
             {
@@ -157,11 +157,13 @@ namespace OpenHAB.Core.SDK
                 // V2 = JSON
                 sitemaps = JsonConvert.DeserializeObject<List<OpenHABSitemap>>(resultString);
 
-                return sitemaps.Where(sitemap => filters.ForEach(filter =>
-               {
-                   filter(sitemap)
+                return sitemaps.Where(sitemap =>
+                {
+                    bool isIncluded = true;
+                    filters.ForEach(filter => isIncluded &= filter(sitemap));
 
-               });
+                    return isIncluded;
+                }).ToList();
             }
             catch (ArgumentNullException ex)
             {

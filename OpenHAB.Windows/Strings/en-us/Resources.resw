@@ -191,4 +191,10 @@ Go to app settings (gear icon) to check the connection configuration.</value>
   <data name="HideDefaultSitemap.Text" xml:space="preserve">
     <value>Hide default sitemap (_default)</value>
   </data>
+  <data name="CertificateSettings.Text" xml:space="preserve">
+    <value>Certificate Settings</value>
+  </data>
+  <data name="Loading.Text" xml:space="preserve">
+    <value>Loading data...</value>
+  </data>
 </root>

@@ -14,6 +14,7 @@
         private bool? _willIgnoreSSLHostname;
         private string _remoteUsername;
         private string _remotePassword;
+        private bool? _hideDefaultSitemap;
 
         /// <summary>
         /// Gets or sets a value indicating whether the app is currently running in demo mode.
@@ -45,17 +46,17 @@
         {
             get
             {
-                return _isRunningInDemoMode;
+                return _hideDefaultSitemap;
             }
 
             set
             {
-                if (_isRunningInDemoMode == value)
+                if (_hideDefaultSitemap == value)
                 {
                     return;
                 }
 
-                _isRunningInDemoMode = value;
+                _hideDefaultSitemap = value;
                 OnPropertyChanged();
             }
         }
