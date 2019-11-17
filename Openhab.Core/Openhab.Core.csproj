@@ -138,11 +138,13 @@
     <Compile Include="Model\EventStreamPayload.cs" />
     <Compile Include="Model\ObservableBase.cs" />
     <Compile Include="Model\OpenHABCommand.cs" />
+    <Compile Include="Model\OpenHABConnection.cs" />
     <Compile Include="Model\OpenHABItem.cs" />
     <Compile Include="Model\OpenHABSitemap.cs" />
     <Compile Include="Model\OpenHABUrlState.cs" />
     <Compile Include="Model\OpenHABWidget.cs" />
     <Compile Include="Model\OpenHABWidgetMapping.cs" />
+    <Compile Include="ViewModel\ConfigurationViewModel.cs" />
     <Compile Include="Model\Settings.cs" />
     <Compile Include="Model\OpenHABCommands.cs" />
     <Compile Include="Model\OpenHABException.cs" />
@@ -153,6 +155,7 @@
     <Compile Include="SDK\OpenHABClient.cs" />
     <Compile Include="Services\SettingsService.cs" />
     <Compile Include="Services\WidgetNavigationService.cs" />
+    <Compile Include="ViewModel\ConnectionConfigViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />

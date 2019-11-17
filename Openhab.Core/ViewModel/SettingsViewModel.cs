@@ -4,7 +4,6 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
 using GalaSoft.MvvmLight.Views;
-using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.SDK;
@@ -17,44 +16,35 @@ namespace OpenHAB.Core.ViewModel
     /// </summary>
     public class SettingsViewModel : ViewModelBase
     {
-        private readonly ISettingsService _settingsService;
         private readonly INavigationService _navigationService;
         private readonly IOpenHAB _openHabsdk;
-        private Settings _settings;
+        private ConfigurationViewModel _configuration;
 
-        private ICommand _saveCommand;
         private ICommand _localUrlCheckCommand;
-        private ICommand _remoteUrlCheckCommand;
-
         private OpenHABUrlState _localUrlState = OpenHABUrlState.Unknown;
+        private ICommand _remoteUrlCheckCommand;
         private OpenHABUrlState _remoteUrlState = OpenHABUrlState.Unknown;
+        private ICommand _saveCommand;
 
         /// <summary>
-        /// Gets the save command to persist the settings.
+        /// Initializes a new instance of the <see cref="SettingsViewModel"/> class.
         /// </summary>
-        /// <value>The save command.</value>
-        public ICommand SaveCommand => _saveCommand ?? (_saveCommand = new RelayCommand(PersistSettings));
+        public SettingsViewModel(ConfigurationViewModel configurationViewModel, INavigationService navigationService, IOpenHAB openHabsdk)
+        {
+            MessengerInstance.Register<PersistSettingsMessage>(this, msg => PersistSettings());
+
+            _configuration = configurationViewModel;
+            _navigationService = navigationService;
+            _openHabsdk = openHabsdk;
+
+            UrlChecks();
+        }
 
         /// <summary>
         /// Gets the command for local url check.
         /// </summary>
         /// <value>The local URL check command.</value>
         public ICommand LocalUrlCheckCommand => _localUrlCheckCommand ?? (_localUrlCheckCommand = new RelayCommand<object>(CheckLocalUrl));
-
-        /// <summary>
-        /// Gets the command for remote url check.
-        /// </summary>
-        /// <value>The remote URL check command.</value>
-        public ICommand RemoteUrlCheckCommand => _remoteUrlCheckCommand ?? (_remoteUrlCheckCommand = new RelayCommand(CheckRemoteUrl));
-
-        /// <summary>
-        /// Gets or sets the current user-defined settings.
-        /// </summary>
-        public Settings Settings
-        {
-            get => _settings;
-            set => Set(ref _settings, value);
-        }
 
         /// <summary>
         /// Gets or sets the state for OpenHab local url.
@@ -67,6 +57,12 @@ namespace OpenHAB.Core.ViewModel
         }
 
         /// <summary>
+        /// Gets the command for remote url check.
+        /// </summary>
+        /// <value>The remote URL check command.</value>
+        public ICommand RemoteUrlCheckCommand => _remoteUrlCheckCommand ?? (_remoteUrlCheckCommand = new RelayCommand(CheckRemoteUrl));
+
+        /// <summary>
         /// Gets or sets the state for OpenHab remote url.
         /// </summary>
         /// <value>The state of the remote URL.</value>
@@ -74,6 +70,21 @@ namespace OpenHAB.Core.ViewModel
         {
             get => _remoteUrlState;
             set => Set(ref _remoteUrlState, value);
+        }
+
+        /// <summary>
+        /// Gets the save command to persist the settings.
+        /// </summary>
+        /// <value>The save command.</value>
+        public ICommand SaveCommand => _saveCommand ?? (_saveCommand = new RelayCommand(PersistSettings));
+
+        /// <summary>
+        /// Gets or sets the current user-defined settings.
+        /// </summary>
+        public ConfigurationViewModel Settings
+        {
+            get => _configuration;
+            set => Set(ref _configuration, value);
         }
 
         /// <summary>
@@ -95,45 +106,17 @@ namespace OpenHAB.Core.ViewModel
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SettingsViewModel"/> class.
-        /// </summary>
-        public SettingsViewModel(ISettingsService settingsService, INavigationService navigationService, IOpenHAB openHabsdk)
-        {
-            MessengerInstance.Register<PersistSettingsMessage>(this, msg => PersistSettings());
-
-            _settingsService = settingsService;
-            _navigationService = navigationService;
-            _openHabsdk = openHabsdk;
-
-            LoadSettings();
-            UrlChecks();
-        }
-
-        /// <summary>
         /// Save the user defined settings to the UWP settings storage.
         /// </summary>
         public void PersistSettings()
         {
-            _settingsService.Save(Settings);
+            _configuration.Save();
 
             MessengerInstance.Send(new SettingsUpdatedMessage());
             _navigationService.GoBack();
         }
 
-        private void LoadSettings()
-        {
-            Settings = _settingsService.Load();
-        }
-
-        private void UrlChecks()
-        {
-            CheckLocalUrl(_settings.OpenHABUrl);
-            CheckRemoteUrl();
-        }
-
-#pragma warning disable S3168 // "async" methods should not return "void"
         private async void CheckLocalUrl(object parameter)
-#pragma warning restore S3168 // "async" methods should not return "void"
         {
             if (parameter == null)
             {
@@ -143,7 +126,7 @@ namespace OpenHAB.Core.ViewModel
             string url = parameter.ToString();
 
             LocalUrlState = OpenHABUrlState.Unknown;
-            if (await _openHabsdk.CheckUrlReachability(url, Settings, Common.OpenHABHttpClientType.Local))
+            if (await _openHabsdk.CheckUrlReachability(url, Common.OpenHABHttpClientType.Local))
             {
                 LocalUrlState = OpenHABUrlState.OK;
             }
@@ -155,15 +138,15 @@ namespace OpenHAB.Core.ViewModel
 
         private async void CheckRemoteUrl()
         {
-            if (string.IsNullOrEmpty(Settings.OpenHABRemoteUrl) &&
-                string.IsNullOrEmpty(Settings.RemoteUsername) &&
-                string.IsNullOrEmpty(Settings.RemotePassword))
+            if (string.IsNullOrEmpty(_configuration?.RemoteConnection?.Url) &&
+                string.IsNullOrEmpty(_configuration?.RemoteConnection?.Username) &&
+                string.IsNullOrEmpty(_configuration?.RemoteConnection?.Password))
             {
                 return;
             }
 
             RemoteUrlState = OpenHABUrlState.Unknown;
-            if (await _openHabsdk.CheckUrlReachability(Settings.OpenHABRemoteUrl, Settings, Common.OpenHABHttpClientType.Remote))
+            if (await _openHabsdk.CheckUrlReachability(Settings.RemoteConnection.Url, Common.OpenHABHttpClientType.Remote))
             {
                 RemoteUrlState = OpenHABUrlState.OK;
             }
@@ -171,6 +154,12 @@ namespace OpenHAB.Core.ViewModel
             {
                 RemoteUrlState = OpenHABUrlState.Failed;
             }
+        }
+
+        private void UrlChecks()
+        {
+            CheckLocalUrl(_configuration.LocalConnection.Url);
+            CheckRemoteUrl();
         }
     }
 }

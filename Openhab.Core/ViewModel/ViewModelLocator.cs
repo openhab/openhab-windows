@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using OpenHAB.Core.Contracts.Services;
+using OpenHAB.Core.Model;
 using OpenHAB.Core.SDK;
 using OpenHAB.Core.Services;
 
@@ -37,6 +38,7 @@ namespace OpenHAB.Core.ViewModel
         {
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<SettingsViewModel>();
+            SimpleIoc.Default.Register<ConfigurationViewModel>();
         }
 
         /// <summary>

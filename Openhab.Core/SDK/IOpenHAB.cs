@@ -57,6 +57,6 @@ namespace OpenHAB.Core.SDK
         /// <param name="settings">Applicaiton settings.</param>
         /// <param name="connectionType">Defines if the connection is local or remote.</param>
         /// <returns>>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        Task<bool> CheckUrlReachability(string openHABUrl, Settings settings, OpenHABHttpClientType connectionType);
+        Task<bool> CheckUrlReachability(string openHABUrl, OpenHABHttpClientType connectionType);
     }
 }

@@ -51,8 +51,7 @@ namespace OpenHAB.Windows.Controls
 
         internal override void SetState()
         {
-            var settings = _settingsService.Load();
-            var serverUrl = settings.IsRunningInDemoMode.Value ? Core.Common.Constants.Api.DemoModeUrl : settings.OpenHABUrl;
+            var serverUrl = OpenHABHttpClient.BaseUrl;
 
             if (!serverUrl.EndsWith("/"))
             {
@@ -85,11 +84,15 @@ namespace OpenHAB.Windows.Controls
         {
             ThumbImage.Source = new BitmapImage(
                 new Uri(ChartUri, UriKind.Absolute))
-                { CreateOptions = BitmapCreateOptions.IgnoreImageCache };
+            {
+                CreateOptions = BitmapCreateOptions.IgnoreImageCache
+            };
 
             FullImage.Source = new BitmapImage(
                 new Uri(ChartUri, UriKind.Absolute))
-            { CreateOptions = BitmapCreateOptions.IgnoreImageCache };
+            {
+                CreateOptions = BitmapCreateOptions.IgnoreImageCache
+            };
         }
 
         private async void ImageWidget_OnTapped(object sender, TappedRoutedEventArgs e)

@@ -86,7 +86,7 @@
 								 x:Name="TextBoxUrl"
 								 Margin="0,0,12,12"
 								 IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-								 Text="{Binding Settings.OpenHABUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+								 Text="{Binding Settings.LocalConnection.Url, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 							<Interactivity:Interaction.Behaviors>
 								<Core:EventTriggerBehavior EventName="LostFocus">
 									<Core:InvokeCommandAction Command="{Binding Path=LocalUrlCheckCommand, Mode=TwoWay}"
@@ -98,7 +98,7 @@
 						<TextBox x:Name="TextBoxUsername"
 								 Margin="0,0,12,12"
 								 IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-								 Text="{Binding Settings.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+								 Text="{Binding Settings.LocalConnection.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 								 TextWrapping="Wrap">
 							<Interactivity:Interaction.Behaviors>
 								<Core:EventTriggerBehavior EventName="LostFocus">
@@ -111,7 +111,7 @@
 						<PasswordBox x:Name="TextBoxPassword"
 									 Margin="0,0,12,12"
 									 IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-									 Password="{Binding Settings.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+									 Password="{Binding Settings.LocalConnection.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 							<Interactivity:Interaction.Behaviors>
 								<Core:EventTriggerBehavior EventName="LostFocus">
 									<Core:InvokeCommandAction Command="{Binding Path=LocalUrlCheckCommand, Mode=TwoWay}"
@@ -141,7 +141,7 @@
 								 x:Name="TextBoxRemoteUrl"
 								 Margin="0,0,12,12"
 								 IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-								 Text="{Binding Settings.OpenHABRemoteUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+								 Text="{Binding Settings.RemoteConnection.Url, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 							<Interactivity:Interaction.Behaviors>
 								<Core:EventTriggerBehavior EventName="LostFocus">
 									<Core:InvokeCommandAction Command="{Binding Path=RemoteUrlCheckCommand, Mode=TwoWay}" />
@@ -152,7 +152,7 @@
 						<TextBox x:Name="TextBoxRemoteUsername"
 								 Margin="0,0,12,12"
 								 IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-								 Text="{Binding Settings.RemoteUsername, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+								 Text="{Binding Settings.RemoteConnection.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 								 TextWrapping="Wrap">
 							<Interactivity:Interaction.Behaviors>
 								<Core:EventTriggerBehavior EventName="LostFocus">
@@ -164,7 +164,7 @@
 						<PasswordBox x:Name="TextBoxRemotePassword"
 									 Margin="0,0,12,12"
 									 IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-									 Password="{Binding Settings.RemotePassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+									 Password="{Binding Settings.RemoteConnection.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 							<Interactivity:Interaction.Behaviors>
 								<Core:EventTriggerBehavior EventName="LostFocus">
 									<Core:InvokeCommandAction Command="{Binding Path=RemoteUrlCheckCommand, Mode=TwoWay}" />
