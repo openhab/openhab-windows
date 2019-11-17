@@ -113,7 +113,7 @@
 					<TextBlock Grid.Row="1"
 							   Margin="10,100,10,0"
 							   x:Uid="NoItemsOrOpenHabNotAvailable"
-							   Visibility="{x:Bind Vm.Sitemaps, Converter={StaticResource ZeroToVisibility}, Mode=TwoWay}"
+							   Visibility="{x:Bind Vm.Sitemaps, Converter={StaticResource ZeroToVisibility}, Mode=OneWay}"
 							   TextWrapping="Wrap"
 							   Foreground="{StaticResource OpenHABMenuColor}"
 							   Style="{StaticResource FlyoutPickerTitleTextBlockStyle}" />

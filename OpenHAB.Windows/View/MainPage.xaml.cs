@@ -60,7 +60,7 @@ namespace OpenHAB.Windows.View
             }
             else
             {
-                ErrorNotification.Show(message.ErrorMessage);
+                ErrorNotification.Show(message.ErrorMessage, 0);
             }
         }
 
@@ -82,7 +82,7 @@ namespace OpenHAB.Windows.View
 
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
               {
-                  InfoNotification.Show(message);
+                  InfoNotification.Show(message, 0);
               });
         }
 

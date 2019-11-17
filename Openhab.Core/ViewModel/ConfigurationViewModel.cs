@@ -1,4 +1,5 @@
 ﻿using OpenHAB.Core.Contracts.Services;
+using OpenHAB.Core.SDK;
 using OpenHAB.Core.ViewModel;
 
 namespace OpenHAB.Core.Model
@@ -20,13 +21,13 @@ namespace OpenHAB.Core.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationViewModel"/> class.
         /// </summary>
-        public ConfigurationViewModel(ISettingsService settingsService)
+        public ConfigurationViewModel(ISettingsService settingsService, IOpenHAB openHabsdk)
         {
             _settingsService = settingsService;
             _settings = settingsService.Load();
 
-            _localConnection = new ConnectionConfigViewModel(_settings.LocalConnection);
-            _remoteConnection = new ConnectionConfigViewModel(_settings.RemoteConnection);
+            _localConnection = new ConnectionConfigViewModel(_settings.LocalConnection, openHabsdk);
+            _remoteConnection = new ConnectionConfigViewModel(_settings.RemoteConnection, openHabsdk);
 
             _willIgnoreSSLCertificate = _settings.WillIgnoreSSLCertificate;
             _willIgnoreSSLHostname = _settings.WillIgnoreSSLHostname;

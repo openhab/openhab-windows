@@ -201,7 +201,6 @@ namespace OpenHAB.Core.ViewModel
                 bool isSuccessful = await _openHabsdk.ResetConnection();
                 if (!isSuccessful)
                 {
-                    IsDataLoading = false;
                     MessengerInstance.Send(new FireInfoMessage(MessageType.NotConfigured));
                     return;
                 }
@@ -210,7 +209,6 @@ namespace OpenHAB.Core.ViewModel
                 if (_version == OpenHABVersion.None)
                 {
                     MessengerInstance.Send(new FireInfoMessage(MessageType.NotConfigured));
-                    IsDataLoading = false;
                     return;
                 }
 
@@ -219,7 +217,7 @@ namespace OpenHAB.Core.ViewModel
                     return !sitemap.Name.Equals("_default", StringComparison.InvariantCultureIgnoreCase);
                 };
 
-                List <Func<OpenHABSitemap, bool>> filters = new List<Func<OpenHABSitemap, bool>>();
+                List<Func<OpenHABSitemap, bool>> filters = new List<Func<OpenHABSitemap, bool>>();
 
                 Settings settings = _settingsService.Load();
                 if (settings.HideDefaultSitemap.HasValue && settings.HideDefaultSitemap.Value)
@@ -233,12 +231,18 @@ namespace OpenHAB.Core.ViewModel
                 _openHabsdk.StartItemUpdates();
 
                 OpenLastOrDefaultSitemap();
-                IsDataLoading = false;
             }
             catch (OpenHABException ex)
             {
-                IsDataLoading = false;
                 MessengerInstance.Send(new FireErrorMessage(ex.Message));
+            }
+            catch (Exception ex)
+            {
+            
+            }
+            finally
+            {
+                IsDataLoading = false;
             }
         }
 

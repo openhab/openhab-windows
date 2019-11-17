@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Windows.Input;
+using GalaSoft.MvvmLight.Command;
 using OpenHAB.Core.Model;
+using OpenHAB.Core.SDK;
 
 namespace OpenHAB.Core.ViewModel
 {
@@ -10,23 +13,26 @@ namespace OpenHAB.Core.ViewModel
     public class ConnectionConfigViewModel : ObservableBase
     {
         private readonly OpenHABConnection _connectionConfig;
+        private readonly IOpenHAB _openHabsdk;
         private string _url;
         private string _password;
         private string _username;
+        private ICommand _urlCheckCommand;
+        private OpenHABUrlState _urlState;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConnectionConfigViewModel"/> class.
         /// </summary>
         /// <param name="connectionConfig">The connection configuration.</param>
-        public ConnectionConfigViewModel(OpenHABConnection connectionConfig)
+        /// <param name="openHabsdk">OpenHABSDK class</param>
+        public ConnectionConfigViewModel(OpenHABConnection connectionConfig, IOpenHAB openHabsdk)
         {
             _connectionConfig = connectionConfig;
+            _openHabsdk = openHabsdk;
 
             _url = _connectionConfig.Url;
             _username = connectionConfig.Username;
             _password = connectionConfig.Password;
-
-
         }
 
         /// <summary>
@@ -41,21 +47,17 @@ namespace OpenHAB.Core.ViewModel
 
             set
             {
-                if (_url == value)
-                {
-                    return;
-                }
-
+                string tempUrl = string.Empty;
                 if (!string.IsNullOrEmpty(value) && !value.EndsWith("/", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    _url = value + "/";
+                    tempUrl = value + "/";
                 }
                 else
                 {
-                    _url = value;
+                    tempUrl = value;
                 }
 
-                SetProperty(ref _url, value);
+                SetProperty(ref _url, tempUrl);
                 _connectionConfig.Url = _url;
             }
         }
@@ -91,6 +93,42 @@ namespace OpenHAB.Core.ViewModel
             {
                 SetProperty(ref _password, value);
                 _connectionConfig.Password = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the command for local url check.
+        /// </summary>
+        /// <value>The local URL check command.</value>
+        public ICommand UrlCheckCommand => _urlCheckCommand ?? (_urlCheckCommand = new RelayCommand<object>(CheckLocalUrl));
+
+        /// <summary>
+        /// Gets or sets the state for OpenHab local url.
+        /// </summary>
+        /// <value>The state of the local URL.</value>
+        public OpenHABUrlState UrlState
+        {
+            get => _urlState;
+            set => SetProperty(ref _urlState, value);
+        }
+
+        private async void CheckLocalUrl(object parameter)
+        {
+            if (parameter == null)
+            {
+                return;
+            }
+
+            string url = parameter.ToString();
+
+            UrlState = OpenHABUrlState.Unknown;
+            if (await _openHabsdk.CheckUrlReachability(url, Common.OpenHABHttpClientType.Local))
+            {
+                UrlState = OpenHABUrlState.OK;
+            }
+            else
+            {
+                UrlState = OpenHABUrlState.Failed;
             }
         }
     }
