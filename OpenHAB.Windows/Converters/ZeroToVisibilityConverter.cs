@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
@@ -9,24 +8,24 @@ namespace OpenHAB.Windows.Converters
     /// Converts zero to visibility type (0 = Visibility.Visible, else Visibility.Collapsed).
     /// </summary>
     /// <seealso cref="IValueConverter" />
-    public class CollectionZeroToVisibilityConverter : IValueConverter
+    public class ZeroToVisibilityConverter : IValueConverter
     {
         /// <inheritdoc/>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value == null)
             {
-                return Visibility.Collapsed;
+                return Visibility.Visible;
             }
 
-            ICollection numberOfElements = (ICollection)value;
-            return numberOfElements.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+            int numberOfElements = (int)value;
+            return numberOfElements == 0 ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <inheritdoc/>
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            return ((Visibility)value) == Visibility.Visible ? 1 : 0;
+            throw new NotImplementedException();
         }
     }
 }

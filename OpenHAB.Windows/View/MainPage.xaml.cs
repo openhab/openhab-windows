@@ -1,5 +1,6 @@
 ﻿using System;
 using GalaSoft.MvvmLight.Messaging;
+using OpenHAB.Core;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.Services;
@@ -7,6 +8,7 @@ using OpenHAB.Core.ViewModel;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace OpenHAB.Windows.View
 {
@@ -29,10 +31,6 @@ namespace OpenHAB.Windows.View
         {
             InitializeComponent();
 
-            Messenger.Default.Register<FireErrorMessage>(this, msg => ShowErrorMessage());
-
-            SetupErrorTimer();
-
             Vm.CurrentWidgets.CollectionChanged += (sender, args) =>
             {
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = WidgetNavigationService.CanGoBack
@@ -41,25 +39,89 @@ namespace OpenHAB.Windows.View
             };
 
             SystemNavigationManager.GetForCurrentView().BackRequested += (sender, args) => Vm.WidgetGoBack();
+
+            this.Loaded += MainPage_Loaded;
         }
 
-        private void SetupErrorTimer()
+        private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            _errorMessageTimer = new DispatcherTimer();
-            _errorMessageTimer.Interval = TimeSpan.FromSeconds(5);
-            _errorMessageTimer.Tick += ErrorMessageTimerOnTick;
+            Messenger.Default.Register<FireErrorMessage>(this, msg => ShowErrorMessage(msg));
+            Messenger.Default.Register<FireInfoMessage>(this, msg => ShowInfoMessage(msg));
+
+            Vm.LoadData();
         }
 
-        private void ErrorMessageTimerOnTick(object sender, object o)
+        /// <inheritdoc/>
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            _errorMessageTimer.Stop();
-            ErrorGoneStoryboard.Begin();
+            base.OnNavigatedTo(e);
         }
 
-        private void ShowErrorMessage()
+        /// <inheritdoc/>
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            ErrorMessageStoryboard.Begin();
-            _errorMessageTimer.Start();
+            Messenger.Default.Unregister<FireErrorMessage>(this, msg => ShowErrorMessage(msg));
+            Messenger.Default.Unregister<FireInfoMessage>(this, msg => ShowInfoMessage(msg));
+
+            ErrorNotification.Dismiss();
+            InfoNotification.Dismiss();
+
+            base.OnNavigatedFrom(e);
+        }
+
+        private async void ShowErrorMessage(FireErrorMessage message)
+        {
+            try
+            {
+                string errorMessage = null;
+                if (message == null || string.IsNullOrEmpty(message.ErrorMessage))
+                {
+                    errorMessage = AppResources.Values.GetString("MessageError");
+                    ErrorNotification.Show(errorMessage);
+                }
+                else
+                {
+                    errorMessage = message.ErrorMessage;
+                }
+
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    ErrorNotification.Show(errorMessage);
+                });
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        private async void ShowInfoMessage(FireInfoMessage msg)
+        {
+
+            try
+            {
+                string message = null;
+                switch (msg.MessageType)
+                {
+                    case MessageType.NotConfigured:
+                        message = AppResources.Values.GetString("MessageNotConfigured");
+                        break;
+                    case MessageType.NotReachable:
+                        message = AppResources.Values.GetString("MessagesNotReachable");
+                        break;
+                    default:
+                        message = "Message not defined";
+                        break;
+                }
+
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                  {
+                      InfoNotification.Show(message, 30000);
+                  });
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         private void MasterListView_OnItemClick(object sender, ItemClickEventArgs e)

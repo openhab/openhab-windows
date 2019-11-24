@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Model;
@@ -20,8 +21,9 @@ namespace OpenHAB.Core.SDK
         /// Loads all the sitemaps.
         /// </summary>
         /// <param name="version">The version of OpenHAB running on the server.</param>
+        /// <param name="filters">Filters for sitemap list.</param>
         /// <returns>A list of sitemaps.</returns>
-        Task<ICollection<OpenHABSitemap>> LoadSiteMaps(OpenHABVersion version);
+        Task<ICollection<OpenHABSitemap>> LoadSiteMaps(OpenHABVersion version, List<Func<OpenHABSitemap, bool>> filters);
 
         /// <summary>
         /// Loads all the items in a sitemap.
@@ -55,6 +57,6 @@ namespace OpenHAB.Core.SDK
         /// <param name="settings">Applicaiton settings.</param>
         /// <param name="connectionType">Defines if the connection is local or remote.</param>
         /// <returns>>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        Task<bool> CheckUrlReachability(string openHABUrl, Settings settings, OpenHABHttpClientType connectionType);
+        Task<bool> CheckUrlReachability(string openHABUrl, OpenHABHttpClientType connectionType);
     }
 }

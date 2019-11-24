@@ -132,6 +132,12 @@
   <data name="DemoModeHeader.Text" xml:space="preserve">
     <value>Demo mode</value>
   </data>
+  <data name="MessageError" xml:space="preserve">
+    <value>Ups, something go wrong</value>
+  </data>
+  <data name="FeedbackHeader.Text" xml:space="preserve">
+    <value>Feedback</value>
+  </data>
   <data name="IgnoreSSLCertErrors.Text" xml:space="preserve">
     <value>Ignore SSL certificate errors</value>
   </data>
@@ -146,6 +152,14 @@
   </data>
   <data name="LocalUrlHeader.Text" xml:space="preserve">
     <value>openHAB URL</value>
+  </data>
+  <data name="MessageNotConfigured" xml:space="preserve">
+    <value>Seems the url to your OpenHab server is not configured.
+Go to app settings (gear icon) to set the connection configuration for your OpenHab server.</value>
+  </data>
+  <data name="MessagesNotReachable" xml:space="preserve">
+    <value>OpenHab service is not reachable at the moment.
+Go to app settings (gear icon) to check the connection configuration.</value>
   </data>
   <data name="PasswordHeader.Text" xml:space="preserve">
     <value>Password</value>
@@ -169,6 +183,22 @@
     <value>Username</value>
   </data>
   <data name="NoItemsOrOpenHabNotAvailable.Text" xml:space="preserve">
-    <value>No sitemaps available or OpenHAB server is not reachable.</value>
+    <value>No sitemaps available</value>
+  </data>
+  <data name="AppSettings.Text" xml:space="preserve">
+    <value>App Settings</value>
+  </data>
+  <data name="HideDefaultSitemap.Text" xml:space="preserve">
+    <value>Hide default sitemap (_default)</value>
+  </data>
+  <data name="CertificateSettings.Text" xml:space="preserve">
+    <value>Certificate Settings</value>
+  </data>
+  <data name="Loading.Text" xml:space="preserve">
+    <value>Loading data...</value>
+  </data>
+  <data name="MessageSettingsConnectionConfigInvalid" xml:space="preserve">
+    <value>Connection settings are not invalid.
+Please select demo mode or configure local/remote connection.</value>
   </data>
 </root>

@@ -37,7 +37,7 @@ namespace OpenHAB.Core.SDK
         }
 
         /// <inheritdoc/>
-        public async Task<bool> CheckUrlReachability(string openHABUrl, Settings settings, OpenHABHttpClientType connectionType)
+        public async Task<bool> CheckUrlReachability(string openHABUrl, OpenHABHttpClientType connectionType)
         {
             if (string.IsNullOrWhiteSpace(openHABUrl))
             {
@@ -51,6 +51,7 @@ namespace OpenHAB.Core.SDK
 
             try
             {
+                Settings settings = _settingsService.Load();
                 var client = OpenHABHttpClient.DisposableClient(connectionType, settings);
                 var result = await client.GetAsync(openHABUrl + "rest").ConfigureAwait(false);
 
@@ -126,7 +127,7 @@ namespace OpenHAB.Core.SDK
         }
 
         /// <inheritdoc />
-        public async Task<ICollection<OpenHABSitemap>> LoadSiteMaps(OpenHABVersion version)
+        public async Task<ICollection<OpenHABSitemap>> LoadSiteMaps(OpenHABVersion version, List<Func<OpenHABSitemap, bool>> filters)
         {
             try
             {
@@ -139,11 +140,12 @@ namespace OpenHAB.Core.SDK
 
                 string resultString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
+                var sitemaps = new List<OpenHABSitemap>();
                 // V1 = xml
                 if (version == OpenHABVersion.One)
                 {
-                    var sitemaps = new List<OpenHABSitemap>();
                     XDocument xml = XDocument.Parse(resultString);
+
                     foreach (XElement xElement in xml.Element("sitemaps").Elements())
                     {
                         var sitemap = new OpenHABSitemap(xElement);
@@ -154,7 +156,15 @@ namespace OpenHAB.Core.SDK
                 }
 
                 // V2 = JSON
-                return JsonConvert.DeserializeObject<List<OpenHABSitemap>>(resultString);
+                sitemaps = JsonConvert.DeserializeObject<List<OpenHABSitemap>>(resultString);
+
+                return sitemaps.Where(sitemap =>
+                {
+                    bool isIncluded = true;
+                    filters.ForEach(filter => isIncluded &= filter(sitemap));
+
+                    return isIncluded;
+                }).ToList();
             }
             catch (ArgumentNullException ex)
             {
@@ -235,9 +245,9 @@ namespace OpenHAB.Core.SDK
                         }
                     }
                 }
-                catch (HttpRequestException)
+                catch (HttpRequestException ex)
                 {
-                    // running on 1.x, no event endpoint
+                    throw new OpenHABException("Fetching item updates failed", ex);
                 }
             });
         }
@@ -259,7 +269,9 @@ namespace OpenHAB.Core.SDK
             var isRunningInDemoMode = settings.IsRunningInDemoMode != null && settings.IsRunningInDemoMode.Value;
 
             // no url configured yet
-            if (string.IsNullOrWhiteSpace(settings.OpenHABUrl) && string.IsNullOrWhiteSpace(settings.OpenHABRemoteUrl) && !isRunningInDemoMode)
+            if (string.IsNullOrWhiteSpace(settings.LocalConnection.Url) &&
+                string.IsNullOrWhiteSpace(settings.RemoteConnection.Url) &&
+                !isRunningInDemoMode)
             {
                 return false;
             }
@@ -272,31 +284,36 @@ namespace OpenHAB.Core.SDK
 
             if (NetworkHelper.Instance.ConnectionInformation.IsInternetOnMeteredConnection)
             {
-                if (settings.OpenHABRemoteUrl.Trim() == string.Empty)
+                if (string.IsNullOrEmpty(settings.RemoteConnection.Url.Trim()))
                 {
                     throw new OpenHABException("No remote url configured");
                 }
 
-                OpenHABHttpClient.BaseUrl = settings.OpenHABRemoteUrl;
+                OpenHABHttpClient.BaseUrl = settings.RemoteConnection.Url;
                 _connectionType = OpenHABHttpClientType.Remote;
                 return true;
             }
 
-            bool isReachable = await CheckUrlReachability(settings.OpenHABUrl, settings, OpenHABHttpClientType.Local).ConfigureAwait(false);
+            bool isReachable = await CheckUrlReachability(settings.LocalConnection.Url, OpenHABHttpClientType.Local).ConfigureAwait(false);
             if (isReachable)
             {
-                OpenHABHttpClient.BaseUrl = settings.OpenHABUrl;
+                OpenHABHttpClient.BaseUrl = settings.LocalConnection.Url;
                 _connectionType = OpenHABHttpClientType.Local;
+
+                return true;
             }
             else
             {
                 // If remote URL is configured
-                if (!string.IsNullOrWhiteSpace(settings.OpenHABRemoteUrl) && await CheckUrlReachability(settings.OpenHABRemoteUrl, settings, OpenHABHttpClientType.Remote).ConfigureAwait(false))
+                if (!string.IsNullOrWhiteSpace(settings.RemoteConnection.Url) &&
+                    await CheckUrlReachability(settings.RemoteConnection.Url, OpenHABHttpClientType.Remote).ConfigureAwait(false))
                 {
-                    OpenHABHttpClient.BaseUrl = settings.OpenHABRemoteUrl;
+                    OpenHABHttpClient.BaseUrl = settings.RemoteConnection.Url;
                     _connectionType = OpenHABHttpClientType.Remote;
                     return true;
                 }
+
+                Messenger.Default.Send<FireInfoMessage>(new FireInfoMessage(MessageType.NotReachable));
             }
 
             return false;

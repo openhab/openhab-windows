@@ -26,7 +26,7 @@ namespace OpenHAB.Windows.Controls
 
         private void SectionSwitchWidget_Loaded(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(Widget.Item.State))
+            if (string.IsNullOrWhiteSpace(Widget.Item?.State))
             {
                 return;
             }

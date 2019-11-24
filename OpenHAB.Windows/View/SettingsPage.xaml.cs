@@ -1,4 +1,9 @@
-﻿using OpenHAB.Core.ViewModel;
+﻿using System;
+using GalaSoft.MvvmLight.Messaging;
+using OpenHAB.Core;
+using OpenHAB.Core.Messages;
+using OpenHAB.Core.ViewModel;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -20,6 +25,25 @@ namespace OpenHAB.Windows.View
         public SettingsPage()
         {
             InitializeComponent();
+
+            Messenger.Default.Register<SettingsUpdatedMessage>(this, msg => ShowInfoMessage(msg));
+        }
+
+        private async void ShowInfoMessage(SettingsUpdatedMessage msg)
+        {
+
+            try
+            {
+                string message = AppResources.Values.GetString("MessageSettingsConnectionConfigInvalid");
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    SettingsNotification.Show(message, 30000);
+                });
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         private void ButtonCancel_OnClick(object sender, RoutedEventArgs e)

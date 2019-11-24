@@ -6,6 +6,7 @@
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
 	  xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+	  xmlns:community="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	  DataContext="{Binding Settings, Source={StaticResource Locator}}"
 	  mc:Ignorable="d">
 
@@ -16,6 +17,60 @@
 	<Page.Resources>
 		<converters:ReverseBoolConverter x:Key="ReverseBoolConverter" />
 		<converters:OpenHabUrlStateToGlyph x:Key="OpenHabUrlStateToGlyph" />
+
+		<DataTemplate x:Key="ConnectionConfigTemplate">
+			<StackPanel Margin="0,0,10,0">
+				<TextBlock x:Uid="LocalSettings"
+						   Style="{StaticResource TitleTextBlockStyle}"
+						   Margin="0,0,0,10" />
+				<TextBlock x:Uid="LocalUrlHeader" />
+				<TextBox x:Uid="LocalUrl"
+						 x:Name="TextBoxUrl"
+						 Margin="0,0,12,12"
+						 Text="{Binding Url, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+					<Interactivity:Interaction.Behaviors>
+						<Core:EventTriggerBehavior EventName="LostFocus">
+							<Core:InvokeCommandAction Command="{Binding Path=UrlCheckCommand, Mode=TwoWay}"
+													  CommandParameter="{Binding ElementName=TextBoxUrl,Path=Text}" />
+						</Core:EventTriggerBehavior>
+					</Interactivity:Interaction.Behaviors>
+				</TextBox>
+				<TextBlock x:Uid="UsernameHeader" />
+				<TextBox x:Name="TextBoxUsername"
+						 Margin="0,0,12,12"
+						 Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+						 TextWrapping="Wrap">
+					<Interactivity:Interaction.Behaviors>
+						<Core:EventTriggerBehavior EventName="LostFocus">
+							<Core:InvokeCommandAction Command="{Binding Path=UrlCheckCommand, Mode=TwoWay}"
+													  CommandParameter="{Binding ElementName=TextBoxUrl,Path=Text}" />
+						</Core:EventTriggerBehavior>
+					</Interactivity:Interaction.Behaviors>
+				</TextBox>
+				<TextBlock x:Uid="PasswordHeader" />
+				<PasswordBox x:Name="TextBoxPassword"
+							 Margin="0,0,12,12"
+							 Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+					<Interactivity:Interaction.Behaviors>
+						<Core:EventTriggerBehavior EventName="LostFocus">
+							<Core:InvokeCommandAction Command="{Binding Path=LocalUrlCheckCommand, Mode=TwoWay}"
+													  CommandParameter="{Binding ElementName=TextBoxUrl,Path=Text}" />
+						</Core:EventTriggerBehavior>
+					</Interactivity:Interaction.Behaviors>
+				</PasswordBox>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock x:Uid="ConnectionCheck"
+							   Margin="0,0,10,0"
+							   VerticalAlignment="Center" />
+					<FontIcon x:Name="IconUrlStatusCheck"
+							  VerticalAlignment="Top"
+							  FontSize="32"
+							  FontFamily="{StaticResource SymbolThemeFontFamily}"
+							  Glyph="{Binding Path=UrlState, Converter={StaticResource OpenHabUrlStateToGlyph}, Mode=TwoWay}" />
+				</StackPanel>
+			</StackPanel>
+		</DataTemplate>
+
 	</Page.Resources>
 
 
@@ -23,177 +78,147 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 		<TextBlock x:Uid="SettingsHeader"
 				   x:Name="SettingsTitle"
-				   Margin="12,6,0,6"
+				   Margin="0,6,0,6"
 				   HorizontalAlignment="Left"
 				   VerticalAlignment="Center"
 				   Foreground="White"
-				   Style="{StaticResource TitleTextBlockStyle}"
+				   FontSize="32"
 				   TextWrapping="Wrap" />
 		<ScrollViewer Grid.Row="1"
 					  VerticalScrollBarVisibility="Auto">
-			<Grid Background="{StaticResource OpenHABLightColor}"
-				  Padding="12,12,12,12"
-				  CornerRadius="5">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition />
-					<ColumnDefinition />
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-				</Grid.RowDefinitions>
-				<StackPanel Grid.Column="0"
-							Grid.Row="0">
-					<TextBlock x:Uid="DemoModeHeader" />
-					<CheckBox x:Name="CheckBoxDemoMode"
-							  Margin="0,0,0,12"
-							  HorizontalAlignment="Stretch"
-							  VerticalAlignment="Stretch"
-							  IsChecked="{Binding Settings.IsRunningInDemoMode, Mode=TwoWay}" />
-				</StackPanel>
-				<StackPanel Grid.Column="0"
-							Grid.Row="1"
-							Margin="0,0,10,0">
-					<TextBlock x:Uid="LocalSettings"
-							   FontSize="24"
+			<StackPanel Orientation="Vertical">
+
+				<StackPanel Margin="0,0,0,25"
+							Padding="12"
+							Background="{ThemeResource OpenHABLightColor}">
+					<TextBlock x:Uid="AppSettings"
+							   Style="{StaticResource TitleTextBlockStyle}"
 							   Margin="0,0,0,10" />
-					<TextBlock x:Uid="LocalUrlHeader" />
-					<TextBox x:Uid="LocalUrl"
-							 x:Name="TextBoxUrl"
-							 Margin="0,0,12,12"
-							 IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-							 Text="{Binding Settings.OpenHABUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-						<Interactivity:Interaction.Behaviors>
-							<Core:EventTriggerBehavior EventName="LostFocus">
-								<Core:InvokeCommandAction Command="{Binding Path=LocalUrlCheckCommand, Mode=TwoWay}"
-														  CommandParameter="{Binding ElementName=TextBoxUrl,Path=Text}" />
-							</Core:EventTriggerBehavior>
-						</Interactivity:Interaction.Behaviors>
-					</TextBox>
-					<TextBlock x:Uid="UsernameHeader" />
-					<TextBox x:Name="TextBoxUsername"
-							 Margin="0,0,12,12"
-							 IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-							 Text="{Binding Settings.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-							 TextWrapping="Wrap" />
-					<TextBlock x:Uid="PasswordHeader" />
-					<PasswordBox x:Name="TextBoxPassword"
-								 Margin="0,0,12,12"
-								 IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-								 Password="{Binding Settings.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-					<StackPanel Orientation="Horizontal">
-						<TextBlock x:Uid="ConnectionCheck"
-								   Margin="0,0,10,0"
-								   VerticalAlignment="Center" />
-						<FontIcon x:Name="IconLocalUrlStatusCheck"
-								  VerticalAlignment="Top"
-								  FontSize="32"
-								  FontFamily="{StaticResource SymbolThemeFontFamily}"
-								  Glyph="{Binding Path=LocalUrlState, Converter={StaticResource OpenHabUrlStateToGlyph}, Mode=TwoWay}" />
+					<TextBlock x:Uid="HideDefaultSitemap" />
+					<ToggleSwitch x:Name="CheckBoxHideDefaultSitemap"
+								  Margin="0,0,0,12"
+								  HorizontalAlignment="Stretch"
+								  VerticalAlignment="Stretch"
+								  IsOn="{Binding Settings.HideDefaultSitemap, Mode=TwoWay}" />
+				</StackPanel>
+
+				<!-- Connection Settings -->
+				<Grid Padding="12"
+					  Background="{ThemeResource OpenHABLightColor}">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
+					<StackPanel Grid.Row="0">
+						<TextBlock x:Uid="ConnectionSettings"
+								   Style="{StaticResource TitleTextBlockStyle}"
+								   Margin="0,0,0,10" />
+						<TextBlock x:Uid="DemoModeHeader" />
+						<ToggleSwitch x:Name="CheckBoxDemoMode"
+									  Margin="0,0,0,12"
+									  HorizontalAlignment="Stretch"
+									  VerticalAlignment="Stretch"
+									  IsOn="{Binding Settings.IsRunningInDemoMode, Mode=TwoWay}" />
 					</StackPanel>
-				</StackPanel>
-				<StackPanel Grid.Column="1"
-							Grid.Row="1"
-							Margin="12,0,0,0">
-					<TextBlock x:Uid="RemoteSettings"
-							   FontSize="24"
-							   Margin="0,0,0,10" />
-					<TextBlock x:Uid="RemoteUrlHeader" />
-					<TextBox x:Uid="RemoteUrl"
-							 x:Name="TextBoxRemoteUrl"
-							 Margin="0,0,12,12"
-							 IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-							 Text="{Binding Settings.OpenHABRemoteUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-						<Interactivity:Interaction.Behaviors>
-							<Core:EventTriggerBehavior EventName="LostFocus">
-								<Core:InvokeCommandAction Command="{Binding Path=RemoteUrlCheckCommand, Mode=TwoWay}" />
-							</Core:EventTriggerBehavior>
-						</Interactivity:Interaction.Behaviors>
-					</TextBox>
-					<TextBlock x:Uid="UsernameHeader" />
-					<TextBox x:Name="TextBoxRemoteUsername"
-							 Margin="0,0,12,12"
-							 IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-							 Text="{Binding Settings.RemoteUsername, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-							 TextWrapping="Wrap">
-						<Interactivity:Interaction.Behaviors>
-							<Core:EventTriggerBehavior EventName="LostFocus">
-								<Core:InvokeCommandAction Command="{Binding Path=RemoteUrlCheckCommand, Mode=TwoWay}" />
-							</Core:EventTriggerBehavior>
-						</Interactivity:Interaction.Behaviors>
-					</TextBox>
-					<TextBlock x:Uid="PasswordHeader" />
-					<PasswordBox x:Name="TextBoxRemotePassword"
-								 Margin="0,0,12,12"
-								 IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-								 Password="{Binding Settings.RemotePassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-						<Interactivity:Interaction.Behaviors>
-							<Core:EventTriggerBehavior EventName="LostFocus">
-								<Core:InvokeCommandAction Command="{Binding Path=RemoteUrlCheckCommand, Mode=TwoWay}" />
-							</Core:EventTriggerBehavior>
-						</Interactivity:Interaction.Behaviors>
-					</PasswordBox>
-					<StackPanel Orientation="Horizontal">
-						<TextBlock x:Uid="ConnectionCheck"
-								   Margin="0,0,10,0"
-								   VerticalAlignment="Center" />
-						<FontIcon x:Name="IconRemoteUrlStatusCheck"
-								  VerticalAlignment="Center"
-								  FontSize="32"
-								  FontFamily="{StaticResource SymbolThemeFontFamily}"
-								  Glyph="{Binding Path=RemoteUrlState, Converter={StaticResource OpenHabUrlStateToGlyph}, Mode=TwoWay}" />
+					<StackPanel Grid.Row="1">
+						<Button Margin="10"
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Stretch"
+								HorizontalContentAlignment="Left"
+								DataContext="{Binding Path=Settings.LocalConnection}"
+								IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}">
+							<Button.Flyout>
+								<Flyout Placement="Top">
+									<ContentPresenter MinWidth="400" ContentTemplate="{StaticResource ConnectionConfigTemplate}" />
+								</Flyout>
+							</Button.Flyout>
+							<StackPanel HorizontalAlignment="Left">
+								<TextBlock x:Uid="LocalSettings" />
+								<TextBlock Text="{Binding Url}" />
+							</StackPanel>
+						</Button>
+						<Button Margin="10"
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Stretch"
+								HorizontalContentAlignment="Left"
+								DataContext="{Binding Path=Settings.RemoteConnection}"
+								IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}">
+							<Button.Flyout>
+								<Flyout Placement="Top">
+									<ContentPresenter MinWidth="400" ContentTemplate="{StaticResource ConnectionConfigTemplate}" />
+								</Flyout>
+							</Button.Flyout>
+							<StackPanel>
+								<TextBlock x:Uid="RemoteSettings" />
+								<TextBlock Text="{Binding Url}" />
+							</StackPanel>
+						</Button>
 					</StackPanel>
-				</StackPanel>
-				<StackPanel Grid.Column="0"
-							Grid.Row="2"
-							Margin="0,12,0,0">
-					<TextBlock x:Uid="ConnectionSettings"
-							   FontSize="24"
-							   Margin="0,0,0,10" />
-					<TextBlock x:Uid="IgnoreSSLCertErrors"/>
-					<CheckBox x:Name="CheckBoxIgnoreSSL"
-							  Margin="0,0,0,12"
-							  HorizontalAlignment="Stretch"
-							  VerticalAlignment="Stretch"
-							  IsChecked="{Binding Settings.WillIgnoreSSLCertificate,
+					<StackPanel Grid.Row="2"
+								Margin="0,12,0,0">
+						<TextBlock x:Uid="CertificateSettings"
+								   Style="{StaticResource TitleTextBlockStyle}"
+								   Margin="0,0,0,10" />
+						<TextBlock x:Uid="IgnoreSSLCertErrors" />
+						<CheckBox x:Name="CheckBoxIgnoreSSL"
+								  Margin="0,0,0,12"
+								  HorizontalAlignment="Stretch"
+								  VerticalAlignment="Stretch"
+								  IsChecked="{Binding Settings.WillIgnoreSSLCertificate,
 												  Mode=TwoWay,
 												  UpdateSourceTrigger=PropertyChanged}"
-							  IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />
-					<TextBlock x:Uid="IgnoreSSLCertHostErrors" />
-					<CheckBox x:Name="CheckBoxIgnoreSSLHostname"
-							  Margin="0,0,0,12"
-							  HorizontalAlignment="Stretch"
-							  VerticalAlignment="Stretch"
-							  IsChecked="{Binding Settings.WillIgnoreSSLHostname,
+								  IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />
+						<TextBlock x:Uid="IgnoreSSLCertHostErrors" />
+						<CheckBox x:Name="CheckBoxIgnoreSSLHostname"
+								  Margin="0,0,0,12"
+								  HorizontalAlignment="Stretch"
+								  VerticalAlignment="Stretch"
+								  IsChecked="{Binding Settings.WillIgnoreSSLHostname,
 												  Mode=TwoWay,
 												  UpdateSourceTrigger=PropertyChanged}"
-							  IsEnabled="{x:Bind CheckBoxDemoMode.IsChecked, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />
-				</StackPanel>
-				<StackPanel Grid.Column="0"
-							Grid.ColumnSpan="2"
-							Grid.Row="3"
-							HorizontalAlignment="Right"
-							Orientation="Horizontal">
-					<Button x:Uid="SaveButton"
-							Margin="0,0,8,0"
-							Command="{x:Bind Vm.SaveCommand}" />
-					<Button x:Uid="CancelButton"
-							Click="ButtonCancel_OnClick" />
-				</StackPanel>
-				<StackPanel Grid.Column="0"
-							Grid.Row="4"
-							Orientation="Horizontal">
-					<TextBlock x:Uid="AppVersion" />
-					<TextBlock Margin="10,0,0,0"
-							   Text="{Binding Path=Version}" />
-				</StackPanel>
-			</Grid>
+								  IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />
+					</StackPanel>
+				</Grid>
+				<Grid Margin="0,25,0,0"
+					  Padding="12"
+					  Background="{ThemeResource OpenHABLightColor}">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+					<StackPanel Grid.Column="0"
+								VerticalAlignment="Center"
+								Orientation="Horizontal">
+						<TextBlock x:Uid="AppVersion" />
+						<TextBlock Margin="10,0,0,0"
+								   Text="{Binding Path=Version}" />
+					</StackPanel>
+					<StackPanel Grid.Column="1"
+								HorizontalAlignment="Right"
+								Orientation="Horizontal">
+						<Button x:Uid="SaveButton"
+								Margin="0,0,8,0"
+								Command="{x:Bind Vm.SaveCommand}" />
+						<Button x:Uid="CancelButton"
+								Click="ButtonCancel_OnClick" />
+					</StackPanel>
+				</Grid>
+			</StackPanel>
 		</ScrollViewer>
+
+		<community:InAppNotification x:Name="SettingsNotification"
+									 Grid.Row="1"
+									 Grid.RowSpan="2"
+									 Background="{StaticResource ErrorNotificationBackground}"
+									 ShowDismissButton="True"
+									 AnimationDuration="00:00:00.1000000"
+									 VerticalOffset="100"
+									 HorizontalOffset="0"
+									 StackMode="StackInFront" />
 	</Grid>
 </Page>

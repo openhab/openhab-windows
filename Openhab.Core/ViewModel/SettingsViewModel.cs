@@ -4,7 +4,6 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
 using GalaSoft.MvvmLight.Views;
-using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.SDK;
@@ -17,17 +16,20 @@ namespace OpenHAB.Core.ViewModel
     /// </summary>
     public class SettingsViewModel : ViewModelBase
     {
-        private readonly ISettingsService _settingsService;
         private readonly INavigationService _navigationService;
-        private readonly IOpenHAB _openHabsdk;
-        private Settings _settings;
-
+        private ConfigurationViewModel _configuration;
         private ICommand _saveCommand;
-        private ICommand _localUrlCheckCommand;
-        private ICommand _remoteUrlCheckCommand;
 
-        private OpenHABUrlState _localUrlState = OpenHABUrlState.Unknown;
-        private OpenHABUrlState _remoteUrlState = OpenHABUrlState.Unknown;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SettingsViewModel"/> class.
+        /// </summary>
+        public SettingsViewModel(ConfigurationViewModel configurationViewModel, INavigationService navigationService)
+        {
+            MessengerInstance.Register<PersistSettingsMessage>(this, msg => PersistSettings());
+
+            _configuration = configurationViewModel;
+            _navigationService = navigationService;
+        }
 
         /// <summary>
         /// Gets the save command to persist the settings.
@@ -36,44 +38,12 @@ namespace OpenHAB.Core.ViewModel
         public ICommand SaveCommand => _saveCommand ?? (_saveCommand = new RelayCommand(PersistSettings));
 
         /// <summary>
-        /// Gets the command for local url check.
-        /// </summary>
-        /// <value>The local URL check command.</value>
-        public ICommand LocalUrlCheckCommand => _localUrlCheckCommand ?? (_localUrlCheckCommand = new RelayCommand<object>(CheckLocalUrl));
-
-        /// <summary>
-        /// Gets the command for remote url check.
-        /// </summary>
-        /// <value>The remote URL check command.</value>
-        public ICommand RemoteUrlCheckCommand => _remoteUrlCheckCommand ?? (_remoteUrlCheckCommand = new RelayCommand(CheckRemoteUrl));
-
-        /// <summary>
         /// Gets or sets the current user-defined settings.
         /// </summary>
-        public Settings Settings
+        public ConfigurationViewModel Settings
         {
-            get => _settings;
-            set => Set(ref _settings, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the state for OpenHab local url.
-        /// </summary>
-        /// <value>The state of the local URL.</value>
-        public OpenHABUrlState LocalUrlState
-        {
-            get => _localUrlState;
-            set => Set(ref _localUrlState, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the state for OpenHab remote url.
-        /// </summary>
-        /// <value>The state of the remote URL.</value>
-        public OpenHABUrlState RemoteUrlState
-        {
-            get => _remoteUrlState;
-            set => Set(ref _remoteUrlState, value);
+            get => _configuration;
+            set => Set(ref _configuration, value);
         }
 
         /// <summary>
@@ -95,82 +65,18 @@ namespace OpenHAB.Core.ViewModel
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SettingsViewModel"/> class.
-        /// </summary>
-        public SettingsViewModel(ISettingsService settingsService, INavigationService navigationService, IOpenHAB openHabsdk)
-        {
-            MessengerInstance.Register<PersistSettingsMessage>(this, msg => PersistSettings());
-
-            _settingsService = settingsService;
-            _navigationService = navigationService;
-            _openHabsdk = openHabsdk;
-
-            LoadSettings();
-
-            UrlChecks();
-        }
-
-        /// <summary>
         /// Save the user defined settings to the UWP settings storage.
         /// </summary>
         public void PersistSettings()
         {
-            _settingsService.Save(Settings);
-
-            MessengerInstance.Send(new SettingsUpdatedMessage());
-            _navigationService.GoBack();
-        }
-
-        private void LoadSettings()
-        {
-            Settings = _settingsService.Load();
-        }
-
-        private void UrlChecks()
-        {
-            CheckLocalUrl(_settings.OpenHABUrl);
-            CheckRemoteUrl();
-        }
-
-#pragma warning disable S3168 // "async" methods should not return "void"
-        private async void CheckLocalUrl(object parameter)
-#pragma warning restore S3168 // "async" methods should not return "void"
-        {
-            if (parameter == null)
+            if (_configuration.IsConnectionConfigValid())
             {
-                return;
-            }
-
-            string url = parameter.ToString();
-
-            LocalUrlState = OpenHABUrlState.Unknown;
-            if (await _openHabsdk.CheckUrlReachability(url, Settings, Common.OpenHABHttpClientType.Local))
-            {
-                LocalUrlState = OpenHABUrlState.OK;
+                _configuration.Save();
+                _navigationService.GoBack();
             }
             else
             {
-                LocalUrlState = OpenHABUrlState.Failed;
-            }
-        }
-
-        private async void CheckRemoteUrl()
-        {
-            if (string.IsNullOrEmpty(Settings.OpenHABRemoteUrl) &&
-                string.IsNullOrEmpty(Settings.RemoteUsername) &&
-                string.IsNullOrEmpty(Settings.RemotePassword))
-            {
-                return;
-            }
-
-            RemoteUrlState = OpenHABUrlState.Unknown;
-            if (await _openHabsdk.CheckUrlReachability(Settings.OpenHABRemoteUrl, Settings, Common.OpenHABHttpClientType.Remote))
-            {
-                RemoteUrlState = OpenHABUrlState.OK;
-            }
-            else
-            {
-                RemoteUrlState = OpenHABUrlState.Failed;
+                MessengerInstance.Send(new SettingsUpdatedMessage());
             }
         }
     }

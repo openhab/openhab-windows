@@ -85,8 +85,8 @@ namespace OpenHAB.Core.Common
 
         private static NetworkCredential GetCredentials(OpenHABHttpClientType connectionType)
         {
-            string username = connectionType == OpenHABHttpClientType.Local ? _settings.Username : _settings.RemoteUsername;
-            string password = connectionType == OpenHABHttpClientType.Local ? _settings.Password : _settings.RemotePassword;
+            string username = connectionType == OpenHABHttpClientType.Local ? _settings.LocalConnection.Username : _settings.RemoteConnection.Username;
+            string password = connectionType == OpenHABHttpClientType.Local ? _settings.LocalConnection.Password : _settings.RemoteConnection.Password;
 
             if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
             {
