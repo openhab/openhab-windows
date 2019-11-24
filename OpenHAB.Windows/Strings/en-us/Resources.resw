@@ -197,4 +197,8 @@ Go to app settings (gear icon) to check the connection configuration.</value>
   <data name="Loading.Text" xml:space="preserve">
     <value>Loading data...</value>
   </data>
+  <data name="MessageSettingsConnectionConfigInvalid" xml:space="preserve">
+    <value>Connection settings are not invalid.
+Please select demo mode or configure local/remote connection.</value>
+  </data>
 </root>
