@@ -136,6 +136,16 @@ namespace OpenHAB.Core.Model
             }
         }
 
+        /// <summary>Determines whether [is connection configuration valid].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is connection configuration valid]; otherwise, <c>false</c>.</returns>
+        public bool IsConnectionConfigValid()
+        {
+            return IsRunningInDemoMode.Value ||
+                   !string.IsNullOrEmpty(LocalConnection?.Url) ||
+                   !string.IsNullOrEmpty(RemoteConnection?.Url);
+        }
+
         /// <summary>
         /// Persists the settings to disk.
         /// </summary>

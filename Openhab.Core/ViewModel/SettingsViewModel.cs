@@ -69,10 +69,15 @@ namespace OpenHAB.Core.ViewModel
         /// </summary>
         public void PersistSettings()
         {
-            _configuration.Save();
-
-            MessengerInstance.Send(new SettingsUpdatedMessage());
-            _navigationService.GoBack();
+            if (_configuration.IsConnectionConfigValid())
+            {
+                _configuration.Save();
+                _navigationService.GoBack();
+            }
+            else
+            {
+                MessengerInstance.Send(new SettingsUpdatedMessage());
+            }
         }
     }
 }

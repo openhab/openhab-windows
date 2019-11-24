@@ -25,7 +25,7 @@
 
 		<converters:ObjectToSitemapConverter x:Key="ObjectToSitemapConverter" />
 		<converters:BoolToBackgroundColorConverter x:Key="BoolToBackgroundColorConverter" />
-		<converters:CollectionZeroToVisibilityConverter x:Key="ZeroToVisibility" />
+		<converters:ZeroToVisibilityConverter x:Key="ZeroToVisibility" />
 		<converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 
 		<DataTemplate x:Key="NavMenuItemTemplate"
@@ -113,7 +113,7 @@
 					<TextBlock Grid.Row="1"
 							   Margin="10,100,10,0"
 							   x:Uid="NoItemsOrOpenHabNotAvailable"
-							   Visibility="{x:Bind Vm.Sitemaps, Converter={StaticResource ZeroToVisibility}, Mode=OneWay}"
+							   Visibility="{x:Bind Vm.Sitemaps.Count, Converter={StaticResource ZeroToVisibility}, Mode=OneWay}"
 							   TextWrapping="Wrap"
 							   Foreground="{StaticResource OpenHABMenuColor}"
 							   Style="{StaticResource FlyoutPickerTitleTextBlockStyle}" />
@@ -231,7 +231,7 @@
 									 AnimationDuration="00:00:00.1000000"
 									 VerticalOffset="100"
 									 HorizontalOffset="0"
-									 StackMode="Replace" />
+									 StackMode="StackInFront" />
 
 		<community:Loading x:Name="LoadingControl"
 						   Grid.Column="0"

@@ -20,6 +20,8 @@ namespace OpenHAB.Windows.View
         public SettingsPage()
         {
             InitializeComponent();
+
+
         }
 
         private void ButtonCancel_OnClick(object sender, RoutedEventArgs e)

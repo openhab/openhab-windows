@@ -13,7 +13,7 @@
 	<media:AcrylicBrush x:Key="OpenHABSplitviewBrush"
 						BackgroundSource="Backdrop"
 						TintOpacity="1"
-						FallbackColor="{StaticResource SystemAccentColor}"
+						FallbackColor="#344040"
 						TintColor="#344040" />
 	
 	<SolidColorBrush x:Key="OpenHABMenuColor"
@@ -22,21 +22,21 @@
 	<media:AcrylicBrush x:Key="OpenHABLightColor"
 						BackgroundSource="Backdrop"
 						TintOpacity="0.5"
-						FallbackColor="{StaticResource SystemAccentColor}"
+						FallbackColor="Silver"
 						TintColor="Silver"
 						AlwaysUseFallback="False" />
 
 	<media:AcrylicBrush x:Key="ErrorNotificationBackground"
 						BackgroundSource="Backdrop"
 						TintOpacity="0.5"
-						FallbackColor="{StaticResource SystemAccentColor}"
+						FallbackColor="Red"
 						TintColor="Red"
 						AlwaysUseFallback="False" />
 
 	<media:AcrylicBrush x:Key="NotificationBackground"
 						BackgroundSource="Backdrop"
 						TintOpacity="0.5"
-						FallbackColor="{StaticResource SystemAccentColor}"
+						FallbackColor="Silver"
 						TintColor="Silver"
 						AlwaysUseFallback="False" />
 

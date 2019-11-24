@@ -6,6 +6,7 @@
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
 	  xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+	  xmlns:community="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	  DataContext="{Binding Settings, Source={StaticResource Locator}}"
 	  mc:Ignorable="d">
 
@@ -75,6 +76,7 @@
 
 	<Grid Margin="16">
 		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
@@ -319,5 +321,14 @@
 				</Grid>
 			</StackPanel>
 		</ScrollViewer>
+
+		<community:InAppNotification x:Name="InfoNotification"
+									 Grid.Row="2"
+									 Background="{StaticResource NotificationBackground}"
+									 ShowDismissButton="True"
+									 AnimationDuration="00:00:00.1000000"
+									 VerticalOffset="100"
+									 HorizontalOffset="0"
+									 StackMode="StackInFront" />
 	</Grid>
 </Page>
