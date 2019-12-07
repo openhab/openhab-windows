@@ -251,10 +251,6 @@ namespace OpenHAB.Core.ViewModel
         public void WidgetGoBack()
         {
             OpenHABWidget widget = WidgetNavigationService.GoBack();
-            if (widget == null)
-            {
-                return;
-            }
 
             Subtitle = widget == null ? string.Empty : widget.Label;
             SetWidgetsOnScreen(widget != null ? widget.LinkedPage.Widgets : SelectedSitemap.Widgets);
