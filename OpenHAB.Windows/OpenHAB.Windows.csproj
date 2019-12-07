@@ -17,7 +17,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>OpenHAB.Windows_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>A9E451229F6E7EF53480228DF3850748FA450C08</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>039D4C5FCB52EFFCB63869417AF8DFDF0F50B90C</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
