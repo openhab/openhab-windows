@@ -31,6 +31,7 @@ namespace OpenHAB.Core.ViewModel
         private OpenHABWidget _selectedWidget;
         private string _errorMessage;
         private string _subtitle;
+        private readonly StoreServicesFeedbackLauncher _feedbackLauncher;
 
         private ICommand _feedbackCommand;
         private bool _isDataLoading;
