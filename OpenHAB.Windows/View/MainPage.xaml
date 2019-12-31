@@ -71,11 +71,6 @@
 		</DataTemplate>
 	</Page.Resources>
 
-	<Page.DataContext>
-		<Binding Path="Main"
-				 Source="{StaticResource Locator}" />
-	</Page.DataContext>
-
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*" />

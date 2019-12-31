@@ -10,7 +10,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/DefaultTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <viewModel:ViewModelLocator x:Key="Locator" />
+            
             <converters:StateToBoolConverter x:Key="StateToBoolConverter" />
             <converters:IconToPathConverter x:Key="IconToPathConverter" />
 

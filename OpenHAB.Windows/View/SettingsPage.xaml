@@ -7,7 +7,6 @@
 	  xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
 	  xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
 	  xmlns:community="using:Microsoft.Toolkit.Uwp.UI.Controls"
-	  DataContext="{Binding Settings, Source={StaticResource Locator}}"
 	  mc:Ignorable="d">
 
 	<Page.Background>

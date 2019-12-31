@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using CommonServiceLocator;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Model;
@@ -16,11 +15,10 @@ namespace OpenHAB.Windows.Converters
         /// <inheritdoc/>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var settingsService = ServiceLocator.Current.GetInstance<ISettingsService>();
+            var settingsService = (ISettingsService)App.Container.Services.GetService(typeof(ISettingsService));
             var serverUrl = OpenHABHttpClient.BaseUrl;
 
             var widget = value as OpenHABWidget;
-
             var state = widget.Item?.State ?? "ON";
 
             var regMatch = Regex.Match(state, @"\d+");

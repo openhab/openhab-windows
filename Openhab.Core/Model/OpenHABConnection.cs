@@ -5,7 +5,6 @@
     /// </summary>
     public class OpenHABConnection
     {
-
         /// <summary>
         /// Gets or sets the url to the OpenHAB server.
         /// </summary>

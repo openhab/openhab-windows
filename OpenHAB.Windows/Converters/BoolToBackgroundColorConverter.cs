@@ -7,7 +7,6 @@ namespace OpenHAB.Windows.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            //throw new NotImplementedException();
             return null;
         }
 

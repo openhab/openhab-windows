@@ -3,7 +3,6 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
-using CommonServiceLocator;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Model;
 

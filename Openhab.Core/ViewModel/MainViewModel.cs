@@ -3,24 +3,26 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
-using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Extensions.Logging;
 using Microsoft.Services.Store.Engagement;
+using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.SDK;
 using OpenHAB.Core.Services;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
 
 namespace OpenHAB.Core.ViewModel
 {
     /// <summary>
     /// Collects and formats all the data for starting the app.
     /// </summary>
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : ViewModelBase<object>
     {
         private readonly IOpenHAB _openHabsdk;
         private readonly ISettingsService _settingsService;
@@ -35,7 +37,7 @@ namespace OpenHAB.Core.ViewModel
 
         private ICommand _feedbackCommand;
         private bool _isDataLoading;
-        private readonly StoreServicesFeedbackLauncher _feedbackLauncher;
+        private ILogger<MainViewModel> _logger;
 
         /// <summary>
         /// Gets or sets an error message to show on screen.
@@ -115,17 +117,16 @@ namespace OpenHAB.Core.ViewModel
             set => Set(ref _selectedWidget, value);
         }
 
-
         /// <summary>Gets the command to open feedback app.</summary>
         /// <value>The feedback command.</value>
-        public ICommand FeedbackCommand => _feedbackCommand ?? (_feedbackCommand = new RelayCommand(ExecuteFeedbackCommand, CanExecuteFeedbackCommand));
+        public ICommand FeedbackCommand => _feedbackCommand ?? (_feedbackCommand = new ActionCommand(ExecuteFeedbackCommand, CanExecuteFeedbackCommand));
 
-        private bool CanExecuteFeedbackCommand()
+        private bool CanExecuteFeedbackCommand(object obj)
         {
             return StoreServicesFeedbackLauncher.IsSupported();
         }
 
-        private async void ExecuteFeedbackCommand()
+        private async void ExecuteFeedbackCommand(object obj)
         {
             await _feedbackLauncher.LaunchAsync();
         }
@@ -146,9 +147,11 @@ namespace OpenHAB.Core.ViewModel
         /// </summary>
         /// <param name="openHabsdk">The OpenHAB SDK object.</param>
         /// <param name="settingsService">Setting service instance.</param>
-        public MainViewModel(IOpenHAB openHabsdk, ISettingsService settingsService)
+        /// <param name="logger">Logger class instance.</param>
+        public MainViewModel(IOpenHAB openHabsdk, ISettingsService settingsService, ILogger<MainViewModel> logger) 
+            : base(new object())
         {
-            ErrorMessage = "Test";
+            _logger = logger;
             IsDataLoading = false;
             CurrentWidgets = new ObservableCollection<OpenHABWidget>();
 
@@ -156,95 +159,102 @@ namespace OpenHAB.Core.ViewModel
             _settingsService = settingsService;
             _feedbackLauncher = StoreServicesFeedbackLauncher.GetDefault();
 
-            MessengerInstance.Register<SettingsUpdatedMessage>(this, async msg =>
+            Messenger.Default.Register<SettingsUpdatedMessage>(this, async msg =>
             {
                 try
                 {
                     ErrorMessage = "Invalid URL, check your settings";
-                    if (await _openHabsdk.ResetConnection())
+                    if (await _openHabsdk.ResetConnection().ConfigureAwait(false))
                     {
-                        await LoadData();
+                        await LoadData().ConfigureAwait(false);
                     }
                 }
                 catch (HttpRequestException ex)
                 {
-                    MessengerInstance.Send(new FireErrorMessage(ex.Message));
+                    Messenger.Default.Send(new FireErrorMessage(ex.Message));
                 }
             });
 
-            MessengerInstance.Register<TriggerCommandMessage>(this, async msg => await TriggerCommand(msg));
-            MessengerInstance.Register<WidgetClickedMessage>(this, msg => OnWidgetClicked(msg.Widget));
+            Messenger.Default.Register<TriggerCommandMessage>(this, async msg => await TriggerCommand(msg).ConfigureAwait(false));
+            Messenger.Default.Register<WidgetClickedMessage>(this, msg => OnWidgetClicked(msg.Widget));
 
-#pragma warning disable 4014
-            LoadData();
-#pragma warning restore 4014
         }
 
         private async Task TriggerCommand(TriggerCommandMessage message)
         {
-            await _openHabsdk.SendCommand(message.Item, message.Command);
+            await _openHabsdk.SendCommand(message.Item, message.Command).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Loads the sitemap data.
+        /// </summary>
         public async Task LoadData()
         {
-            try
+            CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
+            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
-                if (IsDataLoading)
+                try
                 {
-                    return;
+                    if (IsDataLoading)
+                    {
+                        return;
+                    }
+
+                    IsDataLoading = true;
+                    Sitemaps?.Clear();
+                    CurrentWidgets?.Clear();
+                    Subtitle = null;
+
+                    _logger.LogInformation("Load Data");
+
+                    bool isSuccessful = await _openHabsdk.ResetConnection().ConfigureAwait(false);
+                    if (!isSuccessful)
+                    {
+                        Messenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));
+                        return;
+                    }
+
+                    _version = await _openHabsdk.GetOpenHABVersion().ConfigureAwait(false);
+                    if (_version == OpenHABVersion.None)
+                    {
+                        Messenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));
+                        return;
+                    }
+
+                    Func<OpenHABSitemap, bool> defaultSitemapFilter = (sitemap) =>
+                    {
+                        return !sitemap.Name.Equals("_default", StringComparison.InvariantCultureIgnoreCase);
+                    };
+
+                    List<Func<OpenHABSitemap, bool>> filters = new List<Func<OpenHABSitemap, bool>>();
+
+                    Settings settings = _settingsService.Load();
+                    if (settings.HideDefaultSitemap.HasValue && settings.HideDefaultSitemap.Value)
+                    {
+                        filters.Add(defaultSitemapFilter);
+                    }
+
+                    var sitemaps = await _openHabsdk.LoadSiteMaps(_version, filters).ConfigureAwait(false);
+
+                    Sitemaps = new ObservableCollection<OpenHABSitemap>(sitemaps);
+                    _openHabsdk.StartItemUpdates();
+
+                    OpenLastOrDefaultSitemap();
                 }
-
-                IsDataLoading = true;
-                Sitemaps?.Clear();
-                CurrentWidgets?.Clear();
-                Subtitle = null;
-
-                bool isSuccessful = await _openHabsdk.ResetConnection();
-                if (!isSuccessful)
+                catch (OpenHABException ex)
                 {
-                    MessengerInstance.Send(new FireInfoMessage(MessageType.NotConfigured));
-                    return;
+                    _logger.LogError(ex, "Load data failed.");
+                    Messenger.Default.Send(new FireErrorMessage(ex.Message));
                 }
-
-                _version = await _openHabsdk.GetOpenHABVersion();
-                if (_version == OpenHABVersion.None)
+                catch (Exception ex)
                 {
-                    MessengerInstance.Send(new FireInfoMessage(MessageType.NotConfigured));
-                    return;
+                    _logger.LogError(ex, "Load data failed.");
                 }
-
-                Func<OpenHABSitemap, bool> defaultSitemapFilter = (sitemap) =>
+                finally
                 {
-                    return !sitemap.Name.Equals("_default", StringComparison.InvariantCultureIgnoreCase);
-                };
-
-                List<Func<OpenHABSitemap, bool>> filters = new List<Func<OpenHABSitemap, bool>>();
-
-                Settings settings = _settingsService.Load();
-                if (settings.HideDefaultSitemap.HasValue && settings.HideDefaultSitemap.Value)
-                {
-                    filters.Add(defaultSitemapFilter);
+                    IsDataLoading = false;
                 }
-
-                var sitemaps = await _openHabsdk.LoadSiteMaps(_version, filters);
-
-                Sitemaps = new ObservableCollection<OpenHABSitemap>(sitemaps);
-                _openHabsdk.StartItemUpdates();
-
-                OpenLastOrDefaultSitemap();
-            }
-            catch (OpenHABException ex)
-            {
-                MessengerInstance.Send(new FireErrorMessage(ex.Message));
-            }
-            catch (Exception ex)
-            {
-            
-            }
-            finally
-            {
-                IsDataLoading = false;
-            }
+            });
         }
 
         private void OpenLastOrDefaultSitemap()
@@ -274,7 +284,7 @@ namespace OpenHAB.Core.ViewModel
             CurrentWidgets.Clear();
             IsDataLoading = true;
 
-            SelectedSitemap.Widgets = await _openHabsdk.LoadItemsFromSitemap(SelectedSitemap, _version);
+            SelectedSitemap.Widgets = await _openHabsdk.LoadItemsFromSitemap(SelectedSitemap, _version).ConfigureAwait(false);
             SetWidgetsOnScreen(SelectedSitemap.Widgets);
 
             IsDataLoading = false;

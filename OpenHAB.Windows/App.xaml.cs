@@ -1,4 +1,6 @@
 ﻿using System;
+using Microsoft.Extensions.Logging;
+using OpenHAB.Core.Services;
 using OpenHAB.Windows.View;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -17,6 +19,9 @@ namespace OpenHAB.Windows
     /// </summary>
     public sealed partial class App : Application
     {
+        private static DIService _container;
+        private ILogger<App> _logger;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="App"/> class.
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -25,7 +30,24 @@ namespace OpenHAB.Windows
         public App()
         {
             InitializeComponent();
+
+            _logger = (ILogger<App>)Container.Services.GetService(typeof(ILogger<App>));
+
             Suspending += OnSuspending;
+            UnhandledException += App_UnhandledException;
+        }
+
+        public static DIService Container
+        {
+            get
+            {
+                if (_container == null)
+                {
+                    _container = new DIService();
+                }
+
+                return _container;
+            }
         }
 
         /// <summary>
@@ -109,6 +131,14 @@ namespace OpenHAB.Windows
 
             // TODO: Save application state and stop any background activity
             deferral.Complete();
+        }
+
+        /// <summary>Handles the UnhandledException event of the App control.</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Windows.UI.Xaml.UnhandledExceptionEventArgs"/> instance containing the event data.</param>
+        private void App_UnhandledException(object sender, global::Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+        {
+            _logger.LogCritical(e.Exception, "UnhandledException occured");
         }
     }
 }

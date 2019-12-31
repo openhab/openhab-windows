@@ -1,12 +1,10 @@
 using System;
 using System.Windows.Input;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-
+using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
+using OpenHAB.Core.Common;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
-using OpenHAB.Core.SDK;
 using Windows.ApplicationModel;
 
 namespace OpenHAB.Core.ViewModel
@@ -14,7 +12,7 @@ namespace OpenHAB.Core.ViewModel
     /// <summary>
     /// Collects and formats all the data for user defined settings.
     /// </summary>
-    public class SettingsViewModel : ViewModelBase
+    public class SettingsViewModel : ViewModelBase<object>
     {
         private readonly INavigationService _navigationService;
         private ConfigurationViewModel _configuration;
@@ -24,8 +22,9 @@ namespace OpenHAB.Core.ViewModel
         /// Initializes a new instance of the <see cref="SettingsViewModel"/> class.
         /// </summary>
         public SettingsViewModel(ConfigurationViewModel configurationViewModel, INavigationService navigationService)
+            : base(new object())
         {
-            MessengerInstance.Register<PersistSettingsMessage>(this, msg => PersistSettings());
+            Messenger.Default.Register<PersistSettingsMessage>(this, msg => PersistSettings(null));
 
             _configuration = configurationViewModel;
             _navigationService = navigationService;
@@ -35,7 +34,7 @@ namespace OpenHAB.Core.ViewModel
         /// Gets the save command to persist the settings.
         /// </summary>
         /// <value>The save command.</value>
-        public ICommand SaveCommand => _saveCommand ?? (_saveCommand = new RelayCommand(PersistSettings));
+        public ICommand SaveCommand => _saveCommand ?? (_saveCommand = new ActionCommand(PersistSettings));
 
         /// <summary>
         /// Gets or sets the current user-defined settings.
@@ -67,7 +66,7 @@ namespace OpenHAB.Core.ViewModel
         /// <summary>
         /// Save the user defined settings to the UWP settings storage.
         /// </summary>
-        public void PersistSettings()
+        public void PersistSettings(object obj)
         {
             if (_configuration.IsConnectionConfigValid())
             {
@@ -76,7 +75,7 @@ namespace OpenHAB.Core.ViewModel
             }
             else
             {
-                MessengerInstance.Send(new SettingsUpdatedMessage());
+                Messenger.Default.Send(new SettingsUpdatedMessage());
             }
         }
     }

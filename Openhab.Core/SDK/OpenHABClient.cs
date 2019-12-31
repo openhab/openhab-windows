@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Extensions.Logging;
 using Microsoft.Toolkit.Uwp.Connectivity;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -22,6 +23,7 @@ namespace OpenHAB.Core.SDK
     public class OpenHABClient : IOpenHAB
     {
         private readonly IMessenger _messenger;
+        private readonly ILogger<OpenHABClient> _logger;
         private readonly ISettingsService _settingsService;
         private OpenHABHttpClientType _connectionType;
 
@@ -30,10 +32,11 @@ namespace OpenHAB.Core.SDK
         /// </summary>
         /// <param name="settingsService">The service to fetch the settings.</param>
         /// <param name="messenger">The messenger instance.</param>
-        public OpenHABClient(ISettingsService settingsService, IMessenger messenger)
+        public OpenHABClient(ISettingsService settingsService, IMessenger messenger, ILogger<OpenHABClient> logger)
         {
             _settingsService = settingsService;
             _messenger = messenger;
+            _logger = logger;
         }
 
         /// <inheritdoc/>
@@ -60,13 +63,17 @@ namespace OpenHAB.Core.SDK
                     return true;
                 }
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ex)
             {
                 return false;
             }
             catch (HttpRequestException)
             {
                 return false;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "CheckUrlReachability failed.");
             }
 
             return false;
@@ -122,6 +129,12 @@ namespace OpenHAB.Core.SDK
             }
             catch (ArgumentNullException ex)
             {
+                _logger.LogError(ex, "LoadItemsFromSitemap failed.");
+                throw new OpenHABException("Invalid call", ex);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "LoadItemsFromSitemap failed.");
                 throw new OpenHABException("Invalid call", ex);
             }
         }
@@ -141,6 +154,7 @@ namespace OpenHAB.Core.SDK
                 string resultString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 var sitemaps = new List<OpenHABSitemap>();
+
                 // V1 = xml
                 if (version == OpenHABVersion.One)
                 {
@@ -168,6 +182,12 @@ namespace OpenHAB.Core.SDK
             }
             catch (ArgumentNullException ex)
             {
+                _logger.LogError(ex, "LoadSiteMaps failed.");
+                throw new OpenHABException("Invalid call", ex);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "LoadSiteMaps failed.");
                 throw new OpenHABException("Invalid call", ex);
             }
         }
@@ -247,9 +267,15 @@ namespace OpenHAB.Core.SDK
                 }
                 catch (HttpRequestException ex)
                 {
+                    _logger.LogError(ex, "StartItemUpdates failed.");
                     throw new OpenHABException("Fetching item updates failed", ex);
                 }
-            });
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "StartItemUpdates failed.");
+                    throw new OpenHABException("Fetching item updates failed", ex);
+                }
+            }).ConfigureAwait(false);
         }
 
         private ICollection<OpenHABWidget> ParseWidgets(string resultString)
