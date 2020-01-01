@@ -148,11 +148,10 @@ namespace OpenHAB.Core.ViewModel
         /// <param name="openHabsdk">The OpenHAB SDK object.</param>
         /// <param name="settingsService">Setting service instance.</param>
         /// <param name="logger">Logger class instance.</param>
-        public MainViewModel(IOpenHAB openHabsdk, ISettingsService settingsService, ILogger<MainViewModel> logger) 
+        public MainViewModel(IOpenHAB openHabsdk, ISettingsService settingsService, ILogger<MainViewModel> logger)
             : base(new object())
         {
             _logger = logger;
-            IsDataLoading = false;
             CurrentWidgets = new ObservableCollection<OpenHABWidget>();
 
             _openHabsdk = openHabsdk;
@@ -191,70 +190,78 @@ namespace OpenHAB.Core.ViewModel
         public async Task LoadData()
         {
             CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
-            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-            {
-                try
-                {
-                    if (IsDataLoading)
-                    {
-                        return;
-                    }
 
+            try
+            {
+                if (IsDataLoading)
+                {
+                    return;
+                }
+
+                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                {
                     IsDataLoading = true;
                     Sitemaps?.Clear();
                     CurrentWidgets?.Clear();
                     Subtitle = null;
+                });
 
-                    _logger.LogInformation("Load Data");
+                _logger.LogInformation("Load Data");
 
-                    bool isSuccessful = await _openHabsdk.ResetConnection().ConfigureAwait(false);
-                    if (!isSuccessful)
-                    {
-                        Messenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));
-                        return;
-                    }
+                bool isSuccessful = await _openHabsdk.ResetConnection().ConfigureAwait(false);
+                if (!isSuccessful)
+                {
+                    Messenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));
+                    return;
+                }
 
-                    _version = await _openHabsdk.GetOpenHABVersion().ConfigureAwait(false);
-                    if (_version == OpenHABVersion.None)
-                    {
-                        Messenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));
-                        return;
-                    }
+                _version = await _openHabsdk.GetOpenHABVersion().ConfigureAwait(false);
+                if (_version == OpenHABVersion.None)
+                {
+                    Messenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));
+                    return;
+                }
 
-                    Func<OpenHABSitemap, bool> defaultSitemapFilter = (sitemap) =>
-                    {
-                        return !sitemap.Name.Equals("_default", StringComparison.InvariantCultureIgnoreCase);
-                    };
+                Func<OpenHABSitemap, bool> defaultSitemapFilter = (sitemap) =>
+                {
+                    return !sitemap.Name.Equals("_default", StringComparison.InvariantCultureIgnoreCase);
+                };
 
-                    List<Func<OpenHABSitemap, bool>> filters = new List<Func<OpenHABSitemap, bool>>();
+                List<Func<OpenHABSitemap, bool>> filters = new List<Func<OpenHABSitemap, bool>>();
 
-                    Settings settings = _settingsService.Load();
-                    if (settings.HideDefaultSitemap.HasValue && settings.HideDefaultSitemap.Value)
-                    {
-                        filters.Add(defaultSitemapFilter);
-                    }
+                Settings settings = _settingsService.Load();
+                if (settings.HideDefaultSitemap.HasValue && settings.HideDefaultSitemap.Value)
+                {
+                    filters.Add(defaultSitemapFilter);
+                }
 
-                    var sitemaps = await _openHabsdk.LoadSiteMaps(_version, filters).ConfigureAwait(false);
+                var sitemaps = await _openHabsdk.LoadSiteMaps(_version, filters).ConfigureAwait(false);
 
+                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                {
                     Sitemaps = new ObservableCollection<OpenHABSitemap>(sitemaps);
                     _openHabsdk.StartItemUpdates();
 
                     OpenLastOrDefaultSitemap();
-                }
-                catch (OpenHABException ex)
-                {
-                    _logger.LogError(ex, "Load data failed.");
-                    Messenger.Default.Send(new FireErrorMessage(ex.Message));
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Load data failed.");
-                }
-                finally
+                    IsDataLoading = false;
+                });
+            }
+            catch (OpenHABException ex)
+            {
+                _logger.LogError(ex, "Load data failed.");
+                Messenger.Default.Send(new FireErrorMessage(ex.Message));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Load data failed.");
+            }
+            finally
+            {
+                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
                     IsDataLoading = false;
-                }
-            });
+                });
+            }
         }
 
         private void OpenLastOrDefaultSitemap()

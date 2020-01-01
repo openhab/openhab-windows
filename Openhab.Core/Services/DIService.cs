@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using NLog;
 using NLog.Config;
 using NLog.Extensions.Logging;
 using NLog.Layouts;
@@ -70,8 +68,8 @@ namespace OpenHAB.Core.Services
             layout.Columns.Add(new CsvColumn("level", "${level:upperCase=true}"));
             layout.Columns.Add(new CsvColumn("message", "${message}"));
             layout.Columns.Add(new CsvColumn("callsite", "${callsite:includeSourcePath=false}"));
+            layout.Columns.Add(new CsvColumn("exception", "${exception:format=ToString}"));
             layout.Columns.Add(new CsvColumn("stacktrace", "${stacktrace:topFrames=10}"));
-            layout.Columns.Add(new CsvColumn("stacktrace", "${exception:format=ToString}"));
 
             FileTarget fileTarget = new FileTarget("file")
             {

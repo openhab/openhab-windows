@@ -1,95 +1,96 @@
 ﻿<Application x:Class="OpenHAB.Windows.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:controls="using:OpenHAB.Windows.Controls"
-             xmlns:converters="using:OpenHAB.Windows.Converters"
-             xmlns:viewModel="using:OpenHAB.Core.ViewModel"
-             RequestedTheme="Light">
-    <Application.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles/DefaultTheme.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-            
-            <converters:StateToBoolConverter x:Key="StateToBoolConverter" />
-            <converters:IconToPathConverter x:Key="IconToPathConverter" />
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:controls="using:OpenHAB.Windows.Controls"
+			 xmlns:converters="using:OpenHAB.Windows.Converters"
+			 xmlns:viewModel="using:OpenHAB.Core.ViewModel"
+			 RequestedTheme="Light">
+	<Application.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+				<ResourceDictionary Source="Styles/DefaultTheme.xaml" />
+			</ResourceDictionary.MergedDictionaries>
 
-            <DataTemplate x:Key="FrameTemplate">
-                <controls:FrameWidget Widget="{Binding Mode=OneWay}" />
-            </DataTemplate>
+			<converters:StateToBoolConverter x:Key="StateToBoolConverter" />
+			<converters:IconToPathConverter x:Key="IconToPathConverter" />
 
-            <DataTemplate x:Key="ChartTemplate">
-                <controls:ChartWidget Widget="{Binding Mode=OneWay}" />
-            </DataTemplate>
+			<DataTemplate x:Key="FrameTemplate">
+				<controls:FrameWidget Widget="{Binding Mode=OneWay}" />
+			</DataTemplate>
 
-            <DataTemplate x:Key="SelectionTemplate">
-                <controls:SelectionWidget Widget="{Binding Mode=OneWay}" />
-            </DataTemplate>
+			<DataTemplate x:Key="ChartTemplate">
+				<controls:ChartWidget Widget="{Binding Mode=OneWay}" />
+			</DataTemplate>
 
-            <DataTemplate x:Key="MjpegTemplate">
-                <controls:MjpegWidget Widget="{Binding Mode=OneWay}" />
-            </DataTemplate>
+			<DataTemplate x:Key="SelectionTemplate">
+				<controls:SelectionWidget Widget="{Binding Mode=OneWay}" />
+			</DataTemplate>
 
-            <DataTemplate x:Key="PageLinkTemplate">
-                <controls:PageLinkWidget Widget="{Binding Mode=OneWay}" />
-            </DataTemplate>
+			<DataTemplate x:Key="MjpegTemplate">
+				<controls:MjpegWidget Widget="{Binding Mode=OneWay}" />
+			</DataTemplate>
 
-            <DataTemplate x:Key="SwitchTemplate">
-                <controls:SwitchWidget Widget="{Binding Mode=OneWay}" />
-            </DataTemplate>
+			<DataTemplate x:Key="PageLinkTemplate">
+				<controls:PageLinkWidget Widget="{Binding Mode=OneWay}" />
+			</DataTemplate>
 
-            <DataTemplate x:Key="MapViewTemplate">
-                <controls:MapViewWidget Widget="{Binding Mode=OneWay}" />
-            </DataTemplate>
+			<DataTemplate x:Key="SwitchTemplate">
+				<controls:SwitchWidget Widget="{Binding Mode=OneWay}" />
+			</DataTemplate>
 
-            <DataTemplate x:Key="WebViewTemplate">
-                <controls:WebViewWidget Widget="{Binding Mode=OneWay}" />
-            </DataTemplate>
+			<DataTemplate x:Key="MapViewTemplate">
+				<controls:MapViewWidget Widget="{Binding Mode=OneWay}" />
+			</DataTemplate>
 
-            <DataTemplate x:Key="RollershutterTemplate">
-                <controls:RollershutterWidget Widget="{Binding Mode=OneWay}" />
-            </DataTemplate>
+			<DataTemplate x:Key="WebViewTemplate">
+				<controls:WebViewWidget Widget="{Binding Mode=OneWay}" />
+			</DataTemplate>
 
-            <DataTemplate x:Key="SliderTemplate">
-                <controls:SliderWidget Widget="{Binding Mode=OneWay}" />
-            </DataTemplate>
+			<DataTemplate x:Key="RollershutterTemplate">
+				<controls:RollershutterWidget Widget="{Binding Mode=OneWay}" />
+			</DataTemplate>
 
-            <DataTemplate x:Key="TextItemTemplate">
-                <controls:TextWidget Widget="{Binding Mode=OneWay}" />
-            </DataTemplate>
+			<DataTemplate x:Key="SliderTemplate">
+				<controls:SliderWidget Widget="{Binding Mode=OneWay}" />
+			</DataTemplate>
 
-            <DataTemplate x:Key="ImageItemTemplate">
-                <controls:ImageWidget Widget="{Binding Mode=OneWay}" />
-            </DataTemplate>
+			<DataTemplate x:Key="TextItemTemplate">
+				<controls:TextWidget Widget="{Binding Mode=OneWay}" />
+			</DataTemplate>
 
-            <DataTemplate x:Key="SetpoinTemplate">
-                <controls:SetpointWidget Widget="{Binding Mode=OneWay}" />
-            </DataTemplate>
+			<DataTemplate x:Key="ImageItemTemplate">
+				<controls:ImageWidget Widget="{Binding Mode=OneWay}" />
+			</DataTemplate>
 
-            <DataTemplate x:Key="SectionSwitchTemplate">
-                <controls:SectionSwitchWidget Widget="{Binding Mode=OneWay}" />
-            </DataTemplate>
+			<DataTemplate x:Key="SetpoinTemplate">
+				<controls:SetpointWidget Widget="{Binding Mode=OneWay}" />
+			</DataTemplate>
 
-            <DataTemplate x:Key="ColorTemplate">
-                <controls:ColorWidget Widget="{Binding Mode=OneWay}" />
-            </DataTemplate>
+			<DataTemplate x:Key="SectionSwitchTemplate">
+				<controls:SectionSwitchWidget Widget="{Binding Mode=OneWay}" />
+			</DataTemplate>
 
-            <converters:WidgetTemplateSelector x:Key="WidgetTemplateSelector"
-                                               ChartTemplate="{StaticResource ChartTemplate}"
-                                               ColorTemplate="{StaticResource ColorTemplate}"
-                                               FrameTemplate="{StaticResource FrameTemplate}"
-                                               ImageTemplate="{StaticResource ImageItemTemplate}"
-                                               MjpegTemplate="{StaticResource MjpegTemplate}"
-                                               PageLinkTemplate="{StaticResource PageLinkTemplate}"
-                                               RollershutterTemplate="{StaticResource RollershutterTemplate}"
-                                               SectionSwitchTemplate="{StaticResource SectionSwitchTemplate}"
-                                               SelectionTemplate="{StaticResource SelectionTemplate}"
-                                               SetpointTemplate="{StaticResource SetpoinTemplate}"
-                                               SliderTemplate="{StaticResource SliderTemplate}"
-                                               SwitchTemplate="{StaticResource SwitchTemplate}"
-                                               MapViewTemplate="{StaticResource MapViewTemplate}"
-                                               WebViewTemplate="{StaticResource WebViewTemplate}"
-                                               TextTemplate="{StaticResource TextItemTemplate}" />
-        </ResourceDictionary>
-    </Application.Resources>
+			<DataTemplate x:Key="ColorTemplate">
+				<controls:ColorWidget Widget="{Binding Mode=OneWay}" />
+			</DataTemplate>
+
+			<converters:WidgetTemplateSelector x:Key="WidgetTemplateSelector"
+											   ChartTemplate="{StaticResource ChartTemplate}"
+											   ColorTemplate="{StaticResource ColorTemplate}"
+											   FrameTemplate="{StaticResource FrameTemplate}"
+											   ImageTemplate="{StaticResource ImageItemTemplate}"
+											   MjpegTemplate="{StaticResource MjpegTemplate}"
+											   PageLinkTemplate="{StaticResource PageLinkTemplate}"
+											   RollershutterTemplate="{StaticResource RollershutterTemplate}"
+											   SectionSwitchTemplate="{StaticResource SectionSwitchTemplate}"
+											   SelectionTemplate="{StaticResource SelectionTemplate}"
+											   SetpointTemplate="{StaticResource SetpoinTemplate}"
+											   SliderTemplate="{StaticResource SliderTemplate}"
+											   SwitchTemplate="{StaticResource SwitchTemplate}"
+											   MapViewTemplate="{StaticResource MapViewTemplate}"
+											   WebViewTemplate="{StaticResource WebViewTemplate}"
+											   TextTemplate="{StaticResource TextItemTemplate}" />
+		</ResourceDictionary>
+	</Application.Resources>
 </Application>

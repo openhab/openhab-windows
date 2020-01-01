@@ -35,9 +35,12 @@ namespace OpenHAB.Windows.View
 
             Vm.CurrentWidgets.CollectionChanged += (sender, args) =>
             {
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = WidgetNavigationService.CanGoBack
+                Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = WidgetNavigationService.CanGoBack
                     ? AppViewBackButtonVisibility.Visible
                     : AppViewBackButtonVisibility.Collapsed;
+                });
             };
 
             SystemNavigationManager.GetForCurrentView().BackRequested += (sender, args) => Vm.WidgetGoBack();
