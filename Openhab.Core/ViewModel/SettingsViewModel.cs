@@ -2,6 +2,7 @@ using System;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
+using Microsoft.Extensions.Logging;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
@@ -15,19 +16,21 @@ namespace OpenHAB.Core.ViewModel
     public class SettingsViewModel : ViewModelBase<object>
     {
         private readonly INavigationService _navigationService;
+        private readonly ILogger<SettingsViewModel> _logger;
         private ConfigurationViewModel _configuration;
         private ICommand _saveCommand;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingsViewModel"/> class.
         /// </summary>
-        public SettingsViewModel(ConfigurationViewModel configurationViewModel, INavigationService navigationService)
+        public SettingsViewModel(ConfigurationViewModel configurationViewModel, INavigationService navigationService, ILogger<SettingsViewModel> logger)
             : base(new object())
         {
             Messenger.Default.Register<PersistSettingsMessage>(this, msg => PersistSettings(null));
 
             _configuration = configurationViewModel;
             _navigationService = navigationService;
+            _logger = logger;
         }
 
         /// <summary>
@@ -68,6 +71,8 @@ namespace OpenHAB.Core.ViewModel
         /// </summary>
         public void PersistSettings(object obj)
         {
+            _logger.LogInformation("Execute save settings command");
+
             if (_configuration.IsConnectionConfigValid())
             {
                 _configuration.Save();

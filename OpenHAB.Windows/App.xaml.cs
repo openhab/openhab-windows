@@ -31,23 +31,10 @@ namespace OpenHAB.Windows
         {
             InitializeComponent();
 
-            _logger = (ILogger<App>)Container.Services.GetService(typeof(ILogger<App>));
+            _logger = (ILogger<App>)DIService.Instance.Services.GetService(typeof(ILogger<App>));
 
             Suspending += OnSuspending;
             UnhandledException += App_UnhandledException;
-        }
-
-        public static DIService Container
-        {
-            get
-            {
-                if (_container == null)
-                {
-                    _container = new DIService();
-                }
-
-                return _container;
-            }
         }
 
         /// <summary>
@@ -57,6 +44,8 @@ namespace OpenHAB.Windows
         /// <param name="e">Details about the launch request and process.</param>
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
+            _logger.LogInformation("=== Start Application ===");
+
             if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
                 var statusbar = StatusBar.GetForCurrentView();
@@ -130,6 +119,8 @@ namespace OpenHAB.Windows
             var deferral = e.SuspendingOperation.GetDeferral();
 
             // TODO: Save application state and stop any background activity
+            _logger.LogInformation("=== Close Application ===");
+
             deferral.Complete();
         }
 

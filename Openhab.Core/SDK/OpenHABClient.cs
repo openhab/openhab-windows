@@ -47,7 +47,7 @@ namespace OpenHAB.Core.SDK
                 return false;
             }
 
-            if (!openHABUrl.EndsWith("/"))
+            if (!openHABUrl.EndsWith("/", StringComparison.InvariantCultureIgnoreCase))
             {
                 openHABUrl = openHABUrl + "/";
             }
@@ -65,10 +65,14 @@ namespace OpenHAB.Core.SDK
             }
             catch (InvalidOperationException ex)
             {
+                _logger.LogError(ex, "CheckUrlReachability failed");
+
                 return false;
             }
-            catch (HttpRequestException)
+            catch (HttpRequestException ex)
             {
+                _logger.LogError(ex, "CheckUrlReachability failed");
+
                 return false;
             }
             catch (Exception ex)
@@ -94,6 +98,7 @@ namespace OpenHAB.Core.SDK
 
                 var result = await httpClient.GetAsync(Constants.Api.ServerVersion).ConfigureAwait(false);
                 _settingsService.ServerVersion = !result.IsSuccessStatusCode ? OpenHABVersion.One : OpenHABVersion.Two;
+
                 return _settingsService.ServerVersion;
             }
             catch (ArgumentNullException ex)
@@ -107,25 +112,34 @@ namespace OpenHAB.Core.SDK
         {
             try
             {
+                _logger.LogInformation($"Load sitemaps items for sitemap '{sitemap.Name}'");
+
                 var settings = _settingsService.Load();
                 var result = await OpenHABHttpClient.Client(_connectionType, settings).GetAsync(sitemap.Link).ConfigureAwait(false);
                 if (!result.IsSuccessStatusCode)
                 {
+                    _logger.LogError($"Http request for loading sitemaps items failed, ErrorCode:'{result.StatusCode}'");
                     throw new OpenHABException($"{result.StatusCode} received from server");
                 }
 
                 string resultString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                // V1 = xml
+                ICollection<OpenHABWidget> items = null;
                 if (version == OpenHABVersion.One)
                 {
-                    var widgets = ParseWidgets(resultString);
-                    return widgets;
+                    // V1 = xml
+                    items = ParseWidgets(resultString);
+                }
+                else
+                {
+                    // V2 = JSON
+                    var jsonObject = JObject.Parse(resultString);
+                    items = JsonConvert.DeserializeObject<List<OpenHABWidget>>(jsonObject["homepage"]["widgets"].ToString());
                 }
 
-                // V2 = JSON
-                var jsonObject = JObject.Parse(resultString);
-                return JsonConvert.DeserializeObject<List<OpenHABWidget>>(jsonObject["homepage"]["widgets"].ToString());
+                _logger.LogInformation($"Loaded '{items.Count}' sitemaps items from server");
+
+                return items;
             }
             catch (ArgumentNullException ex)
             {
@@ -144,10 +158,13 @@ namespace OpenHAB.Core.SDK
         {
             try
             {
+                _logger.LogInformation($"Load sitemaps for OpenHab server version '{version.ToString()}'");
+
                 var settings = _settingsService.Load();
                 var result = await OpenHABHttpClient.Client(_connectionType, settings).GetAsync(Constants.Api.Sitemaps).ConfigureAwait(false);
                 if (!result.IsSuccessStatusCode)
                 {
+                    _logger.LogError($"Http request for loading sitemaps failed, ErrorCode:'{result.StatusCode}'");
                     throw new OpenHABException($"{result.StatusCode} received from server");
                 }
 
@@ -172,6 +189,7 @@ namespace OpenHAB.Core.SDK
                 // V2 = JSON
                 sitemaps = JsonConvert.DeserializeObject<List<OpenHABSitemap>>(resultString);
 
+                _logger.LogInformation($"Loaded '{sitemaps.Count}' sitemaps from server");
                 return sitemaps.Where(sitemap =>
                 {
                     bool isIncluded = true;
@@ -213,22 +231,27 @@ namespace OpenHAB.Core.SDK
         {
             try
             {
+                _logger.LogInformation($"Send Command '{command}' for item '{item.Name} of type '{item.Type}'");
+
                 var settings = _settingsService.Load();
                 var client = OpenHABHttpClient.Client(_connectionType, settings);
                 var content = new StringContent(command);
+                
                 var result = await client.PostAsync(item.Link, content);
-
                 if (!result.IsSuccessStatusCode)
                 {
+                    _logger.LogError($"Http request for command failed, ErrorCode:'{result.StatusCode}'");
                     throw new OpenHABException($"{result.StatusCode} received from server");
                 }
             }
             catch (HttpRequestException ex)
             {
+                _logger.LogError(ex, "SendCommand failed.");
                 throw new OpenHABException("Invalid call", ex);
             }
             catch (ArgumentNullException ex)
             {
+                _logger.LogError(ex, "SendCommand failed.");
                 throw new OpenHABException("Invalid call", ex);
             }
         }
@@ -242,19 +265,21 @@ namespace OpenHAB.Core.SDK
                 var client = OpenHABHttpClient.Client(_connectionType, settings);
                 var requestUri = Constants.Api.Events;
 
+                _logger.LogInformation($"Retrive item updates from '{client.BaseAddress.ToString()}'");
+
                 try
                 {
-                    var stream = await client.GetStreamAsync(requestUri);
+                    var stream = await client.GetStreamAsync(requestUri).ConfigureAwait(false);
 
                     using (var reader = new StreamReader(stream))
                     {
                         while (!reader.EndOfStream)
                         {
                             var updateEvent = reader.ReadLine();
-                            if (updateEvent?.StartsWith("data:") == true)
+                            if (updateEvent?.StartsWith("data:", StringComparison.InvariantCultureIgnoreCase) == true)
                             {
                                 var data = JsonConvert.DeserializeObject<EventStreamData>(updateEvent.Remove(0, 6));
-                                if (!data.Topic.EndsWith("state"))
+                                if (!data.Topic.EndsWith("state", StringComparison.InvariantCultureIgnoreCase))
                                 {
                                     continue;
                                 }
@@ -275,6 +300,7 @@ namespace OpenHAB.Core.SDK
                     _logger.LogError(ex, "StartItemUpdates failed.");
                     throw new OpenHABException("Fetching item updates failed", ex);
                 }
+
             }).ConfigureAwait(false);
         }
 
@@ -292,7 +318,11 @@ namespace OpenHAB.Core.SDK
 
         private async Task<bool> SetValidUrl(Settings settings)
         {
+            _logger.LogInformation("Validate Url");
+
             var isRunningInDemoMode = settings.IsRunningInDemoMode != null && settings.IsRunningInDemoMode.Value;
+
+            _logger.LogInformation($"App is running in demo mode: {isRunningInDemoMode}");
 
             // no url configured yet
             if (string.IsNullOrWhiteSpace(settings.LocalConnection.Url) &&
@@ -308,19 +338,28 @@ namespace OpenHAB.Core.SDK
                 return true;
             }
 
-            if (NetworkHelper.Instance.ConnectionInformation.IsInternetOnMeteredConnection)
+            bool meteredConnection = NetworkHelper.Instance.ConnectionInformation.IsInternetOnMeteredConnection;
+            _logger.LogInformation($"Metered Connection Type: {meteredConnection}");
+
+            if (meteredConnection)
             {
                 if (string.IsNullOrEmpty(settings.RemoteConnection.Url.Trim()))
                 {
-                    throw new OpenHABException("No remote url configured");
+                    string message = "No remote url configured";
+                    _logger.LogWarning(message);
+
+                    throw new OpenHABException(message);
                 }
 
                 OpenHABHttpClient.BaseUrl = settings.RemoteConnection.Url;
                 _connectionType = OpenHABHttpClientType.Remote;
+
                 return true;
             }
 
             bool isReachable = await CheckUrlReachability(settings.LocalConnection.Url, OpenHABHttpClientType.Local).ConfigureAwait(false);
+            _logger.LogInformation($"OpenHab server is reachable: {isReachable}");
+
             if (isReachable)
             {
                 OpenHABHttpClient.BaseUrl = settings.LocalConnection.Url;
@@ -341,6 +380,8 @@ namespace OpenHAB.Core.SDK
 
                 Messenger.Default.Send<FireInfoMessage>(new FireInfoMessage(MessageType.NotReachable));
             }
+
+            _logger.LogWarning($"OpenHab server url is not valid");
 
             return false;
         }

@@ -26,6 +26,8 @@ namespace OpenHAB.Core.ViewModel
     {
         private readonly IOpenHAB _openHabsdk;
         private readonly ISettingsService _settingsService;
+        private readonly StoreServicesFeedbackLauncher _feedbackLauncher;
+
         private ObservableCollection<OpenHABSitemap> _sitemaps;
         private OpenHABSitemap _selectedSitemap;
         private OpenHABVersion _version;
@@ -33,7 +35,6 @@ namespace OpenHAB.Core.ViewModel
         private OpenHABWidget _selectedWidget;
         private string _errorMessage;
         private string _subtitle;
-        private readonly StoreServicesFeedbackLauncher _feedbackLauncher;
 
         private ICommand _feedbackCommand;
         private bool _isDataLoading;
@@ -198,6 +199,8 @@ namespace OpenHAB.Core.ViewModel
                     return;
                 }
 
+                _logger.LogInformation("Load sitemaps and their items");
+
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
                     IsDataLoading = true;
@@ -205,8 +208,6 @@ namespace OpenHAB.Core.ViewModel
                     CurrentWidgets?.Clear();
                     Subtitle = null;
                 });
-
-                _logger.LogInformation("Load Data");
 
                 bool isSuccessful = await _openHabsdk.ResetConnection().ConfigureAwait(false);
                 if (!isSuccessful)
@@ -270,6 +271,8 @@ namespace OpenHAB.Core.ViewModel
 
             if (string.IsNullOrWhiteSpace(sitemapName))
             {
+                _logger.LogInformation("No sitemap was selected in the past -> Pick first entry from list");
+
                 SelectedSitemap = Sitemaps.FirstOrDefault();
                 return;
             }
@@ -277,6 +280,7 @@ namespace OpenHAB.Core.ViewModel
             SelectedSitemap = Sitemaps.FirstOrDefault(x => x.Name == sitemapName);
             if (SelectedSitemap == null)
             {
+                _logger.LogInformation($"Unable to find sitemap '{sitemapName}' -> Pick first entry from list");
                 SelectedSitemap = Sitemaps.FirstOrDefault();
             }
         }
@@ -321,10 +325,14 @@ namespace OpenHAB.Core.ViewModel
             SetWidgetsOnScreen(widget != null ? widget.LinkedPage.Widgets : SelectedSitemap.Widgets);
         }
 
-        private void SetWidgetsOnScreen(ICollection<OpenHABWidget> widgets)
+        private async void SetWidgetsOnScreen(ICollection<OpenHABWidget> widgets)
         {
-            CurrentWidgets.Clear();
-            CurrentWidgets.AddRange(widgets);
+            CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
+            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                CurrentWidgets.Clear();
+                CurrentWidgets.AddRange(widgets);
+            });
         }
     }
 }

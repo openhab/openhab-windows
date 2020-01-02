@@ -122,7 +122,7 @@ namespace OpenHAB.Core.ViewModel
             string url = parameter.ToString();
 
             UrlState = OpenHABUrlState.Unknown;
-            if (await _openHabsdk.CheckUrlReachability(url, Common.OpenHABHttpClientType.Local))
+            if (await _openHabsdk.CheckUrlReachability(url, Common.OpenHABHttpClientType.Local).ConfigureAwait(false))
             {
                 UrlState = OpenHABUrlState.OK;
             }

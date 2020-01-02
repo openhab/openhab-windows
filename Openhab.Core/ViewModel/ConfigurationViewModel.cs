@@ -1,4 +1,5 @@
-﻿using OpenHAB.Core.Contracts.Services;
+﻿using Microsoft.Extensions.Logging;
+using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.SDK;
 using OpenHAB.Core.ViewModel;
 
@@ -14,6 +15,7 @@ namespace OpenHAB.Core.Model
         private ConnectionConfigViewModel _remoteConnection;
         private ConnectionConfigViewModel _localConnection;
         private readonly ISettingsService _settingsService;
+        private readonly ILogger<ConfigurationViewModel> _logger;
         private readonly Settings _settings;
         private bool? _willIgnoreSSLCertificate;
         private bool? _willIgnoreSSLHostname;
@@ -21,9 +23,10 @@ namespace OpenHAB.Core.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationViewModel"/> class.
         /// </summary>
-        public ConfigurationViewModel(ISettingsService settingsService, IOpenHAB openHabsdk)
+        public ConfigurationViewModel(ISettingsService settingsService, IOpenHAB openHabsdk, ILogger<ConfigurationViewModel> logger)
         {
             _settingsService = settingsService;
+            _logger = logger;
             _settings = settingsService.Load();
 
             _localConnection = new ConnectionConfigViewModel(_settings.LocalConnection, openHabsdk);
@@ -141,9 +144,13 @@ namespace OpenHAB.Core.Model
         ///   <c>true</c> if [is connection configuration valid]; otherwise, <c>false</c>.</returns>
         public bool IsConnectionConfigValid()
         {
-            return IsRunningInDemoMode.Value ||
-                   !string.IsNullOrEmpty(LocalConnection?.Url) ||
-                   !string.IsNullOrEmpty(RemoteConnection?.Url);
+            bool validConfig = IsRunningInDemoMode.Value ||
+                     !string.IsNullOrEmpty(LocalConnection?.Url) ||
+                     !string.IsNullOrEmpty(RemoteConnection?.Url);
+
+            _logger.LogInformation($"Vaild app configuration: {validConfig}");
+
+            return validConfig;
         }
 
         /// <summary>

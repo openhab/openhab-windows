@@ -30,24 +30,24 @@ namespace OpenHAB.Windows.View
         /// </summary>
         public MainPage()
         {
-            DataContext = (MainViewModel)App.Container.Services.GetService(typeof(MainViewModel));
-            _logger = (ILogger<MainPage>)App.Container.Services.GetService(typeof(ILogger<MainPage>));
+            DataContext = (MainViewModel)DIService.Instance.Services.GetService(typeof(MainViewModel));
+            _logger = (ILogger<MainPage>)DIService.Instance.Services.GetService(typeof(ILogger<MainPage>));
 
-            Vm.CurrentWidgets.CollectionChanged += (sender, args) =>
+            InitializeComponent();
+
+            Vm.CurrentWidgets.CollectionChanged += async (sender, args) =>
             {
-                Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = WidgetNavigationService.CanGoBack
-                    ? AppViewBackButtonVisibility.Visible
-                    : AppViewBackButtonVisibility.Collapsed;
-                });
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                 {
+                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = WidgetNavigationService.CanGoBack
+                     ? AppViewBackButtonVisibility.Visible
+                     : AppViewBackButtonVisibility.Collapsed;
+                 });
             };
 
             SystemNavigationManager.GetForCurrentView().BackRequested += (sender, args) => Vm.WidgetGoBack();
 
             this.Loaded += MainPage_Loaded;
-
-            InitializeComponent();
         }
 
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)

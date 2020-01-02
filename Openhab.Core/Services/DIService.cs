@@ -18,9 +18,10 @@ namespace OpenHAB.Core.Services
     /// <summary>
     /// Dependency Injection Service.
     /// </summary>
-    public class DIService : IDisposable
+    public class DIService : IDependencyInjectionService
     {
-        private ServiceCollection _services;
+        private static DIService _instance;
+        private readonly ServiceCollection _services;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DIService"/> class.
@@ -69,7 +70,7 @@ namespace OpenHAB.Core.Services
             layout.Columns.Add(new CsvColumn("message", "${message}"));
             layout.Columns.Add(new CsvColumn("callsite", "${callsite:includeSourcePath=false}"));
             layout.Columns.Add(new CsvColumn("exception", "${exception:format=ToString}"));
-            layout.Columns.Add(new CsvColumn("stacktrace", "${stacktrace:topFrames=10}"));
+            layout.Columns.Add(new CsvColumn("stacktrace", "${onexception:inner=${stacktrace:topFrames=10}}"));
 
             FileTarget fileTarget = new FileTarget("file")
             {
@@ -90,6 +91,23 @@ namespace OpenHAB.Core.Services
         }
 
         /// <summary>
+        /// Gets the DIService instance.
+        /// </summary>
+        /// <value>The instance.</value>
+        public static DIService Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new DIService();
+                }
+
+                return _instance;
+            }
+        }
+
+        /// <summary>
         /// Gets the services.
         /// </summary>
         /// <value>The services.</value>
@@ -97,11 +115,6 @@ namespace OpenHAB.Core.Services
         {
             get;
             private set;
-        }
-
-        /// <inheritdoc />
-        public void Dispose()
-        {
         }
     }
 }

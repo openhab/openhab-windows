@@ -127,7 +127,6 @@
     <Compile Include="Common\OpenHABHttpClientType.cs" />
     <Compile Include="Common\ViewModelBase.cs" />
     <Compile Include="Contracts\Services\ISettingsService.cs" />
-    <Compile Include="HABCore.cs" />
     <Compile Include="Messages\FireErrorMessage.cs" />
     <Compile Include="Messages\FireInfoMessage.cs" />
     <Compile Include="Messages\MessageType.cs" />
@@ -147,6 +146,7 @@
     <Compile Include="Model\OpenHABUrlState.cs" />
     <Compile Include="Model\OpenHABWidget.cs" />
     <Compile Include="Model\OpenHABWidgetMapping.cs" />
+    <Compile Include="Contracts\Services\IDependencyInjectionService.cs" />
     <Compile Include="ViewModel\ConfigurationViewModel.cs" />
     <Compile Include="Model\Settings.cs" />
     <Compile Include="Model\OpenHABCommands.cs" />
