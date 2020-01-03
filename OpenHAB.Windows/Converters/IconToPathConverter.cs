@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Model;
+using OpenHAB.Core.Services;
 using Windows.UI.Xaml.Data;
 
 namespace OpenHAB.Windows.Converters
@@ -15,7 +16,7 @@ namespace OpenHAB.Windows.Converters
         /// <inheritdoc/>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var settingsService = (ISettingsService)App.Container.Services.GetService(typeof(ISettingsService));
+            var settingsService = (ISettingsService)DIService.Instance.Services.GetService(typeof(ISettingsService));
             var serverUrl = OpenHABHttpClient.BaseUrl;
 
             var widget = value as OpenHABWidget;

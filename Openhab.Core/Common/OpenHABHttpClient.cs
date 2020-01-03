@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.Extensions.Logging;
-using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.Services;
 

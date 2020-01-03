@@ -97,6 +97,12 @@ namespace OpenHAB.Core.SDK
                 }
 
                 var result = await httpClient.GetAsync(Constants.Api.ServerVersion).ConfigureAwait(false);
+                if (!result.IsSuccessStatusCode)
+                {
+                    _logger.LogError($"Http request get OpenHab version failed, ErrorCode:'{result.StatusCode}'");
+                    throw new OpenHABException($"{result.StatusCode} received from server");
+                }
+
                 _settingsService.ServerVersion = !result.IsSuccessStatusCode ? OpenHABVersion.One : OpenHABVersion.Two;
 
                 return _settingsService.ServerVersion;

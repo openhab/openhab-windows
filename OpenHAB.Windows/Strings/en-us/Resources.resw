@@ -133,7 +133,7 @@
     <value>Demo mode</value>
   </data>
   <data name="MessageError" xml:space="preserve">
-    <value>Ups, something go wrong</value>
+    <value>Ups, something went wrong</value>
   </data>
   <data name="FeedbackHeader.Text" xml:space="preserve">
     <value>Feedback</value>
@@ -180,7 +180,7 @@ Go to app settings (gear icon) to check the connection configuration.</value>
     <value>Settings</value>
   </data>
   <data name="UsernameHeader.Text" xml:space="preserve">
-    <value>Username</value>
+    <value>went</value>
   </data>
   <data name="NoItemsOrOpenHabNotAvailable.Text" xml:space="preserve">
     <value>No sitemaps available</value>

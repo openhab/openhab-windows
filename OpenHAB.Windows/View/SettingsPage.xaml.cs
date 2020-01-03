@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Extensions.Logging;
 using OpenHAB.Core;
 using OpenHAB.Core.Messages;
+using OpenHAB.Core.Services;
 using OpenHAB.Core.ViewModel;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -29,8 +30,8 @@ namespace OpenHAB.Windows.View
         {
             InitializeComponent();
 
-            DataContext = (SettingsViewModel)App.Container.Services.GetService(typeof(SettingsViewModel));
-            _logger = (ILogger<SettingsViewModel>)App.Container.Services.GetService(typeof(ILogger<SettingsViewModel>));
+            DataContext = (SettingsViewModel)DIService.Instance.Services.GetService(typeof(SettingsViewModel));
+            _logger = (ILogger<SettingsViewModel>)DIService.Instance.Services.GetService(typeof(ILogger<SettingsViewModel>));
 
             Messenger.Default.Register<SettingsUpdatedMessage>(this, msg => ShowInfoMessage(msg));
         }
