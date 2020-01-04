@@ -97,12 +97,19 @@
 					<TextBlock x:Uid="AppSettings"
 							   Style="{StaticResource TitleTextBlockStyle}"
 							   Margin="0,0,0,10" />
-					<TextBlock x:Uid="HideDefaultSitemap" />
+					<TextBlock x:Uid="HideDefaultSitemap"
+							   Margin="0,0,0,10" />
 					<ToggleSwitch x:Name="CheckBoxHideDefaultSitemap"
 								  Margin="0,0,0,12"
 								  HorizontalAlignment="Stretch"
 								  VerticalAlignment="Stretch"
 								  IsOn="{Binding Settings.HideDefaultSitemap, Mode=TwoWay}" />
+					<TextBlock x:Uid="AppLanguage"
+							   Margin="0,0,0,10" />
+					<ComboBox Margin="0,0,0,12"
+							  ItemsSource="{Binding Settings.AppLanguages}"
+							  DisplayMemberPath="Name"
+							  SelectedItem="{Binding Settings.SelectedAppLanguage, Mode=TwoWay}" />
 				</StackPanel>
 
 				<!-- Connection Settings -->
@@ -133,7 +140,8 @@
 								IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}">
 							<Button.Flyout>
 								<Flyout Placement="Top">
-									<ContentPresenter MinWidth="400" ContentTemplate="{StaticResource ConnectionConfigTemplate}" />
+									<ContentPresenter MinWidth="400"
+													  ContentTemplate="{StaticResource ConnectionConfigTemplate}" />
 								</Flyout>
 							</Button.Flyout>
 							<StackPanel HorizontalAlignment="Left">
@@ -149,7 +157,8 @@
 								IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}">
 							<Button.Flyout>
 								<Flyout Placement="Top">
-									<ContentPresenter MinWidth="400" ContentTemplate="{StaticResource ConnectionConfigTemplate}" />
+									<ContentPresenter MinWidth="400"
+													  ContentTemplate="{StaticResource ConnectionConfigTemplate}" />
 								</Flyout>
 							</Button.Flyout>
 							<StackPanel>
@@ -202,9 +211,10 @@
 								Orientation="Horizontal">
 						<Button x:Uid="SaveButton"
 								Margin="0,0,8,0"
-								Command="{x:Bind Vm.SaveCommand}" />
+								Command="{x:Bind Vm.SaveCommand}"
+								Click="Button_OnClick" />
 						<Button x:Uid="CancelButton"
-								Click="ButtonCancel_OnClick" />
+								Click="Button_OnClick" />
 					</StackPanel>
 				</Grid>
 			</StackPanel>

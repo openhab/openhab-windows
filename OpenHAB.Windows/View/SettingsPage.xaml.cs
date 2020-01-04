@@ -33,19 +33,27 @@ namespace OpenHAB.Windows.View
             DataContext = (SettingsViewModel)DIService.Instance.Services.GetService(typeof(SettingsViewModel));
             _logger = (ILogger<SettingsViewModel>)DIService.Instance.Services.GetService(typeof(ILogger<SettingsViewModel>));
 
-            Messenger.Default.Register<SettingsUpdatedMessage>(this, msg => ShowInfoMessage(msg));
+            Messenger.Default.Register<SettingsUpdatedMessage>(this, msg => HandleSettingsUpdate(msg));
         }
 
-        private async void ShowInfoMessage(SettingsUpdatedMessage msg)
+        private async void HandleSettingsUpdate(SettingsUpdatedMessage msg)
         {
 
             try
             {
-                string message = AppResources.Values.GetString("MessageSettingsConnectionConfigInvalid");
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                if (msg.IsSettingsValid)
                 {
-                    SettingsNotification.Show(message, 30000);
-                });
+                    Frame.BackStack.Clear();
+                    Frame.Navigate(typeof(MainPage));
+                }
+                else
+                {
+                    string message = AppResources.Values.GetString("MessageSettingsConnectionConfigInvalid");
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        SettingsNotification.Show(message, 30000);
+                    });
+                }
             }
             catch (Exception ex)
             {
@@ -53,7 +61,7 @@ namespace OpenHAB.Windows.View
             }
         }
 
-        private void ButtonCancel_OnClick(object sender, RoutedEventArgs e)
+        private void Button_OnClick(object sender, RoutedEventArgs e)
         {
             Frame.GoBack();
         }

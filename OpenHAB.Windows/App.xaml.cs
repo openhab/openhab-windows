@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
+using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Services;
 using OpenHAB.Windows.View;
 using Windows.ApplicationModel;
@@ -19,8 +20,8 @@ namespace OpenHAB.Windows
     /// </summary>
     public sealed partial class App : Application
     {
-        private static DIService _container;
         private ILogger<App> _logger;
+        private ISettingsService _settingsService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="App"/> class.
@@ -32,6 +33,7 @@ namespace OpenHAB.Windows
             InitializeComponent();
 
             _logger = (ILogger<App>)DIService.Instance.Services.GetService(typeof(ILogger<App>));
+            _settingsService = (ISettingsService)DIService.Instance.Services.GetService(typeof(ISettingsService));
 
             Suspending += OnSuspending;
             UnhandledException += App_UnhandledException;
@@ -54,6 +56,8 @@ namespace OpenHAB.Windows
                 statusbar.BackgroundOpacity = 1;
                 statusbar.ForegroundColor = Colors.White;
             }
+
+            _settingsService.SetProgramLanguage(null);
 
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
 

@@ -137,6 +137,7 @@
     <Compile Include="Services\SettingsService.cs" />
     <Compile Include="Services\WidgetNavigationService.cs" />
     <Compile Include="ViewModel\ConnectionConfigViewModel.cs" />
+    <Compile Include="ViewModel\LanguageViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="Services\DIService.cs" />

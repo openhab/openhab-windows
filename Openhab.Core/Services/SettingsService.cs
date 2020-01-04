@@ -3,7 +3,9 @@ using Newtonsoft.Json;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Model;
+using Windows.Globalization;
 using Windows.Storage;
+using Windows.System.UserProfile;
 
 namespace OpenHAB.Core.Services
 {
@@ -77,6 +79,26 @@ namespace OpenHAB.Core.Services
             }
 
             return JsonConvert.DeserializeObject<Settings>(json);
+        }
+
+        /// <inheritdoc />
+        public void SetProgramLanguage(string langcode)
+        {
+            if (string.IsNullOrEmpty(langcode))
+            {
+                Settings settings = Load();
+                langcode = settings.AppLanguage;
+            }
+
+
+            if (!string.IsNullOrEmpty(langcode))
+            {
+                ApplicationLanguages.PrimaryLanguageOverride = langcode;
+            }
+            else
+            {
+                ApplicationLanguages.PrimaryLanguageOverride = GlobalizationPreferences.Languages[0];
+            }
         }
 
         private void EnsureSettingsContainer()

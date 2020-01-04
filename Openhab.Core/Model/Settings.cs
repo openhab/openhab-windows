@@ -1,4 +1,6 @@
-﻿namespace OpenHAB.Core.Model
+﻿using System.Collections.Generic;
+
+namespace OpenHAB.Core.Model
 {
     /// <summary>
     /// Class that holds all the OpenHAB Windows app settings.
@@ -50,6 +52,16 @@
         /// Gets or sets the config to the OpenHAB remote instance.
         /// </summary>
         public OpenHABConnection RemoteConnection
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the application language.
+        /// </summary>
+        /// <value>The application language.</value>
+        public string AppLanguage
         {
             get;
             set;

@@ -108,6 +108,7 @@
     <None Include="OpenHAB.Windows.ruleset" />
     <None Include="OpenHAB.Windows_StoreKey.pfx" />
     <None Include="OpenHAB.Windows_TemporaryKey.pfx" />
+    <PRIResource Include="Strings\de-de\Resources.resw" />
     <PRIResource Include="Strings\en-us\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
