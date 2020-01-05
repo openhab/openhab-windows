@@ -139,7 +139,7 @@
     <value>Feedback</value>
   </data>
   <data name="IgnoreSSLCertErrors.Text" xml:space="preserve">
-    <value>Ignoriere SSL Zertifkasfehler</value>
+    <value>Ignoriere SSL Zertifkatsfehler</value>
   </data>
   <data name="IgnoreSSLCertHostErrors.Text" xml:space="preserve">
     <value>Ignoriere SSL Hostname Fehler</value>

@@ -72,23 +72,23 @@
 
 	</Page.Resources>
 
+	<ScrollViewer Grid.Row="1"
+				  VerticalScrollBarVisibility="Auto">
+		<Grid Margin="16">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+			<TextBlock x:Uid="SettingsHeader"
+					   x:Name="SettingsTitle"
+					   Margin="0,6,0,6"
+					   HorizontalAlignment="Left"
+					   VerticalAlignment="Center"
+					   Foreground="White"
+					   FontSize="32"
+					   TextWrapping="Wrap" />
 
-	<Grid Margin="16">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-		</Grid.RowDefinitions>
-		<TextBlock x:Uid="SettingsHeader"
-				   x:Name="SettingsTitle"
-				   Margin="0,6,0,6"
-				   HorizontalAlignment="Left"
-				   VerticalAlignment="Center"
-				   Foreground="White"
-				   FontSize="32"
-				   TextWrapping="Wrap" />
-		<ScrollViewer Grid.Row="1"
-					  VerticalScrollBarVisibility="Auto">
 			<StackPanel Orientation="Vertical">
 
 				<StackPanel Margin="0,0,0,25"
@@ -218,16 +218,16 @@
 					</StackPanel>
 				</Grid>
 			</StackPanel>
-		</ScrollViewer>
 
-		<community:InAppNotification x:Name="SettingsNotification"
-									 Grid.Row="1"
-									 Grid.RowSpan="2"
-									 Background="{StaticResource ErrorNotificationBackground}"
-									 ShowDismissButton="True"
-									 AnimationDuration="00:00:00.1000000"
-									 VerticalOffset="100"
-									 HorizontalOffset="0"
-									 StackMode="StackInFront" />
-	</Grid>
+			<community:InAppNotification x:Name="SettingsNotification"
+										 Grid.Row="1"
+										 Grid.RowSpan="2"
+										 Background="{StaticResource ErrorNotificationBackground}"
+										 ShowDismissButton="True"
+										 AnimationDuration="00:00:00.1000000"
+										 VerticalOffset="100"
+										 HorizontalOffset="0"
+										 StackMode="StackInFront" />
+		</Grid>
+	</ScrollViewer>
 </Page>
