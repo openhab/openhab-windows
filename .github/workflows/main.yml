@@ -26,10 +26,10 @@ jobs:
       uses: warrenbuckley/Setup-MSBuild@v1
 
     - name: Restore nuget packages
-      run: nuget restore ${{github.workspace}}/openhab-windows/src/OpenHAB.Windows.sln
+      run: nuget restore ${{github.workspace}}\OpenHAB.Windows.sln
     
     - name: Build OpenHab Windows App
-      run: msbuild.exe ${{github.workspace}}/openhab-windows/src/OpenHAB.Windows.sln /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxPackageDir="${{github.workspace}}/openhab-windows/build/" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="release"
+      run: msbuild.exe ${{github.workspace}}\OpenHAB.Windows.sln /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxPackageDir="${{github.workspace}}\build\" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="release"
 
     - name: Upload math result for job 1
       uses: actions/upload-artifact@v1
@@ -48,5 +48,5 @@ jobs:
       uses: actions/upload-release-asset@v1.0.1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: ${{github.workspace}}/openhab-windows/build/
+        asset_path: ${{github.workspace}}\build\
         asset_name: OpenHab UWP App
