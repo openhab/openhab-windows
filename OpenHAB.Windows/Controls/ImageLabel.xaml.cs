@@ -2,6 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
+using System.Text.RegularExpressions;
 
 
 namespace OpenHAB.Windows.Controls
@@ -25,7 +26,19 @@ namespace OpenHAB.Windows.Controls
                 return;
             }
 
-            control.Icon.Source = new BitmapImage(new Uri(control.IconPath));
+            // fix IconPathState by removeing empty space and special characters
+            string iconPath = control.IconPath;
+            Match state = Regex.Match(iconPath, @"state=(.+?)&");
+            if (state != null)
+            {
+                if (!string.IsNullOrEmpty(state.Value))
+                {
+                    string newstate = Regex.Replace(state.Groups[1].Value, "[^0-9a-zA-Z.&]", string.Empty);
+                    iconPath = control.IconPath.Replace(state.Groups[1].Value, newstate, StringComparison.InvariantCulture);
+                }
+            }
+
+            control.Icon.Source = new BitmapImage(new Uri(iconPath));
         }
 
         /// <summary>
