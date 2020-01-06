@@ -31,11 +31,11 @@ jobs:
     - name: Build OpenHab Windows App
       run: msbuild.exe ${{github.workspace}}\OpenHAB.Windows.sln /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxPackageDir="${{github.workspace}}\build\" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="release"
 
-    - name: Upload math result for job 1
+    - name: Upload build assets
       uses: actions/upload-artifact@v1
       with:
         name: app
-        path: build
+        path: ${{github.workspace}}\build\
     
     - name: Create a Release
       uses: actions/create-release@v1
