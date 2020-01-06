@@ -7,8 +7,8 @@ on:
       - features/*
 
 env:
-  SRC_Dir: ${{GITHUB_WORKSPACE}}/openhab-windows/src/
-  Build_Dir:  ${{GITHUB_WORKSPACE}}/openhab-windows/build/
+  SRC_Dir: ${{ github.workspace}}/openhab-windows/src/
+  Build_Dir: ${{github.workspace}}/openhab-windows/build/
 
 jobs:
   build:
