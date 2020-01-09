@@ -4,6 +4,7 @@ on:
   push:
     branches: 
       - master
+      - features/*
 
 jobs:
   build:
@@ -12,6 +13,9 @@ jobs:
     steps:
     - name: Checkout master code
       uses: actions/checkout@v1
+      with:
+        path: src
+        clean: true
          
     - name: Install latest Nuget
       uses: NuGet/setup-nuget@v1.0.2
@@ -22,27 +26,34 @@ jobs:
       uses: warrenbuckley/Setup-MSBuild@v1
 
     - name: Restore nuget packages
-      run: nuget restore OpenHAB.Windows.sln
+      run: nuget restore ${{github.workspace}}\OpenHAB.Windows.sln
     
     - name: Build OpenHab Windows App
-      run: msbuild.exe TranslateIT.sln /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxPackageDir="build/" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="release"
+      run: msbuild.exe ${{github.workspace}}\OpenHAB.Windows.sln /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxPackageDir="${{github.workspace}}\build\" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="release"
 
-    - name: Upload math result for job 1
+    - name: Upload build assets
       uses: actions/upload-artifact@v1
       with:
         name: app
-        path: build
+        path: ${{github.workspace}}\build\
     
     - name: Create a Release
+      if: github.ref == 'refs/heads/master'
+      id: create_release
       uses: actions/create-release@v1
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-         tag_name: ${{ github.ref }}
-         release_name: Release ${{ github.ref }}
+         tag_name: ${{ github.sha }}
+         release_name: Release ${{ github.sha }}
       
     - name: Upload Release Asset
+      if: github.ref == 'refs/heads/master'
       id: upload-release-asset 
       uses: actions/upload-release-asset@v1.0.1
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: ./build
+        upload_url: ${{steps.create_release.outputs.upload_url}} 
+        asset_path: ${{github.workspace}}\build\
         asset_name: OpenHab UWP App
