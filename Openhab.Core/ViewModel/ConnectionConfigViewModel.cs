@@ -3,6 +3,8 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.SDK;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
 
 namespace OpenHAB.Core.ViewModel
 {
@@ -59,6 +61,31 @@ namespace OpenHAB.Core.ViewModel
 
                 SetProperty(ref _url, tempUrl);
                 _connectionConfig.Url = _url;
+
+                OnPropertyChanged(nameof(Subtitle));
+            }
+        }
+
+        /// <summary>
+        /// Gets the subtitle.
+        /// </summary>
+        /// <value>The subtitle.</value>
+        public string Subtitle
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_url))
+                {
+                    return "Not configured";
+                }
+
+                if (Uri.TryCreate(_url, UriKind.Absolute, out Uri uri) && 
+                    string.Compare(uri.Scheme.ToUpperInvariant(), "HTTPS", StringComparison.InvariantCulture) == 0)
+                {
+                    return "Conntected to " + _url;
+                }
+
+                return "Unsecure connected to" + _url;
             }
         }
 
@@ -121,15 +148,21 @@ namespace OpenHAB.Core.ViewModel
 
             string url = parameter.ToString();
 
-            UrlState = OpenHABUrlState.Unknown;
+            OpenHABUrlState urlState = OpenHABUrlState.Unknown;
             if (await _openHabsdk.CheckUrlReachability(url, Common.OpenHABHttpClientType.Local).ConfigureAwait(false))
             {
-                UrlState = OpenHABUrlState.OK;
+                urlState = OpenHABUrlState.OK;
             }
             else
             {
-                UrlState = OpenHABUrlState.Failed;
+                urlState = OpenHABUrlState.Failed;
             }
+
+            CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
+            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                UrlState = urlState;
+            });
         }
     }
 }

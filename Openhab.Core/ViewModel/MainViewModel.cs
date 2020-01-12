@@ -244,6 +244,8 @@ namespace OpenHAB.Core.ViewModel
                     _openHabsdk.StartItemUpdates();
 
                     OpenLastOrDefaultSitemap();
+
+                    Subtitle = SelectedSitemap.Label;
                     IsDataLoading = false;
                 });
             }
@@ -321,7 +323,7 @@ namespace OpenHAB.Core.ViewModel
         {
             OpenHABWidget widget = WidgetNavigationService.GoBack();
 
-            Subtitle = widget == null ? string.Empty : widget.Label;
+            Subtitle = widget == null ? SelectedSitemap.Label: widget.Label;
             SetWidgetsOnScreen(widget != null ? widget.LinkedPage.Widgets : SelectedSitemap.Widgets);
         }
 

@@ -154,7 +154,7 @@
     <value>openHAB URL</value>
   </data>
   <data name="MessageNotConfigured" xml:space="preserve">
-    <value>Connection settings are not invalid.
+    <value>Connection settings are not configured.
 Please select demo mode or configure local/remote OpenHab connection information.</value>
   </data>
   <data name="MessagesNotReachable" xml:space="preserve">
@@ -180,7 +180,7 @@ Go to app settings (gear icon) to check the connection configuration.</value>
     <value>Settings</value>
   </data>
   <data name="UsernameHeader.Text" xml:space="preserve">
-    <value>went</value>
+    <value>Username</value>
   </data>
   <data name="NoItemsOrOpenHabNotAvailable.Text" xml:space="preserve">
     <value>No sitemaps available</value>
@@ -198,7 +198,7 @@ Go to app settings (gear icon) to check the connection configuration.</value>
     <value>Loading data...</value>
   </data>
   <data name="MessageSettingsConnectionConfigInvalid" xml:space="preserve">
-    <value>Connection settings are not invalid.
+    <value>Connection settings are invalid.
 Please select demo mode or configure local/remote connection.</value>
   </data>
   <data name="AppLanguage.Text" xml:space="preserve">

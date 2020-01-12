@@ -242,7 +242,7 @@ namespace OpenHAB.Core.SDK
                 var settings = _settingsService.Load();
                 var client = OpenHABHttpClient.Client(_connectionType, settings);
                 var content = new StringContent(command);
-                
+
                 var result = await client.PostAsync(item.Link, content);
                 if (!result.IsSuccessStatusCode)
                 {

@@ -69,7 +69,6 @@
 				</StackPanel>
 			</StackPanel>
 		</DataTemplate>
-
 	</Page.Resources>
 
 	<ScrollViewer Grid.Row="1"
@@ -145,8 +144,9 @@
 								</Flyout>
 							</Button.Flyout>
 							<StackPanel HorizontalAlignment="Left">
-								<TextBlock x:Uid="LocalSettings" />
-								<TextBlock Text="{Binding Url}" />
+								<TextBlock x:Uid="LocalSettings"
+										   FontSize="16" />
+								<TextBlock Text="{Binding Subtitle}" />
 							</StackPanel>
 						</Button>
 						<Button Margin="10"
@@ -162,8 +162,8 @@
 								</Flyout>
 							</Button.Flyout>
 							<StackPanel>
-								<TextBlock x:Uid="RemoteSettings" />
-								<TextBlock Text="{Binding Url}" />
+								<TextBlock x:Uid="RemoteSettings" FontSize="16" />
+								<TextBlock Text="{Binding Subtitle}" />
 							</StackPanel>
 						</Button>
 					</StackPanel>

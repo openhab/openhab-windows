@@ -1,7 +1,6 @@
 ﻿using System;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Extensions.Logging;
-using OpenHAB.Core;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Services;
 using OpenHAB.Core.ViewModel;
@@ -38,7 +37,6 @@ namespace OpenHAB.Windows.View
 
         private async void HandleSettingsUpdate(SettingsUpdatedMessage msg)
         {
-
             try
             {
                 if (msg.IsSettingsValid)

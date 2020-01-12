@@ -111,7 +111,7 @@
 							 Color="Black" />
 		</Grid.Background>
 		<NavigationView x:Name="SitemapNavigation"
-						Header="{x:Bind Vm.SelectedSitemap.Label, Mode=OneWay}"
+						Header="{x:Bind Vm.Subtitle, Mode=OneWay}"
 						MenuItemsSource="{x:Bind Vm.Sitemaps, Mode=OneWay}"
 						MenuItemTemplate="{StaticResource NavSitemapTemplate}"
 						IsBackButtonVisible="Collapsed"

@@ -44,7 +44,9 @@ namespace OpenHAB.Core.Common
         /// <returns>The HttpClient instance.</returns>
         public static HttpClient DisposableClient(OpenHABHttpClientType connectionType, Settings settings)
         {
+            _logger = (ILogger<OpenHABHttpClient>)DIService.Instance.Services.GetService(typeof(ILogger<OpenHABHttpClient>));
             _settings = settings;
+
             return InitClient(connectionType, true);
         }
 
