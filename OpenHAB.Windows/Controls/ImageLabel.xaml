@@ -20,7 +20,7 @@
                    Margin="8"
                    Foreground="{StaticResource OpenHABSplitviewBrush}"
                    Text="{x:Bind LabelText, Mode=OneWay}"
-                   TextWrapping="NoWrap" />
+                   TextWrapping="Wrap" />
         </ScrollViewer>
     </StackPanel>
 </UserControl>

@@ -3,9 +3,9 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
-using CommonServiceLocator;
-using OpenHAB.Core.Contracts.Services;
+using Microsoft.Extensions.Logging;
 using OpenHAB.Core.Model;
+using OpenHAB.Core.Services;
 
 namespace OpenHAB.Core.Common
 {
@@ -16,6 +16,7 @@ namespace OpenHAB.Core.Common
     {
         private static HttpClient _client;
         private static Settings _settings;
+        private static ILogger<OpenHABHttpClient> _logger;
 
         /// <summary>
         /// Gets or sets the connection URL.
@@ -32,6 +33,8 @@ namespace OpenHAB.Core.Common
         public static HttpClient Client(OpenHABHttpClientType connectionType, Settings settings)
         {
             _settings = settings;
+            _logger = (ILogger<OpenHABHttpClient>)DIService.Instance.Services.GetService(typeof(ILogger<OpenHABHttpClient>));
+
             return _client ?? (_client = InitClient(connectionType));
         }
 
@@ -41,7 +44,9 @@ namespace OpenHAB.Core.Common
         /// <returns>The HttpClient instance.</returns>
         public static HttpClient DisposableClient(OpenHABHttpClientType connectionType, Settings settings)
         {
+            _logger = (ILogger<OpenHABHttpClient>)DIService.Instance.Services.GetService(typeof(ILogger<OpenHABHttpClient>));
             _settings = settings;
+
             return InitClient(connectionType, true);
         }
 
@@ -55,6 +60,8 @@ namespace OpenHAB.Core.Common
 
         private static HttpClient InitClient(OpenHABHttpClientType connectionType, bool disposable = false)
         {
+            _logger.LogInformation($"Initialize http client for connection type '{connectionType.ToString()}'");
+
             if (string.IsNullOrWhiteSpace(BaseUrl) && !disposable)
             {
                 return null;

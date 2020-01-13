@@ -23,24 +23,48 @@
 					Value="Stretch" />
 		</Style>
 
+		<!-- Navigation View Styling -->
+		<SolidColorBrush x:Key="NavigationViewDefaultPaneBackground"
+						 Color="#344040" />
+		
+		<SolidColorBrush x:Key="NavigationViewExpandedPaneBackground"
+						 Color="#344040" />
+
+		<SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground"
+						 Color="#FFFF5722" />
+		
+		<SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver"
+						 Color="white" />
+		<SolidColorBrush x:Key="NavigationViewItemForegroundSelected"
+						 Color="white" />
+		<SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPointerOver"
+						 Color="white" />
+		<SolidColorBrush x:Key="NavigationViewItemForegroundPressed"
+						 Color="white" />
+		<SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPressed"
+						 Color="white" />
+		<SolidColorBrush x:Key="NavigationViewItemForeground"
+						 Color="White" />
+
+		<!-- Converters -->
 		<converters:ObjectToSitemapConverter x:Key="ObjectToSitemapConverter" />
 		<converters:BoolToBackgroundColorConverter x:Key="BoolToBackgroundColorConverter" />
 		<converters:ZeroToVisibilityConverter x:Key="ZeroToVisibility" />
 		<converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 
-		<DataTemplate x:Key="NavMenuItemTemplate"
+		<DataTemplate x:Key="NavSitemapTemplate"
 					  x:DataType="model:OpenHABSitemap">
 			<StackPanel Orientation="Horizontal">
-				<Border Width="5"
+				<!--<Border Width="5"
 						HorizontalAlignment="Left"
 						VerticalAlignment="Stretch"
-						Background="{Binding Source={RelativeSource TemplatedParent}}" />
+						Background="{Binding Source={RelativeSource TemplatedParent}}" />-->
 				<Image x:Name="image"
-					   Width="35"
-					   Height="35"
+					   Width="25"
+					   Height="25"
 					   Source="/Assets/openhab.png" />
 				<TextBlock x:Name="textBlock"
-						   Margin="16,0,0,0"
+						   Margin="10,0,0,0"
 						   VerticalAlignment="Center"
 						   Foreground="{StaticResource OpenHABMenuColor}"
 						   Style="{StaticResource FlyoutPickerTitleTextBlockStyle}"
@@ -58,6 +82,16 @@
 					   Text="{Binding }" />
 		</DataTemplate>
 
+		<DataTemplate x:Key="NavHeaderTemplate">
+			<TextBlock x:Name="textBlock"
+					   Margin="5,0,0,10"
+					   VerticalAlignment="Center"
+					   Style="{StaticResource HeaderText}"
+					   FontSize="36"
+					   Foreground="White"
+					   Text="{Binding }" />
+		</DataTemplate>
+
 		<DataTemplate x:Key="WaitListTemplate">
 			<StackPanel Orientation="Horizontal"
 						Padding="12">
@@ -71,115 +105,93 @@
 		</DataTemplate>
 	</Page.Resources>
 
-	<Page.DataContext>
-		<Binding Path="Main"
-				 Source="{StaticResource Locator}" />
-	</Page.DataContext>
-
 	<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="*" />
-			<ColumnDefinition Width="120" />
-		</Grid.ColumnDefinitions>
-		<SplitView x:Name="SitemapSplitView"
-				   Grid.ColumnSpan="2"
-				   VerticalContentAlignment="Stretch"
-				   CompactPaneLength="0"
-				   DisplayMode="CompactOverlay"
-				   IsPaneOpen="False"
-				   LightDismissOverlayMode="Auto"
-				   OpenPaneLength="200">
-			<SplitView.Background>
-				<SolidColorBrush Opacity="0.2"
-								 Color="Black" />
-			</SplitView.Background>
-
-			<SplitView.Pane>
-				<Grid Background="{StaticResource OpenHABSplitviewBrush}">
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto" />
-						<RowDefinition Height="*" />
-						<RowDefinition Height="Auto" />
-					</Grid.RowDefinitions>
-					<controls:NavMenuListView Grid.Row="1"
-											  Margin="0,48,0,0"
-											  Padding="0"
-											  HeaderTemplate="{StaticResource NavMenuHeaderTemplate}"
-											  Header="Sitemaps"
-											  ItemContainerStyle="{StaticResource NavMenuContainerStyle}"
-											  ItemTemplate="{StaticResource NavMenuItemTemplate}"
-											  ItemsSource="{x:Bind Vm.Sitemaps, Mode=OneWay}"
-											  SelectedItem="{x:Bind Vm.SelectedSitemap, Converter={StaticResource ObjectToSitemapConverter}, Mode=TwoWay}" />
+		<Grid.Background>
+			<SolidColorBrush Opacity="0.2"
+							 Color="Black" />
+		</Grid.Background>
+		<NavigationView x:Name="SitemapNavigation"
+						Header="{x:Bind Vm.Subtitle, Mode=OneWay}"
+						MenuItemsSource="{x:Bind Vm.Sitemaps, Mode=OneWay}"
+						MenuItemTemplate="{StaticResource NavSitemapTemplate}"
+						IsBackButtonVisible="Collapsed"
+						AlwaysShowHeader="True"
+						IsSettingsVisible="False"
+						OpenPaneLength="200"
+						CompactPaneLength="45"
+						PaneDisplayMode="Left"
+						HeaderTemplate="{StaticResource NavHeaderTemplate}">
+			<NavigationView.PaneCustomContent>
+				<StackPanel Orientation="Vertical"
+							Visibility="{Binding IsPaneOpen, ElementName=SitemapNavigation}">
+					<TextBlock x:Name="textBlock"
+							   Margin="5,0,0,10"
+							   VerticalAlignment="Center"
+							   Style="{StaticResource HeaderText}"
+							   Foreground="{StaticResource OpenHABMenuColor}"
+							   Text="Sitemaps" />
 					<TextBlock Grid.Row="1"
-							   Margin="10,100,10,0"
+							   Margin="10,10,10,0"
 							   x:Uid="NoItemsOrOpenHabNotAvailable"
 							   Visibility="{x:Bind Vm.Sitemaps.Count, Converter={StaticResource ZeroToVisibility}, Mode=OneWay}"
 							   TextWrapping="Wrap"
 							   Foreground="{StaticResource OpenHABMenuColor}"
 							   Style="{StaticResource FlyoutPickerTitleTextBlockStyle}" />
-
-					<StackPanel Grid.Row="2"
-								Orientation="Vertical">
-						<StackPanel Margin="12,0,0,15"
-									VerticalAlignment="Bottom"
-									Orientation="Horizontal">
-							<interactivity:Interaction.Behaviors>
-								<core:EventTriggerBehavior EventName="Tapped">
-									<core:InvokeCommandAction Command="{x:Bind Vm.FeedbackCommand}" />
-								</core:EventTriggerBehavior>
-							</interactivity:Interaction.Behaviors>
-							<TextBlock VerticalAlignment="Center"
-									   AutomationProperties.Name="Favorite"
-									   FontFamily="Segoe MDL2 Assets"
-									   FontSize="36"
-									   Foreground="{StaticResource OpenHABMenuColor}"
-									   Text="&#xE939;" />
-							<TextBlock x:Uid="FeedbackHeader"
-									   x:Name="feedbackTextBlock"
-									   Margin="12,0,0,0"
-									   VerticalAlignment="Center"
-									   Foreground="{StaticResource OpenHABMenuColor}"
-									   Style="{StaticResource FlyoutPickerTitleTextBlockStyle}"
-									   TextWrapping="Wrap" />
-						</StackPanel>
-						<StackPanel Margin="12,0,0,8"
-									VerticalAlignment="Bottom"
-									Orientation="Horizontal">
-							<interactivity:Interaction.Behaviors>
-								<core:EventTriggerBehavior EventName="Tapped">
-									<core:NavigateToPageAction TargetPage="OpenHAB.Windows.View.SettingsPage" />
-								</core:EventTriggerBehavior>
-							</interactivity:Interaction.Behaviors>
-							<TextBlock VerticalAlignment="Center"
-									   AutomationProperties.Name="Favorite"
-									   FontFamily="Segoe MDL2 Assets"
-									   FontSize="36"
-									   Foreground="{StaticResource OpenHABMenuColor}"
-									   Text="&#xE713;" />
-							<TextBlock x:Uid="SettingsHeader"
-									   x:Name="settingsTextBlock"
-									   Margin="12,0,0,0"
-									   VerticalAlignment="Center"
-									   Foreground="{StaticResource OpenHABMenuColor}"
-									   Style="{StaticResource FlyoutPickerTitleTextBlockStyle}"
-									   TextWrapping="Wrap" />
-						</StackPanel>
+				</StackPanel>
+			</NavigationView.PaneCustomContent>
+			<NavigationView.PaneFooter>
+				<StackPanel Grid.Row="2"
+							Orientation="Vertical">
+					<StackPanel Margin="8,0,0,15"
+								VerticalAlignment="Bottom"
+								Orientation="Horizontal">
+						<interactivity:Interaction.Behaviors>
+							<core:EventTriggerBehavior EventName="Tapped">
+								<core:InvokeCommandAction Command="{x:Bind Vm.FeedbackCommand}" />
+							</core:EventTriggerBehavior>
+						</interactivity:Interaction.Behaviors>
+						<TextBlock VerticalAlignment="Center"
+								   AutomationProperties.Name="Favorite"
+								   FontFamily="Segoe MDL2 Assets"
+								   FontSize="24"
+								   Foreground="{StaticResource OpenHABMenuColor}"
+								   Text="&#xE939;" />
+						<TextBlock x:Uid="FeedbackHeader"
+								   x:Name="feedbackTextBlock"
+								   Margin="12,0,0,0"
+								   VerticalAlignment="Center"
+								   Foreground="{StaticResource OpenHABMenuColor}"
+								   Style="{StaticResource FlyoutPickerTitleTextBlockStyle}"
+								   TextWrapping="Wrap" />
 					</StackPanel>
-				</Grid>
-			</SplitView.Pane>
+					<StackPanel Margin="8,0,0,0"
+								VerticalAlignment="Bottom"
+								Orientation="Horizontal">
+						<interactivity:Interaction.Behaviors>
+							<core:EventTriggerBehavior EventName="Tapped">
+								<core:NavigateToPageAction TargetPage="OpenHAB.Windows.View.SettingsPage" />
+							</core:EventTriggerBehavior>
+						</interactivity:Interaction.Behaviors>
+						<TextBlock VerticalAlignment="Center"
+								   AutomationProperties.Name="Favorite"
+								   FontFamily="Segoe MDL2 Assets"
+								   FontSize="24"
+								   Foreground="{StaticResource OpenHABMenuColor}"
+								   Text="&#xE713;" />
+						<TextBlock x:Uid="SettingsHeader"
+								   x:Name="settingsTextBlock"
+								   Margin="12,0,0,0"
+								   VerticalAlignment="Center"
+								   Foreground="{StaticResource OpenHABMenuColor}"
+								   Style="{StaticResource FlyoutPickerTitleTextBlockStyle}"
+								   TextWrapping="Wrap" />
+					</StackPanel>
+				</StackPanel>
+			</NavigationView.PaneFooter>
 			<Grid x:Name="MainContentGrid"
 				  Margin="35,0,0,0"
 				  VerticalAlignment="Stretch">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="*" />
-				</Grid.RowDefinitions>
-				<TextBlock x:Name="SitemapLabel"
-						   FontSize="36"
-						   Foreground="White"
-						   Text="{x:Bind Vm.SelectedSitemap.Label, Mode=OneWay}" />
-				<ScrollViewer Grid.Row="1"
-							  VerticalScrollBarVisibility="Auto">
+				<ScrollViewer VerticalScrollBarVisibility="Auto">
 					<GridView x:Name="MasterListView"
 							  Margin="12,0,0,0"
 							  HorizontalAlignment="Stretch"
@@ -202,20 +214,10 @@
 					</GridView>
 				</ScrollViewer>
 			</Grid>
-		</SplitView>
-
-		<ToggleButton x:Name="TogglePaneButton"
-					  Grid.Row="0"
-					  Foreground="White"
-					  IsChecked="{Binding IsPaneOpen, ElementName=SitemapSplitView, Mode=TwoWay}"
-					  Style="{StaticResource SplitViewTogglePaneButtonStyle}"
-					  TabIndex="1"
-					  ToolTipService.ToolTip="Menu" />
+		</NavigationView>
 
 		<community:InAppNotification x:Uid="ErrorMessage"
 									 x:Name="ErrorNotification"
-									 Grid.Column="0"
-									 Grid.ColumnSpan="2"
 									 Background="{StaticResource ErrorNotificationBackground}"
 									 ShowDismissButton="True"
 									 AnimationDuration="00:00:00.1000000"
@@ -234,8 +236,6 @@
 									 StackMode="StackInFront" />
 
 		<community:Loading x:Name="LoadingControl"
-						   Grid.Column="0"
-						   Grid.ColumnSpan="2"
 						   IsLoading="{x:Bind Vm.IsDataLoading, Mode=TwoWay}"
 						   HorizontalContentAlignment="Center"
 						   VerticalContentAlignment="Center">
@@ -254,14 +254,8 @@
 						<AdaptiveTrigger MinWindowWidth="720" />
 					</VisualState.StateTriggers>
 					<VisualState.Setters>
-						<Setter Target="SitemapSplitView.CompactPaneLength"
-								Value="56" />
-						<Setter Target="SitemapLabel.Margin"
-								Value="20,12,0,16" />
-						<Setter Target="SitemapSplitView.DisplayMode"
-								Value="Inline" />
-						<Setter Target="SitemapSplitView.IsPaneOpen"
-								Value="True" />
+						<Setter Target="SitemapNavigation.PaneDisplayMode"
+								Value="Left" />
 					</VisualState.Setters>
 				</VisualState>
 				<VisualState x:Name="NarrowState">
@@ -269,14 +263,8 @@
 						<AdaptiveTrigger MinWindowWidth="0" />
 					</VisualState.StateTriggers>
 					<VisualState.Setters>
-						<Setter Target="SitemapSplitView.CompactPaneLength"
-								Value="0" />
-						<Setter Target="SitemapLabel.Margin"
-								Value="40,12,0,16" />
-						<Setter Target="SitemapSplitView.DisplayMode"
-								Value="CompactOverlay" />
-						<Setter Target="SitemapSplitView.IsPaneOpen"
-								Value="False" />
+						<Setter Target="SitemapNavigation.PaneDisplayMode"
+								Value="LeftMinimal" />
 					</VisualState.Setters>
 				</VisualState>
 			</VisualStateGroup>

@@ -7,7 +7,6 @@
 	  xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
 	  xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
 	  xmlns:community="using:Microsoft.Toolkit.Uwp.UI.Controls"
-	  DataContext="{Binding Settings, Source={StaticResource Locator}}"
 	  mc:Ignorable="d">
 
 	<Page.Background>
@@ -70,26 +69,25 @@
 				</StackPanel>
 			</StackPanel>
 		</DataTemplate>
-
 	</Page.Resources>
 
+	<ScrollViewer Grid.Row="1"
+				  VerticalScrollBarVisibility="Auto">
+		<Grid Margin="16">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+			<TextBlock x:Uid="SettingsHeader"
+					   x:Name="SettingsTitle"
+					   Margin="0,6,0,6"
+					   HorizontalAlignment="Left"
+					   VerticalAlignment="Center"
+					   Foreground="White"
+					   FontSize="32"
+					   TextWrapping="Wrap" />
 
-	<Grid Margin="16">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-		</Grid.RowDefinitions>
-		<TextBlock x:Uid="SettingsHeader"
-				   x:Name="SettingsTitle"
-				   Margin="0,6,0,6"
-				   HorizontalAlignment="Left"
-				   VerticalAlignment="Center"
-				   Foreground="White"
-				   FontSize="32"
-				   TextWrapping="Wrap" />
-		<ScrollViewer Grid.Row="1"
-					  VerticalScrollBarVisibility="Auto">
 			<StackPanel Orientation="Vertical">
 
 				<StackPanel Margin="0,0,0,25"
@@ -98,12 +96,19 @@
 					<TextBlock x:Uid="AppSettings"
 							   Style="{StaticResource TitleTextBlockStyle}"
 							   Margin="0,0,0,10" />
-					<TextBlock x:Uid="HideDefaultSitemap" />
+					<TextBlock x:Uid="HideDefaultSitemap"
+							   Margin="0,0,0,10" />
 					<ToggleSwitch x:Name="CheckBoxHideDefaultSitemap"
 								  Margin="0,0,0,12"
 								  HorizontalAlignment="Stretch"
 								  VerticalAlignment="Stretch"
 								  IsOn="{Binding Settings.HideDefaultSitemap, Mode=TwoWay}" />
+					<TextBlock x:Uid="AppLanguage"
+							   Margin="0,0,0,10" />
+					<ComboBox Margin="0,0,0,12"
+							  ItemsSource="{Binding Settings.AppLanguages}"
+							  DisplayMemberPath="Name"
+							  SelectedItem="{Binding Settings.SelectedAppLanguage, Mode=TwoWay}" />
 				</StackPanel>
 
 				<!-- Connection Settings -->
@@ -134,12 +139,14 @@
 								IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}">
 							<Button.Flyout>
 								<Flyout Placement="Top">
-									<ContentPresenter MinWidth="400" ContentTemplate="{StaticResource ConnectionConfigTemplate}" />
+									<ContentPresenter MinWidth="400"
+													  ContentTemplate="{StaticResource ConnectionConfigTemplate}" />
 								</Flyout>
 							</Button.Flyout>
 							<StackPanel HorizontalAlignment="Left">
-								<TextBlock x:Uid="LocalSettings" />
-								<TextBlock Text="{Binding Url}" />
+								<TextBlock x:Uid="LocalSettings"
+										   FontSize="16" />
+								<TextBlock Text="{Binding Subtitle}" />
 							</StackPanel>
 						</Button>
 						<Button Margin="10"
@@ -150,12 +157,13 @@
 								IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}">
 							<Button.Flyout>
 								<Flyout Placement="Top">
-									<ContentPresenter MinWidth="400" ContentTemplate="{StaticResource ConnectionConfigTemplate}" />
+									<ContentPresenter MinWidth="400"
+													  ContentTemplate="{StaticResource ConnectionConfigTemplate}" />
 								</Flyout>
 							</Button.Flyout>
 							<StackPanel>
-								<TextBlock x:Uid="RemoteSettings" />
-								<TextBlock Text="{Binding Url}" />
+								<TextBlock x:Uid="RemoteSettings" FontSize="16" />
+								<TextBlock Text="{Binding Subtitle}" />
 							</StackPanel>
 						</Button>
 					</StackPanel>
@@ -203,22 +211,23 @@
 								Orientation="Horizontal">
 						<Button x:Uid="SaveButton"
 								Margin="0,0,8,0"
-								Command="{x:Bind Vm.SaveCommand}" />
+								Command="{x:Bind Vm.SaveCommand}"
+								Click="Button_OnClick" />
 						<Button x:Uid="CancelButton"
-								Click="ButtonCancel_OnClick" />
+								Click="Button_OnClick" />
 					</StackPanel>
 				</Grid>
 			</StackPanel>
-		</ScrollViewer>
 
-		<community:InAppNotification x:Name="SettingsNotification"
-									 Grid.Row="1"
-									 Grid.RowSpan="2"
-									 Background="{StaticResource ErrorNotificationBackground}"
-									 ShowDismissButton="True"
-									 AnimationDuration="00:00:00.1000000"
-									 VerticalOffset="100"
-									 HorizontalOffset="0"
-									 StackMode="StackInFront" />
-	</Grid>
+			<community:InAppNotification x:Name="SettingsNotification"
+										 Grid.Row="1"
+										 Grid.RowSpan="2"
+										 Background="{StaticResource ErrorNotificationBackground}"
+										 ShowDismissButton="True"
+										 AnimationDuration="00:00:00.1000000"
+										 VerticalOffset="100"
+										 HorizontalOffset="0"
+										 StackMode="StackInFront" />
+		</Grid>
+	</ScrollViewer>
 </Page>

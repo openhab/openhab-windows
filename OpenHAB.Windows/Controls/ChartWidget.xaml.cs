@@ -1,5 +1,4 @@
 ﻿using System;
-using CommonServiceLocator;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts.Services;
 using Windows.UI.Xaml;
@@ -13,8 +12,6 @@ namespace OpenHAB.Windows.Controls
     /// </summary>
     public sealed partial class ChartWidget : WidgetBase
     {
-        private readonly ISettingsService _settingsService;
-
         private DispatcherTimer _timer;
         private string _chartUri;
 
@@ -38,7 +35,6 @@ namespace OpenHAB.Windows.Controls
         {
             InitializeComponent();
             Loaded += OnLoaded;
-            _settingsService = ServiceLocator.Current.GetInstance<ISettingsService>();
         }
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -85,13 +81,13 @@ namespace OpenHAB.Windows.Controls
             ThumbImage.Source = new BitmapImage(
                 new Uri(ChartUri, UriKind.Absolute))
             {
-                CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                CreateOptions = BitmapCreateOptions.IgnoreImageCache,
             };
 
             FullImage.Source = new BitmapImage(
                 new Uri(ChartUri, UriKind.Absolute))
             {
-                CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                CreateOptions = BitmapCreateOptions.IgnoreImageCache,
             };
         }
 

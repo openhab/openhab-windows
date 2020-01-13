@@ -28,7 +28,7 @@ namespace OpenHAB.Core.Model
 
             set
             {
-                if (value.Trim() == string.Empty)
+                if (string.IsNullOrEmpty(value.Trim()))
                 {
                     _label = value;
                     return;

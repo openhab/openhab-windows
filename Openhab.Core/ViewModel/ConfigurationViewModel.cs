@@ -1,6 +1,10 @@
-﻿using OpenHAB.Core.Contracts.Services;
+﻿using Microsoft.Extensions.Logging;
+using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.SDK;
 using OpenHAB.Core.ViewModel;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OpenHAB.Core.Model
 {
@@ -14,16 +18,20 @@ namespace OpenHAB.Core.Model
         private ConnectionConfigViewModel _remoteConnection;
         private ConnectionConfigViewModel _localConnection;
         private readonly ISettingsService _settingsService;
+        private readonly ILogger<ConfigurationViewModel> _logger;
         private readonly Settings _settings;
         private bool? _willIgnoreSSLCertificate;
         private bool? _willIgnoreSSLHostname;
+        private LanguageViewModel _selectedAppLanguage;
+        private List<LanguageViewModel> _appLanguages;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationViewModel"/> class.
         /// </summary>
-        public ConfigurationViewModel(ISettingsService settingsService, IOpenHAB openHabsdk)
+        public ConfigurationViewModel(ISettingsService settingsService, IOpenHAB openHabsdk, ILogger<ConfigurationViewModel> logger)
         {
             _settingsService = settingsService;
+            _logger = logger;
             _settings = settingsService.Load();
 
             _localConnection = new ConnectionConfigViewModel(_settings.LocalConnection, openHabsdk);
@@ -33,9 +41,42 @@ namespace OpenHAB.Core.Model
             _willIgnoreSSLHostname = _settings.WillIgnoreSSLHostname;
             _isRunningInDemoMode = _settings.IsRunningInDemoMode;
             _hideDefaultSitemap = _settings.HideDefaultSitemap;
+
+            _appLanguages = InitalizeAppLanguages();
+
+            _selectedAppLanguage =
+                _appLanguages.FirstOrDefault(x => string.Compare(x.Code, _settings.AppLanguage, StringComparison.InvariantCultureIgnoreCase) == 0);
         }
 
-        /// <summary>
+        private List<LanguageViewModel> InitalizeAppLanguages()
+        {
+            List<LanguageViewModel> appLanguages = new List<LanguageViewModel>();
+            LanguageViewModel system = new LanguageViewModel()
+            {
+                Name = "System",
+                Code = null
+            };
+
+            LanguageViewModel english = new LanguageViewModel()
+            {
+                Name = "English",
+                Code = "en-us"
+            };
+
+            LanguageViewModel german = new LanguageViewModel()
+            {
+                Name = "Deutsch",
+                Code = "de-de"
+            };
+
+            appLanguages.Add(system);
+            appLanguages.Add(english);
+            appLanguages.Add(german);
+
+            return appLanguages;
+        }
+
+        /// <summary>,
         /// Gets or sets the if the default sitemap should be hidden.
         /// </summary>
         /// <value>The hide default sitemap.</value>
@@ -136,14 +177,53 @@ namespace OpenHAB.Core.Model
             }
         }
 
+        /// <summary>
+        /// Gets or sets the supported application languages.
+        /// </summary>
+        /// <value>The application languages.</value>
+        public List<LanguageViewModel> AppLanguages
+        {
+            get
+            {
+                return _appLanguages;
+            }
+
+            set
+            {
+                SetProperty(ref _appLanguages, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the selected application language.
+        /// </summary>
+        /// <value>The selected application language.</value>
+        public LanguageViewModel SelectedAppLanguage
+        {
+            get
+            {
+                return _selectedAppLanguage;
+            }
+
+            set
+            {
+                SetProperty(ref _selectedAppLanguage, value);
+                _settings.AppLanguage = value.Code;
+            }
+        }
+
         /// <summary>Determines whether [is connection configuration valid].</summary>
         /// <returns>
         ///   <c>true</c> if [is connection configuration valid]; otherwise, <c>false</c>.</returns>
         public bool IsConnectionConfigValid()
         {
-            return IsRunningInDemoMode.Value ||
-                   !string.IsNullOrEmpty(LocalConnection?.Url) ||
-                   !string.IsNullOrEmpty(RemoteConnection?.Url);
+            bool validConfig = IsRunningInDemoMode.Value ||
+                     !string.IsNullOrEmpty(LocalConnection?.Url) ||
+                     !string.IsNullOrEmpty(RemoteConnection?.Url);
+
+            _logger.LogInformation($"Vaild app configuration: {validConfig}");
+
+            return validConfig;
         }
 
         /// <summary>
@@ -152,6 +232,7 @@ namespace OpenHAB.Core.Model
         public void Save()
         {
             _settingsService.Save(_settings);
+            _settingsService.SetProgramLanguage(null);
         }
     }
 }

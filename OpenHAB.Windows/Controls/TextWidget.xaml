@@ -23,6 +23,7 @@
                    HorizontalAlignment="Right"
                    VerticalAlignment="Center"
                    FontSize="18"
-                   Text="{x:Bind Widget.Value, Mode=OneWay}" />
+                   Text="{x:Bind Widget.Value, Mode=OneWay}" 
+				   TextWrapping="Wrap" />
     </Grid>
 </local:WidgetBase>

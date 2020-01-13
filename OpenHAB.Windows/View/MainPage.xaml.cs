@@ -1,5 +1,6 @@
 ﻿using System;
 using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Extensions.Logging;
 using OpenHAB.Core;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
@@ -17,7 +18,7 @@ namespace OpenHAB.Windows.View
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private DispatcherTimer _errorMessageTimer;
+        private ILogger<MainPage> _logger;
 
         /// <summary>
         /// Gets the datacontext, for use in compiled bindings.
@@ -29,13 +30,19 @@ namespace OpenHAB.Windows.View
         /// </summary>
         public MainPage()
         {
+            DataContext = (MainViewModel)DIService.Instance.Services.GetService(typeof(MainViewModel));
+            _logger = (ILogger<MainPage>)DIService.Instance.Services.GetService(typeof(ILogger<MainPage>));
+
             InitializeComponent();
 
-            Vm.CurrentWidgets.CollectionChanged += (sender, args) =>
+            Vm.CurrentWidgets.CollectionChanged += async (sender, args) =>
             {
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = WidgetNavigationService.CanGoBack
-                    ? AppViewBackButtonVisibility.Visible
-                    : AppViewBackButtonVisibility.Collapsed;
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                 {
+                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = WidgetNavigationService.CanGoBack
+                     ? AppViewBackButtonVisibility.Visible
+                     : AppViewBackButtonVisibility.Collapsed;
+                 });
             };
 
             SystemNavigationManager.GetForCurrentView().BackRequested += (sender, args) => Vm.WidgetGoBack();
@@ -43,12 +50,12 @@ namespace OpenHAB.Windows.View
             this.Loaded += MainPage_Loaded;
         }
 
-        private void MainPage_Loaded(object sender, RoutedEventArgs e)
+        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             Messenger.Default.Register<FireErrorMessage>(this, msg => ShowErrorMessage(msg));
             Messenger.Default.Register<FireInfoMessage>(this, msg => ShowInfoMessage(msg));
 
-            Vm.LoadData();
+            await Vm.LoadData().ConfigureAwait(false);
         }
 
         /// <inheritdoc/>
@@ -91,12 +98,12 @@ namespace OpenHAB.Windows.View
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Show error message failed.");
             }
         }
 
         private async void ShowInfoMessage(FireInfoMessage msg)
         {
-
             try
             {
                 string message = null;
@@ -120,7 +127,7 @@ namespace OpenHAB.Windows.View
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Show info message failed.");
             }
         }
 

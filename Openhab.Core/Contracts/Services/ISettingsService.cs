@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using OpenHAB.Core.Model;
+﻿using OpenHAB.Core.Model;
 
 namespace OpenHAB.Core.Contracts.Services
 {
@@ -36,5 +35,11 @@ namespace OpenHAB.Core.Contracts.Services
         /// </summary>
         /// <returns>The name of the sitemap.</returns>
         string LoadLastSitemap();
+
+        /// <summary>
+        ///   Sets the program language.
+        /// </summary>
+        /// <param name="langcode">Language code e.g. en-us.</param>
+        void SetProgramLanguage(string langcode);
     }
 }
