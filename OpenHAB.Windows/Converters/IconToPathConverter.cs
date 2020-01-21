@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Model;
-using OpenHAB.Core.Services;
+using OpenHAB.Windows.Services;
 using Windows.UI.Xaml.Data;
 
 namespace OpenHAB.Windows.Converters

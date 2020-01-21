@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
-using GalaSoft.MvvmLight;
 using Newtonsoft.Json;
 
 namespace OpenHAB.Core.Model
@@ -9,15 +8,36 @@ namespace OpenHAB.Core.Model
     /// <summary>
     /// A class that represents an OpenHAB widget.
     /// </summary>
-    public class OpenHABWidget : ObservableObject
+    public class OpenHABWidget
     {
         private string _icon;
         private string _label;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="OpenHABWidget"/> class.
+        /// </summary>
+        public OpenHABWidget()
+        {
+            Children = new List<OpenHABWidget>();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OpenHABWidget"/> class.
+        /// </summary>
+        /// <param name="startNode">The XML from the OpenHAB server that represents this OpenHAB item.</param>
+        public OpenHABWidget(XElement startNode)
+        {
+            Children = new List<OpenHABWidget>();
+            ParseNode(startNode);
+        }
+
+        /// <summary>
         /// Gets or sets the ID of the OpenHAB widget.
         /// </summary>
-        public string Id { get; set; }
+        public string Id
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the Label of the OpenHAB widget.
@@ -41,15 +61,16 @@ namespace OpenHAB.Core.Model
                 {
                     Value = parts[1];
                 }
-
-                RaisePropertyChanged();
             }
         }
 
         /// <summary>
         /// Gets or sets the Value of the widget.
         /// </summary>
-        public string Value { get; set; }
+        public string Value
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the Icon of the OpenHAB widget.
@@ -63,115 +84,154 @@ namespace OpenHAB.Core.Model
         /// <summary>
         /// Gets or sets the Type of the OpenHAB widget.
         /// </summary>
-        public string Type { get; set; }
+        public string Type
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the Url of the OpenHAB widget.
         /// </summary>
-        public string Url { get; set; }
+        public string Url
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the Period of the OpenHAB widget.
         /// </summary>
-        public string Period { get; set; }
+        public string Period
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the Service of the OpenHAB widget.
         /// </summary>
-        public string Service { get; set; }
+        public string Service
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the MinValue of the OpenHAB widget.
         /// </summary>
-        public float MinValue { get; set; }
+        public float MinValue
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the MaxValue of the OpenHAB widget.
         /// </summary>
-        public float MaxValue { get; set; }
+        public float MaxValue
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the Step of the OpenHAB widget.
         /// </summary>
-        public float Step { get; set; }
+        public float Step
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the Refresh of the OpenHAB widget.
         /// </summary>
-        public int Refresh { get; set; }
+        public int Refresh
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the Height of the OpenHAB widget.
         /// </summary>
-        public int Height { get; set; }
+        public int Height
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the State of the OpenHAB widget.
         /// </summary>
-        public string State { get; set; }
+        public string State
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the IconColor of the OpenHAB widget.
         /// </summary>
-        public string IconColor { get; set; }
+        public string IconColor
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the LabelColor of the OpenHAB widget.
         /// </summary>
-        public string LabelColor { get; set; }
+        public string LabelColor
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the ValueColor of the OpenHAB widget.
         /// </summary>
-        public string ValueColor { get; set; }
+        public string ValueColor
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the Encoding of the OpenHAB widget.
         /// </summary>
-        public string Encoding { get; set; }
+        public string Encoding
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the Item of the OpenHAB widget.
         /// </summary>
-        public OpenHABItem Item { get; set; }
+        public OpenHABItem Item
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the Parent of the OpenHAB widget.
         /// </summary>
-        public OpenHABWidget Parent { get; set; }
+        public OpenHABWidget Parent
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the Children of the OpenHAB widget.
         /// </summary>
         [JsonProperty(PropertyName = "widgets")]
-        public ICollection<OpenHABWidget> Children { get; set; }
+        public ICollection<OpenHABWidget> Children
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the Mapping of the OpenHAB widget.
         /// </summary>
-        public ICollection<OpenHABWidgetMapping> Mappings { get; set; }
+        public ICollection<OpenHABWidgetMapping> Mappings
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the linked page when available.
         /// </summary>
-        public OpenHABSitemap LinkedPage { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OpenHABWidget"/> class.
-        /// </summary>
-        public OpenHABWidget()
+        public OpenHABSitemap LinkedPage
         {
-            Children = new List<OpenHABWidget>();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OpenHABWidget"/> class.
-        /// </summary>
-        /// <param name="startNode">The XML from the OpenHAB server that represents this OpenHAB item.</param>
-        public OpenHABWidget(XElement startNode)
-        {
-            Children = new List<OpenHABWidget>();
-            ParseNode(startNode);
+            get; set;
         }
 
         private void ParseNode(XElement startNode)

@@ -17,7 +17,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>OpenHAB.Windows_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>6C25F2E134A80996B00FB3A759315C6D29049986</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>2F9C14FA5D305E8BA1A21D0FBF835EBE3DBB2007</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
@@ -181,8 +181,17 @@
     <Compile Include="Converters\StringToDoubleConverter.cs" />
     <Compile Include="Converters\WidgetTemplateSelector.cs" />
     <Compile Include="Converters\ZeroToVisibilityConverter.cs" />
+    <Compile Include="DIService.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="ViewModel\ConfigurationViewModel.cs" />
+    <Compile Include="ViewModel\ConnectionConfigViewModel.cs" />
+    <Compile Include="ViewModel\LanguageViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\SitemapViewModel.cs" />
+    <Compile Include="ViewModel\WidgetViewModel.cs" />
+    <Compile Include="ViewModel\SettingsViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

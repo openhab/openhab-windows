@@ -1,4 +1,4 @@
-﻿namespace OpenHAB.Core.Model
+﻿namespace OpenHAB.Windows.ViewModel
 {
     /// <summary>
     /// ViewModel for Application Language.

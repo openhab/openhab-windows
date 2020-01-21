@@ -2,8 +2,8 @@
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Extensions.Logging;
 using OpenHAB.Core.Messages;
-using OpenHAB.Core.Services;
-using OpenHAB.Core.ViewModel;
+using OpenHAB.Windows.Services;
+using OpenHAB.Windows.ViewModel;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

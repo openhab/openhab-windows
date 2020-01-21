@@ -8,7 +8,7 @@
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	  xmlns:model="using:OpenHAB.Core.Model"
+	  xmlns:viewModel="using:OpenHAB.Windows.ViewModel"
 	  mc:Ignorable="d">
 	<Page.Background>
 		<ImageBrush ImageSource="/Assets/background.jpg"
@@ -53,12 +53,8 @@
 		<converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 
 		<DataTemplate x:Key="NavSitemapTemplate"
-					  x:DataType="model:OpenHABSitemap">
+					  x:DataType="viewModel:SitemapViewModel">
 			<StackPanel Orientation="Horizontal">
-				<!--<Border Width="5"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Stretch"
-						Background="{Binding Source={RelativeSource TemplatedParent}}" />-->
 				<Image x:Name="image"
 					   Width="25"
 					   Height="25"
@@ -114,6 +110,7 @@
 						Header="{x:Bind Vm.Subtitle, Mode=OneWay}"
 						MenuItemsSource="{x:Bind Vm.Sitemaps, Mode=OneWay}"
 						MenuItemTemplate="{StaticResource NavSitemapTemplate}"
+						SelectedItem="{Binding Path=Vm.SelectedSitemap, Mode=TwoWay}"
 						IsBackButtonVisible="Collapsed"
 						AlwaysShowHeader="True"
 						IsSettingsVisible="False"

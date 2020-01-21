@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Services;
+using OpenHAB.Windows.Services;
 using OpenHAB.Windows.View;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;

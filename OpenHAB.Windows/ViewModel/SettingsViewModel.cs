@@ -7,7 +7,7 @@ using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using Windows.ApplicationModel;
 
-namespace OpenHAB.Core.ViewModel
+namespace OpenHAB.Windows.ViewModel
 {
     /// <summary>
     /// Collects and formats all the data for user defined settings.

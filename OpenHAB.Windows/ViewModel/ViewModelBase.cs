@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using OpenHAB.Core.Common;
 
-namespace OpenHAB.Core.Common
+namespace OpenHAB.Windows.ViewModel
 {
     /// <summary>
     /// IViewModelModelProp.

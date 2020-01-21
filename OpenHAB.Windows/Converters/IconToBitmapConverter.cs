@@ -1,7 +1,7 @@
 ﻿using System;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Model;
-using OpenHAB.Core.Services;
+using OpenHAB.Windows.Services;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media.Imaging;
 

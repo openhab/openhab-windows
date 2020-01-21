@@ -93,7 +93,7 @@ namespace OpenHAB.Core.Common
         ///   Gets the validation errors for a specified property or for the entire object.
         /// </summary>
         /// <param name = "propertyName">The name of the property to retrieve validation errors for, or null or <see
-        ///    cref = "F:System.String.Empty" /> to retrieve errors for the entire object.</param>
+        ///    cref = "string.Empty" /> to retrieve errors for the entire object.</param>
         /// <returns>
         ///   The validation errors for the property or object.
         /// </returns>

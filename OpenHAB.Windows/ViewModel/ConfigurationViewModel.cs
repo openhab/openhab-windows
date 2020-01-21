@@ -1,17 +1,17 @@
-﻿using Microsoft.Extensions.Logging;
-using OpenHAB.Core.Contracts.Services;
-using OpenHAB.Core.SDK;
-using OpenHAB.Core.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Logging;
+using OpenHAB.Core.Contracts.Services;
+using OpenHAB.Core.Model;
+using OpenHAB.Core.SDK;
 
-namespace OpenHAB.Core.Model
+namespace OpenHAB.Windows.ViewModel
 {
     /// <summary>
     /// Class that holds all the OpenHAB Windows app settings.
     /// </summary>
-    public class ConfigurationViewModel : ObservableBase
+    public class ConfigurationViewModel : ViewModelBase<object>
     {
         private bool? _hideDefaultSitemap;
         private bool? _isRunningInDemoMode;
@@ -28,7 +28,8 @@ namespace OpenHAB.Core.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationViewModel"/> class.
         /// </summary>
-        public ConfigurationViewModel(ISettingsService settingsService, IOpenHAB openHabsdk, ILogger<ConfigurationViewModel> logger)
+        public ConfigurationViewModel(ISettingsService settingsService, IOpenHAB openHabsdk, ILogger<ConfigurationViewModel> logger) 
+            : base(new object())
         {
             _settingsService = settingsService;
             _logger = logger;
@@ -89,7 +90,7 @@ namespace OpenHAB.Core.Model
 
             set
             {
-                SetProperty(ref _hideDefaultSitemap, value);
+                Set(ref _hideDefaultSitemap, value);
                 _settings.HideDefaultSitemap = value;
             }
         }
@@ -106,7 +107,7 @@ namespace OpenHAB.Core.Model
 
             set
             {
-                SetProperty(ref _isRunningInDemoMode, value);
+                Set(ref _isRunningInDemoMode, value);
                 _settings.IsRunningInDemoMode = value;
             }
         }
@@ -123,7 +124,7 @@ namespace OpenHAB.Core.Model
 
             set
             {
-                SetProperty(ref _remoteConnection, value);
+                Set(ref _remoteConnection, value);
             }
         }
 
@@ -139,7 +140,7 @@ namespace OpenHAB.Core.Model
 
             set
             {
-                SetProperty(ref _localConnection, value);
+                Set(ref _localConnection, value);
             }
         }
 
@@ -155,7 +156,7 @@ namespace OpenHAB.Core.Model
 
             set
             {
-                SetProperty(ref _willIgnoreSSLCertificate, value);
+                Set(ref _willIgnoreSSLCertificate, value);
                 _settings.WillIgnoreSSLCertificate = value;
             }
         }
@@ -172,7 +173,7 @@ namespace OpenHAB.Core.Model
 
             set
             {
-                SetProperty(ref _willIgnoreSSLHostname, value);
+                Set(ref _willIgnoreSSLHostname, value);
                 _settings.WillIgnoreSSLHostname = value;
             }
         }
@@ -190,7 +191,7 @@ namespace OpenHAB.Core.Model
 
             set
             {
-                SetProperty(ref _appLanguages, value);
+                Set(ref _appLanguages, value);
             }
         }
 
@@ -207,7 +208,7 @@ namespace OpenHAB.Core.Model
 
             set
             {
-                SetProperty(ref _selectedAppLanguage, value);
+                Set(ref _selectedAppLanguage, value);
                 _settings.AppLanguage = value.Code;
             }
         }
