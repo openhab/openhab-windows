@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.Messaging;
 using OpenHAB.Core.Messages;
 using Windows.UI.Xaml;
+using System.Text.RegularExpressions;
 
 namespace OpenHAB.Windows.Controls
 {
@@ -20,7 +21,7 @@ namespace OpenHAB.Windows.Controls
 
         private void ButtonUp_Click(object sender, RoutedEventArgs e)
         {
-            double value = double.Parse(Widget.Item.State);
+            double value = getDoubleValue(Widget.Item.State);
             value += Widget.Step;
 
             if (value > Widget.MaxValue)
@@ -34,7 +35,7 @@ namespace OpenHAB.Windows.Controls
 
         private void ButtonDown_Click(object sender, RoutedEventArgs e)
         {
-            double value = double.Parse(Widget.Item.State);
+            double value = getDoubleValue(Widget.Item.State);
             value -= Widget.Step;
 
             if (value < Widget.MinValue)
@@ -44,6 +45,19 @@ namespace OpenHAB.Windows.Controls
 
             Widget.Item.State = value.ToString(CultureInfo.CurrentCulture);
             Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, value.ToString(CultureInfo.InvariantCulture)));
+        }
+
+        private double getDoubleValue(string state)
+        {
+            string newstate = Regex.Replace(state, "[^0-9,.]", string.Empty);
+            double value = 0;
+            try
+            {
+                value = double.Parse(newstate);
+            }
+            catch { }
+
+            return value;
         }
 
         internal override void SetState()
