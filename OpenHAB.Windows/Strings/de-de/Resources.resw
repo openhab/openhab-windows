@@ -203,4 +203,10 @@ Bitte wählen Sie den Demo Modus oder die Lokalen/Remote Verbindunsinformation z
   <data name="AppLanguage.Text" xml:space="preserve">
     <value>App Sprache</value>
   </data>
+  <data name="ConnectionDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Schliesen</value>
+  </data>
+  <data name="ConnectionDialog.Title" xml:space="preserve">
+    <value>Verbindungseinstellungen</value>
+  </data>
 </root>

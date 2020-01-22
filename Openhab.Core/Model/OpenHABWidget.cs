@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 using Newtonsoft.Json;
 
@@ -8,10 +10,23 @@ namespace OpenHAB.Core.Model
     /// <summary>
     /// A class that represents an OpenHAB widget.
     /// </summary>
-    public class OpenHABWidget
+    public class OpenHABWidget : INotifyPropertyChanged
     {
         private string _icon;
         private string _label;
+
+        /// <summary>Occurs when a property value changes.</summary>
+        /// <returns></returns>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Called when [property changed].
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenHABWidget"/> class.
@@ -19,16 +34,6 @@ namespace OpenHAB.Core.Model
         public OpenHABWidget()
         {
             Children = new List<OpenHABWidget>();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OpenHABWidget"/> class.
-        /// </summary>
-        /// <param name="startNode">The XML from the OpenHAB server that represents this OpenHAB item.</param>
-        public OpenHABWidget(XElement startNode)
-        {
-            Children = new List<OpenHABWidget>();
-            ParseNode(startNode);
         }
 
         /// <summary>
@@ -61,6 +66,8 @@ namespace OpenHAB.Core.Model
                 {
                     Value = parts[1];
                 }
+
+                OnPropertyChanged();
             }
         }
 
@@ -232,81 +239,6 @@ namespace OpenHAB.Core.Model
         public OpenHABSitemap LinkedPage
         {
             get; set;
-        }
-
-        private void ParseNode(XElement startNode)
-        {
-            if (!startNode.HasElements)
-            {
-                return;
-            }
-
-            Id = startNode.Element("widgetId")?.Value;
-            Type = startNode.Element("type")?.Value;
-            Label = startNode.Element("label")?.Value;
-            State = startNode.Element("state")?.Value;
-            Icon = startNode.Element("icon")?.Value;
-            Url = startNode.Element("url")?.Value;
-
-            XElement linkedPage = startNode.Element("linkedPage");
-
-            if (linkedPage != null)
-            {
-                ParseLinkedPage(linkedPage);
-            }
-
-            ParseItem(startNode.Element("item"));
-            ParseChildren(startNode);
-            ParseMappings(startNode);
-        }
-
-        private void ParseMappings(XElement startNode)
-        {
-            Mappings = new List<OpenHABWidgetMapping>();
-
-            foreach (XElement childNode in startNode.Elements("mapping"))
-            {
-                string command = childNode.Element("command")?.Value;
-                string label = childNode.Element("label")?.Value;
-                Mappings.Add(new OpenHABWidgetMapping(command, label));
-            }
-        }
-
-        private void ParseLinkedPage(XElement linkedPage)
-        {
-            LinkedPage = new OpenHABSitemap(linkedPage) { Widgets = new List<OpenHABWidget>() };
-
-            foreach (XElement childNode in linkedPage.Elements("widget"))
-            {
-                var widget = new OpenHABWidget(childNode) { Parent = this };
-                LinkedPage.Widgets.Add(widget);
-            }
-        }
-
-        private void ParseChildren(XElement startNode)
-        {
-            foreach (XElement childNode in startNode.Elements("widget"))
-            {
-                var widget = new OpenHABWidget(childNode) { Parent = this };
-                Children.Add(widget);
-
-                XElement linkedPage = childNode.Element("linkedPage");
-
-                if (linkedPage != null)
-                {
-                    ParseLinkedPage(linkedPage);
-                }
-            }
-        }
-
-        private void ParseItem(XElement element)
-        {
-            if (element == null)
-            {
-                return;
-            }
-
-            Item = new OpenHABItem(element);
         }
     }
 }

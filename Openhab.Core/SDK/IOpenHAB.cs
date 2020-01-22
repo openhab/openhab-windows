@@ -53,9 +53,8 @@ namespace OpenHAB.Core.SDK
         void StartItemUpdates();
 
         /// <summary>Checks the URL reachability.</summary>
-        /// <param name="openHABUrl">  OpenHAB host URL.</param>
-        /// <param name="connectionType">Defines if the connection is local or remote.</param>
+        /// <param name="connection">Defines settings for local or remote connections.</param>
         /// <returns>>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        Task<bool> CheckUrlReachability(string openHABUrl, OpenHABHttpClientType connectionType);
+        Task<bool> CheckUrlReachability(OpenHABConnection connection);
     }
 }

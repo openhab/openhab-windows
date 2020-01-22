@@ -21,6 +21,8 @@ namespace OpenHAB.Windows.ViewModel
         private string _username;
         private ICommand _urlCheckCommand;
         private OpenHABUrlState _urlState;
+        private bool? _willIgnoreSSLCertificate;
+        private bool? _willIgnoreSSLHostname;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConnectionConfigViewModel"/> class.
@@ -36,6 +38,8 @@ namespace OpenHAB.Windows.ViewModel
             _url = _connectionConfig.Url;
             _username = connectionConfig.Username;
             _password = connectionConfig.Password;
+            _willIgnoreSSLCertificate = connectionConfig.WillIgnoreSSLCertificate;
+            _willIgnoreSSLHostname = connectionConfig.WillIgnoreSSLHostname;
         }
 
         /// <summary>
@@ -125,10 +129,44 @@ namespace OpenHAB.Windows.ViewModel
         }
 
         /// <summary>
+        ///  Gets or sets a value indicating whether the app will ignore the SSL certificate.
+        /// </summary>
+        public bool? WillIgnoreSSLCertificate
+        {
+            get
+            {
+                return _willIgnoreSSLCertificate;
+            }
+
+            set
+            {
+                Set(ref _willIgnoreSSLCertificate, value);
+                _connectionConfig.WillIgnoreSSLCertificate = value;
+            }
+        }
+
+        /// <summary>
+        ///  Gets or sets a value indicating whether the app will ignore the SSL hostname.
+        /// </summary>
+        public bool? WillIgnoreSSLHostname
+        {
+            get
+            {
+                return _willIgnoreSSLHostname;
+            }
+
+            set
+            {
+                Set(ref _willIgnoreSSLHostname, value);
+                _connectionConfig.WillIgnoreSSLHostname = value;
+            }
+        }
+
+        /// <summary>
         /// Gets the command for local url check.
         /// </summary>
         /// <value>The local URL check command.</value>
-        public ICommand UrlCheckCommand => _urlCheckCommand ?? (_urlCheckCommand = new RelayCommand<object>(CheckLocalUrl));
+        public ICommand UrlCheckCommand => _urlCheckCommand ?? (_urlCheckCommand = new RelayCommand<object>(CheckConnectionSettings));
 
         /// <summary>
         /// Gets or sets the state for OpenHab local url.
@@ -140,7 +178,7 @@ namespace OpenHAB.Windows.ViewModel
             set => Set(ref _urlState, value);
         }
 
-        private async void CheckLocalUrl(object parameter)
+        private async void CheckConnectionSettings(object parameter)
         {
             if (parameter == null)
             {
@@ -150,7 +188,7 @@ namespace OpenHAB.Windows.ViewModel
             string url = parameter.ToString();
 
             OpenHABUrlState urlState = OpenHABUrlState.Unknown;
-            if (await _openHabsdk.CheckUrlReachability(url, OpenHABHttpClientType.Local).ConfigureAwait(false))
+            if (await _openHabsdk.CheckUrlReachability(this.Model).ConfigureAwait(false))
             {
                 urlState = OpenHABUrlState.OK;
             }

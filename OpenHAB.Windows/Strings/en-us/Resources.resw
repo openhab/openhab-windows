@@ -204,4 +204,10 @@ Please select demo mode or configure local/remote connection.</value>
   <data name="AppLanguage.Text" xml:space="preserve">
     <value>App Language</value>
   </data>
+  <data name="ConnectionDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="ConnectionDialog.Title" xml:space="preserve">
+    <value>Connection Settings</value>
+  </data>
 </root>

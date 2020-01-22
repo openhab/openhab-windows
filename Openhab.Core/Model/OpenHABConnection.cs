@@ -1,10 +1,20 @@
-﻿namespace OpenHAB.Core.Model
+﻿using OpenHAB.Core.Common;
+
+namespace OpenHAB.Core.Model
 {
     /// <summary>
-    /// Connection configuration for OpenHAB service or cloud instance
+    /// Connection configuration for OpenHAB service or cloud instance.
     /// </summary>
     public class OpenHABConnection
     {
+        /// <summary>Gets or sets the type of the connection.</summary>
+        /// <value>The type of the connection.</value>
+        public OpenHABHttpClientType Type
+        {
+            get; 
+            set;
+        }
+
         /// <summary>
         /// Gets or sets the url to the OpenHAB server.
         /// </summary>
@@ -27,6 +37,24 @@
         /// Gets or sets the password for the OpenHAB connection.
         /// </summary>
         public string Password
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        ///  Gets or sets a value indicating whether the app will ignore the SSL certificate.
+        /// </summary>
+        public bool? WillIgnoreSSLCertificate
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        ///  Gets or sets a value indicating whether the app will ignore the SSL hostname.
+        /// </summary>
+        public bool? WillIgnoreSSLHostname
         {
             get;
             set;

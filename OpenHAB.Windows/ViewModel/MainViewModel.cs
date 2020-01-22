@@ -33,8 +33,8 @@ namespace OpenHAB.Windows.ViewModel
         private SitemapViewModel _selectedSitemap;
 
         private OpenHABVersion _version;
-        private ObservableCollection<WidgetViewModel> _currentWidgets;
-        private WidgetViewModel _selectedWidget;
+        private ObservableCollection<OpenHABWidget> _currentWidgets;
+        private OpenHABWidget _selectedWidget;
         private string _errorMessage;
         private string _subtitle;
 
@@ -52,7 +52,7 @@ namespace OpenHAB.Windows.ViewModel
             : base(new object())
         {
             _logger = logger;
-            CurrentWidgets = new ObservableCollection<WidgetViewModel>();
+            CurrentWidgets = new ObservableCollection<OpenHABWidget>();
 
             _openHabsdk = openHabsdk;
             _settingsService = settingsService;
@@ -141,7 +141,7 @@ namespace OpenHAB.Windows.ViewModel
         /// <summary>
         /// Gets or sets the widgets currently on screen.
         /// </summary>
-        public ObservableCollection<WidgetViewModel> CurrentWidgets
+        public ObservableCollection<OpenHABWidget> CurrentWidgets
         {
             get => _currentWidgets;
             set => Set(ref _currentWidgets, value);
@@ -150,7 +150,7 @@ namespace OpenHAB.Windows.ViewModel
         /// <summary>
         /// Gets or sets the selected widget.
         /// </summary>
-        public WidgetViewModel SelectedWidget
+        public OpenHABWidget SelectedWidget
         {
             get => _selectedWidget;
             set => Set(ref _selectedWidget, value);
@@ -308,7 +308,7 @@ namespace OpenHAB.Windows.ViewModel
 
         private void OnWidgetClicked(OpenHABWidget widget)
         {
-            SelectedWidget = new WidgetViewModel(widget);
+            SelectedWidget = widget;
             if (SelectedWidget.LinkedPage == null || !SelectedWidget.LinkedPage.Widgets.Any())
             {
                 return;
@@ -316,7 +316,7 @@ namespace OpenHAB.Windows.ViewModel
 
             Subtitle = SelectedWidget.Label;
 
-            WidgetNavigationService.Navigate(SelectedWidget.Model);
+            WidgetNavigationService.Navigate(SelectedWidget);
             SetWidgetsOnScreen(SelectedWidget?.LinkedPage?.Widgets);
         }
 
@@ -325,13 +325,13 @@ namespace OpenHAB.Windows.ViewModel
         /// </summary>
         public void WidgetGoBack()
         {
-            WidgetViewModel widget = new WidgetViewModel(WidgetNavigationService.GoBack());
+            OpenHABWidget widget = WidgetNavigationService.GoBack();
 
             Subtitle = widget == null ? SelectedSitemap.Label: widget.Label;
             SetWidgetsOnScreen(widget != null ? widget.LinkedPage.Widgets : SelectedSitemap.Widgets);
         }
 
-        private async void SetWidgetsOnScreen(ICollection<WidgetViewModel> widgets)
+        private async void SetWidgetsOnScreen(ICollection<OpenHABWidget> widgets)
         {
             CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
             await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>

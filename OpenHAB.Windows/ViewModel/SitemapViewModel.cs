@@ -13,7 +13,7 @@ namespace OpenHAB.Windows.ViewModel
     /// </summary>
     public class SitemapViewModel : ViewModelBase<OpenHABSitemap>
     {
-        private ObservableCollection<WidgetViewModel> _widgets;
+        private ObservableCollection<OpenHABWidget> _widgets;
         private IOpenHAB _openHabsdk;
 
         /// <summary>
@@ -31,10 +31,8 @@ namespace OpenHAB.Windows.ViewModel
         public SitemapViewModel(OpenHABSitemap model)
              : base(model)
         {
-            _widgets = new ObservableCollection<WidgetViewModel>();
+            _widgets = new ObservableCollection<OpenHABWidget>();
             _openHabsdk = (IOpenHAB)DIService.Instance.Services.GetService(typeof(IOpenHAB));
-
-            //Model.Widgets.ToList().ForEach(x => _widgets.Add(new WidgetViewModel(x)));
         }
 
         /// <summary>
@@ -59,53 +57,10 @@ namespace OpenHAB.Windows.ViewModel
             }
         }
 
-        ///// <summary>
-        ///// Gets or sets the link of the OpenHAB sitemap.
-        ///// </summary>
-        //public string Link
-        //{
-        //    get; set;
-        //}
-
-        ///// <summary>
-        ///// Gets or sets the icon of the OpenHAB sitemap.
-        ///// </summary>
-        //public string Icon
-        //{
-        //    get; set;
-        //}
-
-        ///// <summary>
-        ///// Gets or sets the url of the OpenHAB sitemap.
-        ///// </summary>
-        //public string HomepageLink
-        //{
-        //    get; set;
-        //}
-
-        ///// <summary>
-        ///// Gets or sets a value indicating whether the sitemap is a leaf.
-        ///// </summary>
-        //public bool Leaf
-        //{
-        //    get; set;
-        //}
-
-        /// <summary>
-        /// Gets or sets the title of the sitemap.
-        /// </summary>
-        public string Title
-        {
-            get
-            {
-                return Model.Title;
-            }
-        }
-
         /// <summary>
         /// Gets or sets a collection of widgets of the OpenHAB sitemap.
         /// </summary>
-        public ObservableCollection<WidgetViewModel> Widgets
+        public ObservableCollection<OpenHABWidget> Widgets
         {
             get
             {
@@ -127,7 +82,7 @@ namespace OpenHAB.Windows.ViewModel
         public async Task LoadWidgets(OpenHABVersion version)
         {
             ICollection<OpenHABWidget> widgetModels = await _openHabsdk.LoadItemsFromSitemap(Model, version).ConfigureAwait(false);
-            widgetModels.ToList().ForEach(x => _widgets.Add(new WidgetViewModel(x)));
+            widgetModels.ToList().ForEach(x => Widgets.Add(x));
         }
     }
 }

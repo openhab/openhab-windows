@@ -17,6 +17,7 @@ namespace OpenHAB.Core.Common
         private static HttpClient _client;
         private static Settings _settings;
         private static ILogger<OpenHABHttpClient> _logger;
+        private OpenHABConnection _connection;
 
         /// <summary>Initializes a new instance of the <see cref="OpenHABHttpClient"/> class.</summary>
         /// <param name="logger">The logger.</param>
@@ -37,21 +38,21 @@ namespace OpenHAB.Core.Common
         /// Fetch the HttpClient instance.
         /// </summary>
         /// <returns>The HttpClient instance.</returns>
-        public HttpClient Client(OpenHABHttpClientType connectionType, Settings settings)
+        public HttpClient Client(OpenHABConnection connection, Settings settings)
         {
             _settings = settings;
 
-            return _client ?? (_client = InitClient(connectionType));
+            return _client ?? (_client = InitClient(connection));
         }
 
         /// <summary>
         /// Create an HttpClient instance for one-time use.
         /// </summary>
         /// <returns>The HttpClient instance.</returns>
-        public HttpClient DisposableClient(OpenHABHttpClientType connectionType, Settings settings)
+        public HttpClient DisposableClient(OpenHABConnection connection, Settings settings)
         {
             _settings = settings;
-            return InitClient(connectionType, true);
+            return InitClient(connection, true);
         }
 
         /// <summary>
@@ -62,9 +63,9 @@ namespace OpenHAB.Core.Common
             _client = null;
         }
 
-        private HttpClient InitClient(OpenHABHttpClientType connectionType, bool disposable = false)
+        private HttpClient InitClient(OpenHABConnection connection, bool disposable = false)
         {
-            _logger.LogInformation($"Initialize http client for connection type '{connectionType.ToString()}'");
+            _logger.LogInformation($"Initialize http client for connection type '{connection.Type.ToString()}'");
 
             if (string.IsNullOrWhiteSpace(BaseUrl) && !disposable)
             {
@@ -73,12 +74,13 @@ namespace OpenHAB.Core.Common
 
             var handler = new HttpClientHandler();
 
-            if (_settings.WillIgnoreSSLCertificate.HasValue && _settings.WillIgnoreSSLHostname.HasValue)
+            if (connection.WillIgnoreSSLCertificate.HasValue && connection.WillIgnoreSSLHostname.HasValue)
             {
+                _connection = connection;
                 handler.ServerCertificateCustomValidationCallback = CheckValidationResult;
             }
 
-            var credentials = GetCredentials(connectionType);
+            var credentials = GetCredentials(connection.Type);
 
             if (credentials != null)
             {
@@ -117,12 +119,12 @@ namespace OpenHAB.Core.Common
 
             if (sslPolicyErrors.HasFlag(SslPolicyErrors.RemoteCertificateChainErrors))
             {
-                result &= _settings.WillIgnoreSSLCertificate.Value;
+                result &= _connection.WillIgnoreSSLCertificate.Value;
             }
 
             if (sslPolicyErrors.HasFlag(SslPolicyErrors.RemoteCertificateNameMismatch))
             {
-                result &= _settings.WillIgnoreSSLHostname.Value;
+                result &= _connection.WillIgnoreSSLHostname.Value;
             }
 
             if (sslPolicyErrors.HasFlag(SslPolicyErrors.RemoteCertificateNotAvailable))

@@ -38,8 +38,6 @@ namespace OpenHAB.Windows.ViewModel
             _localConnection = new ConnectionConfigViewModel(_settings.LocalConnection, openHabsdk);
             _remoteConnection = new ConnectionConfigViewModel(_settings.RemoteConnection, openHabsdk);
 
-            _willIgnoreSSLCertificate = _settings.WillIgnoreSSLCertificate;
-            _willIgnoreSSLHostname = _settings.WillIgnoreSSLHostname;
             _isRunningInDemoMode = _settings.IsRunningInDemoMode;
             _hideDefaultSitemap = _settings.HideDefaultSitemap;
 
@@ -141,40 +139,6 @@ namespace OpenHAB.Windows.ViewModel
             set
             {
                 Set(ref _localConnection, value);
-            }
-        }
-
-        /// <summary>
-        ///  Gets or sets a value indicating whether the app will ignore the SSL certificate.
-        /// </summary>
-        public bool? WillIgnoreSSLCertificate
-        {
-            get
-            {
-                return _willIgnoreSSLCertificate;
-            }
-
-            set
-            {
-                Set(ref _willIgnoreSSLCertificate, value);
-                _settings.WillIgnoreSSLCertificate = value;
-            }
-        }
-
-        /// <summary>
-        ///  Gets or sets a value indicating whether the app will ignore the SSL hostname.
-        /// </summary>
-        public bool? WillIgnoreSSLHostname
-        {
-            get
-            {
-                return _willIgnoreSSLHostname;
-            }
-
-            set
-            {
-                Set(ref _willIgnoreSSLHostname, value);
-                _settings.WillIgnoreSSLHostname = value;
             }
         }
 

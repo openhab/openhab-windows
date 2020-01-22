@@ -120,6 +120,7 @@
     <Compile Include="Model\OpenHABItem.cs" />
     <Compile Include="Model\OpenHABSitemap.cs" />
     <Compile Include="Model\OpenHABUrlState.cs" />
+    <Compile Include="Model\OpenHABWidgetFactory.cs" />
     <Compile Include="Model\OpenHABWidget.cs" />
     <Compile Include="Model\OpenHABWidgetMapping.cs" />
     <Compile Include="Contracts\Services\IDependencyInjectionService.cs" />

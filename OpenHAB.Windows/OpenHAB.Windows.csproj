@@ -189,7 +189,6 @@
     <Compile Include="ViewModel\LanguageViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\SitemapViewModel.cs" />
-    <Compile Include="ViewModel\WidgetViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\MainPage.xaml.cs">

@@ -12,8 +12,6 @@ namespace OpenHAB.Core.Model
         /// </summary>
         public Settings()
         {
-            WillIgnoreSSLCertificate = false;
-            WillIgnoreSSLHostname = false;
             IsRunningInDemoMode = false;
 
             LocalConnection = new OpenHABConnection();
@@ -62,24 +60,6 @@ namespace OpenHAB.Core.Model
         /// </summary>
         /// <value>The application language.</value>
         public string AppLanguage
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        ///  Gets or sets a value indicating whether the app will ignore the SSL certificate.
-        /// </summary>
-        public bool? WillIgnoreSSLCertificate
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        ///  Gets or sets a value indicating whether the app will ignore the SSL hostname.
-        /// </summary>
-        public bool? WillIgnoreSSLHostname
         {
             get;
             set;

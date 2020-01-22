@@ -19,9 +19,6 @@
 
 		<DataTemplate x:Key="ConnectionConfigTemplate">
 			<StackPanel Margin="0,0,10,0">
-				<TextBlock x:Uid="LocalSettings"
-						   Style="{StaticResource TitleTextBlockStyle}"
-						   Margin="0,0,0,10" />
 				<TextBlock x:Uid="LocalUrlHeader" />
 				<TextBox x:Uid="LocalUrl"
 						 x:Name="TextBoxUrl"
@@ -57,6 +54,19 @@
 						</Core:EventTriggerBehavior>
 					</Interactivity:Interaction.Behaviors>
 				</PasswordBox>
+				<TextBlock x:Uid="IgnoreSSLCertErrors" />
+				<CheckBox x:Name="CheckBoxIgnoreSSL"
+						  Margin="0,0,0,12"
+						  HorizontalAlignment="Stretch"
+						  VerticalAlignment="Stretch"
+						  IsChecked="{Binding WillIgnoreSSLCertificate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+						  IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />
+				<TextBlock x:Uid="IgnoreSSLCertHostErrors" />
+				<CheckBox x:Name="CheckBoxIgnoreSSLHostname"
+						  Margin="0,0,0,12"
+						  HorizontalAlignment="Stretch"
+						  VerticalAlignment="Stretch"
+						  IsChecked="{Binding WillIgnoreSSLHostname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 				<StackPanel Orientation="Horizontal">
 					<TextBlock x:Uid="ConnectionCheck"
 							   Margin="0,0,10,0"
@@ -65,7 +75,7 @@
 							  VerticalAlignment="Top"
 							  FontSize="32"
 							  FontFamily="{StaticResource SymbolThemeFontFamily}"
-							  Glyph="{Binding Path=UrlState, Converter={StaticResource OpenHabUrlStateToGlyph}, Mode=TwoWay}" />
+							  Glyph="{Binding UrlState, Converter={StaticResource OpenHabUrlStateToGlyph}, Mode=TwoWay}" />
 				</StackPanel>
 			</StackPanel>
 		</DataTemplate>
@@ -136,13 +146,8 @@
 								VerticalAlignment="Stretch"
 								HorizontalContentAlignment="Left"
 								DataContext="{Binding Path=Settings.LocalConnection}"
-								IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}">
-							<Button.Flyout>
-								<Flyout Placement="Top">
-									<ContentPresenter MinWidth="400"
-													  ContentTemplate="{StaticResource ConnectionConfigTemplate}" />
-								</Flyout>
-							</Button.Flyout>
+								IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
+								Click="OpenLocalConnectionButton_Click">
 							<StackPanel HorizontalAlignment="Left">
 								<TextBlock x:Uid="LocalSettings"
 										   FontSize="16" />
@@ -154,42 +159,14 @@
 								VerticalAlignment="Stretch"
 								HorizontalContentAlignment="Left"
 								DataContext="{Binding Path=Settings.RemoteConnection}"
-								IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}">
-							<Button.Flyout>
-								<Flyout Placement="Top">
-									<ContentPresenter MinWidth="400"
-													  ContentTemplate="{StaticResource ConnectionConfigTemplate}" />
-								</Flyout>
-							</Button.Flyout>
+								IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
+								Click="OpenRemoteConnectionButton_Click">
 							<StackPanel>
-								<TextBlock x:Uid="RemoteSettings" FontSize="16" />
+								<TextBlock x:Uid="RemoteSettings"
+										   FontSize="16" />
 								<TextBlock Text="{Binding Subtitle}" />
 							</StackPanel>
 						</Button>
-					</StackPanel>
-					<StackPanel Grid.Row="2"
-								Margin="0,12,0,0">
-						<TextBlock x:Uid="CertificateSettings"
-								   Style="{StaticResource TitleTextBlockStyle}"
-								   Margin="0,0,0,10" />
-						<TextBlock x:Uid="IgnoreSSLCertErrors" />
-						<CheckBox x:Name="CheckBoxIgnoreSSL"
-								  Margin="0,0,0,12"
-								  HorizontalAlignment="Stretch"
-								  VerticalAlignment="Stretch"
-								  IsChecked="{Binding Settings.WillIgnoreSSLCertificate,
-												  Mode=TwoWay,
-												  UpdateSourceTrigger=PropertyChanged}"
-								  IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />
-						<TextBlock x:Uid="IgnoreSSLCertHostErrors" />
-						<CheckBox x:Name="CheckBoxIgnoreSSLHostname"
-								  Margin="0,0,0,12"
-								  HorizontalAlignment="Stretch"
-								  VerticalAlignment="Stretch"
-								  IsChecked="{Binding Settings.WillIgnoreSSLHostname,
-												  Mode=TwoWay,
-												  UpdateSourceTrigger=PropertyChanged}"
-								  IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />
 					</StackPanel>
 				</Grid>
 				<Grid Margin="0,25,0,0"
@@ -228,6 +205,12 @@
 										 VerticalOffset="100"
 										 HorizontalOffset="0"
 										 StackMode="StackInFront" />
+
+			<ContentDialog x:Uid="ConnectionDialog"
+						   x:Name="ConnectionDialog"
+						   PrimaryButtonText="Close"
+						   DefaultButton="Primary"
+						   ContentTemplate="{StaticResource ConnectionConfigTemplate}" />
 		</Grid>
 	</ScrollViewer>
 </Page>

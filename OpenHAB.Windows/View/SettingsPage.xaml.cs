@@ -63,5 +63,17 @@ namespace OpenHAB.Windows.View
         {
             Frame.GoBack();
         }
+
+        private void OpenLocalConnectionButton_Click(object sender, RoutedEventArgs e)
+        {
+            ConnectionDialog.DataContext = Vm.Settings.LocalConnection;
+            ConnectionDialog.ShowAsync();
+        }
+
+        private void OpenRemoteConnectionButton_Click(object sender, RoutedEventArgs e)
+        {
+            ConnectionDialog.DataContext = Vm.Settings.RemoteConnection;
+            ConnectionDialog.ShowAsync();
+        }
     }
 }
