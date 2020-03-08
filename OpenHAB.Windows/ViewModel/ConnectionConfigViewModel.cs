@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using Microsoft.Toolkit.Parsers.Markdown.Blocks;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.SDK;
@@ -90,7 +92,7 @@ namespace OpenHAB.Windows.ViewModel
                     return "Conntected to " + _url;
                 }
 
-                return "Unsecure connected to" + _url;
+                return "Unsecure connected to " + _url;
             }
         }
 
@@ -187,20 +189,24 @@ namespace OpenHAB.Windows.ViewModel
 
             string url = parameter.ToString();
 
-            OpenHABUrlState urlState = OpenHABUrlState.Unknown;
-            if (await _openHabsdk.CheckUrlReachability(this.Model).ConfigureAwait(false))
+            Task<bool> result = _openHabsdk.CheckUrlReachability(this.Model);
+            result.ContinueWith(async (task) =>
             {
-                urlState = OpenHABUrlState.OK;
-            }
-            else
-            {
-                urlState = OpenHABUrlState.Failed;
-            }
+                OpenHABUrlState urlState = OpenHABUrlState.Unknown;
+                if (task.IsCompletedSuccessfully && task.Result)
+                {
+                    urlState = OpenHABUrlState.OK;
+                }
+                else
+                {
+                    urlState = OpenHABUrlState.Failed;
+                }
 
-            CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
-            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-            {
-                UrlState = urlState;
+                CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
+                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                {
+                    UrlState = urlState;
+                });
             });
         }
     }

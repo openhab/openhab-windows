@@ -80,7 +80,7 @@ namespace OpenHAB.Core.Common
                 handler.ServerCertificateCustomValidationCallback = CheckValidationResult;
             }
 
-            var credentials = GetCredentials(connection.Type);
+            var credentials = GetCredentials(connection);
 
             if (credentials != null)
             {
@@ -96,14 +96,11 @@ namespace OpenHAB.Core.Common
             return client;
         }
 
-        private NetworkCredential GetCredentials(OpenHABHttpClientType connectionType)
+        private NetworkCredential GetCredentials(OpenHABConnection connection)
         {
-            string username = connectionType == OpenHABHttpClientType.Local ? _settings.LocalConnection.Username : _settings.RemoteConnection.Username;
-            string password = connectionType == OpenHABHttpClientType.Local ? _settings.LocalConnection.Password : _settings.RemoteConnection.Password;
-
-            if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
+            if (!string.IsNullOrWhiteSpace(connection.Username) && !string.IsNullOrWhiteSpace(connection.Password))
             {
-                return new NetworkCredential(username, password);
+                return new NetworkCredential(connection.Username, connection.Password);
             }
 
             return null;

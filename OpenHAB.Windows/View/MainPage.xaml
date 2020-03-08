@@ -116,7 +116,7 @@
 						IsSettingsVisible="False"
 						OpenPaneLength="200"
 						CompactPaneLength="45"
-						PaneDisplayMode="Left"
+						PaneDisplayMode="LeftMinimal"
 						HeaderTemplate="{StaticResource NavHeaderTemplate}">
 			<NavigationView.PaneCustomContent>
 				<StackPanel Orientation="Vertical"
@@ -246,6 +246,15 @@
 
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="WindowStates">
+				<VisualState x:Name="NarrowState">
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowWidth="0" />
+					</VisualState.StateTriggers>
+					<!--<VisualState.Setters>
+						<Setter Target="SitemapNavigation.PaneDisplayMode"
+								Value="LeftMinimal" />
+					</VisualState.Setters>-->
+				</VisualState>
 				<VisualState x:Name="WideState">
 					<VisualState.StateTriggers>
 						<AdaptiveTrigger MinWindowWidth="720" />
@@ -253,15 +262,6 @@
 					<VisualState.Setters>
 						<Setter Target="SitemapNavigation.PaneDisplayMode"
 								Value="Left" />
-					</VisualState.Setters>
-				</VisualState>
-				<VisualState x:Name="NarrowState">
-					<VisualState.StateTriggers>
-						<AdaptiveTrigger MinWindowWidth="0" />
-					</VisualState.StateTriggers>
-					<VisualState.Setters>
-						<Setter Target="SitemapNavigation.PaneDisplayMode"
-								Value="LeftMinimal" />
 					</VisualState.Setters>
 				</VisualState>
 			</VisualStateGroup>

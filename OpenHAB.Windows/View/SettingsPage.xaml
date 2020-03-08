@@ -59,8 +59,7 @@
 						  Margin="0,0,0,12"
 						  HorizontalAlignment="Stretch"
 						  VerticalAlignment="Stretch"
-						  IsChecked="{Binding WillIgnoreSSLCertificate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-						  IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />
+						  IsChecked="{Binding WillIgnoreSSLCertificate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 				<TextBlock x:Uid="IgnoreSSLCertHostErrors" />
 				<CheckBox x:Name="CheckBoxIgnoreSSLHostname"
 						  Margin="0,0,0,12"
