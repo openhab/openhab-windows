@@ -22,15 +22,13 @@ namespace OpenHAB.Windows.ViewModel
         private readonly ISettingsService _settingsService;
         private readonly ILogger<ConfigurationViewModel> _logger;
         private readonly Settings _settings;
-        private bool? _willIgnoreSSLCertificate;
-        private bool? _willIgnoreSSLHostname;
         private LanguageViewModel _selectedAppLanguage;
         private List<LanguageViewModel> _appLanguages;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationViewModel"/> class.
         /// </summary>
-        public ConfigurationViewModel(ISettingsService settingsService, IOpenHAB openHabsdk, ILogger<ConfigurationViewModel> logger) 
+        public ConfigurationViewModel(ISettingsService settingsService, IOpenHAB openHabsdk, ILogger<ConfigurationViewModel> logger)
             : base(new object())
         {
             _settingsService = settingsService;
@@ -112,19 +110,6 @@ namespace OpenHAB.Windows.ViewModel
             }
         }
 
-
-
-        /// <summary>Gets the remote connection profiles.</summary>
-        /// <value>The remote connection profiles.</value>
-        public List<IConnectionProfile> RemoteConnectionProfiles
-        {
-            get
-            {
-                return _settings.ConnectionProfiles.Where(x=>x.Type == OpenHABHttpClientType.Remote).ToList();
-            }
-        }
-
-
         /// <summary>
         /// Gets or sets remote OpenHAB connection configuration.
         /// </summary>
@@ -138,16 +123,6 @@ namespace OpenHAB.Windows.ViewModel
             set
             {
                 Set(ref _remoteConnection, value);
-            }
-        }
-
-        /// <summary>Gets the remote connection profiles.</summary>
-        /// <value>The remote connection profiles.</value>
-        public List<IConnectionProfile> LocalConnectionProfiles
-        {
-            get
-            {
-                return _settings.ConnectionProfiles.Where(x => x.Type == OpenHABHttpClientType.Local).ToList();
             }
         }
 

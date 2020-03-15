@@ -9,6 +9,8 @@ namespace OpenHAB.Core.Model
     /// </summary>
     public class Settings
     {
+        private static List<IConnectionProfile> _connectionProfiles;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Settings"/> class.
         /// </summary>
@@ -18,12 +20,6 @@ namespace OpenHAB.Core.Model
 
             LocalConnection = new OpenHABConnection();
             RemoteConnection = new OpenHABConnection();
-
-            ConnectionProfiles = new List<IConnectionProfile>();
-            ConnectionProfiles.Add(new LocalConnectionProfile());
-            ConnectionProfiles.Add(new DefaultConnectionProfile());
-            ConnectionProfiles.Add(new RemoteConnectionProfile());
-            ConnectionProfiles.Add(new CloudConnectionProfile());
         }
 
         /// <summary>
@@ -65,9 +61,21 @@ namespace OpenHAB.Core.Model
 
         /// <summary>Gets the list of available connection profiles.</summary>
         /// <value>The connection profiles.</value>
-        public List<IConnectionProfile> ConnectionProfiles
+        public static List<IConnectionProfile> ConnectionProfiles
         {
-            get;
+            get
+            {
+                if (_connectionProfiles == null)
+                {
+                    _connectionProfiles = new List<IConnectionProfile>();
+                    _connectionProfiles.Add(new LocalConnectionProfile());
+                    _connectionProfiles.Add(new DefaultConnectionProfile());
+                    _connectionProfiles.Add(new RemoteConnectionProfile());
+                    _connectionProfiles.Add(new CloudConnectionProfile());
+                }
+
+                return _connectionProfiles;
+            }
         }
 
         /// <summary>

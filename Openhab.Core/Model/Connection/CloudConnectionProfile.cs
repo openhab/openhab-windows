@@ -11,7 +11,7 @@ namespace OpenHAB.Core.Model.Connection
         /// <inheritdoc/>
         public OpenHABHttpClientType Type
         {
-            get => OpenHABHttpClientType.Local;
+            get => OpenHABHttpClientType.Remote;
         }
 
         /// <inheritdoc/>

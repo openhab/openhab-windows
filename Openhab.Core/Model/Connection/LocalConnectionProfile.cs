@@ -17,7 +17,7 @@ namespace OpenHAB.Core.Model.Connection
         /// <inheritdoc/>
         public string Name
         {
-            get => "Custom Lokal Connection";
+            get => "Custom Local Connection";
         }
 
         /// <inheritdoc/>

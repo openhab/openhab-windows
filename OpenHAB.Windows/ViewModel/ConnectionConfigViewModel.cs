@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
@@ -43,6 +45,16 @@ namespace OpenHAB.Windows.ViewModel
             _password = connectionConfig.Password;
             _willIgnoreSSLCertificate = connectionConfig.WillIgnoreSSLCertificate;
             _willIgnoreSSLHostname = connectionConfig.WillIgnoreSSLHostname;
+        }
+
+        /// <summary>Gets the available connection profiles.</summary>
+        /// <value>The profiles.</value>
+        public List<IConnectionProfile> Profiles
+        {
+            get
+            {
+                return Settings.ConnectionProfiles.Where(x => x.Type == _connectionConfig.Type).ToList();
+            }
         }
 
         /// <summary>Gets or sets the profile for the connection.</summary>

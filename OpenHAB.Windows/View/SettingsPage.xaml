@@ -21,7 +21,9 @@
 			<StackPanel Margin="0,0,10,0">
 				<TextBlock x:Uid="ConnectionProfile" />
 				<ComboBox Margin="0,0,12,12"
-						  ItemsSource="{Binding}"
+						  ItemsSource="{Binding Profiles, Mode=TwoWay}"
+						  PlaceholderText="No profile selected"
+						  DisplayMemberPath="Name"
 						  SelectedItem="{Binding Profile, Mode=TwoWay}"  />
 				<TextBlock x:Uid="LocalUrlHeader" />
 				<TextBox x:Uid="LocalUrl"
