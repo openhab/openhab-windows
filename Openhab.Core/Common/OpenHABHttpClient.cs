@@ -5,6 +5,7 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.Extensions.Logging;
 using OpenHAB.Core.Model;
+using OpenHAB.Core.Model.Connection;
 using OpenHAB.Core.Services;
 
 namespace OpenHAB.Core.Common

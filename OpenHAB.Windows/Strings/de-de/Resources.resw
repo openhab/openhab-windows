@@ -209,4 +209,7 @@ Bitte wählen Sie den Demo Modus oder die Lokalen/Remote Verbindunsinformation z
   <data name="ConnectionDialog.Title" xml:space="preserve">
     <value>Verbindungseinstellungen</value>
   </data>
+  <data name="ConnectionProfile.Text" xml:space="preserve">
+    <value>Verbindungsprofil</value>
+  </data>
 </root>

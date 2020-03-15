@@ -1,17 +1,26 @@
 ﻿using OpenHAB.Core.Common;
+using OpenHAB.Core.Contracts;
 
-namespace OpenHAB.Core.Model
+namespace OpenHAB.Core.Model.Connection
 {
     /// <summary>
     /// Connection configuration for OpenHAB service or cloud instance.
     /// </summary>
     public class OpenHABConnection
     {
+        /// <summary>Gets or sets the connection profile.</summary>
+        /// <value>The profile.</value>
+        public IConnectionProfile Profile
+        {
+            get;set;
+        }
+
+
         /// <summary>Gets or sets the type of the connection.</summary>
         /// <value>The type of the connection.</value>
         public OpenHABHttpClientType Type
         {
-            get; 
+            get;
             set;
         }
 

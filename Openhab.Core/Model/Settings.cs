@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using OpenHAB.Core.Contracts;
+using OpenHAB.Core.Model.Connection;
 
 namespace OpenHAB.Core.Model
 {
@@ -16,6 +18,12 @@ namespace OpenHAB.Core.Model
 
             LocalConnection = new OpenHABConnection();
             RemoteConnection = new OpenHABConnection();
+
+            ConnectionProfiles = new List<IConnectionProfile>();
+            ConnectionProfiles.Add(new LocalConnectionProfile());
+            ConnectionProfiles.Add(new DefaultConnectionProfile());
+            ConnectionProfiles.Add(new RemoteConnectionProfile());
+            ConnectionProfiles.Add(new CloudConnectionProfile());
         }
 
         /// <summary>
@@ -53,6 +61,13 @@ namespace OpenHAB.Core.Model
         {
             get;
             set;
+        }
+
+        /// <summary>Gets the list of available connection profiles.</summary>
+        /// <value>The connection profiles.</value>
+        public List<IConnectionProfile> ConnectionProfiles
+        {
+            get;
         }
 
         /// <summary>

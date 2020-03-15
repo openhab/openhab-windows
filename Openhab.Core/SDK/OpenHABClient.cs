@@ -14,6 +14,7 @@ using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
+using OpenHAB.Core.Model.Connection;
 
 namespace OpenHAB.Core.SDK
 {

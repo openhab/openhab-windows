@@ -210,4 +210,7 @@ Please select demo mode or configure local/remote connection.</value>
   <data name="ConnectionDialog.Title" xml:space="preserve">
     <value>Connection Settings</value>
   </data>
+  <data name="ConnectionProfile.Text" xml:space="preserve">
+    <value>Connection Profile</value>
+  </data>
 </root>

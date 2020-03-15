@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
-using Microsoft.Toolkit.Parsers.Markdown.Blocks;
-using OpenHAB.Core.Common;
+using OpenHAB.Core.Contracts;
 using OpenHAB.Core.Model;
+using OpenHAB.Core.Model.Connection;
 using OpenHAB.Core.SDK;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
@@ -25,12 +25,13 @@ namespace OpenHAB.Windows.ViewModel
         private OpenHABUrlState _urlState;
         private bool? _willIgnoreSSLCertificate;
         private bool? _willIgnoreSSLHostname;
+        private IConnectionProfile _profile;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConnectionConfigViewModel"/> class.
         /// </summary>
         /// <param name="connectionConfig">The connection configuration.</param>
-        /// <param name="openHabsdk">OpenHABSDK class</param>
+        /// <param name="openHabsdk">OpenHABSDK class.</param>
         public ConnectionConfigViewModel(OpenHABConnection connectionConfig, IOpenHAB openHabsdk)
             : base(connectionConfig)
         {
@@ -42,6 +43,23 @@ namespace OpenHAB.Windows.ViewModel
             _password = connectionConfig.Password;
             _willIgnoreSSLCertificate = connectionConfig.WillIgnoreSSLCertificate;
             _willIgnoreSSLHostname = connectionConfig.WillIgnoreSSLHostname;
+        }
+
+        /// <summary>Gets or sets the profile for the connection.</summary>
+        /// <value>The profile.</value>
+        public IConnectionProfile Profile
+        {
+            get
+            {
+                return _connectionConfig.Profile;
+            }
+
+            set
+            {
+
+                Set(ref _profile, value);
+                _connectionConfig.Profile = value;
+            }
         }
 
         /// <summary>
@@ -86,7 +104,7 @@ namespace OpenHAB.Windows.ViewModel
                     return "Not configured";
                 }
 
-                if (Uri.TryCreate(_url, UriKind.Absolute, out Uri uri) && 
+                if (Uri.TryCreate(_url, UriKind.Absolute, out Uri uri) &&
                     string.Compare(uri.Scheme.ToUpperInvariant(), "HTTPS", StringComparison.InvariantCulture) == 0)
                 {
                     return "Conntected to " + _url;

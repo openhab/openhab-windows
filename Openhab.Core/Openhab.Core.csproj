@@ -102,7 +102,11 @@
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\DataErrorInfo.cs" />
     <Compile Include="Common\ObservableCollectionExtensions.cs" />
-    <Compile Include="Common\OpenHABHttpClientType.cs" />
+    <Compile Include="Model\Connection\CloudConnectionProfile.cs" />
+    <Compile Include="Model\Connection\RemoteConnectionProfile.cs" />
+    <Compile Include="Model\Connection\LocalConnectionProfile.cs" />
+    <Compile Include="Model\Connection\OpenHABHttpClientType.cs" />
+    <Compile Include="Contracts\IConnectionProfile.cs" />
     <Compile Include="Contracts\Services\ISettingsService.cs" />
     <Compile Include="Messages\FireErrorMessage.cs" />
     <Compile Include="Messages\FireInfoMessage.cs" />
@@ -112,11 +116,12 @@
     <Compile Include="Messages\TriggerCommandMessage.cs" />
     <Compile Include="Messages\UpdateItemMessage.cs" />
     <Compile Include="Messages\WidgetClickedMessage.cs" />
-    <Compile Include="Model\Enums.cs" />
+    <Compile Include="Model\Connection\DefaultConnectionProfile.cs" />
+    <Compile Include="Model\WidgetTypeEnum.cs" />
     <Compile Include="Model\EventStreamData.cs" />
     <Compile Include="Model\EventStreamPayload.cs" />
     <Compile Include="Model\OpenHABCommand.cs" />
-    <Compile Include="Model\OpenHABConnection.cs" />
+    <Compile Include="Model\Connection\OpenHABConnection.cs" />
     <Compile Include="Model\OpenHABItem.cs" />
     <Compile Include="Model\OpenHABSitemap.cs" />
     <Compile Include="Model\OpenHABUrlState.cs" />

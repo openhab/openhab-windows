@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Logging;
+using OpenHAB.Core.Contracts;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Model;
+using OpenHAB.Core.Model.Connection;
 using OpenHAB.Core.SDK;
 
 namespace OpenHAB.Windows.ViewModel
@@ -110,6 +112,19 @@ namespace OpenHAB.Windows.ViewModel
             }
         }
 
+
+
+        /// <summary>Gets the remote connection profiles.</summary>
+        /// <value>The remote connection profiles.</value>
+        public List<IConnectionProfile> RemoteConnectionProfiles
+        {
+            get
+            {
+                return _settings.ConnectionProfiles.Where(x=>x.Type == OpenHABHttpClientType.Remote).ToList();
+            }
+        }
+
+
         /// <summary>
         /// Gets or sets remote OpenHAB connection configuration.
         /// </summary>
@@ -123,6 +138,16 @@ namespace OpenHAB.Windows.ViewModel
             set
             {
                 Set(ref _remoteConnection, value);
+            }
+        }
+
+        /// <summary>Gets the remote connection profiles.</summary>
+        /// <value>The remote connection profiles.</value>
+        public List<IConnectionProfile> LocalConnectionProfiles
+        {
+            get
+            {
+                return _settings.ConnectionProfiles.Where(x => x.Type == OpenHABHttpClientType.Local).ToList();
             }
         }
 

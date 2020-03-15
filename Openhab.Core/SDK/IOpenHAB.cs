@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Model;
+using OpenHAB.Core.Model.Connection;
 
 namespace OpenHAB.Core.SDK
 {
