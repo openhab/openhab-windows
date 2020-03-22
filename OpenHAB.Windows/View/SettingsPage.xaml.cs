@@ -39,7 +39,6 @@ namespace OpenHAB.Windows.View
         private static ConnectionDialog CreateConnectionDialog()
         {
             ConnectionDialog connectionDialog = new ConnectionDialog();
-            connectionDialog.PrimaryButtonText = "Close";
             connectionDialog.DefaultButton = ContentDialogButton.Primary;
             return connectionDialog;
         }

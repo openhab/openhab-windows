@@ -110,7 +110,7 @@
 						Header="{x:Bind Vm.Subtitle, Mode=OneWay}"
 						MenuItemsSource="{x:Bind Vm.Sitemaps, Mode=OneWay}"
 						MenuItemTemplate="{StaticResource NavSitemapTemplate}"
-						SelectedItem="{Binding Path=Vm.SelectedSitemap, Mode=TwoWay}"
+						SelectedItem="{x:Bind Vm.SelectedSitemap, Mode=TwoWay}"
 						IsBackButtonVisible="Collapsed"
 						AlwaysShowHeader="True"
 						IsSettingsVisible="False"
