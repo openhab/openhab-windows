@@ -17,8 +17,16 @@ namespace OpenHAB.Core.Services
         private ApplicationDataContainer _settingsContainer;
         private ILogger<SettingsService> _logger;
 
+        private JsonSerializerSettings _serializerSettings = new JsonSerializerSettings()
+        {
+            TypeNameHandling = TypeNameHandling.Auto,
+        };
+
         /// <inheritdoc />
-        public OpenHABVersion ServerVersion { get; set; }
+        public OpenHABVersion ServerVersion
+        {
+            get; set;
+        }
 
 
         /// <summary>
@@ -35,7 +43,7 @@ namespace OpenHAB.Core.Services
             _logger.LogInformation("Save settings to disk");
 
             EnsureSettingsContainer();
-            _settingsContainer.Values[Constants.Local.SettingsKey] = JsonConvert.SerializeObject(settings);
+            _settingsContainer.Values[Constants.Local.SettingsKey] = JsonConvert.SerializeObject(settings, _serializerSettings);
         }
 
         /// <inheritdoc />
@@ -78,7 +86,7 @@ namespace OpenHAB.Core.Services
                 return new Settings();
             }
 
-            return JsonConvert.DeserializeObject<Settings>(json);
+            return JsonConvert.DeserializeObject<Settings>(json, _serializerSettings);
         }
 
         /// <inheritdoc />

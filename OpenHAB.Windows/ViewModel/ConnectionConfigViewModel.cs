@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.Model.Connection;
@@ -18,42 +19,68 @@ namespace OpenHAB.Windows.ViewModel
     /// </summary>
     public class ConnectionConfigViewModel : ViewModelBase<OpenHABConnection>
     {
-        private readonly OpenHABConnection _connectionConfig;
         private readonly IOpenHAB _openHabsdk;
-        private string _url;
+        private readonly OpenHABHttpClientType _type;
         private string _password;
-        private string _username;
+        private IConnectionProfile _profile;
+        private ICommand _selectProfile;
+        private string _url;
         private ICommand _urlCheckCommand;
         private OpenHABUrlState _urlState;
+        private string _username;
         private bool? _willIgnoreSSLCertificate;
         private bool? _willIgnoreSSLHostname;
-        private IConnectionProfile _profile;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConnectionConfigViewModel"/> class.
         /// </summary>
         /// <param name="connectionConfig">The connection configuration.</param>
         /// <param name="openHabsdk">OpenHABSDK class.</param>
-        public ConnectionConfigViewModel(OpenHABConnection connectionConfig, IOpenHAB openHabsdk)
+        public ConnectionConfigViewModel(OpenHABConnection connectionConfig, IOpenHAB openHabsdk, OpenHABHttpClientType type)
             : base(connectionConfig)
         {
-            _connectionConfig = connectionConfig;
             _openHabsdk = openHabsdk;
-
-            _url = _connectionConfig.Url;
-            _username = connectionConfig.Username;
-            _password = connectionConfig.Password;
-            _willIgnoreSSLCertificate = connectionConfig.WillIgnoreSSLCertificate;
-            _willIgnoreSSLHostname = connectionConfig.WillIgnoreSSLHostname;
+            _type = type;
         }
 
-        /// <summary>Gets the available connection profiles.</summary>
-        /// <value>The profiles.</value>
-        public List<IConnectionProfile> Profiles
+        /// <summary>Gets a value indicating whether [host URL] value can be modified.</summary>
+        /// <value>
+        ///   <c>true</c> if [host URL configuration] can be modified; otherwise, <c>false</c>.</value>
+        public bool AllowHostUrlConfiguration
+        {
+            get => Profile?.AllowHostUrlConfiguration ?? false;
+        }
+
+        /// <summary>Gets a value indicating whether [allow ignore SSL certificate] issues option is available.</summary>
+        /// <value>
+        ///   <c>true</c> if [allow ignore SSL certificate] is available; otherwise, <c>false</c>.</value>
+        public bool AllowIgnoreSSLCertificate
+        {
+            get => Profile?.AllowIgnoreSSLCertificate ?? false;
+        }
+
+        /// <summary>Gets a value indicating whether [host URL] value can be modified.</summary>
+        /// <value>
+        ///   <c>true</c> if [host URL configuration] can be modified; otherwise, <c>false</c>.</value>
+        public bool AllowIgnoreSSLHostname
+        {
+            get => Profile?.AllowIgnoreSSLHostname ?? false;
+        }
+
+        /// <summary>
+        /// Gets or sets the password for the local OpenHAB connection.
+        /// </summary>
+        public string Password
         {
             get
             {
-                return Settings.ConnectionProfiles.Where(x => x.Type == _connectionConfig.Type).ToList();
+                return Model?.Password;
+            }
+
+            set
+            {
+                Set(ref _password, value);
+                Model.Password = value;
             }
         }
 
@@ -63,45 +90,31 @@ namespace OpenHAB.Windows.ViewModel
         {
             get
             {
-                return _connectionConfig.Profile;
+                return Model?.Profile;
             }
 
             set
             {
-
                 Set(ref _profile, value);
-                _connectionConfig.Profile = value;
+                Model.Profile = value;
+            }
+        }
+
+        /// <summary>Gets the available connection profiles.</summary>
+        /// <value>The profiles.</value>
+        public ObservableCollection<IConnectionProfile> Profiles
+        {
+            get
+            {
+                return new ObservableCollection<IConnectionProfile>(Settings.ConnectionProfiles.Where(x => x.Type == _type).OrderBy(x => x.Id).ToList());
             }
         }
 
         /// <summary>
-        /// Gets or sets the url to the OpenHAB server.
+        /// Gets the save command to persist the settings.
         /// </summary>
-        public string Url
-        {
-            get
-            {
-                return _url;
-            }
-
-            set
-            {
-                string tempUrl = string.Empty;
-                if (!string.IsNullOrEmpty(value) && !value.EndsWith("/", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    tempUrl = value + "/";
-                }
-                else
-                {
-                    tempUrl = value;
-                }
-
-                Set(ref _url, tempUrl);
-                _connectionConfig.Url = _url;
-
-                OnPropertyChanged(nameof(Subtitle));
-            }
-        }
+        /// <value>The save command.</value>
+        public ICommand SelectProfile => _selectProfile ?? (_selectProfile = new ActionCommand(CreateProfile));
 
         /// <summary>
         /// Gets the subtitle.
@@ -127,70 +140,31 @@ namespace OpenHAB.Windows.ViewModel
         }
 
         /// <summary>
-        /// Gets or sets the username for the local OpenHAB server connection.
+        /// Gets or sets the url to the OpenHAB server.
         /// </summary>
-        public string Username
+        public string Url
         {
             get
             {
-                return _username;
+                return Model?.Url;
             }
 
             set
             {
-                Set(ref _username, value);
-                _connectionConfig.Username = value;
-            }
-        }
+                string tempUrl = string.Empty;
+                if (!string.IsNullOrEmpty(value) && !value.EndsWith("/", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    tempUrl = value + "/";
+                }
+                else
+                {
+                    tempUrl = value;
+                }
 
-        /// <summary>
-        /// Gets or sets the password for the local OpenHAB connection.
-        /// </summary>
-        public string Password
-        {
-            get
-            {
-                return _password;
-            }
+                Set(ref _url, tempUrl);
+                Model.Url = _url;
 
-            set
-            {
-                Set(ref _password, value);
-                _connectionConfig.Password = value;
-            }
-        }
-
-        /// <summary>
-        ///  Gets or sets a value indicating whether the app will ignore the SSL certificate.
-        /// </summary>
-        public bool? WillIgnoreSSLCertificate
-        {
-            get
-            {
-                return _willIgnoreSSLCertificate;
-            }
-
-            set
-            {
-                Set(ref _willIgnoreSSLCertificate, value);
-                _connectionConfig.WillIgnoreSSLCertificate = value;
-            }
-        }
-
-        /// <summary>
-        ///  Gets or sets a value indicating whether the app will ignore the SSL hostname.
-        /// </summary>
-        public bool? WillIgnoreSSLHostname
-        {
-            get
-            {
-                return _willIgnoreSSLHostname;
-            }
-
-            set
-            {
-                Set(ref _willIgnoreSSLHostname, value);
-                _connectionConfig.WillIgnoreSSLHostname = value;
+                OnPropertyChanged(nameof(Subtitle));
             }
         }
 
@@ -208,6 +182,66 @@ namespace OpenHAB.Windows.ViewModel
         {
             get => _urlState;
             set => Set(ref _urlState, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the username for the local OpenHAB server connection.
+        /// </summary>
+        public string Username
+        {
+            get
+            {
+                return Model?.Username;
+            }
+
+            set
+            {
+                Set(ref _username, value);
+                Model.Username = value;
+            }
+        }
+
+        /// <summary>
+        ///  Gets or sets a value indicating whether the app will ignore the SSL certificate.
+        /// </summary>
+        public bool? WillIgnoreSSLCertificate
+        {
+            get
+            {
+                return Model?.WillIgnoreSSLCertificate;
+            }
+
+            set
+            {
+                Set(ref _willIgnoreSSLCertificate, value);
+                Model.WillIgnoreSSLCertificate = value;
+            }
+        }
+
+        /// <summary>
+        ///  Gets or sets a value indicating whether the app will ignore the SSL hostname.
+        /// </summary>
+        public bool? WillIgnoreSSLHostname
+        {
+            get
+            {
+                return Model?.WillIgnoreSSLHostname;
+            }
+
+            set
+            {
+                Set(ref _willIgnoreSSLHostname, value);
+                Model.WillIgnoreSSLHostname = value;
+            }
+        }
+
+        private void AssignValues(OpenHABConnection connectionConfig)
+        {
+            Url = connectionConfig.Url;
+            Username = connectionConfig.Username;
+            Password = connectionConfig.Password;
+            WillIgnoreSSLCertificate = connectionConfig.WillIgnoreSSLCertificate;
+            WillIgnoreSSLHostname = connectionConfig.WillIgnoreSSLHostname;
         }
 
         private async void CheckConnectionSettings(object parameter)
@@ -238,6 +272,28 @@ namespace OpenHAB.Windows.ViewModel
                     UrlState = urlState;
                 });
             });
+        }
+
+        private void CreateProfile(IConnectionProfile value)
+        {
+            Model = value.CreateConnection();
+            Model.Profile = value;
+
+            AssignValues(Model);
+        }
+
+        private void CreateProfile(object obj)
+        {
+            IConnectionProfile profile = obj as IConnectionProfile;
+
+            if (profile != null)
+            {
+                CreateProfile(profile);
+
+                OnPropertyChanged(nameof(AllowHostUrlConfiguration));
+                OnPropertyChanged(nameof(AllowIgnoreSSLCertificate));
+                OnPropertyChanged(nameof(AllowIgnoreSSLHostname));
+            }
         }
     }
 }

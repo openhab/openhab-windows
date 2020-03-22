@@ -17,9 +17,6 @@ namespace OpenHAB.Core.Model
         public Settings()
         {
             IsRunningInDemoMode = false;
-
-            LocalConnection = new OpenHABConnection();
-            RemoteConnection = new OpenHABConnection();
         }
 
         /// <summary>

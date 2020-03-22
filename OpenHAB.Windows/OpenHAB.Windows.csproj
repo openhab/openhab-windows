@@ -174,6 +174,7 @@
     <Compile Include="Converters\BoolToBackgroundColorConverter.cs" />
     <Compile Include="Converters\IconToBitmapConverter.cs" />
     <Compile Include="Converters\IconToPathConverter.cs" />
+    <Compile Include="Converters\NullToBooleanConverter.cs" />
     <Compile Include="Converters\ObjectToSitemapConverter.cs" />
     <Compile Include="Converters\OpenHabUrlStateToGlyph.cs" />
     <Compile Include="Converters\ReverseBoolConverter.cs" />
@@ -383,7 +384,7 @@
       <Version>3.1.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.9</Version>
+      <Version>6.2.10</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Services.Store.Engagement">
       <Version>10.1901.28001</Version>
@@ -401,7 +402,7 @@
       <Version>5.4.1.1</Version>
     </PackageReference>
     <PackageReference Include="NLog.Extensions.Logging">
-      <Version>1.6.1</Version>
+      <Version>1.6.2</Version>
     </PackageReference>
     <PackageReference Include="StyleCop.Analyzers">
       <Version>1.1.118</Version>

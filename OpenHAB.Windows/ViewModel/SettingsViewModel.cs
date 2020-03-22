@@ -4,7 +4,6 @@ using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Extensions.Logging;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Messages;
-using OpenHAB.Core.Model;
 using Windows.ApplicationModel;
 
 namespace OpenHAB.Windows.ViewModel

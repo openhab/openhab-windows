@@ -47,7 +47,7 @@ namespace OpenHAB.Core.SDK
         /// <inheritdoc/>
         public async Task<bool> CheckUrlReachability(OpenHABConnection connection)
         {
-            if (string.IsNullOrWhiteSpace(connection.Url))
+            if (string.IsNullOrWhiteSpace(connection?.Url))
             {
                 return false;
             }
@@ -335,8 +335,8 @@ namespace OpenHAB.Core.SDK
             _logger.LogInformation($"App is running in demo mode: {isRunningInDemoMode}");
 
             // no url configured yet
-            if (string.IsNullOrWhiteSpace(settings.LocalConnection.Url) &&
-                string.IsNullOrWhiteSpace(settings.RemoteConnection.Url) &&
+            if (string.IsNullOrWhiteSpace(settings.LocalConnection?.Url) &&
+                string.IsNullOrWhiteSpace(settings.RemoteConnection?.Url) &&
                 !isRunningInDemoMode)
             {
                 return false;
@@ -380,7 +380,7 @@ namespace OpenHAB.Core.SDK
             else
             {
                 // If remote URL is configured
-                if (!string.IsNullOrWhiteSpace(settings.RemoteConnection.Url) &&
+                if (!string.IsNullOrWhiteSpace(settings.RemoteConnection?.Url) &&
                     await CheckUrlReachability(settings.RemoteConnection).ConfigureAwait(false))
                 {
                     OpenHABHttpClient.BaseUrl = settings.RemoteConnection.Url;

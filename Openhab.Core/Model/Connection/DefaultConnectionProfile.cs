@@ -9,35 +9,40 @@ namespace OpenHAB.Core.Model.Connection
     public class DefaultConnectionProfile : IConnectionProfile
     {
         /// <inheritdoc/>
-        public OpenHABHttpClientType Type
-        {
-            get => OpenHABHttpClientType.Local;
-        }
-
-        /// <inheritdoc/>
-        public string Name
-        {
-            get => "Default Local Connection";
-        }
-
-        /// <inheritdoc/>
-        public bool AllowIgnoreSSLCertificate
-        {
-            get => false;
-        }
-
-        /// <inheritdoc/>
-        public bool AllowIgnoreSSLHostname
-        {
-            get => false;
-        }
-
-        /// <inheritdoc/>
         public bool AllowHostUrlConfiguration
         {
             get => false;
         }
 
+        /// <inheritdoc/>
+        public bool AllowIgnoreSSLCertificate
+        {
+            get => true;
+        }
+
+        /// <inheritdoc/>
+        public bool AllowIgnoreSSLHostname
+        {
+            get => true;
+        }
+
+        /// <inheritdoc/>
+        public int Id
+        {
+            get => 1;
+        }
+
+        /// <inheritdoc/>
+        public string Name
+        {
+            get => "Default Connection";
+        }
+
+        /// <inheritdoc/>
+        public OpenHABHttpClientType Type
+        {
+            get => OpenHABHttpClientType.Local;
+        }
         /// <inheritdoc/>
         public OpenHABConnection CreateConnection()
         {

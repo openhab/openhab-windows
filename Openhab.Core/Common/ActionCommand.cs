@@ -10,6 +10,7 @@ namespace OpenHAB.Core.Common
     {
         private readonly Func<object, bool> _canExecuteHandler;
         private readonly Action<object> _executeHandler;
+        private ICommand selectProfile;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref = "ActionCommand" /> class.
@@ -43,6 +44,11 @@ namespace OpenHAB.Core.Common
         public ActionCommand(Action<object> execute)
         {
             _executeHandler = execute;
+        }
+
+        public ActionCommand(ICommand selectProfile)
+        {
+            this.selectProfile = selectProfile;
         }
 
         /// <summary>

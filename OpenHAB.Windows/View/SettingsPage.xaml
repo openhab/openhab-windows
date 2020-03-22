@@ -16,18 +16,28 @@
 	<Page.Resources>
 		<converters:ReverseBoolConverter x:Key="ReverseBoolConverter" />
 		<converters:OpenHabUrlStateToGlyph x:Key="OpenHabUrlStateToGlyph" />
+		<converters:NullToBooleanConverter x:Key="NullToBooleanConverter" />
 
 		<DataTemplate x:Key="ConnectionConfigTemplate">
 			<StackPanel Margin="0,0,10,0">
 				<TextBlock x:Uid="ConnectionProfile" />
 				<ComboBox Margin="0,0,12,12"
+						  x:Name="ProfileSeletion"						  
 						  ItemsSource="{Binding Profiles, Mode=TwoWay}"
 						  PlaceholderText="No profile selected"
 						  DisplayMemberPath="Name"
-						  SelectedItem="{Binding Profile, Mode=TwoWay}"  />
+						  SelectedItem="{Binding Path=Profile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+					<Interactivity:Interaction.Behaviors>
+						<Core:EventTriggerBehavior EventName="SelectionChanged">
+							<Core:InvokeCommandAction Command="{Binding Path=SelectProfile, Mode=TwoWay}"
+													  CommandParameter="{Binding ElementName=ProfileSeletion,Path=SelectedValue}" />
+						</Core:EventTriggerBehavior>
+					</Interactivity:Interaction.Behaviors>
+				</ComboBox>
 				<TextBlock x:Uid="LocalUrlHeader" />
 				<TextBox x:Uid="LocalUrl"
 						 x:Name="TextBoxUrl"
+						 IsEnabled="{Binding AllowHostUrlConfiguration, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 						 Margin="0,0,12,12"
 						 Text="{Binding Url, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 					<Interactivity:Interaction.Behaviors>
@@ -40,6 +50,7 @@
 				<TextBlock x:Uid="UsernameHeader" />
 				<TextBox x:Name="TextBoxUsername"
 						 Margin="0,0,12,12"
+						 IsEnabled="{Binding Profile, Converter={StaticResource NullToBooleanConverter}}"
 						 Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 						 TextWrapping="Wrap">
 					<Interactivity:Interaction.Behaviors>
@@ -52,10 +63,11 @@
 				<TextBlock x:Uid="PasswordHeader" />
 				<PasswordBox x:Name="TextBoxPassword"
 							 Margin="0,0,12,12"
+							 IsEnabled="{Binding Profile, Converter={StaticResource NullToBooleanConverter}}"
 							 Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 					<Interactivity:Interaction.Behaviors>
 						<Core:EventTriggerBehavior EventName="LostFocus">
-							<Core:InvokeCommandAction Command="{Binding Path=LocalUrlCheckCommand, Mode=TwoWay}"
+							<Core:InvokeCommandAction Command="{Binding Path=UrlCheckCommand, Mode=TwoWay}"
 													  CommandParameter="{Binding ElementName=TextBoxUrl,Path=Text}" />
 						</Core:EventTriggerBehavior>
 					</Interactivity:Interaction.Behaviors>
@@ -63,12 +75,14 @@
 				<TextBlock x:Uid="IgnoreSSLCertErrors" />
 				<CheckBox x:Name="CheckBoxIgnoreSSL"
 						  Margin="0,0,0,12"
+						  IsEnabled="{Binding AllowIgnoreSSLCertificate, Mode=OneWay}"
 						  HorizontalAlignment="Stretch"
 						  VerticalAlignment="Stretch"
 						  IsChecked="{Binding WillIgnoreSSLCertificate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 				<TextBlock x:Uid="IgnoreSSLCertHostErrors" />
 				<CheckBox x:Name="CheckBoxIgnoreSSLHostname"
 						  Margin="0,0,0,12"
+						  IsEnabled="{Binding AllowIgnoreSSLHostname, Mode=OneWay}"
 						  HorizontalAlignment="Stretch"
 						  VerticalAlignment="Stretch"
 						  IsChecked="{Binding WillIgnoreSSLHostname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />

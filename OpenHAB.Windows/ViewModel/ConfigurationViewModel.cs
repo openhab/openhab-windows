@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Logging;
-using OpenHAB.Core.Contracts;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.Model.Connection;
@@ -35,15 +34,14 @@ namespace OpenHAB.Windows.ViewModel
             _logger = logger;
             _settings = settingsService.Load();
 
-            _localConnection = new ConnectionConfigViewModel(_settings.LocalConnection, openHabsdk);
-            _remoteConnection = new ConnectionConfigViewModel(_settings.RemoteConnection, openHabsdk);
+            LocalConnection = new ConnectionConfigViewModel(_settings.LocalConnection, openHabsdk, OpenHABHttpClientType.Local);
+            RemoteConnection = new ConnectionConfigViewModel(_settings.RemoteConnection, openHabsdk, OpenHABHttpClientType.Remote);
 
-            _isRunningInDemoMode = _settings.IsRunningInDemoMode;
-            _hideDefaultSitemap = _settings.HideDefaultSitemap;
+            IsRunningInDemoMode = _settings.IsRunningInDemoMode;
+            HideDefaultSitemap = _settings.HideDefaultSitemap;
 
-            _appLanguages = InitalizeAppLanguages();
-
-            _selectedAppLanguage =
+            AppLanguages = InitalizeAppLanguages();
+            SelectedAppLanguage =
                 _appLanguages.FirstOrDefault(x => string.Compare(x.Code, _settings.AppLanguage, StringComparison.InvariantCultureIgnoreCase) == 0);
         }
 
@@ -196,6 +194,9 @@ namespace OpenHAB.Windows.ViewModel
         /// </summary>
         public void Save()
         {
+            _settings.LocalConnection = _localConnection.Model;
+            _settings.RemoteConnection = _remoteConnection.Model;
+
             _settingsService.Save(_settings);
             _settingsService.SetProgramLanguage(null);
         }

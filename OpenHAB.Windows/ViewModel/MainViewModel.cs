@@ -210,10 +210,16 @@ namespace OpenHAB.Windows.ViewModel
                     Subtitle = null;
                 });
 
+
+                Settings settings = _settingsService.Load();
+                if (settings.LocalConnection == null && settings.RemoteConnection == null)
+                {
+                    Messenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));
+                }
+
                 bool isSuccessful = await _openHabsdk.ResetConnection().ConfigureAwait(false);
                 if (!isSuccessful)
                 {
-                    Messenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));
                     return;
                 }
 
@@ -231,7 +237,6 @@ namespace OpenHAB.Windows.ViewModel
 
                 List<Func<OpenHABSitemap, bool>> filters = new List<Func<OpenHABSitemap, bool>>();
 
-                Settings settings = _settingsService.Load();
                 if (settings.HideDefaultSitemap.HasValue && settings.HideDefaultSitemap.Value)
                 {
                     filters.Add(defaultSitemapFilter);
@@ -327,7 +332,7 @@ namespace OpenHAB.Windows.ViewModel
         {
             OpenHABWidget widget = WidgetNavigationService.GoBack();
 
-            Subtitle = widget == null ? SelectedSitemap.Label: widget.Label;
+            Subtitle = widget == null ? SelectedSitemap.Label : widget.Label;
             SetWidgetsOnScreen(widget != null ? widget.LinkedPage.Widgets : SelectedSitemap.Widgets);
         }
 

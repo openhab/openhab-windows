@@ -1,6 +1,4 @@
-﻿using System;
-using OpenHAB.Core.Common;
-using OpenHAB.Core.Contracts;
+﻿using OpenHAB.Core.Contracts;
 
 namespace OpenHAB.Core.Model.Connection
 {
@@ -9,15 +7,9 @@ namespace OpenHAB.Core.Model.Connection
     public class CloudConnectionProfile : IConnectionProfile
     {
         /// <inheritdoc/>
-        public OpenHABHttpClientType Type
+        public bool AllowHostUrlConfiguration
         {
-            get => OpenHABHttpClientType.Remote;
-        }
-
-        /// <inheritdoc/>
-        public string Name
-        {
-            get => "OpenHab Cloud";
+            get => false;
         }
 
         /// <inheritdoc/>
@@ -33,9 +25,21 @@ namespace OpenHAB.Core.Model.Connection
         }
 
         /// <inheritdoc/>
-        public bool AllowHostUrlConfiguration
+        public int Id
         {
-            get => false;
+            get => 4;
+        }
+
+        /// <inheritdoc/>
+        public string Name
+        {
+            get => "OpenHab Cloud";
+        }
+
+        /// <inheritdoc/>
+        public OpenHABHttpClientType Type
+        {
+            get => OpenHABHttpClientType.Remote;
         }
 
         /// <inheritdoc/>

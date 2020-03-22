@@ -33,6 +33,8 @@ namespace OpenHAB.Windows.View
             _logger = (ILogger<SettingsViewModel>)DIService.Instance.Services.GetService(typeof(ILogger<SettingsViewModel>));
 
             Messenger.Default.Register<SettingsUpdatedMessage>(this, msg => HandleSettingsUpdate(msg));
+
+
         }
 
         private async void HandleSettingsUpdate(SettingsUpdatedMessage msg)

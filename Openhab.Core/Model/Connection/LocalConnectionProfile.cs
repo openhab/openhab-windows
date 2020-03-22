@@ -9,15 +9,9 @@ namespace OpenHAB.Core.Model.Connection
     public class LocalConnectionProfile : IConnectionProfile
     {
         /// <inheritdoc/>
-        public OpenHABHttpClientType Type
+        public bool AllowHostUrlConfiguration
         {
-            get => OpenHABHttpClientType.Local;
-        }
-
-        /// <inheritdoc/>
-        public string Name
-        {
-            get => "Custom Local Connection";
+            get => true;
         }
 
         /// <inheritdoc/>
@@ -32,10 +26,21 @@ namespace OpenHAB.Core.Model.Connection
             get => true;
         }
 
-        /// <inheritdoc/>
-        public bool AllowHostUrlConfiguration
+        public int Id
         {
-            get => true;
+            get => 2;
+        }
+
+        /// <inheritdoc/>
+        public string Name
+        {
+            get => "Custom Connection";
+        }
+
+        /// <inheritdoc/>
+        public OpenHABHttpClientType Type
+        {
+            get => OpenHABHttpClientType.Local;
         }
 
         /// <inheritdoc/>

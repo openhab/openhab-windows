@@ -9,15 +9,9 @@ namespace OpenHAB.Core.Model.Connection
     public class RemoteConnectionProfile : IConnectionProfile
     {
         /// <inheritdoc/>
-        public OpenHABHttpClientType Type
+        public bool AllowHostUrlConfiguration
         {
-            get => OpenHABHttpClientType.Remote;
-        }
-
-        /// <inheritdoc/>
-        public string Name
-        {
-            get => "Custom Remote Connection";
+            get => true;
         }
 
         /// <inheritdoc/>
@@ -33,9 +27,21 @@ namespace OpenHAB.Core.Model.Connection
         }
 
         /// <inheritdoc/>
-        public bool AllowHostUrlConfiguration
+        public int Id
         {
-            get => true;
+            get => 3;
+        }
+
+        /// <inheritdoc/>
+        public string Name
+        {
+            get => "Custom Remote Connection";
+        }
+
+        /// <inheritdoc/>
+        public OpenHABHttpClientType Type
+        {
+            get => OpenHABHttpClientType.Remote;
         }
 
         /// <inheritdoc/>
