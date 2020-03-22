@@ -122,6 +122,9 @@
     <Compile Include="Controls\ColorMap.xaml.cs">
       <DependentUpon>ColorMap.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ConnectionDialog.xaml.cs">
+      <DependentUpon>ConnectionDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\FrameWidget.xaml.cs">
       <DependentUpon>FrameWidget.xaml</DependentUpon>
     </Compile>
@@ -186,7 +189,8 @@
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ViewModel\ConfigurationViewModel.cs" />
-    <Compile Include="ViewModel\ConnectionConfigViewModel.cs" />
+    <Compile Include="ViewModel\ConnectionDialogViewModel.cs" />
+    <Compile Include="ViewModel\ConnectionProfileViewModel.cs" />
     <Compile Include="ViewModel\LanguageViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\SitemapViewModel.cs" />
@@ -270,6 +274,10 @@
     <Page Include="Controls\ColorMap.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ConnectionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\FrameWidget.xaml">
       <SubType>Designer</SubType>

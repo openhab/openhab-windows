@@ -16,8 +16,8 @@ namespace OpenHAB.Windows.ViewModel
     {
         private bool? _hideDefaultSitemap;
         private bool? _isRunningInDemoMode;
-        private ConnectionConfigViewModel _remoteConnection;
-        private ConnectionConfigViewModel _localConnection;
+        private ConnectionDialogViewModel _remoteConnection;
+        private ConnectionDialogViewModel _localConnection;
         private readonly ISettingsService _settingsService;
         private readonly ILogger<ConfigurationViewModel> _logger;
         private readonly Settings _settings;
@@ -34,8 +34,8 @@ namespace OpenHAB.Windows.ViewModel
             _logger = logger;
             _settings = settingsService.Load();
 
-            LocalConnection = new ConnectionConfigViewModel(_settings.LocalConnection, openHabsdk, OpenHABHttpClientType.Local);
-            RemoteConnection = new ConnectionConfigViewModel(_settings.RemoteConnection, openHabsdk, OpenHABHttpClientType.Remote);
+            LocalConnection = new ConnectionDialogViewModel(_settings.LocalConnection, openHabsdk, OpenHABHttpClientType.Local);
+            RemoteConnection = new ConnectionDialogViewModel(_settings.RemoteConnection, openHabsdk, OpenHABHttpClientType.Remote);
 
             IsRunningInDemoMode = _settings.IsRunningInDemoMode;
             HideDefaultSitemap = _settings.HideDefaultSitemap;
@@ -111,7 +111,7 @@ namespace OpenHAB.Windows.ViewModel
         /// <summary>
         /// Gets or sets remote OpenHAB connection configuration.
         /// </summary>
-        public ConnectionConfigViewModel RemoteConnection
+        public ConnectionDialogViewModel RemoteConnection
         {
             get
             {
@@ -127,7 +127,7 @@ namespace OpenHAB.Windows.ViewModel
         /// <summary>
         /// Gets or sets local OpenHAB connection configuration.
         /// </summary>
-        public ConnectionConfigViewModel LocalConnection
+        public ConnectionDialogViewModel LocalConnection
         {
             get
             {

@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Extensions.Logging;
 using OpenHAB.Core.Messages;
+using OpenHAB.Windows.Controls;
 using OpenHAB.Windows.Services;
 using OpenHAB.Windows.ViewModel;
 using Windows.UI.Core;
@@ -18,11 +19,6 @@ namespace OpenHAB.Windows.View
         private ILogger<SettingsViewModel> _logger;
 
         /// <summary>
-        /// Gets the datacontext, for use in compiled bindings.
-        /// </summary>
-        public SettingsViewModel Vm => DataContext as SettingsViewModel;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="SettingsPage"/> class.
         /// </summary>
         public SettingsPage()
@@ -33,8 +29,24 @@ namespace OpenHAB.Windows.View
             _logger = (ILogger<SettingsViewModel>)DIService.Instance.Services.GetService(typeof(ILogger<SettingsViewModel>));
 
             Messenger.Default.Register<SettingsUpdatedMessage>(this, msg => HandleSettingsUpdate(msg));
+        }
 
+        /// <summary>
+        /// Gets the datacontext, for use in compiled bindings.
+        /// </summary>
+        public SettingsViewModel Vm => DataContext as SettingsViewModel;
 
+        private static ConnectionDialog CreateConnectionDialog()
+        {
+            ConnectionDialog connectionDialog = new ConnectionDialog();
+            connectionDialog.PrimaryButtonText = "Close";
+            connectionDialog.DefaultButton = ContentDialogButton.Primary;
+            return connectionDialog;
+        }
+
+        private void Button_OnClick(object sender, RoutedEventArgs e)
+        {
+            Frame.GoBack();
         }
 
         private async void HandleSettingsUpdate(SettingsUpdatedMessage msg)
@@ -61,21 +73,18 @@ namespace OpenHAB.Windows.View
             }
         }
 
-        private void Button_OnClick(object sender, RoutedEventArgs e)
-        {
-            Frame.GoBack();
-        }
-
         private void OpenLocalConnectionButton_Click(object sender, RoutedEventArgs e)
         {
-            ConnectionDialog.DataContext = Vm.Settings.LocalConnection;
-            ConnectionDialog.ShowAsync();
+            ConnectionDialog connectionDialog = CreateConnectionDialog();
+            connectionDialog.DataContext = Vm.Settings.LocalConnection;
+            connectionDialog.ShowAsync();
         }
 
         private void OpenRemoteConnectionButton_Click(object sender, RoutedEventArgs e)
         {
-            ConnectionDialog.DataContext = Vm.Settings.RemoteConnection;
-            ConnectionDialog.ShowAsync();
+            ConnectionDialog connectionDialog = CreateConnectionDialog();
+            connectionDialog.DataContext = Vm.Settings.RemoteConnection;
+            connectionDialog.ShowAsync();
         }
     }
 }
