@@ -154,15 +154,15 @@ namespace OpenHAB.Windows.ViewModel
                 if (Uri.TryCreate(Url, UriKind.Absolute, out Uri uri) &&
                     string.Compare(uri.Scheme.ToUpperInvariant(), "HTTPS", StringComparison.InvariantCulture) == 0)
                 {
-                    return "Conntected to " + Url;
+                    return "Connected to " + _url;
                 }
 
-                return "Unsecure connected to " + Url;
+                return "Unsecured connected to " + _url;
             }
         }
 
         /// <summary>
-        /// Gets or sets the url to the OpenHAB server.
+        /// Gets or sets the URL to the OpenHAB server.
         /// </summary>
         public string Url
         {
@@ -191,13 +191,13 @@ namespace OpenHAB.Windows.ViewModel
         }
 
         /// <summary>
-        /// Gets the command for local url check.
+        /// Gets the command for local URL check.
         /// </summary>
         /// <value>The local URL check command.</value>
         public ICommand UrlCheckCommand => _urlCheckCommand ?? (_urlCheckCommand = new RelayCommand<object>(CheckConnectionSettings));
 
         /// <summary>
-        /// Gets or sets the state for OpenHab local url.
+        /// Gets or sets the state for OpenHab local URL.
         /// </summary>
         /// <value>The state of the local URL.</value>
         public OpenHABUrlState UrlState
