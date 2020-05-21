@@ -45,7 +45,7 @@ namespace OpenHAB.Windows.ViewModel
         }
 
         /// <summary>
-        /// Gets the app version number.
+        /// Gets the application version number.
         /// </summary>
         /// <value>The version number.</value>
         public string Version

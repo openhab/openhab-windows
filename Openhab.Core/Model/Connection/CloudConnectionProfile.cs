@@ -33,7 +33,7 @@ namespace OpenHAB.Core.Model.Connection
         /// <inheritdoc/>
         public string Name
         {
-            get => "OpenHab Cloud";
+            get => AppResources.Values.GetString("RemoteDefaultConnection");
         }
 
         /// <inheritdoc/>

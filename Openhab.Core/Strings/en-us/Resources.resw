@@ -189,7 +189,7 @@ Go to app settings (gear icon) to check the connection configuration.</value>
     <value>App Settings</value>
   </data>
   <data name="HideDefaultSitemap.Text" xml:space="preserve">
-    <value>Hide default sitemap (_default)</value>
+    <value>Show default sitemap (_default)</value>
   </data>
   <data name="CertificateSettings.Text" xml:space="preserve">
     <value>Certificate Settings</value>
@@ -214,9 +214,24 @@ Please select demo mode or configure local/remote connection.</value>
     <value>Connection Profile</value>
   </data>
   <data name="EncryptedConnection" xml:space="preserve">
-    <value>Connected to </value>
+    <value>Connected to</value>
   </data>
   <data name="UnencryptedConnection" xml:space="preserve">
-    <value>Unsecured connected to </value>
+    <value>Unsecured connected to</value>
+  </data>
+  <data name="ConnectionNotConfigured" xml:space="preserve">
+    <value>Not configured</value>
+  </data>
+  <data name="LocalDefaultConnection" xml:space="preserve">
+    <value>Default Connection Profile</value>
+  </data>
+  <data name="LocalCustomConnection" xml:space="preserve">
+    <value>Custom Connection Profile</value>
+  </data>
+  <data name="RemoteCustomConnection" xml:space="preserve">
+    <value>Custom Connection Profile</value>
+  </data>
+  <data name="RemoteDefaultConnection" xml:space="preserve">
+    <value>OpenHab Cloud</value>
   </data>
 </root>

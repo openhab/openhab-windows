@@ -1,6 +1,7 @@
 ﻿using System;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Extensions.Logging;
+using OpenHAB.Core;
 using OpenHAB.Core.Messages;
 using OpenHAB.Windows.Controls;
 using OpenHAB.Windows.Services;

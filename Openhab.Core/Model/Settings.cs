@@ -17,20 +17,21 @@ namespace OpenHAB.Core.Model
         public Settings()
         {
             IsRunningInDemoMode = false;
+            ShowDefaultSitemap = false;
         }
 
         /// <summary>
-        /// Gets or sets the if the default sitemap should be hidden.
+        /// Gets or sets the if the default sitemap should be visible.
         /// </summary>
         /// <value>The hide default sitemap.</value>
-        public bool? HideDefaultSitemap
+        public bool ShowDefaultSitemap
         {
             get;
             set;
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the app is currently running in demo mode.
+        /// Gets or sets a value indicating whether the application is currently running in demo mode.
         /// </summary>
         public bool? IsRunningInDemoMode
         {
@@ -39,7 +40,7 @@ namespace OpenHAB.Core.Model
         }
 
         /// <summary>
-        /// Gets or sets the config to the OpenHAB remote instance.
+        /// Gets or sets the configuration to the OpenHAB remote instance.
         /// </summary>
         public OpenHABConnection LocalConnection
         {
@@ -48,7 +49,7 @@ namespace OpenHAB.Core.Model
         }
 
         /// <summary>
-        /// Gets or sets the config to the OpenHAB remote instance.
+        /// Gets or sets the configuration to the OpenHAB remote instance.
         /// </summary>
         public OpenHABConnection RemoteConnection
         {

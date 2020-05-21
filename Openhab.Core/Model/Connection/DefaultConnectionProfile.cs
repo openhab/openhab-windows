@@ -4,7 +4,7 @@ using OpenHAB.Core.Contracts;
 
 namespace OpenHAB.Core.Model.Connection
 {
-    /// <summary>Connection profile for for local default connection to OpenHab server.</summary>
+    /// <summary>Connection profile for local default connection to OpenHab server.</summary>
     /// <seealso cref="OpenHAB.Core.Contracts.IConnectionProfile" />
     public class DefaultConnectionProfile : IConnectionProfile
     {
@@ -35,7 +35,7 @@ namespace OpenHAB.Core.Model.Connection
         /// <inheritdoc/>
         public string Name
         {
-            get => "Default Connection";
+            get => AppResources.Values.GetString("LocalDefaultConnection");
         }
 
         /// <inheritdoc/>

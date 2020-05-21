@@ -14,7 +14,7 @@ namespace OpenHAB.Windows.ViewModel
     /// </summary>
     public class ConfigurationViewModel : ViewModelBase<object>
     {
-        private bool? _hideDefaultSitemap;
+        private bool _showDefaultSitemap;
         private bool? _isRunningInDemoMode;
         private ConnectionDialogViewModel _remoteConnection;
         private ConnectionDialogViewModel _localConnection;
@@ -38,7 +38,7 @@ namespace OpenHAB.Windows.ViewModel
             RemoteConnection = new ConnectionDialogViewModel(_settings.RemoteConnection, openHabsdk, OpenHABHttpClientType.Remote);
 
             IsRunningInDemoMode = _settings.IsRunningInDemoMode;
-            HideDefaultSitemap = _settings.HideDefaultSitemap;
+            ShowDefaultSitemap = _settings.ShowDefaultSitemap;
 
             AppLanguages = InitalizeAppLanguages();
             SelectedAppLanguage =
@@ -74,20 +74,20 @@ namespace OpenHAB.Windows.ViewModel
         }
 
         /// <summary>,
-        /// Gets or sets the if the default sitemap should be hidden.
+        /// Gets or sets the if the default sitemap should be visible.
         /// </summary>
         /// <value>The hide default sitemap.</value>
-        public bool? HideDefaultSitemap
+        public bool ShowDefaultSitemap
         {
             get
             {
-                return _hideDefaultSitemap;
+                return _showDefaultSitemap;
             }
 
             set
             {
-                Set(ref _hideDefaultSitemap, value);
-                _settings.HideDefaultSitemap = value;
+                Set(ref _showDefaultSitemap, value);
+                _settings.ShowDefaultSitemap = value;
             }
         }
 
@@ -184,7 +184,7 @@ namespace OpenHAB.Windows.ViewModel
                      !string.IsNullOrEmpty(LocalConnection?.Url) ||
                      !string.IsNullOrEmpty(RemoteConnection?.Url);
 
-            _logger.LogInformation($"Vaild app configuration: {validConfig}");
+            _logger.LogInformation($"Valid application configuration: {validConfig}");
 
             return validConfig;
         }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
-using Microsoft.Toolkit.Uwp.UI.Controls.TextToolbarSymbols;
+using OpenHAB.Core;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts;
 using OpenHAB.Core.Model;
@@ -25,6 +25,7 @@ namespace OpenHAB.Windows.ViewModel
         private readonly OpenHABHttpClientType _type;
         private string _password;
         private ConnectionProfileViewModel _profile;
+        private ObservableCollection<ConnectionProfileViewModel> _profiles;
         private ICommand _selectProfile;
         private string _url;
         private ICommand _urlCheckCommand;
@@ -32,8 +33,6 @@ namespace OpenHAB.Windows.ViewModel
         private string _username;
         private bool? _willIgnoreSSLCertificate;
         private bool? _willIgnoreSSLHostname;
-        private ObservableCollection<ConnectionProfileViewModel> _profiles;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ConnectionDialogViewModel"/> class.
         /// </summary>
@@ -148,16 +147,16 @@ namespace OpenHAB.Windows.ViewModel
             {
                 if (string.IsNullOrEmpty(Url))
                 {
-                    return "Not configured";
+                    return AppResources.Values.GetString("ConnectionNotConfigured");
                 }
 
                 if (Uri.TryCreate(Url, UriKind.Absolute, out Uri uri) &&
                     string.Compare(uri.Scheme.ToUpperInvariant(), "HTTPS", StringComparison.InvariantCulture) == 0)
                 {
-                    return "Connected to " + _url;
+                    return $"{AppResources.Values.GetString("EncryptedConnection")} {Url}";
                 }
 
-                return "Unsecured connected to " + _url;
+                return $"{AppResources.Values.GetString("UnencryptedConnection")} {Url}";
             }
         }
 
@@ -173,7 +172,7 @@ namespace OpenHAB.Windows.ViewModel
 
             set
             {
-                string tempUrl = string.Empty;
+                string tempUrl;
                 if (!string.IsNullOrEmpty(value) && !value.EndsWith("/", StringComparison.InvariantCultureIgnoreCase))
                 {
                     tempUrl = value + "/";
@@ -224,7 +223,7 @@ namespace OpenHAB.Windows.ViewModel
         }
 
         /// <summary>
-        ///  Gets or sets a value indicating whether the app will ignore the SSL certificate.
+        ///  Gets or sets a value indicating whether the application will ignore the SSL certificate.
         /// </summary>
         public bool? WillIgnoreSSLCertificate
         {
@@ -241,7 +240,7 @@ namespace OpenHAB.Windows.ViewModel
         }
 
         /// <summary>
-        ///  Gets or sets a value indicating whether the app will ignore the SSL hostname.
+        ///  Gets or sets a value indicating whether the application will ignore the SSL hostname.
         /// </summary>
         public bool? WillIgnoreSSLHostname
         {

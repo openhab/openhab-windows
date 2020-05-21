@@ -15,7 +15,6 @@ namespace OpenHAB.Core.Model.Connection
             get;set;
         }
 
-
         /// <summary>Gets or sets the type of the connection.</summary>
         /// <value>The type of the connection.</value>
         public OpenHABHttpClientType Type
@@ -25,7 +24,7 @@ namespace OpenHAB.Core.Model.Connection
         }
 
         /// <summary>
-        /// Gets or sets the url to the OpenHAB server.
+        /// Gets or sets the URL to the OpenHAB server.
         /// </summary>
         public string Url
         {
@@ -52,7 +51,7 @@ namespace OpenHAB.Core.Model.Connection
         }
 
         /// <summary>
-        ///  Gets or sets a value indicating whether the app will ignore the SSL certificate.
+        ///  Gets or sets a value indicating whether the application will ignore the SSL certificate.
         /// </summary>
         public bool? WillIgnoreSSLCertificate
         {
@@ -61,7 +60,7 @@ namespace OpenHAB.Core.Model.Connection
         }
 
         /// <summary>
-        ///  Gets or sets a value indicating whether the app will ignore the SSL hostname.
+        ///  Gets or sets a value indicating whether the application will ignore the SSL hostname.
         /// </summary>
         public bool? WillIgnoreSSLHostname
         {

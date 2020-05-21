@@ -237,7 +237,7 @@ namespace OpenHAB.Windows.ViewModel
 
                 List<Func<OpenHABSitemap, bool>> filters = new List<Func<OpenHABSitemap, bool>>();
 
-                if (settings.HideDefaultSitemap.HasValue && settings.HideDefaultSitemap.Value)
+                if (!settings.ShowDefaultSitemap)
                 {
                     filters.Add(defaultSitemapFilter);
                 }

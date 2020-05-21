@@ -35,7 +35,7 @@ namespace OpenHAB.Core.Model.Connection
         /// <inheritdoc/>
         public string Name
         {
-            get => "Custom Remote Connection";
+            get => AppResources.Values.GetString("RemoteCustomConnection");
         }
 
         /// <inheritdoc/>
