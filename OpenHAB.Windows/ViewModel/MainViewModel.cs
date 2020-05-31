@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Messaging;
@@ -21,26 +22,25 @@ using Windows.UI.Core;
 namespace OpenHAB.Windows.ViewModel
 {
     /// <summary>
-    /// Collects and formats all the data for starting the app.
+    /// Collects and formats all the data for starting the application.
     /// </summary>
     public class MainViewModel : ViewModelBase<object>
     {
+        private readonly StoreServicesFeedbackLauncher _feedbackLauncher;
         private readonly IOpenHAB _openHabsdk;
         private readonly ISettingsService _settingsService;
-        private readonly StoreServicesFeedbackLauncher _feedbackLauncher;
-
-        private ObservableCollection<SitemapViewModel> _sitemaps;
-        private SitemapViewModel _selectedSitemap;
-
-        private OpenHABVersion _version;
+        private CancellationTokenSource _cancellationTokenSource;
         private ObservableCollection<OpenHABWidget> _currentWidgets;
-        private OpenHABWidget _selectedWidget;
         private string _errorMessage;
-        private string _subtitle;
-
         private ICommand _feedbackCommand;
         private bool _isDataLoading;
         private ILogger<MainViewModel> _logger;
+        private ActionCommand _refreshCommand;
+        private SitemapViewModel _selectedSitemap;
+        private OpenHABWidget _selectedWidget;
+        private ObservableCollection<SitemapViewModel> _sitemaps;
+        private string _subtitle;
+        private OpenHABVersion _version;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
@@ -57,6 +57,7 @@ namespace OpenHAB.Windows.ViewModel
             _openHabsdk = openHabsdk;
             _settingsService = settingsService;
             _feedbackLauncher = StoreServicesFeedbackLauncher.GetDefault();
+            _cancellationTokenSource = new CancellationTokenSource();
 
             Messenger.Default.Register<SettingsUpdatedMessage>(this, async msg =>
             {
@@ -65,7 +66,7 @@ namespace OpenHAB.Windows.ViewModel
                     ErrorMessage = "Invalid URL, check your settings";
                     if (await _openHabsdk.ResetConnection().ConfigureAwait(false))
                     {
-                        await LoadData().ConfigureAwait(false);
+                        await LoadData(_cancellationTokenSource.Token).ConfigureAwait(false);
                     }
                 }
                 catch (HttpRequestException ex)
@@ -79,6 +80,15 @@ namespace OpenHAB.Windows.ViewModel
         }
 
         /// <summary>
+        /// Gets or sets the widgets currently on screen.
+        /// </summary>
+        public ObservableCollection<OpenHABWidget> CurrentWidgets
+        {
+            get => _currentWidgets;
+            set => Set(ref _currentWidgets, value);
+        }
+
+        /// <summary>
         /// Gets or sets an error message to show on screen.
         /// </summary>
         public string ErrorMessage
@@ -87,23 +97,24 @@ namespace OpenHAB.Windows.ViewModel
             set => Set(ref _errorMessage, value);
         }
 
-        /// <summary>
-        /// Gets or sets the subtitle of the page.
-        /// </summary>
-        public string Subtitle
-        {
-            get => _subtitle;
-            set => Set(ref _subtitle, value);
-        }
+        /// <summary>Gets the command to open feedback application.</summary>
+        /// <value>The feedback command.</value>
+        public ICommand FeedbackCommand => _feedbackCommand ?? (_feedbackCommand = new ActionCommand(ExecuteFeedbackCommand, CanExecuteFeedbackCommand));
 
         /// <summary>
-        /// Gets or sets a collection of OpenHAB sitemaps.
+        /// Gets or sets a value indicating whether data is loaded from an OpenHAB instance.
         /// </summary>
-        public ObservableCollection<SitemapViewModel> Sitemaps
+        /// <value>
+        ///   <c>true</c> if data will loaded; otherwise, <c>false</c>.</value>
+        public bool IsDataLoading
         {
-            get => _sitemaps;
-            set => Set(ref _sitemaps, value);
+            get => _isDataLoading;
+            set => Set(ref _isDataLoading, value);
         }
+
+        /// <summary>Gets the command to refresh sitemap and widget data.</summary>
+        /// <value>The refresh command.</value>
+        public ICommand RefreshCommand => _refreshCommand ?? (_refreshCommand = new ActionCommand(ExecuteRefreshCommandAsync, CanExecuteRefreshCommand));
 
         /// <summary>
         /// Gets or sets the sitemap currently selected by the user.
@@ -139,15 +150,6 @@ namespace OpenHAB.Windows.ViewModel
         }
 
         /// <summary>
-        /// Gets or sets the widgets currently on screen.
-        /// </summary>
-        public ObservableCollection<OpenHABWidget> CurrentWidgets
-        {
-            get => _currentWidgets;
-            set => Set(ref _currentWidgets, value);
-        }
-
-        /// <summary>
         /// Gets or sets the selected widget.
         /// </summary>
         public OpenHABWidget SelectedWidget
@@ -156,13 +158,34 @@ namespace OpenHAB.Windows.ViewModel
             set => Set(ref _selectedWidget, value);
         }
 
-        /// <summary>Gets the command to open feedback app.</summary>
-        /// <value>The feedback command.</value>
-        public ICommand FeedbackCommand => _feedbackCommand ?? (_feedbackCommand = new ActionCommand(ExecuteFeedbackCommand, CanExecuteFeedbackCommand));
+        /// <summary>
+        /// Gets or sets a collection of OpenHAB sitemaps.
+        /// </summary>
+        public ObservableCollection<SitemapViewModel> Sitemaps
+        {
+            get => _sitemaps;
+            set => Set(ref _sitemaps, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the subtitle of the page.
+        /// </summary>
+        public string Subtitle
+        {
+            get => _subtitle;
+            set => Set(ref _subtitle, value);
+        }
+
+        #region Commands
 
         private bool CanExecuteFeedbackCommand(object obj)
         {
             return StoreServicesFeedbackLauncher.IsSupported();
+        }
+
+        private bool CanExecuteRefreshCommand(object arg)
+        {
+            return !IsDataLoading;
         }
 
         private async void ExecuteFeedbackCommand(object obj)
@@ -170,15 +193,9 @@ namespace OpenHAB.Windows.ViewModel
             await _feedbackLauncher.LaunchAsync();
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether data is loaded from an OpenHAB instance.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if data wil loaded; otherwise, <c>false</c>.</value>
-        public bool IsDataLoading
+        private async void ExecuteRefreshCommandAsync(object obj)
         {
-            get => _isDataLoading;
-            set => Set(ref _isDataLoading, value);
+            await LoadSitemapsAndItemData().ConfigureAwait(false);
         }
 
         private async Task TriggerCommand(TriggerCommandMessage message)
@@ -186,12 +203,34 @@ namespace OpenHAB.Windows.ViewModel
             await _openHabsdk.SendCommand(message.Item, message.Command).ConfigureAwait(false);
         }
 
+        #endregion
+
+        #region Load sitemap and Data
+
         /// <summary>
         /// Loads the sitemap data.
         /// </summary>
-        public async Task LoadData()
+        public async Task LoadSitemapsAndItemData()
+        {
+            await LoadData(_cancellationTokenSource.Token).ConfigureAwait(false);
+        }
+
+        private async void CancelSyncCallbackAsync()
         {
             CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
+            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                Sitemaps?.Clear();
+                CurrentWidgets?.Clear();
+                Subtitle = null;
+                IsDataLoading = false;
+            });
+        }
+
+        private async Task LoadData(CancellationToken cancellationToken)
+        {
+            CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
+            cancellationToken.Register(CancelSyncCallbackAsync);
 
             try
             {
@@ -200,16 +239,15 @@ namespace OpenHAB.Windows.ViewModel
                     return;
                 }
 
-                _logger.LogInformation("Load sitemaps and their items");
+                _logger.LogInformation("Load available sitemap's and their items");
 
-                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     IsDataLoading = true;
                     Sitemaps?.Clear();
                     CurrentWidgets?.Clear();
                     Subtitle = null;
                 });
-
 
                 Settings settings = _settingsService.Load();
                 if (settings.LocalConnection == null && settings.RemoteConnection == null)
@@ -230,26 +268,17 @@ namespace OpenHAB.Windows.ViewModel
                     return;
                 }
 
-                Func<OpenHABSitemap, bool> defaultSitemapFilter = (sitemap) =>
+                if (cancellationToken.IsCancellationRequested)
                 {
-                    return !sitemap.Name.Equals("_default", StringComparison.InvariantCultureIgnoreCase);
-                };
-
-                List<Func<OpenHABSitemap, bool>> filters = new List<Func<OpenHABSitemap, bool>>();
-
-                if (!settings.ShowDefaultSitemap)
-                {
-                    filters.Add(defaultSitemapFilter);
+                    return;
                 }
 
-                ICollection<OpenHABSitemap> sitemaps = await _openHabsdk.LoadSiteMaps(_version, filters).ConfigureAwait(false);
-                List<SitemapViewModel> sitemapViewModels = new List<SitemapViewModel>();
-                sitemaps.ToList().ForEach(x => sitemapViewModels.Add(new SitemapViewModel(x)));
+                List<SitemapViewModel> sitemapViewModels = await LoadSitemaps(settings).ConfigureAwait(false);
 
-                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     Sitemaps = new ObservableCollection<SitemapViewModel>(sitemapViewModels);
-                    _openHabsdk.StartItemUpdates();
+                    _openHabsdk.StartItemUpdates(cancellationToken);
 
                     OpenLastOrDefaultSitemap();
 
@@ -275,6 +304,27 @@ namespace OpenHAB.Windows.ViewModel
             }
         }
 
+        private async Task<List<SitemapViewModel>> LoadSitemaps(Settings settings)
+        {
+            Func<OpenHABSitemap, bool> defaultSitemapFilter = (sitemap) =>
+            {
+                return !sitemap.Name.Equals("_default", StringComparison.InvariantCultureIgnoreCase);
+            };
+
+            List<Func<OpenHABSitemap, bool>> filters = new List<Func<OpenHABSitemap, bool>>();
+
+            if (!settings.ShowDefaultSitemap)
+            {
+                filters.Add(defaultSitemapFilter);
+            }
+
+            ICollection<OpenHABSitemap> sitemaps = await _openHabsdk.LoadSiteMaps(_version, filters).ConfigureAwait(false);
+            List<SitemapViewModel> sitemapViewModels = new List<SitemapViewModel>();
+            sitemaps.ToList().ForEach(x => sitemapViewModels.Add(new SitemapViewModel(x)));
+
+            return sitemapViewModels;
+        }
+
         private void OpenLastOrDefaultSitemap()
         {
             string sitemapName = _settingsService.LoadLastSitemap();
@@ -293,6 +343,21 @@ namespace OpenHAB.Windows.ViewModel
                 _logger.LogInformation($"Unable to find sitemap '{sitemapName}' -> Pick first entry from list");
                 SelectedSitemap = Sitemaps.FirstOrDefault();
             }
+        }
+
+        #endregion
+
+        #region Widget Handing
+
+        /// <summary>
+        /// Navigate backwards between linked pages.
+        /// </summary>
+        public void WidgetGoBack()
+        {
+            OpenHABWidget widget = WidgetNavigationService.GoBack();
+
+            Subtitle = widget == null ? SelectedSitemap?.Label : widget.Label;
+            SetWidgetsOnScreen(widget != null ? widget.LinkedPage.Widgets : SelectedSitemap.Widgets);
         }
 
         private async Task LoadWidgets()
@@ -325,17 +390,6 @@ namespace OpenHAB.Windows.ViewModel
             SetWidgetsOnScreen(SelectedWidget?.LinkedPage?.Widgets);
         }
 
-        /// <summary>
-        /// Navigate backwards between linkedpages.
-        /// </summary>
-        public void WidgetGoBack()
-        {
-            OpenHABWidget widget = WidgetNavigationService.GoBack();
-
-            Subtitle = widget == null ? SelectedSitemap.Label : widget.Label;
-            SetWidgetsOnScreen(widget != null ? widget.LinkedPage.Widgets : SelectedSitemap.Widgets);
-        }
-
         private async void SetWidgetsOnScreen(ICollection<OpenHABWidget> widgets)
         {
             CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
@@ -345,5 +399,7 @@ namespace OpenHAB.Windows.ViewModel
                 CurrentWidgets.AddRange(widgets);
             });
         }
+
+        #endregion
     }
 }

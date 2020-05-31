@@ -8,7 +8,6 @@ namespace OpenHAB.Core.Contracts
     /// </summary>
     public class ConnectionProfileViewModel : ViewModelBase<IConnectionProfile>
     {
-
         /// <summary>Initializes a new instance of the <see cref="ConnectionProfileViewModel"/> class.</summary>
         /// <param name="profile">The profile.</param>
         public ConnectionProfileViewModel(IConnectionProfile profile)
@@ -30,8 +29,8 @@ namespace OpenHAB.Core.Contracts
         /// <c>true.</c> if [allow ignore SSL hostname] can be enabled; otherwise, <c>false</c>.</value>
         public bool AllowIgnoreSSLHostname => Model.AllowIgnoreSSLHostname;
 
-        /// <summary>Gets the connection profile îd.</summary>
-        /// <value>The îd.</value>
+        /// <summary>Gets the connection profile id.</summary>
+        /// <value>The id.</value>
         public int Id => Model.Id;
 
         /// <summary>Gets the connection profile name.</summary>
@@ -41,6 +40,5 @@ namespace OpenHAB.Core.Contracts
         /// <summary>Gets the profile type.</summary>
         /// <value>The type.</value>
         public OpenHABHttpClientType Type => Model.Type;
-
     }
 }

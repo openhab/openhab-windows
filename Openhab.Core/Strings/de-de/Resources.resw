@@ -233,4 +233,16 @@ Bitte wählen Sie den Demo Modus oder die Lokalen/Remote Verbindunsinformation z
   <data name="RemoteDefaultConnection" xml:space="preserve">
     <value>OpenHab Cloud</value>
   </data>
+  <data name="LogsOpen.Content" xml:space="preserve">
+    <value>Öffne Logs</value>
+  </data>
+  <data name="LogsSend.Content" xml:space="preserve">
+    <value>Logs per mail versenden</value>
+  </data>
+  <data name="LogFileLocation.Text" xml:space="preserve">
+    <value>Dateipfad Logdatei:</value>
+  </data>
+  <data name="LogsHeader.Text" xml:space="preserve">
+    <value>Logs</value>
+  </data>
 </root>

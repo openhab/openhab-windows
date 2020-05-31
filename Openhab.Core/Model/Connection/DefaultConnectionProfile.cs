@@ -43,6 +43,7 @@ namespace OpenHAB.Core.Model.Connection
         {
             get => OpenHABHttpClientType.Local;
         }
+
         /// <inheritdoc/>
         public OpenHABConnection CreateConnection()
         {

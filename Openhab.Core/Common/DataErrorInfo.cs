@@ -21,8 +21,8 @@ namespace OpenHAB.Core.Common
         }
 
         /// <summary>
-        ///   Adds the specified error to the errors collection if it is not 
-        ///   already present, inserting it in the first position if isWarning is 
+        ///   Adds the specified error to the errors collection if it is not
+        ///   already present, inserting it in the first position if isWarning is
         ///   false. Raises the ErrorsChanged event if the collection changes.
         /// </summary>
         /// <param name = "propertyName">Name of the property.</param>
@@ -49,7 +49,6 @@ namespace OpenHAB.Core.Common
                 InvokeErrorsChanged(propertyName);
             }
         }
-
 
         /// <summary>
         ///   Removes the specified error from the errors collection if it is

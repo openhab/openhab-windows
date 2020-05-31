@@ -9,11 +9,6 @@ namespace OpenHAB.Core.Common
     public class ColorChangedEventArgs : EventArgs
     {
         /// <summary>
-        /// Gets or sets the newly selected color.
-        /// </summary>
-        public Color SelectedColor { get; set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ColorChangedEventArgs"/> class.
         /// </summary>
         /// <param name="selectedColor">The color that was just selected.</param>
@@ -21,5 +16,10 @@ namespace OpenHAB.Core.Common
         {
             SelectedColor = selectedColor;
         }
+
+        /// <summary>
+        /// Gets or sets the newly selected color.
+        /// </summary>
+        public Color SelectedColor { get; set; }
     }
 }

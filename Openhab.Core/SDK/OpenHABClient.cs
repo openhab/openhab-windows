@@ -268,7 +268,7 @@ namespace OpenHAB.Core.SDK
         }
 
         /// <inheritdoc />
-        public async void StartItemUpdates()
+        public async void StartItemUpdates(System.Threading.CancellationToken token)
         {
             await Task.Run(async () =>
             {
@@ -286,6 +286,11 @@ namespace OpenHAB.Core.SDK
                     {
                         while (!reader.EndOfStream)
                         {
+                            if (token.IsCancellationRequested)
+                            {
+                                return;
+                            }
+
                             var updateEvent = reader.ReadLine();
                             if (updateEvent?.StartsWith("data:", StringComparison.InvariantCultureIgnoreCase) == true)
                             {

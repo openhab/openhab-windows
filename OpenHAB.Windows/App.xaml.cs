@@ -134,7 +134,7 @@ namespace OpenHAB.Windows
         /// <param name="e">The <see cref="Windows.UI.Xaml.UnhandledExceptionEventArgs"/> instance containing the event data.</param>
         private void App_UnhandledException(object sender, global::Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
-            _logger.LogCritical(e.Exception, "UnhandledException occured");
+            _logger.LogCritical(e.Exception, "UnhandledException occurred");
         }
     }
 }

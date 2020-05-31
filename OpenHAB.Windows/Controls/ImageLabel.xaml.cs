@@ -1,9 +1,8 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
-using System.Text.RegularExpressions;
-
 
 namespace OpenHAB.Windows.Controls
 {
@@ -26,7 +25,7 @@ namespace OpenHAB.Windows.Controls
                 return;
             }
 
-            // fix IconPathState by removeing empty space and special characters
+            // fix IconPathState by removing empty space and special characters
             string iconPath = control.IconPath;
             Match state = Regex.Match(iconPath, @"state=(.+?)&");
             if (state != null)

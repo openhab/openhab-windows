@@ -56,11 +56,11 @@ namespace OpenHAB.Windows.View
             Messenger.Default.Register<FireErrorMessage>(this, msg => ShowErrorMessage(msg));
             Messenger.Default.Register<FireInfoMessage>(this, msg => ShowInfoMessage(msg));
 
-            await Vm.LoadData().ConfigureAwait(false);
+            await Vm.LoadSitemapsAndItemData().ConfigureAwait(false);
         }
 
         /// <inheritdoc/>
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
         }

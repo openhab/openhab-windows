@@ -51,7 +51,7 @@ namespace OpenHAB.Core.SDK
         /// <summary>
         /// Starts listening to server events.
         /// </summary>
-        void StartItemUpdates();
+        void StartItemUpdates(System.Threading.CancellationToken token);
 
         /// <summary>Checks the URL reachability.</summary>
         /// <param name="connection">Defines settings for local or remote connections.</param>

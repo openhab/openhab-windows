@@ -10,7 +10,6 @@ namespace OpenHAB.Core.Common
     {
         private readonly Func<object, bool> _canExecuteHandler;
         private readonly Action<object> _executeHandler;
-        private ICommand selectProfile;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref = "ActionCommand" /> class.
@@ -46,11 +45,6 @@ namespace OpenHAB.Core.Common
             _executeHandler = execute;
         }
 
-        public ActionCommand(ICommand selectProfile)
-        {
-            this.selectProfile = selectProfile;
-        }
-
         /// <summary>
         /// Occurs when changes occur that affect whether or not the command should execute.
         /// </summary>
@@ -62,11 +56,7 @@ namespace OpenHAB.Core.Common
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         public void InvokeCanExecuteChanged(EventArgs e)
         {
-            EventHandler handler = CanExecuteChanged;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            CanExecuteChanged?.Invoke(this, e);
         }
 
         /// <summary>

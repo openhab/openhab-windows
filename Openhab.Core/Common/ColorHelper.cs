@@ -74,8 +74,8 @@ namespace OpenHAB.Core.Common
         /// Input: Color ( R: [0, 255], G: [0, 255], B: [0, 255], A: [0, 255] )
         /// Output: Vector4 ( X: [0.0, 1.0], Y: [0.0, 1.0], Z: [0.0, 1.0], W: [0.0, 1.0] ).
         /// </summary>
-        /// <param name="rgba"></param>
-        /// <returns></returns>
+        /// <param name="rgba">Color as RGBA value.</param>
+        /// <returns>RGBA color as hex code.</returns>
         public static Vector4 ToHSL(Color rgba)
         {
             float r = rgba.R / 255.0f;

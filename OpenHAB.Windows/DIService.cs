@@ -41,7 +41,7 @@ namespace OpenHAB.Windows.Services
              {
                  // configure Logging with NLog
                  loggingBuilder.ClearProviders();
-                 loggingBuilder.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+                 loggingBuilder.SetMinimumLevel(LogLevel.Trace);
                  loggingBuilder.AddNLog(GetLoggingConfiguration());
              });
 
@@ -57,13 +57,14 @@ namespace OpenHAB.Windows.Services
             _services.AddTransient<MainViewModel>();
             _services.AddTransient<SettingsViewModel>();
             _services.AddTransient<ConfigurationViewModel>();
+            _services.AddTransient<LogsViewModel>();
         }
 
         private LoggingConfiguration GetLoggingConfiguration()
         {
             CsvLayout layout = new CsvLayout()
             {
-                Delimiter = CsvColumnDelimiterMode.Semicolon
+                Delimiter = CsvColumnDelimiterMode.Semicolon,
             };
 
             layout.Columns.Add(new CsvColumn("time", @"${date:format=HH\:mm\:ss}"));
@@ -78,7 +79,7 @@ namespace OpenHAB.Windows.Services
                 FileName = "${var:LogPath}/logs/${shortdate}.log",
                 Layout = layout,
                 MaxArchiveFiles = 3,
-                ArchiveEvery = FileArchivePeriod.Day
+                ArchiveEvery = FileArchivePeriod.Day,
             };
 
             LoggingConfiguration configuration = new LoggingConfiguration();

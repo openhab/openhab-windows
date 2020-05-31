@@ -9,7 +9,8 @@
 	  xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:viewModel="using:OpenHAB.Windows.ViewModel"
-	  mc:Ignorable="d">
+	  mc:Ignorable="d"
+	  Name="Page">
 	<Page.Background>
 		<ImageBrush ImageSource="/Assets/background.jpg"
 					Stretch="UniformToFill" />
@@ -26,13 +27,13 @@
 		<!-- Navigation View Styling -->
 		<SolidColorBrush x:Key="NavigationViewDefaultPaneBackground"
 						 Color="#344040" />
-		
+
 		<SolidColorBrush x:Key="NavigationViewExpandedPaneBackground"
 						 Color="#344040" />
 
 		<SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground"
 						 Color="#FFFF5722" />
-		
+
 		<SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver"
 						 Color="white" />
 		<SolidColorBrush x:Key="NavigationViewItemForegroundSelected"
@@ -70,22 +71,31 @@
 		</DataTemplate>
 
 		<DataTemplate x:Key="NavMenuHeaderTemplate">
+
 			<TextBlock x:Name="textBlock"
 					   Margin="5,0,0,10"
 					   VerticalAlignment="Center"
 					   Style="{StaticResource HeaderText}"
 					   Foreground="{StaticResource OpenHABMenuColor}"
 					   Text="{Binding }" />
+
 		</DataTemplate>
 
 		<DataTemplate x:Key="NavHeaderTemplate">
-			<TextBlock x:Name="textBlock"
-					   Margin="5,0,0,10"
-					   VerticalAlignment="Center"
-					   Style="{StaticResource HeaderText}"
-					   FontSize="36"
-					   Foreground="White"
-					   Text="{Binding }" />
+			<StackPanel Orientation="Horizontal">
+				<TextBlock x:Name="textBlock"
+						   Margin="5,0,10,10"
+						   VerticalAlignment="Center"
+						   Style="{StaticResource HeaderText}"
+						   FontSize="36"
+						   Foreground="White"
+						   Text="{Binding }" />
+				<Button Command="{Binding Vm.RefreshCommand, ElementName=Page}">
+					<SymbolIcon Symbol="Refresh"
+								VerticalAlignment="Center"
+								Foreground="{StaticResource OpenHABMenuColor}" />
+				</Button>
+			</StackPanel>
 		</DataTemplate>
 
 		<DataTemplate x:Key="WaitListTemplate">

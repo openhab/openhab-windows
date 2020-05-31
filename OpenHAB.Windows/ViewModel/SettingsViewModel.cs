@@ -15,7 +15,7 @@ namespace OpenHAB.Windows.ViewModel
     {
         private readonly ILogger<SettingsViewModel> _logger;
         private ConfigurationViewModel _configuration;
-        private ICommand _saveCommand;
+        private ActionCommand _saveCommand;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingsViewModel"/> class.
@@ -26,14 +26,20 @@ namespace OpenHAB.Windows.ViewModel
             Messenger.Default.Register<PersistSettingsMessage>(this, msg => PersistSettings(null));
 
             _configuration = configurationViewModel;
+            _configuration.PropertyChanged += _configuration_PropertyChanged;
             _logger = logger;
+        }
+
+        private void _configuration_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            SaveCommand.InvokeCanExecuteChanged(null);
         }
 
         /// <summary>
         /// Gets the save command to persist the settings.
         /// </summary>
         /// <value>The save command.</value>
-        public ICommand SaveCommand => _saveCommand ?? (_saveCommand = new ActionCommand(PersistSettings));
+        public ActionCommand SaveCommand => _saveCommand ?? (_saveCommand = new ActionCommand(PersistSettings, CanPersistSettings));
 
         /// <summary>
         /// Gets or sets the current user-defined settings.
@@ -75,6 +81,11 @@ namespace OpenHAB.Windows.ViewModel
             }
 
             Messenger.Default.Send(new SettingsUpdatedMessage(_configuration.IsConnectionConfigValid()));
+        }
+
+        private bool CanPersistSettings(object arg)
+        {
+            return _configuration.IsConnectionConfigValid() && _configuration.IsDirty;
         }
     }
 }

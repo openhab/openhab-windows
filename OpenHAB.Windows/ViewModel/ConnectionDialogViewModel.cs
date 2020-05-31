@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using Microsoft.Graphics.Canvas.Effects;
 using OpenHAB.Core;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts;
@@ -33,6 +34,7 @@ namespace OpenHAB.Windows.ViewModel
         private string _username;
         private bool? _willIgnoreSSLCertificate;
         private bool? _willIgnoreSSLHostname;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ConnectionDialogViewModel"/> class.
         /// </summary>
@@ -47,11 +49,11 @@ namespace OpenHAB.Windows.ViewModel
             List<ConnectionProfileViewModel> list
                 = new List<ConnectionProfileViewModel>(Settings.ConnectionProfiles.Where(x => x.Type == _type).OrderBy(x => x.Id).Select(x => new ConnectionProfileViewModel(x)));
 
-            Profiles = new ObservableCollection<ConnectionProfileViewModel>(list);
+            _profiles = new ObservableCollection<ConnectionProfileViewModel>(list);
 
             if (Model != null)
             {
-                Profile = list.FirstOrDefault(x => x.Id == Model.Profile.Id);
+                _profile = list.FirstOrDefault(x => x.Id == Model.Profile.Id);
             }
         }
 
@@ -91,7 +93,7 @@ namespace OpenHAB.Windows.ViewModel
 
             set
             {
-                Set(ref _password, value);
+                Set(ref _password, value, true);
                 Model.Password = value;
             }
         }
@@ -116,7 +118,7 @@ namespace OpenHAB.Windows.ViewModel
             }
         }
 
-        /// <summary>Gets the available connection profiles.</summary>
+        /// <summary>Gets or sets the available connection profiles.</summary>
         /// <value>The profiles.</value>
         public ObservableCollection<ConnectionProfileViewModel> Profiles
         {
@@ -135,7 +137,7 @@ namespace OpenHAB.Windows.ViewModel
         /// Gets the save command to persist the settings.
         /// </summary>
         /// <value>The save command.</value>
-        public ICommand SelectProfile => _selectProfile ?? (_selectProfile = new ActionCommand(SelectPRofile));
+        public ICommand SelectProfile => _selectProfile ?? (_selectProfile = new ActionCommand(ExecuteSelectProfile));
 
         /// <summary>
         /// Gets the subtitle.
@@ -182,7 +184,7 @@ namespace OpenHAB.Windows.ViewModel
                     tempUrl = value;
                 }
 
-                Set(ref _url, tempUrl);
+                Set(ref _url, tempUrl, true);
                 Model.Url = _url;
 
                 OnPropertyChanged(nameof(Subtitle));
@@ -217,7 +219,7 @@ namespace OpenHAB.Windows.ViewModel
 
             set
             {
-                Set(ref _username, value);
+                Set(ref _username, value, true);
                 Model.Username = value;
             }
         }
@@ -234,7 +236,7 @@ namespace OpenHAB.Windows.ViewModel
 
             set
             {
-                Set(ref _willIgnoreSSLCertificate, value);
+                Set(ref _willIgnoreSSLCertificate, value, true);
                 Model.WillIgnoreSSLCertificate = value;
             }
         }
@@ -251,7 +253,7 @@ namespace OpenHAB.Windows.ViewModel
 
             set
             {
-                Set(ref _willIgnoreSSLHostname, value);
+                Set(ref _willIgnoreSSLHostname, value, true);
                 Model.WillIgnoreSSLHostname = value;
             }
         }
@@ -298,7 +300,7 @@ namespace OpenHAB.Windows.ViewModel
             WillIgnoreSSLHostname = Model.WillIgnoreSSLHostname;
         }
 
-        private void SelectPRofile(object obj)
+        private void ExecuteSelectProfile(object obj)
         {
             ConnectionProfileViewModel profile = obj as ConnectionProfileViewModel;
 

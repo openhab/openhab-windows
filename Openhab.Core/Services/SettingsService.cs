@@ -28,7 +28,6 @@ namespace OpenHAB.Core.Services
             get; set;
         }
 
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingsService"/> class.
         /// </summary>
@@ -97,7 +96,6 @@ namespace OpenHAB.Core.Services
                 Settings settings = Load();
                 langcode = settings.AppLanguage;
             }
-
 
             if (!string.IsNullOrEmpty(langcode))
             {
