@@ -118,7 +118,7 @@
 					<StackPanel Grid.Row="1"
 								VerticalAlignment="Center"
 								Orientation="Horizontal">
-						<Button x:Uid="LogsOpen"
+						<Button x:Uid="LogsShow"
 								Margin="0,0,10,0">
 							<interactivity:Interaction.Behaviors>
 								<core:EventTriggerBehavior EventName="Tapped">
@@ -157,7 +157,7 @@
 				</Grid>
 			</StackPanel>
 
-			<community:InAppNotification x:Name="SettingsNotification"
+            <community:InAppNotification x:Name="SettingsNotification"
 										 Grid.Row="1"
 										 Grid.RowSpan="2"
 										 Background="{StaticResource ErrorNotificationBackground}"
@@ -166,11 +166,6 @@
 										 VerticalOffset="100"
 										 HorizontalOffset="0"
 										 StackMode="StackInFront" />
-
-			<!--<controls:ConnectionDialog x:Uid="ConnectionDialog"
-									   x:Name="ConnectionDialog"
-									   PrimaryButtonText="Close"
-									   DefaultButton="Primary"/>-->
-		</Grid>
+        </Grid>
 	</ScrollViewer>
 </Page>

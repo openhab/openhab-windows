@@ -234,8 +234,8 @@ Please select demo mode or configure local/remote connection.</value>
   <data name="RemoteDefaultConnection" xml:space="preserve">
     <value>OpenHab Cloud</value>
   </data>
-  <data name="LogsOpen.Content" xml:space="preserve">
-    <value>Open Logs</value>
+  <data name="LogsShow.Content" xml:space="preserve">
+    <value>Show Log</value>
   </data>
   <data name="LogsSend.Content" xml:space="preserve">
     <value>Send Logs by mail</value>
@@ -248,5 +248,11 @@ Please select demo mode or configure local/remote connection.</value>
   </data>
   <data name="LogFileLocation.Text" xml:space="preserve">
     <value>Log File Path:</value>
+  </data>
+  <data name="LogsFolderOpen.Content" xml:space="preserve">
+    <value>Browse log folder</value>
+  </data>
+  <data name="LogsInfo.Text" xml:space="preserve">
+    <value>Details</value>
   </data>
 </root>
