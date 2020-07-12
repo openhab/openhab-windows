@@ -120,7 +120,7 @@
   <data name="AppVersion.Text" xml:space="preserve">
     <value>OpenHab App Version:</value>
   </data>
-  <data name="CancelButton.Content" xml:space="preserve">
+  <data name="SettingsCancelButton.Label" xml:space="preserve">
     <value>Cancel</value>
   </data>
   <data name="ConnectionCheck.Text" xml:space="preserve">
@@ -173,7 +173,7 @@ Go to app settings (gear icon) to check the connection configuration.</value>
   <data name="RemoteUrlHeader.Text" xml:space="preserve">
     <value>OpenHAB Remote URL</value>
   </data>
-  <data name="SaveButton.Content" xml:space="preserve">
+  <data name="SettingsSaveButton.Label" xml:space="preserve">
     <value>Save</value>
   </data>
   <data name="SettingsHeader.Text" xml:space="preserve">
@@ -234,8 +234,8 @@ Please select demo mode or configure local/remote connection.</value>
   <data name="RemoteDefaultConnection" xml:space="preserve">
     <value>OpenHab Cloud</value>
   </data>
-  <data name="LogsShow.Content" xml:space="preserve">
-    <value>Show Log</value>
+  <data name="MenuLogsView.Content" xml:space="preserve">
+    <value>View Log</value>
   </data>
   <data name="LogsSend.Content" xml:space="preserve">
     <value>Send Logs by mail</value>
@@ -249,10 +249,22 @@ Please select demo mode or configure local/remote connection.</value>
   <data name="LogFileLocation.Text" xml:space="preserve">
     <value>Log File Path:</value>
   </data>
-  <data name="LogsFolderOpen.Content" xml:space="preserve">
+  <data name="LogsFolderOpen.Label" xml:space="preserve">
     <value>Browse log folder</value>
   </data>
-  <data name="LogsInfo.Text" xml:space="preserve">
-    <value>Details</value>
+  <data name="Back.Label" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="Log.Text" xml:space="preserve">
+    <value>Log</value>
+  </data>
+  <data name="MenuAppSettings.Content" xml:space="preserve">
+    <value>App Settings</value>
+  </data>
+  <data name="MenuConnectionSettings.Content" xml:space="preserve">
+    <value>Connection Settings</value>
+  </data>
+  <data name="ShowDefaultSitemap.Text" xml:space="preserve">
+    <value>Show default sitemaps</value>
   </data>
 </root>

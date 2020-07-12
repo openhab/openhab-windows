@@ -9,6 +9,7 @@ using OpenHAB.Windows.ViewModel;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace OpenHAB.Windows.View
 {
@@ -28,9 +29,26 @@ namespace OpenHAB.Windows.View
 
             DataContext = (SettingsViewModel)DIService.Instance.Services.GetService(typeof(SettingsViewModel));
             _logger = (ILogger<SettingsViewModel>)DIService.Instance.Services.GetService(typeof(ILogger<SettingsViewModel>));
-
-            Messenger.Default.Register<SettingsUpdatedMessage>(this, msg => HandleSettingsUpdate(msg));
         }
+
+        #region Page Navigation
+
+        /// <inheritdoc/>
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            Messenger.Default.Register<SettingsUpdatedMessage>(this, msg => HandleSettingsUpdate(msg));
+            base.OnNavigatedTo(e);
+
+        }
+
+        /// <inheritdoc/>
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            Messenger.Default.Unregister<SettingsUpdatedMessage>(this, msg => HandleSettingsUpdate(msg));
+            base.OnNavigatingFrom(e);
+        }
+
+        #endregion
 
         /// <summary>
         /// Gets the datacontext, for use in compiled bindings.

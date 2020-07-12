@@ -10,6 +10,7 @@ using OpenHAB.Windows.ViewModel;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 
 namespace OpenHAB.Windows.View
@@ -47,22 +48,17 @@ namespace OpenHAB.Windows.View
             };
 
             SystemNavigationManager.GetForCurrentView().BackRequested += (sender, args) => Vm.WidgetGoBack();
-
-            this.Loaded += MainPage_Loaded;
         }
 
-        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
+        /// <inheritdoc/>
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
+            base.OnNavigatedTo(e);
+
             Messenger.Default.Register<FireErrorMessage>(this, msg => ShowErrorMessage(msg));
             Messenger.Default.Register<FireInfoMessage>(this, msg => ShowInfoMessage(msg));
 
             await Vm.LoadSitemapsAndItemData().ConfigureAwait(false);
-        }
-
-        /// <inheritdoc/>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
         }
 
         /// <inheritdoc/>
@@ -135,6 +131,11 @@ namespace OpenHAB.Windows.View
         private void MasterListView_OnItemClick(object sender, ItemClickEventArgs e)
         {
             Messenger.Default.Send(new WidgetClickedMessage(e.ClickedItem as OpenHABWidget));
+        }
+
+        private void StackPanel_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SettingsPage));
         }
     }
 }

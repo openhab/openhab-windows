@@ -15,56 +15,46 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="5*" />
-            <RowDefinition Height="15*" />
-            <RowDefinition Height="80*" />
+            <RowDefinition Height="95*" />
         </Grid.RowDefinitions>
         <CommandBar Grid.Row="0"
 					Background="{ThemeResource OpenHABLightColor}"
-					HorizontalContentAlignment="Stretch"
-					VerticalAlignment="Stretch">
+					DefaultLabelPosition="Right">
+            <AppBarButton  x:Uid="LogsFolderOpen"
+                              Icon="Folder"
+					Command="{Binding OpenLogFileCommand}" />
+            <AppBarButton  x:Uid="Back"
+                              Icon="Back">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Tapped">
+                        <core:NavigateToPageAction TargetPage="OpenHAB.Windows.View.SettingsPage" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </AppBarButton>
             <CommandBar.Content>
-                <StackPanel Orientation="Horizontal"
-							VerticalAlignment="Top">
-                    <Button Style="{StaticResource NavigationBackButtonNormalStyle}">
-                        <interactivity:Interaction.Behaviors>
-                            <core:EventTriggerBehavior EventName="Tapped">
-                                <core:NavigateToPageAction TargetPage="OpenHAB.Windows.View.SettingsPage" />
-                            </core:EventTriggerBehavior>
-                        </interactivity:Interaction.Behaviors>
-                    </Button>
-                    <TextBlock x:Uid="LogsHeader"
+                <TextBlock x:Uid="LogsHeader"
 							   Margin="10,6,0,6"
-							   HorizontalAlignment="Left"
-                               VerticalAlignment="Center"
 							   FontSize="24"
 							   TextWrapping="Wrap" />
-                </StackPanel>
             </CommandBar.Content>
         </CommandBar>
-        <StackPanel Grid.Row="1"
-					Margin="10"
-					Padding="5"
-					Orientation="Vertical"
-					Background="{ThemeResource OpenHABLightColor}">
-            <TextBlock x:Uid="LogsInfo"
+
+        <Grid Grid.Row="1" Margin="10,0,10  ,0" Background="{ThemeResource OpenHABLightColor}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="6*" />
+                <RowDefinition Height="94*" />
+            </Grid.RowDefinitions>
+            <TextBlock x:Uid="Log" Grid.Row="0" 
 								   Style="{StaticResource TitleTextBlockStyle}"
-								   Margin="10,0,0,5" />
-            <StackPanel Orientation="Horizontal">
-                <TextBlock x:Uid="LogFileLocation" Margin="10,0,0,0" />
-                <TextBlock Text="{Binding LogFilePath}" />
-            </StackPanel>
-            <Button x:Uid="LogsFolderOpen"
-					Margin="10,10,0,0"
-					Command="{Binding OpenLogFileCommand}"/>
-        </StackPanel>
-        <ScrollViewer Margin="10"
-					  Padding="10"
-					  Grid.Row="2"
-					  Background="{ThemeResource OpenHABLightColor}">
-            <TextBlock ScrollViewer.VerticalScrollBarVisibility="Visible"
+								   Margin="10,10,0,5" />
+            <ScrollViewer Grid.Row="1">
+                <TextBlock ScrollViewer.VerticalScrollBarVisibility="Visible"
 					   ScrollViewer.ZoomMode="Enabled"
+                       ScrollViewer.VerticalScrollMode="Auto"
+                       Padding="5,0,0,0"
 					   TextWrapping="Wrap"
 					   Text="{Binding LogContent}" />
-        </ScrollViewer>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </Page>

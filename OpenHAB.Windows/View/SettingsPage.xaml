@@ -1,171 +1,173 @@
 ﻿<Page x:Class="OpenHAB.Windows.View.SettingsPage"
-	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	  xmlns:converters="using:OpenHAB.Windows.Converters"
-	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	  xmlns:community="using:Microsoft.Toolkit.Uwp.UI.Controls"
-	  xmlns:core="using:Microsoft.Xaml.Interactions.Core"
-	  xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-	  mc:Ignorable="d">
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:converters="using:OpenHAB.Windows.Converters"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:community="using:Microsoft.Toolkit.Uwp.UI.Controls"
+      xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+      mc:Ignorable="d">
 
-	<Page.Background>
-		<ImageBrush ImageSource="/Assets/background.jpg"
-					Stretch="UniformToFill" />
-	</Page.Background>
-	<Page.Resources>
-		<converters:ReverseBoolConverter x:Key="ReverseBoolConverter" />
-	</Page.Resources>
+    <Page.Background>
+        <ImageBrush ImageSource="/Assets/background.jpg"
+                    Stretch="UniformToFill" />
+    </Page.Background>
+    <Page.Resources>
+        <converters:ReverseBoolConverter x:Key="ReverseBoolConverter" />
 
-	<ScrollViewer Grid.Row="1"
-				  VerticalScrollBarVisibility="Auto">
-		<Grid Margin="16">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto" />
-				<RowDefinition Height="Auto" />
-				<RowDefinition Height="Auto" />
-			</Grid.RowDefinitions>
-			<TextBlock x:Uid="SettingsHeader"
-					   x:Name="SettingsTitle"
-					   Margin="0,6,0,6"
-					   HorizontalAlignment="Left"
-					   VerticalAlignment="Center"
-					   Foreground="White"
-					   FontSize="32"
-					   TextWrapping="Wrap" />
+        <Style x:Name="SettingsMenuItem"
+               TargetType="ListViewItem">
+            <Setter Property="Foreground"
+                    Value="White" />
+            <Setter Property="FontSize"
+                    Value="16" />
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <CommandBar Grid.Row="0"
+                    Background="{StaticResource DarkColor}"
+                    DefaultLabelPosition="Right">
+            <AppBarButton  x:Uid="SettingsSaveButton"
+                           Icon="Save"
+                           Foreground="White"
+                           Command="{x:Bind Vm.SaveCommand}" />
+            <AppBarButton  x:Uid="SettingsCancelButton"
+                           Foreground="White"
+                           Icon="Cancel"
+                           Click="Button_OnClick">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Tapped">
+                        <core:NavigateToPageAction TargetPage="OpenHAB.Windows.View.SettingsPage" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </AppBarButton>
+            <CommandBar.Content>
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Symbol="Setting"
+                                Margin="10,5,0,0"
+                                VerticalAlignment="Center"
+                                Foreground="{StaticResource OpenHABMenuColor}" />
+                    <TextBlock x:Uid="SettingsHeader"
+                               Margin="10,0,0,0"
+                               FontSize="28"
+                               VerticalAlignment="Center"
+                               TextWrapping="Wrap"
+                               Foreground="White" />
+                </StackPanel>
+            </CommandBar.Content>
+        </CommandBar>
 
-			<StackPanel Orientation="Vertical">
+        <SplitView  Grid.Row="1"
+                    IsPaneOpen="True"
+                    DisplayMode="CompactInline"
+                    OpenPaneLength="256"
+                    PaneBackground="{ThemeResource DarkColor}">
+            <SplitView.Pane>
+                <ListView Margin="0,10,0,0"
+                          ItemContainerStyle="{StaticResource SettingsMenuItem}">
+                    <ListViewItem x:Uid="MenuAppSettings" />
+                    <ListViewItem x:Uid="MenuConnectionSettings" />
+                    <ListViewItem x:Uid="MenuLogsView">
+                        <interactivity:Interaction.Behaviors>
+                            <core:EventTriggerBehavior EventName="Tapped">
+                                <core:NavigateToPageAction TargetPage="OpenHAB.Windows.View.LogViewerPage" />
+                            </core:EventTriggerBehavior>
+                        </interactivity:Interaction.Behaviors>
+                    </ListViewItem>
+                </ListView>
+            </SplitView.Pane>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <Grid Margin="10">
+                    <StackPanel Orientation="Vertical">
 
-				<StackPanel Margin="0,0,0,25"
-							Padding="12"
-							Background="{ThemeResource OpenHABLightColor}">
-					<TextBlock x:Uid="AppSettings"
-							   Style="{StaticResource TitleTextBlockStyle}"
-							   Margin="0,0,0,10" />
-					<TextBlock x:Uid="ShowDefaultSitemap"
-							   Margin="0,0,0,10" />
-					<ToggleSwitch x:Name="CheckBoxHideDefaultSitemap"
-								  Margin="0,0,0,12"
-								  HorizontalAlignment="Stretch"
-								  VerticalAlignment="Stretch"
-								  IsOn="{Binding Settings.ShowDefaultSitemap, Mode=TwoWay}" />
-					<TextBlock x:Uid="AppLanguage"
-							   Margin="0,0,0,10" />
-					<ComboBox Margin="0,0,0,12"
-							  ItemsSource="{Binding Settings.AppLanguages}"
-							  DisplayMemberPath="Name"
-							  SelectedItem="{Binding Settings.SelectedAppLanguage, Mode=TwoWay}" />
-				</StackPanel>
+                        <StackPanel Margin="0,0,0,25"
+                                    Padding="12"
+                                    Background="{ThemeResource OpenHABLightColor}">
+                            <TextBlock x:Uid="AppSettings"
+                                       Style="{StaticResource TitleTextBlockStyle}"
+                                       Margin="0,0,0,10" />
+                            <TextBlock x:Uid="ShowDefaultSitemap"
+                                       Margin="0,0,0,10" />
+                            <ToggleSwitch x:Name="CheckBoxHideDefaultSitemap"
+                                          Margin="0,0,0,12"
+                                          HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Stretch"
+                                          IsOn="{Binding Settings.ShowDefaultSitemap, Mode=TwoWay}" />
+                            <TextBlock x:Uid="AppLanguage"
+                                       Margin="0,0,0,10" />
+                            <ComboBox Margin="0,0,0,12"
+                                      ItemsSource="{Binding Settings.AppLanguages}"
+                                      DisplayMemberPath="Name"
+                                      SelectedItem="{Binding Settings.SelectedAppLanguage, Mode=TwoWay}" />
+                        </StackPanel>
 
-				<!-- Connection Settings -->
-				<Grid Margin="0,0,0,25"
-					  Padding="12"
-					  Background="{ThemeResource OpenHABLightColor}">
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto" />
-						<RowDefinition Height="Auto" />
-						<RowDefinition Height="Auto" />
-					</Grid.RowDefinitions>
-					<StackPanel Grid.Row="0">
-						<TextBlock x:Uid="ConnectionSettings"
-								   Style="{StaticResource TitleTextBlockStyle}"
-								   Margin="0,0,0,10" />
-						<TextBlock x:Uid="DemoModeHeader" />
-						<ToggleSwitch x:Name="CheckBoxDemoMode"
-									  Margin="0,0,0,12"
-									  HorizontalAlignment="Stretch"
-									  VerticalAlignment="Stretch"
-									  IsOn="{Binding Settings.IsRunningInDemoMode, Mode=TwoWay}" />
-					</StackPanel>
-					<StackPanel Grid.Row="1">
-						<Button Margin="10"
-								HorizontalAlignment="Stretch"
-								VerticalAlignment="Stretch"
-								HorizontalContentAlignment="Left"
-								DataContext="{Binding Path=Settings.LocalConnection}"
-								IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-								Click="OpenLocalConnectionButton_Click">
-							<StackPanel HorizontalAlignment="Left">
-								<TextBlock x:Uid="LocalSettings"
-										   FontSize="16" />
-								<TextBlock Text="{Binding Subtitle}" />
-							</StackPanel>
-						</Button>
-						<Button Margin="10"
-								HorizontalAlignment="Stretch"
-								VerticalAlignment="Stretch"
-								HorizontalContentAlignment="Left"
-								DataContext="{Binding Path=Settings.RemoteConnection}"
-								IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-								Click="OpenRemoteConnectionButton_Click">
-							<StackPanel>
-								<TextBlock x:Uid="RemoteSettings"
-										   FontSize="16" />
-								<TextBlock Text="{Binding Subtitle}" />
-							</StackPanel>
-						</Button>
-					</StackPanel>
-				</Grid>
-				<Grid Padding="12"
-					  Background="{ThemeResource OpenHABLightColor}">
-					<Grid.RowDefinitions>
-						<RowDefinition />
-						<RowDefinition />
-					</Grid.RowDefinitions>
-					<TextBlock x:Uid="LogsHeader"
-							   Style="{StaticResource TitleTextBlockStyle}"
-							   Margin="0,0,0,10" />
-					<StackPanel Grid.Row="1"
-								VerticalAlignment="Center"
-								Orientation="Horizontal">
-						<Button x:Uid="LogsShow"
-								Margin="0,0,10,0">
-							<interactivity:Interaction.Behaviors>
-								<core:EventTriggerBehavior EventName="Tapped">
-									<core:NavigateToPageAction TargetPage="OpenHAB.Windows.View.LogViewerPage" />
-								</core:EventTriggerBehavior>
-							</interactivity:Interaction.Behaviors>
-						</Button>
-						<Button x:Uid="LogsSend" />
-					</StackPanel>
-				</Grid>
+                        <!-- Connection Settings -->
+                        <Grid Margin="0,0,0,25"
+                              Padding="12"
+                              Background="{ThemeResource OpenHABLightColor}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0">
+                                <TextBlock x:Uid="ConnectionSettings"
+                                           Style="{StaticResource TitleTextBlockStyle}"
+                                           Margin="0,0,0,10" />
+                                <TextBlock x:Uid="DemoModeHeader" />
+                                <ToggleSwitch x:Name="CheckBoxDemoMode"
+                                              Margin="0,0,0,12"
+                                              HorizontalAlignment="Stretch"
+                                              VerticalAlignment="Stretch"
+                                              IsOn="{Binding Settings.IsRunningInDemoMode, Mode=TwoWay}" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="1">
+                                <Button Margin="10"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        DataContext="{Binding Path=Settings.LocalConnection}"
+                                        IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
+                                        Click="OpenLocalConnectionButton_Click">
+                                    <StackPanel HorizontalAlignment="Left">
+                                        <TextBlock x:Uid="LocalSettings"
+                                                   FontSize="16" />
+                                        <TextBlock Text="{Binding Subtitle}" />
+                                    </StackPanel>
+                                </Button>
+                                <Button Margin="10"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        DataContext="{Binding Path=Settings.RemoteConnection}"
+                                        IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
+                                        Click="OpenRemoteConnectionButton_Click">
+                                    <StackPanel>
+                                        <TextBlock x:Uid="RemoteSettings"
+                                                   FontSize="16" />
+                                        <TextBlock Text="{Binding Subtitle}" />
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                        <community:InAppNotification x:Name="SettingsNotification"
+                                                     Grid.Row="1"
+                                                     Grid.RowSpan="2"
+                                                     Background="{StaticResource ErrorNotificationBackground}"
+                                                     ShowDismissButton="True"
+                                                     AnimationDuration="00:00:00.1000000"
+                                                     VerticalOffset="100"
+                                                     HorizontalOffset="0"
+                                                     StackMode="StackInFront" />
 
-				<Grid Margin="0,25,0,0"
-					  Padding="12"
-					  Background="{ThemeResource OpenHABLightColor}">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition />
-						<ColumnDefinition />
-					</Grid.ColumnDefinitions>
-					<StackPanel Grid.Column="0"
-								VerticalAlignment="Center"
-								Orientation="Horizontal">
-						<TextBlock x:Uid="AppVersion" />
-						<TextBlock Margin="10,0,0,0"
-								   Text="{Binding Path=Version}" />
-					</StackPanel>
-					<StackPanel Grid.Column="1"
-								HorizontalAlignment="Right"
-								Orientation="Horizontal">
-						<Button x:Uid="SaveButton"
-								Margin="0,0,8,0"
-								Command="{x:Bind Vm.SaveCommand}"
-								Click="Button_OnClick" />
-						<Button x:Uid="CancelButton"
-								Click="Button_OnClick" />
-					</StackPanel>
-				</Grid>
-			</StackPanel>
-
-            <community:InAppNotification x:Name="SettingsNotification"
-										 Grid.Row="1"
-										 Grid.RowSpan="2"
-										 Background="{StaticResource ErrorNotificationBackground}"
-										 ShowDismissButton="True"
-										 AnimationDuration="00:00:00.1000000"
-										 VerticalOffset="100"
-										 HorizontalOffset="0"
-										 StackMode="StackInFront" />
-        </Grid>
-	</ScrollViewer>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+        </SplitView>
+    </Grid>
 </Page>

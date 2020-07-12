@@ -120,7 +120,7 @@
   <data name="AppVersion.Text" xml:space="preserve">
     <value>OpenHab App Version:</value>
   </data>
-  <data name="CancelButton.Content" xml:space="preserve">
+  <data name="SettingsCancelButton.Label" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
   <data name="ConnectionCheck.Text" xml:space="preserve">
@@ -172,7 +172,7 @@ ehe Sie in die App Einstellungen (Zahnrad Icon) um die Verbindungseinstellung zu
   <data name="RemoteUrlHeader.Text" xml:space="preserve">
     <value>OpenHAB Remote URL</value>
   </data>
-  <data name="SaveButton.Content" xml:space="preserve">
+  <data name="SettingsSaveButton.Label" xml:space="preserve">
     <value>Speichern</value>
   </data>
   <data name="SettingsHeader.Text" xml:space="preserve">
@@ -233,7 +233,7 @@ Bitte wählen Sie den Demo Modus oder die Lokalen/Remote Verbindunsinformation z
   <data name="RemoteDefaultConnection" xml:space="preserve">
     <value>OpenHab Cloud</value>
   </data>
-  <data name="LogsShow.Content" xml:space="preserve">
+  <data name="MenuLogsView.Content" xml:space="preserve">
     <value>Log Anzeigen</value>
   </data>
   <data name="LogsSend.Content" xml:space="preserve">
@@ -245,10 +245,22 @@ Bitte wählen Sie den Demo Modus oder die Lokalen/Remote Verbindunsinformation z
   <data name="LogsHeader.Text" xml:space="preserve">
     <value>Logs</value>
   </data>
-  <data name="LogsFolderOpen.Content" xml:space="preserve">
+  <data name="LogsFolderOpen.Label" xml:space="preserve">
     <value>Öffne Logverzeichnis</value>
   </data>
-  <data name="LogsInfo.Text" xml:space="preserve">
-    <value>Details</value>
+  <data name="Back.Label" xml:space="preserve">
+    <value>Zurück</value>
+  </data>
+  <data name="Log.Text" xml:space="preserve">
+    <value>Log</value>
+  </data>
+  <data name="MenuAppSettings.Content" xml:space="preserve">
+    <value>App Einstellungen</value>
+  </data>
+  <data name="MenuConnectionSettings.Content" xml:space="preserve">
+    <value>Verbindungseinstellungen</value>
+  </data>
+  <data name="ShowDefaultSitemap.Text" xml:space="preserve">
+    <value>Standard Sitemaps einblenden</value>
   </data>
 </root>

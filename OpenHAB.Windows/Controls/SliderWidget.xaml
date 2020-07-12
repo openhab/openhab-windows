@@ -30,7 +30,7 @@
                             IsInteractive="True"
                             MaxAngle="150"
                             MinAngle="-150"
-                            ScaleBrush="{StaticResource OpenHABSplitviewBrush}"
+                            ScaleBrush="{StaticResource DarkAcrylicColor}"
                             ScaleWidth="10"
                             StepSize="1"
                             TrailBrush="{StaticResource OpenHABLightOrangeBrush}"

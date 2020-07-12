@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -139,6 +140,7 @@ namespace OpenHAB.Windows.ViewModel
         private bool disposedValue = false; // To detect redundant calls
         private StorageFolder _logFolder;
 
+        /// <inheritdoc/>
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)

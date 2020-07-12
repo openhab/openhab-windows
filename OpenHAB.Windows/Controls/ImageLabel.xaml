@@ -18,7 +18,7 @@
         <ScrollViewer x:Name="LabelScrollViewer" HorizontalScrollMode="Enabled" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" >
         <TextBlock x:Name="Label"
                    Margin="8"
-                   Foreground="{StaticResource OpenHABSplitviewBrush}"
+                   Foreground="{StaticResource DarkAcrylicColor}"
                    Text="{x:Bind LabelText, Mode=OneWay}"
                    TextWrapping="Wrap" />
         </ScrollViewer>

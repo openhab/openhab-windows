@@ -24,7 +24,7 @@
               Margin="0,0,12,0"
               HorizontalAlignment="Center"
               VerticalAlignment="Center"
-              BorderBrush="{StaticResource OpenHABSplitviewBrush}"
+              BorderBrush="{StaticResource DarkAcrylicColor}"
               BorderThickness="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
@@ -54,7 +54,7 @@
             <VisualStateGroup x:Name="ToggleStates">
                 <VisualState x:Name="OnState">
                     <VisualState.Setters>
-                        <Setter Target="OnBorder.(Border.Background)" Value="{StaticResource OpenHABSplitviewBrush}" />
+                        <Setter Target="OnBorder.(Border.Background)" Value="{StaticResource DarkAcrylicColor}" />
                     </VisualState.Setters>
                     <Storyboard>
                         <ColorAnimation d:IsOptimized="True"
@@ -66,7 +66,7 @@
                 </VisualState>
                 <VisualState x:Name="OffState">
                     <VisualState.Setters>
-                        <Setter Target="OffBorder.(Border.Background)" Value="{StaticResource OpenHABSplitviewBrush}" />
+                        <Setter Target="OffBorder.(Border.Background)" Value="{StaticResource DarkAcrylicColor}" />
                     </VisualState.Setters>
                     <Storyboard>
                         <ColorAnimation d:IsOptimized="True"
