@@ -14,16 +14,18 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="5*" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="95*" />
         </Grid.RowDefinitions>
         <CommandBar Grid.Row="0"
-					Background="{ThemeResource OpenHABLightColor}"
-					DefaultLabelPosition="Right">
+					Background="{StaticResource DarkColor}"
+					DefaultLabelPosition="Right"  OverflowButtonVisibility="Collapsed">
             <AppBarButton  x:Uid="LogsFolderOpen"
+						   Foreground="White"
                               Icon="Folder"
 					Command="{Binding OpenLogFileCommand}" />
             <AppBarButton  x:Uid="Back"
+						   Foreground="White"
                               Icon="Back">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Tapped">
@@ -32,10 +34,19 @@
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>
             <CommandBar.Content>
-                <TextBlock x:Uid="LogsHeader"
-							   Margin="10,6,0,6"
-							   FontSize="24"
-							   TextWrapping="Wrap" />
+				<StackPanel Orientation="Horizontal">
+					<SymbolIcon Symbol="Folder"
+								Margin="10,5,0,0"
+								VerticalAlignment="Center"
+								Foreground="{StaticResource OpenHABMenuColor}" />
+					<TextBlock x:Uid="LogsHeader"
+							   Margin="10,0,0,0"
+							   FontSize="28"
+							   VerticalAlignment="Center"
+							   TextWrapping="Wrap"
+							   Foreground="White" />
+				</StackPanel>
+              
             </CommandBar.Content>
         </CommandBar>
 

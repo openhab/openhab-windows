@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Extensions.Logging;
 using OpenHAB.Core;
@@ -9,6 +10,7 @@ using OpenHAB.Windows.ViewModel;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 
 namespace OpenHAB.Windows.View
@@ -29,6 +31,8 @@ namespace OpenHAB.Windows.View
 
             DataContext = (SettingsViewModel)DIService.Instance.Services.GetService(typeof(SettingsViewModel));
             _logger = (ILogger<SettingsViewModel>)DIService.Instance.Services.GetService(typeof(ILogger<SettingsViewModel>));
+
+            SettingOptionsListView.SelectedIndex = 0;
         }
 
         #region Page Navigation
@@ -37,15 +41,12 @@ namespace OpenHAB.Windows.View
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             Messenger.Default.Register<SettingsUpdatedMessage>(this, msg => HandleSettingsUpdate(msg));
-            base.OnNavigatedTo(e);
-
         }
 
         /// <inheritdoc/>
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             Messenger.Default.Unregister<SettingsUpdatedMessage>(this, msg => HandleSettingsUpdate(msg));
-            base.OnNavigatingFrom(e);
         }
 
         #endregion
@@ -60,11 +61,6 @@ namespace OpenHAB.Windows.View
             ConnectionDialog connectionDialog = new ConnectionDialog();
             connectionDialog.DefaultButton = ContentDialogButton.Primary;
             return connectionDialog;
-        }
-
-        private void Button_OnClick(object sender, RoutedEventArgs e)
-        {
-            Frame.GoBack();
         }
 
         private async void HandleSettingsUpdate(SettingsUpdatedMessage msg)
@@ -103,6 +99,19 @@ namespace OpenHAB.Windows.View
             ConnectionDialog connectionDialog = CreateConnectionDialog();
             connectionDialog.DataContext = Vm.Settings.RemoteConnection;
             connectionDialog.ShowAsync();
+        }
+
+        private void AppSettingsListViewItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            AppSettings.Visibility = Visibility.Visible;
+            ConnectionSettings.Visibility = Visibility.Collapsed;
+        }
+
+        private void ConnectionSettingsListViewItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
+            AppSettings.Visibility = Visibility.Collapsed;
+            ConnectionSettings.Visibility = Visibility.Visible;
         }
     }
 }

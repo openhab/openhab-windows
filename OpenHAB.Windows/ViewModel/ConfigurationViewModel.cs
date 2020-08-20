@@ -23,6 +23,7 @@ namespace OpenHAB.Windows.ViewModel
         private ConnectionDialogViewModel _remoteConnection;
         private LanguageViewModel _selectedAppLanguage;
         private bool _showDefaultSitemap;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationViewModel"/> class.
         /// </summary>

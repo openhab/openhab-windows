@@ -53,8 +53,6 @@ namespace OpenHAB.Windows.View
         /// <inheritdoc/>
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            base.OnNavigatedTo(e);
-
             Messenger.Default.Register<FireErrorMessage>(this, msg => ShowErrorMessage(msg));
             Messenger.Default.Register<FireInfoMessage>(this, msg => ShowInfoMessage(msg));
 
@@ -69,8 +67,6 @@ namespace OpenHAB.Windows.View
 
             ErrorNotification.Dismiss();
             InfoNotification.Dismiss();
-
-            base.OnNavigatedFrom(e);
         }
 
         private async void ShowErrorMessage(FireErrorMessage message)
@@ -135,6 +131,7 @@ namespace OpenHAB.Windows.View
 
         private void StackPanel_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            e.Handled = true;
             Frame.Navigate(typeof(SettingsPage));
         }
     }

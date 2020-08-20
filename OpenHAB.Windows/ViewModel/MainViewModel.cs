@@ -59,22 +59,6 @@ namespace OpenHAB.Windows.ViewModel
             _feedbackLauncher = StoreServicesFeedbackLauncher.GetDefault();
             _cancellationTokenSource = new CancellationTokenSource();
 
-            Messenger.Default.Register<SettingsUpdatedMessage>(this, async msg =>
-            {
-                try
-                {
-                    ErrorMessage = "Invalid URL, check your settings";
-                    if (await _openHabsdk.ResetConnection().ConfigureAwait(false))
-                    {
-                        await LoadData(_cancellationTokenSource.Token).ConfigureAwait(false);
-                    }
-                }
-                catch (HttpRequestException ex)
-                {
-                    Messenger.Default.Send(new FireErrorMessage(ex.Message));
-                }
-            });
-
             Messenger.Default.Register<TriggerCommandMessage>(this, async msg => await TriggerCommand(msg).ConfigureAwait(false));
             Messenger.Default.Register<WidgetClickedMessage>(this, msg => OnWidgetClicked(msg.Widget));
         }

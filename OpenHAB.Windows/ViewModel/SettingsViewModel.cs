@@ -23,14 +23,12 @@ namespace OpenHAB.Windows.ViewModel
         public SettingsViewModel(ConfigurationViewModel configurationViewModel, ILogger<SettingsViewModel> logger)
             : base(new object())
         {
-            Messenger.Default.Register<PersistSettingsMessage>(this, msg => PersistSettings(null));
-
             _configuration = configurationViewModel;
-            _configuration.PropertyChanged += _configuration_PropertyChanged;
+            _configuration.PropertyChanged += Configuration_PropertyChanged;
             _logger = logger;
         }
 
-        private void _configuration_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void Configuration_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             SaveCommand.InvokeCanExecuteChanged(null);
         }
