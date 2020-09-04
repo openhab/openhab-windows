@@ -4,9 +4,9 @@
 	  xmlns:converters="using:OpenHAB.Windows.Converters"
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	  xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
-	  xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
 	  xmlns:community="using:Microsoft.Toolkit.Uwp.UI.Controls"
+	  xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+	  xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 	  mc:Ignorable="d">
 
 	<Page.Background>
@@ -15,219 +15,190 @@
 	</Page.Background>
 	<Page.Resources>
 		<converters:ReverseBoolConverter x:Key="ReverseBoolConverter" />
-		<converters:OpenHabUrlStateToGlyph x:Key="OpenHabUrlStateToGlyph" />
 
-		<DataTemplate x:Key="ConnectionConfigTemplate">
-			<StackPanel Margin="0,0,10,0">
-				<TextBlock x:Uid="LocalSettings"
-						   Style="{StaticResource TitleTextBlockStyle}"
-						   Margin="0,0,0,10" />
-				<TextBlock x:Uid="LocalUrlHeader" />
-				<TextBox x:Uid="LocalUrl"
-						 x:Name="TextBoxUrl"
-						 Margin="0,0,12,12"
-						 Text="{Binding Url, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-					<Interactivity:Interaction.Behaviors>
-						<Core:EventTriggerBehavior EventName="LostFocus">
-							<Core:InvokeCommandAction Command="{Binding Path=UrlCheckCommand, Mode=TwoWay}"
-													  CommandParameter="{Binding ElementName=TextBoxUrl,Path=Text}" />
-						</Core:EventTriggerBehavior>
-					</Interactivity:Interaction.Behaviors>
-				</TextBox>
-				<TextBlock x:Uid="UsernameHeader" />
-				<TextBox x:Name="TextBoxUsername"
-						 Margin="0,0,12,12"
-						 Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-						 TextWrapping="Wrap">
-					<Interactivity:Interaction.Behaviors>
-						<Core:EventTriggerBehavior EventName="LostFocus">
-							<Core:InvokeCommandAction Command="{Binding Path=UrlCheckCommand, Mode=TwoWay}"
-													  CommandParameter="{Binding ElementName=TextBoxUrl,Path=Text}" />
-						</Core:EventTriggerBehavior>
-					</Interactivity:Interaction.Behaviors>
-				</TextBox>
-				<TextBlock x:Uid="PasswordHeader" />
-				<PasswordBox x:Name="TextBoxPassword"
-							 Margin="0,0,12,12"
-							 Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-					<Interactivity:Interaction.Behaviors>
-						<Core:EventTriggerBehavior EventName="LostFocus">
-							<Core:InvokeCommandAction Command="{Binding Path=LocalUrlCheckCommand, Mode=TwoWay}"
-													  CommandParameter="{Binding ElementName=TextBoxUrl,Path=Text}" />
-						</Core:EventTriggerBehavior>
-					</Interactivity:Interaction.Behaviors>
-				</PasswordBox>
-				<StackPanel Orientation="Horizontal">
-					<TextBlock x:Uid="ConnectionCheck"
-							   Margin="0,0,10,0"
-							   VerticalAlignment="Center" />
-					<FontIcon x:Name="IconUrlStatusCheck"
-							  VerticalAlignment="Top"
-							  FontSize="32"
-							  FontFamily="{StaticResource SymbolThemeFontFamily}"
-							  Glyph="{Binding Path=UrlState, Converter={StaticResource OpenHabUrlStateToGlyph}, Mode=TwoWay}" />
-				</StackPanel>
-			</StackPanel>
-		</DataTemplate>
+		<Style x:Name="SettingsMenuItem"
+			   TargetType="ListViewItem">
+			<Setter Property="Foreground"
+					Value="White" />
+			<Setter Property="FontSize"
+					Value="16" />
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="ListViewItem">
+
+						<ListViewItemPresenter 	CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" 
+                    ContentMargin="{TemplateBinding Padding}" 
+                    CheckMode="Overlay" 
+                    ContentTransitions="{TemplateBinding ContentTransitions}" 
+                    CheckBoxBrush="{ThemeResource SystemControlBackgroundChromeMediumBrush}" 
+                    DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" 
+                    DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" 
+                    DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" 
+                    DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" 
+                    FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}" 
+                    FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}" 
+                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    PointerOverForeground="#FFFF5722" 
+                    PressedBackground="{ThemeResource SystemControlHighlightListMediumBrush}" 
+                    PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" 
+                    PointerOverBackground="{ThemeResource SystemControlHighlightListLowBrush}" 
+                    ReorderHintOffset="{ThemeResource GridViewItemReorderHintThemeOffset}" 
+                    SelectedPressedBackground="{ThemeResource SystemControlHighlightListAccentHighBrush}" 
+                    SelectionCheckMarkVisualEnabled="True" 
+                    SelectedForeground="#FFFF5722"
+                    SelectedPointerOverBackground="{ThemeResource SystemControlHighlightListAccentMediumBrush}" 
+                    SelectedBackground="#344040"
+                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
 	</Page.Resources>
-
-	<ScrollViewer Grid.Row="1"
-				  VerticalScrollBarVisibility="Auto">
-		<Grid Margin="16">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto" />
-				<RowDefinition Height="Auto" />
-				<RowDefinition Height="Auto" />
-			</Grid.RowDefinitions>
-			<TextBlock x:Uid="SettingsHeader"
-					   x:Name="SettingsTitle"
-					   Margin="0,6,0,6"
-					   HorizontalAlignment="Left"
-					   VerticalAlignment="Center"
-					   Foreground="White"
-					   FontSize="32"
-					   TextWrapping="Wrap" />
-
-			<StackPanel Orientation="Vertical">
-
-				<StackPanel Margin="0,0,0,25"
-							Padding="12"
-							Background="{ThemeResource OpenHABLightColor}">
-					<TextBlock x:Uid="AppSettings"
-							   Style="{StaticResource TitleTextBlockStyle}"
-							   Margin="0,0,0,10" />
-					<TextBlock x:Uid="HideDefaultSitemap"
-							   Margin="0,0,0,10" />
-					<ToggleSwitch x:Name="CheckBoxHideDefaultSitemap"
-								  Margin="0,0,0,12"
-								  HorizontalAlignment="Stretch"
-								  VerticalAlignment="Stretch"
-								  IsOn="{Binding Settings.HideDefaultSitemap, Mode=TwoWay}" />
-					<TextBlock x:Uid="AppLanguage"
-							   Margin="0,0,0,10" />
-					<ComboBox Margin="0,0,0,12"
-							  ItemsSource="{Binding Settings.AppLanguages}"
-							  DisplayMemberPath="Name"
-							  SelectedItem="{Binding Settings.SelectedAppLanguage, Mode=TwoWay}" />
-				</StackPanel>
-
-				<!-- Connection Settings -->
-				<Grid Padding="12"
-					  Background="{ThemeResource OpenHABLightColor}">
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto" />
-						<RowDefinition Height="Auto" />
-						<RowDefinition Height="Auto" />
-					</Grid.RowDefinitions>
-					<StackPanel Grid.Row="0">
-						<TextBlock x:Uid="ConnectionSettings"
-								   Style="{StaticResource TitleTextBlockStyle}"
-								   Margin="0,0,0,10" />
-						<TextBlock x:Uid="DemoModeHeader" />
-						<ToggleSwitch x:Name="CheckBoxDemoMode"
-									  Margin="0,0,0,12"
-									  HorizontalAlignment="Stretch"
-									  VerticalAlignment="Stretch"
-									  IsOn="{Binding Settings.IsRunningInDemoMode, Mode=TwoWay}" />
-					</StackPanel>
-					<StackPanel Grid.Row="1">
-						<Button Margin="10"
-								HorizontalAlignment="Stretch"
-								VerticalAlignment="Stretch"
-								HorizontalContentAlignment="Left"
-								DataContext="{Binding Path=Settings.LocalConnection}"
-								IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}">
-							<Button.Flyout>
-								<Flyout Placement="Top">
-									<ContentPresenter MinWidth="400"
-													  ContentTemplate="{StaticResource ConnectionConfigTemplate}" />
-								</Flyout>
-							</Button.Flyout>
-							<StackPanel HorizontalAlignment="Left">
-								<TextBlock x:Uid="LocalSettings"
-										   FontSize="16" />
-								<TextBlock Text="{Binding Subtitle}" />
-							</StackPanel>
-						</Button>
-						<Button Margin="10"
-								HorizontalAlignment="Stretch"
-								VerticalAlignment="Stretch"
-								HorizontalContentAlignment="Left"
-								DataContext="{Binding Path=Settings.RemoteConnection}"
-								IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}">
-							<Button.Flyout>
-								<Flyout Placement="Top">
-									<ContentPresenter MinWidth="400"
-													  ContentTemplate="{StaticResource ConnectionConfigTemplate}" />
-								</Flyout>
-							</Button.Flyout>
-							<StackPanel>
-								<TextBlock x:Uid="RemoteSettings" FontSize="16" />
-								<TextBlock Text="{Binding Subtitle}" />
-							</StackPanel>
-						</Button>
-					</StackPanel>
-					<StackPanel Grid.Row="2"
-								Margin="0,12,0,0">
-						<TextBlock x:Uid="CertificateSettings"
-								   Style="{StaticResource TitleTextBlockStyle}"
-								   Margin="0,0,0,10" />
-						<TextBlock x:Uid="IgnoreSSLCertErrors" />
-						<CheckBox x:Name="CheckBoxIgnoreSSL"
-								  Margin="0,0,0,12"
-								  HorizontalAlignment="Stretch"
-								  VerticalAlignment="Stretch"
-								  IsChecked="{Binding Settings.WillIgnoreSSLCertificate,
-												  Mode=TwoWay,
-												  UpdateSourceTrigger=PropertyChanged}"
-								  IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />
-						<TextBlock x:Uid="IgnoreSSLCertHostErrors" />
-						<CheckBox x:Name="CheckBoxIgnoreSSLHostname"
-								  Margin="0,0,0,12"
-								  HorizontalAlignment="Stretch"
-								  VerticalAlignment="Stretch"
-								  IsChecked="{Binding Settings.WillIgnoreSSLHostname,
-												  Mode=TwoWay,
-												  UpdateSourceTrigger=PropertyChanged}"
-								  IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}" />
-					</StackPanel>
-				</Grid>
-				<Grid Margin="0,25,0,0"
-					  Padding="12"
-					  Background="{ThemeResource OpenHABLightColor}">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition />
-						<ColumnDefinition />
-					</Grid.ColumnDefinitions>
-					<StackPanel Grid.Column="0"
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<CommandBar Grid.Row="0"
+					Background="{StaticResource DarkColor}"
+					DefaultLabelPosition="Right">
+			<AppBarButton  x:Uid="SettingsSaveButton"
+						   Icon="Save"
+						   Foreground="White"
+						   Command="{x:Bind Vm.SaveCommand}" />
+			<AppBarButton  x:Uid="SettingsCancelButton"
+						   Foreground="White"
+						   Icon="Cancel">
+				<interactivity:Interaction.Behaviors>
+					<core:EventTriggerBehavior EventName="Tapped">
+						<core:NavigateToPageAction TargetPage="OpenHAB.Windows.View.MainPage" />
+					</core:EventTriggerBehavior>
+				</interactivity:Interaction.Behaviors>
+			</AppBarButton>
+			<CommandBar.Content>
+				<StackPanel Orientation="Horizontal">
+					<SymbolIcon Symbol="Setting"
+								Margin="10,5,0,0"
 								VerticalAlignment="Center"
-								Orientation="Horizontal">
-						<TextBlock x:Uid="AppVersion" />
-						<TextBlock Margin="10,0,0,0"
-								   Text="{Binding Path=Version}" />
-					</StackPanel>
-					<StackPanel Grid.Column="1"
-								HorizontalAlignment="Right"
-								Orientation="Horizontal">
-						<Button x:Uid="SaveButton"
-								Margin="0,0,8,0"
-								Command="{x:Bind Vm.SaveCommand}"
-								Click="Button_OnClick" />
-						<Button x:Uid="CancelButton"
-								Click="Button_OnClick" />
+								Foreground="{StaticResource OpenHABMenuColor}" />
+					<TextBlock x:Uid="SettingsHeader"
+							   Margin="10,0,0,0"
+							   FontSize="28"
+							   VerticalAlignment="Center"
+							   TextWrapping="Wrap"
+							   Foreground="White" />
+				</StackPanel>
+			</CommandBar.Content>
+		</CommandBar>
+
+		<SplitView  Grid.Row="1"
+					IsPaneOpen="True"
+					DisplayMode="CompactInline"
+					OpenPaneLength="256"
+					PaneBackground="{ThemeResource DarkColor}">
+			<SplitView.Pane>
+				<ListView x:Name="SettingOptionsListView" Margin="0,10,0,0"
+						  ItemContainerStyle="{StaticResource SettingsMenuItem}">
+					<ListViewItem x:Uid="MenuAppSettings" Tapped="AppSettingsListViewItem_Tapped" />
+					<ListViewItem x:Uid="MenuConnectionSettings" Tapped="ConnectionSettingsListViewItem_Tapped" />
+					<ListViewItem x:Uid="MenuLogsView">
+						<interactivity:Interaction.Behaviors>
+							<core:EventTriggerBehavior EventName="Tapped">
+								<core:NavigateToPageAction TargetPage="OpenHAB.Windows.View.LogViewerPage" />
+							</core:EventTriggerBehavior>
+						</interactivity:Interaction.Behaviors>
+					</ListViewItem>
+				</ListView>
+			</SplitView.Pane>
+			<ScrollViewer VerticalScrollBarVisibility="Auto">
+				<Grid Margin="10">
+					<StackPanel Orientation="Vertical">
+						<!-- App Settings -->
+						<StackPanel x:Name="AppSettings" Margin="0,0,0,25"
+									Padding="12"
+									Background="{ThemeResource OpenHABLightColor}">
+							<TextBlock x:Uid="AppSettings"
+									   Style="{StaticResource TitleTextBlockStyle}"
+									   Margin="0,0,0,10" />
+							<TextBlock x:Uid="ShowDefaultSitemap"
+									   Margin="0,0,0,10" />
+							<ToggleSwitch x:Name="CheckBoxHideDefaultSitemap"
+										  Margin="0,0,0,12"
+										  HorizontalAlignment="Stretch"
+										  VerticalAlignment="Stretch"
+										  IsOn="{Binding Settings.ShowDefaultSitemap, Mode=TwoWay}" />
+							<TextBlock x:Uid="AppLanguage"
+									   Margin="0,0,0,10" />
+							<ComboBox Margin="0,0,0,12"
+									  ItemsSource="{Binding Settings.AppLanguages}"
+									  DisplayMemberPath="Name"
+									  SelectedItem="{Binding Settings.SelectedAppLanguage, Mode=TwoWay}" />
+						</StackPanel>
+
+						<!-- Connection Settings -->
+						<Grid x:Name="ConnectionSettings" 
+							  Margin="0,0,0,25"
+							  Padding="12"
+							  Background="{ThemeResource OpenHABLightColor}"
+							  Visibility="Collapsed">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+							</Grid.RowDefinitions>
+							<StackPanel Grid.Row="0">
+								<TextBlock x:Uid="ConnectionSettings"
+										   Style="{StaticResource TitleTextBlockStyle}"
+										   Margin="0,0,0,10" />
+								<TextBlock x:Uid="DemoModeHeader" />
+								<ToggleSwitch x:Name="CheckBoxDemoMode"
+											  Margin="0,0,0,12"
+											  HorizontalAlignment="Stretch"
+											  VerticalAlignment="Stretch"
+											  IsOn="{Binding Settings.IsRunningInDemoMode, Mode=TwoWay}" />
+							</StackPanel>
+							<StackPanel Grid.Row="1">
+								<Button Margin="10"
+										HorizontalAlignment="Stretch"
+										VerticalAlignment="Stretch"
+										HorizontalContentAlignment="Left"
+										DataContext="{Binding Path=Settings.LocalConnection}"
+										IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
+										Click="OpenLocalConnectionButton_Click">
+									<StackPanel HorizontalAlignment="Left">
+										<TextBlock x:Uid="LocalSettings"
+												   FontSize="16" />
+										<TextBlock Text="{Binding Subtitle}" />
+									</StackPanel>
+								</Button>
+								<Button Margin="10"
+										HorizontalAlignment="Stretch"
+										VerticalAlignment="Stretch"
+										HorizontalContentAlignment="Left"
+										DataContext="{Binding Path=Settings.RemoteConnection}"
+										IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
+										Click="OpenRemoteConnectionButton_Click">
+									<StackPanel>
+										<TextBlock x:Uid="RemoteSettings"
+												   FontSize="16" />
+										<TextBlock Text="{Binding Subtitle}" />
+									</StackPanel>
+								</Button>
+							</StackPanel>
+						</Grid>
+						<community:InAppNotification x:Name="SettingsNotification"
+													 Grid.Row="1"
+													 Grid.RowSpan="2"
+													 Background="{StaticResource ErrorNotificationBackground}"
+													 ShowDismissButton="True"
+													 AnimationDuration="00:00:00.1000000"
+													 VerticalOffset="100"
+													 HorizontalOffset="0"
+													 StackMode="StackInFront" />
+
 					</StackPanel>
 				</Grid>
-			</StackPanel>
-
-			<community:InAppNotification x:Name="SettingsNotification"
-										 Grid.Row="1"
-										 Grid.RowSpan="2"
-										 Background="{StaticResource ErrorNotificationBackground}"
-										 ShowDismissButton="True"
-										 AnimationDuration="00:00:00.1000000"
-										 VerticalOffset="100"
-										 HorizontalOffset="0"
-										 StackMode="StackInFront" />
-		</Grid>
-	</ScrollViewer>
+			</ScrollViewer>
+		</SplitView>
+	</Grid>
 </Page>

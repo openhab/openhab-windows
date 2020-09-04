@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using OpenHAB.Core.Contracts;
+using OpenHAB.Core.Model.Connection;
 
 namespace OpenHAB.Core.Model
 {
@@ -7,31 +9,29 @@ namespace OpenHAB.Core.Model
     /// </summary>
     public class Settings
     {
+        private static List<IConnectionProfile> _connectionProfiles;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Settings"/> class.
         /// </summary>
         public Settings()
         {
-            WillIgnoreSSLCertificate = false;
-            WillIgnoreSSLHostname = false;
             IsRunningInDemoMode = false;
-
-            LocalConnection = new OpenHABConnection();
-            RemoteConnection = new OpenHABConnection();
+            ShowDefaultSitemap = false;
         }
 
         /// <summary>
-        /// Gets or sets the if the default sitemap should be hidden.
+        /// Gets or sets the if the default sitemap should be visible.
         /// </summary>
         /// <value>The hide default sitemap.</value>
-        public bool? HideDefaultSitemap
+        public bool ShowDefaultSitemap
         {
             get;
             set;
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the app is currently running in demo mode.
+        /// Gets or sets a value indicating whether the application is currently running in demo mode.
         /// </summary>
         public bool? IsRunningInDemoMode
         {
@@ -40,7 +40,7 @@ namespace OpenHAB.Core.Model
         }
 
         /// <summary>
-        /// Gets or sets the config to the OpenHAB remote instance.
+        /// Gets or sets the configuration to the OpenHAB remote instance.
         /// </summary>
         public OpenHABConnection LocalConnection
         {
@@ -49,7 +49,7 @@ namespace OpenHAB.Core.Model
         }
 
         /// <summary>
-        /// Gets or sets the config to the OpenHAB remote instance.
+        /// Gets or sets the configuration to the OpenHAB remote instance.
         /// </summary>
         public OpenHABConnection RemoteConnection
         {
@@ -57,29 +57,30 @@ namespace OpenHAB.Core.Model
             set;
         }
 
+        /// <summary>Gets the list of available connection profiles.</summary>
+        /// <value>The connection profiles.</value>
+        public static List<IConnectionProfile> ConnectionProfiles
+        {
+            get
+            {
+                if (_connectionProfiles == null)
+                {
+                    _connectionProfiles = new List<IConnectionProfile>();
+                    _connectionProfiles.Add(new LocalConnectionProfile());
+                    _connectionProfiles.Add(new DefaultConnectionProfile());
+                    _connectionProfiles.Add(new RemoteConnectionProfile());
+                    _connectionProfiles.Add(new CloudConnectionProfile());
+                }
+
+                return _connectionProfiles;
+            }
+        }
+
         /// <summary>
         /// Gets or sets the application language.
         /// </summary>
         /// <value>The application language.</value>
         public string AppLanguage
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        ///  Gets or sets a value indicating whether the app will ignore the SSL certificate.
-        /// </summary>
-        public bool? WillIgnoreSSLCertificate
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        ///  Gets or sets a value indicating whether the app will ignore the SSL hostname.
-        /// </summary>
-        public bool? WillIgnoreSSLHostname
         {
             get;
             set;

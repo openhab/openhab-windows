@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using OpenHAB.Core.Common;
 
-namespace OpenHAB.Core.Common
+namespace OpenHAB.Windows.ViewModel
 {
     /// <summary>
     /// IViewModelModelProp.
@@ -58,15 +59,22 @@ namespace OpenHAB.Core.Common
         /// <summary>
         /// Sets the property.
         /// </summary>
-        /// <typeparam name="TS">Field value type </typeparam>
+        /// <typeparam name="TS">Field value type.</typeparam>
         /// <param name="field">The field.</param>
         /// <param name="value">The value.</param>
+        /// <param name="markDirty">Set dirty flag on value change.</param>
         /// <param name="name">The name.</param>
         /// <returns>True when value was updated, else false.</returns>
-        public bool Set<TS>(ref TS field, TS value, [CallerMemberName] string name = "")
+        public bool Set<TS>(ref TS field, TS value, bool markDirty = false, [CallerMemberName] string name = "")
         {
             if (!EqualityComparer<TS>.Default.Equals(field, value))
             {
+                if (markDirty)
+                {
+                    IsDirty = true;
+                    OnPropertyChanged(nameof(IsDirty));
+                }
+
                 field = value;
                 var handler = PropertyChanged;
                 if (handler != null)
@@ -89,6 +97,15 @@ namespace OpenHAB.Core.Common
         {
             get;
             set;
+        }
+
+        /// <summary>Gets a value indicating whether this object is dirty.</summary>
+        /// <value>
+        ///   <c>true</c> if this instance is dirty; otherwise, <c>false</c>.</value>
+        public bool IsDirty
+        {
+            get; 
+            protected set;
         }
     }
 }

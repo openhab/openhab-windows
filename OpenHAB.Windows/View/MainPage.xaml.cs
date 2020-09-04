@@ -5,10 +5,12 @@ using OpenHAB.Core;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.Services;
-using OpenHAB.Core.ViewModel;
+using OpenHAB.Windows.Services;
+using OpenHAB.Windows.ViewModel;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 
 namespace OpenHAB.Windows.View
@@ -46,22 +48,15 @@ namespace OpenHAB.Windows.View
             };
 
             SystemNavigationManager.GetForCurrentView().BackRequested += (sender, args) => Vm.WidgetGoBack();
-
-            this.Loaded += MainPage_Loaded;
-        }
-
-        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            Messenger.Default.Register<FireErrorMessage>(this, msg => ShowErrorMessage(msg));
-            Messenger.Default.Register<FireInfoMessage>(this, msg => ShowInfoMessage(msg));
-
-            await Vm.LoadData().ConfigureAwait(false);
         }
 
         /// <inheritdoc/>
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            base.OnNavigatedTo(e);
+            Messenger.Default.Register<FireErrorMessage>(this, msg => ShowErrorMessage(msg));
+            Messenger.Default.Register<FireInfoMessage>(this, msg => ShowInfoMessage(msg));
+
+            await Vm.LoadSitemapsAndItemData().ConfigureAwait(false);
         }
 
         /// <inheritdoc/>
@@ -72,8 +67,6 @@ namespace OpenHAB.Windows.View
 
             ErrorNotification.Dismiss();
             InfoNotification.Dismiss();
-
-            base.OnNavigatedFrom(e);
         }
 
         private async void ShowErrorMessage(FireErrorMessage message)
@@ -134,6 +127,12 @@ namespace OpenHAB.Windows.View
         private void MasterListView_OnItemClick(object sender, ItemClickEventArgs e)
         {
             Messenger.Default.Send(new WidgetClickedMessage(e.ClickedItem as OpenHABWidget));
+        }
+
+        private void StackPanel_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            e.Handled = true;
+            Frame.Navigate(typeof(SettingsPage));
         }
     }
 }

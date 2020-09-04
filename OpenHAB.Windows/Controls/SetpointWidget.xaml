@@ -24,7 +24,7 @@
                     Margin="0,12,12,12"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    BorderBrush="{StaticResource OpenHABSplitviewBrush}"
+                    BorderBrush="{StaticResource DarkAcrylicColor}"
                     BorderThickness="0">
             <Grid>
                 <Grid.RowDefinitions>

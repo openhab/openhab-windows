@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Services;
+using OpenHAB.Windows.Services;
 using OpenHAB.Windows.View;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -133,7 +134,7 @@ namespace OpenHAB.Windows
         /// <param name="e">The <see cref="Windows.UI.Xaml.UnhandledExceptionEventArgs"/> instance containing the event data.</param>
         private void App_UnhandledException(object sender, global::Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
-            _logger.LogCritical(e.Exception, "UnhandledException occured");
+            _logger.LogCritical(e.Exception, "UnhandledException occurred");
         }
     }
 }

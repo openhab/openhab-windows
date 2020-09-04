@@ -14,6 +14,7 @@ using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
+using OpenHAB.Core.Model.Connection;
 
 namespace OpenHAB.Core.SDK
 {
@@ -25,38 +26,42 @@ namespace OpenHAB.Core.SDK
         private readonly IMessenger _messenger;
         private readonly ILogger<OpenHABClient> _logger;
         private readonly ISettingsService _settingsService;
-        private OpenHABHttpClientType _connectionType;
+        private OpenHABConnection _connection;
+        private OpenHABHttpClient _openHABHttpClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenHABClient"/> class.
         /// </summary>
         /// <param name="settingsService">The service to fetch the settings.</param>
         /// <param name="messenger">The messenger instance.</param>
-        public OpenHABClient(ISettingsService settingsService, IMessenger messenger, ILogger<OpenHABClient> logger)
+        /// <param name="logger">Logger class.</param>
+        /// <param name="openHABHttpClient">OpenHab Http client factory.</param>
+        public OpenHABClient(ISettingsService settingsService, IMessenger messenger, ILogger<OpenHABClient> logger, OpenHABHttpClient openHABHttpClient)
         {
             _settingsService = settingsService;
             _messenger = messenger;
             _logger = logger;
+            _openHABHttpClient = openHABHttpClient;
         }
 
         /// <inheritdoc/>
-        public async Task<bool> CheckUrlReachability(string openHABUrl, OpenHABHttpClientType connectionType)
+        public async Task<bool> CheckUrlReachability(OpenHABConnection connection)
         {
-            if (string.IsNullOrWhiteSpace(openHABUrl))
+            if (string.IsNullOrWhiteSpace(connection?.Url))
             {
                 return false;
             }
 
-            if (!openHABUrl.EndsWith("/", StringComparison.InvariantCultureIgnoreCase))
+            if (!connection.Url.EndsWith("/", StringComparison.InvariantCultureIgnoreCase))
             {
-                openHABUrl = openHABUrl + "/";
+                connection.Url = connection.Url + "/";
             }
 
             try
             {
                 Settings settings = _settingsService.Load();
-                var client = OpenHABHttpClient.DisposableClient(connectionType, settings);
-                var result = await client.GetAsync(openHABUrl + "rest").ConfigureAwait(false);
+                var client = _openHABHttpClient.DisposableClient(connection, settings);
+                var result = await client.GetAsync(connection.Url + "rest").ConfigureAwait(false);
 
                 if (result.IsSuccessStatusCode)
                 {
@@ -89,7 +94,7 @@ namespace OpenHAB.Core.SDK
             try
             {
                 var settings = _settingsService.Load();
-                var httpClient = OpenHABHttpClient.Client(_connectionType, settings);
+                var httpClient = _openHABHttpClient.Client(_connection, settings);
 
                 if (httpClient == null)
                 {
@@ -121,7 +126,7 @@ namespace OpenHAB.Core.SDK
                 _logger.LogInformation($"Load sitemaps items for sitemap '{sitemap.Name}'");
 
                 var settings = _settingsService.Load();
-                var result = await OpenHABHttpClient.Client(_connectionType, settings).GetAsync(sitemap.Link).ConfigureAwait(false);
+                var result = await _openHABHttpClient.Client(_connection, settings).GetAsync(sitemap.Link).ConfigureAwait(false);
                 if (!result.IsSuccessStatusCode)
                 {
                     _logger.LogError($"Http request for loading sitemaps items failed, ErrorCode:'{result.StatusCode}'");
@@ -167,7 +172,7 @@ namespace OpenHAB.Core.SDK
                 _logger.LogInformation($"Load sitemaps for OpenHab server version '{version.ToString()}'");
 
                 var settings = _settingsService.Load();
-                var result = await OpenHABHttpClient.Client(_connectionType, settings).GetAsync(Constants.Api.Sitemaps).ConfigureAwait(false);
+                var result = await _openHABHttpClient.Client(_connection, settings).GetAsync(Constants.Api.Sitemaps).ConfigureAwait(false);
                 if (!result.IsSuccessStatusCode)
                 {
                     _logger.LogError($"Http request for loading sitemaps failed, ErrorCode:'{result.StatusCode}'");
@@ -227,7 +232,7 @@ namespace OpenHAB.Core.SDK
                 return false;
             }
 
-            OpenHABHttpClient.ResetClient();
+            _openHABHttpClient.ResetClient();
 
             return true;
         }
@@ -240,7 +245,7 @@ namespace OpenHAB.Core.SDK
                 _logger.LogInformation($"Send Command '{command}' for item '{item.Name} of type '{item.Type}'");
 
                 var settings = _settingsService.Load();
-                var client = OpenHABHttpClient.Client(_connectionType, settings);
+                var client = _openHABHttpClient.Client(_connection, settings);
                 var content = new StringContent(command);
 
                 var result = await client.PostAsync(item.Link, content);
@@ -263,12 +268,12 @@ namespace OpenHAB.Core.SDK
         }
 
         /// <inheritdoc />
-        public async void StartItemUpdates()
+        public async void StartItemUpdates(System.Threading.CancellationToken token)
         {
             await Task.Run(async () =>
             {
                 var settings = _settingsService.Load();
-                var client = OpenHABHttpClient.Client(_connectionType, settings);
+                var client = _openHABHttpClient.Client(_connection, settings);
                 var requestUri = Constants.Api.Events;
 
                 _logger.LogInformation($"Retrive item updates from '{client.BaseAddress.ToString()}'");
@@ -281,6 +286,11 @@ namespace OpenHAB.Core.SDK
                     {
                         while (!reader.EndOfStream)
                         {
+                            if (token.IsCancellationRequested)
+                            {
+                                return;
+                            }
+
                             var updateEvent = reader.ReadLine();
                             if (updateEvent?.StartsWith("data:", StringComparison.InvariantCultureIgnoreCase) == true)
                             {
@@ -306,7 +316,6 @@ namespace OpenHAB.Core.SDK
                     _logger.LogError(ex, "StartItemUpdates failed.");
                     throw new OpenHABException("Fetching item updates failed", ex);
                 }
-
             }).ConfigureAwait(false);
         }
 
@@ -318,7 +327,7 @@ namespace OpenHAB.Core.SDK
                 xml.Element("sitemap")
                     .Element("homepage")
                     .Elements("widget")
-                    .Select(xElement => new OpenHABWidget(xElement))
+                    .Select(xElement => OpenHABWidgetFactory.Parse(xElement))
                     .ToList();
         }
 
@@ -331,8 +340,8 @@ namespace OpenHAB.Core.SDK
             _logger.LogInformation($"App is running in demo mode: {isRunningInDemoMode}");
 
             // no url configured yet
-            if (string.IsNullOrWhiteSpace(settings.LocalConnection.Url) &&
-                string.IsNullOrWhiteSpace(settings.RemoteConnection.Url) &&
+            if (string.IsNullOrWhiteSpace(settings.LocalConnection?.Url) &&
+                string.IsNullOrWhiteSpace(settings.RemoteConnection?.Url) &&
                 !isRunningInDemoMode)
             {
                 return false;
@@ -358,29 +367,29 @@ namespace OpenHAB.Core.SDK
                 }
 
                 OpenHABHttpClient.BaseUrl = settings.RemoteConnection.Url;
-                _connectionType = OpenHABHttpClientType.Remote;
+                _connection = settings.RemoteConnection;
 
                 return true;
             }
 
-            bool isReachable = await CheckUrlReachability(settings.LocalConnection.Url, OpenHABHttpClientType.Local).ConfigureAwait(false);
+            bool isReachable = await CheckUrlReachability(settings.LocalConnection).ConfigureAwait(false);
             _logger.LogInformation($"OpenHab server is reachable: {isReachable}");
 
             if (isReachable)
             {
                 OpenHABHttpClient.BaseUrl = settings.LocalConnection.Url;
-                _connectionType = OpenHABHttpClientType.Local;
+                _connection = settings.LocalConnection;
 
                 return true;
             }
             else
             {
                 // If remote URL is configured
-                if (!string.IsNullOrWhiteSpace(settings.RemoteConnection.Url) &&
-                    await CheckUrlReachability(settings.RemoteConnection.Url, OpenHABHttpClientType.Remote).ConfigureAwait(false))
+                if (!string.IsNullOrWhiteSpace(settings.RemoteConnection?.Url) &&
+                    await CheckUrlReachability(settings.RemoteConnection).ConfigureAwait(false))
                 {
                     OpenHABHttpClient.BaseUrl = settings.RemoteConnection.Url;
-                    _connectionType = OpenHABHttpClientType.Remote;
+                    _connection = settings.RemoteConnection;
                     return true;
                 }
 

@@ -1,5 +1,4 @@
-﻿using System;
-using GalaSoft.MvvmLight.Messaging;
+﻿using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -7,13 +6,14 @@ using NLog.Config;
 using NLog.Extensions.Logging;
 using NLog.Layouts;
 using NLog.Targets;
+using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts.Services;
-using OpenHAB.Core.Model;
 using OpenHAB.Core.SDK;
-using OpenHAB.Core.ViewModel;
+using OpenHAB.Core.Services;
+using OpenHAB.Windows.ViewModel;
 using Windows.Storage;
 
-namespace OpenHAB.Core.Services
+namespace OpenHAB.Windows.Services
 {
     /// <summary>
     /// Dependency Injection Service.
@@ -41,14 +41,15 @@ namespace OpenHAB.Core.Services
              {
                  // configure Logging with NLog
                  loggingBuilder.ClearProviders();
-                 loggingBuilder.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+                 loggingBuilder.SetMinimumLevel(LogLevel.Trace);
                  loggingBuilder.AddNLog(GetLoggingConfiguration());
              });
 
             _services.AddSingleton(Messenger.Default);
-            _services.AddSingleton<IOpenHAB, SDK.OpenHABClient>();
+            _services.AddSingleton<IOpenHAB, OpenHABClient>();
             _services.AddSingleton<ISettingsService, SettingsService>();
             _services.AddSingleton<INavigationService, NavigationService>();
+            _services.AddSingleton<OpenHABHttpClient>();
         }
 
         private void RegisterViewModels()
@@ -56,13 +57,14 @@ namespace OpenHAB.Core.Services
             _services.AddTransient<MainViewModel>();
             _services.AddTransient<SettingsViewModel>();
             _services.AddTransient<ConfigurationViewModel>();
+            _services.AddTransient<LogsViewModel>();
         }
 
         private LoggingConfiguration GetLoggingConfiguration()
         {
             CsvLayout layout = new CsvLayout()
             {
-                Delimiter = CsvColumnDelimiterMode.Semicolon
+                Delimiter = CsvColumnDelimiterMode.Semicolon,
             };
 
             layout.Columns.Add(new CsvColumn("time", @"${date:format=HH\:mm\:ss}"));
@@ -77,7 +79,7 @@ namespace OpenHAB.Core.Services
                 FileName = "${var:LogPath}/logs/${shortdate}.log",
                 Layout = layout,
                 MaxArchiveFiles = 3,
-                ArchiveEvery = FileArchivePeriod.Day
+                ArchiveEvery = FileArchivePeriod.Day,
             };
 
             LoggingConfiguration configuration = new LoggingConfiguration();

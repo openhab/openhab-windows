@@ -120,88 +120,147 @@
   <data name="AppVersion.Text" xml:space="preserve">
     <value>OpenHab App Version:</value>
   </data>
-  <data name="CancelButton.Content" xml:space="preserve">
-    <value>Cancel</value>
+  <data name="SettingsCancelButton.Label" xml:space="preserve">
+    <value>Abbrechen</value>
   </data>
   <data name="ConnectionCheck.Text" xml:space="preserve">
-    <value>Connection Check:</value>
+    <value>Verbindungscheck:</value>
   </data>
   <data name="ConnectionSettings.Text" xml:space="preserve">
-    <value>Connection Settings</value>
+    <value>Verbindungseinstellungen</value>
   </data>
   <data name="DemoModeHeader.Text" xml:space="preserve">
-    <value>Demo mode</value>
+    <value>Demo Modus</value>
   </data>
   <data name="MessageError" xml:space="preserve">
-    <value>Ups, something went wrong</value>
+    <value>Oops, da ist etwas schief gelaufen.</value>
   </data>
   <data name="FeedbackHeader.Text" xml:space="preserve">
     <value>Feedback</value>
   </data>
   <data name="IgnoreSSLCertErrors.Text" xml:space="preserve">
-    <value>Ignore SSL certificate errors</value>
+    <value>Ignoriere SSL Zertifkatsfehler</value>
   </data>
   <data name="IgnoreSSLCertHostErrors.Text" xml:space="preserve">
-    <value>Ignore SSL hostname errors</value>
+    <value>Ignoriere SSL Hostname Fehler</value>
   </data>
   <data name="LocalSettings.Text" xml:space="preserve">
-    <value>Local Settings</value>
+    <value>Lokale Einstellungen</value>
   </data>
   <data name="LocalUrl.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Local url to the OpenHab instance. Default url is http://openhab:8080</value>
+    <value>Url der lokalen OpenHab Instanz. Standard Url ist http://openhab:8080</value>
   </data>
   <data name="LocalUrlHeader.Text" xml:space="preserve">
     <value>openHAB URL</value>
   </data>
   <data name="MessageNotConfigured" xml:space="preserve">
-    <value>Connection settings are not configured.
-Please select demo mode or configure local/remote OpenHab connection information.</value>
+    <value>Es scheint kein OpenHab Server url konfiguriert zu sein. Gehe Sie in die App Einstellungen (Zahnrad Icon) um die Verbindungseinstellung zur ihrem OpenHab Server zukonfigurieren.</value>
   </data>
   <data name="MessagesNotReachable" xml:space="preserve">
-    <value>OpenHab service is not reachable at the moment.
-Go to app settings (gear icon) to check the connection configuration.</value>
+    <value>Im Moment ist der OpenHab Service nicht erreichbar.
+ehe Sie in die App Einstellungen (Zahnrad Icon) um die Verbindungseinstellung zu prüfen.</value>
   </data>
   <data name="PasswordHeader.Text" xml:space="preserve">
-    <value>Password</value>
+    <value>Passwort</value>
   </data>
   <data name="RemoteSettings.Text" xml:space="preserve">
-    <value>Remote Settings</value>
+    <value>Remote Einstellungen</value>
   </data>
   <data name="RemoteUrl.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Url to access OpenHab server from outside of the home network</value>
+    <value>Url für den Zugriff auf den OpenHab Server von außerhalb des Heimnetzwerks.</value>
   </data>
   <data name="RemoteUrlHeader.Text" xml:space="preserve">
     <value>OpenHAB Remote URL</value>
   </data>
-  <data name="SaveButton.Content" xml:space="preserve">
-    <value>Save</value>
+  <data name="SettingsSaveButton.Label" xml:space="preserve">
+    <value>Speichern</value>
   </data>
   <data name="SettingsHeader.Text" xml:space="preserve">
-    <value>Settings</value>
+    <value>Einstellungen</value>
   </data>
   <data name="UsernameHeader.Text" xml:space="preserve">
-    <value>Username</value>
+    <value>Benutzername</value>
   </data>
   <data name="NoItemsOrOpenHabNotAvailable.Text" xml:space="preserve">
-    <value>No sitemaps available</value>
+    <value>Keine Sitemaps verfügbar</value>
   </data>
   <data name="AppSettings.Text" xml:space="preserve">
-    <value>App Settings</value>
+    <value>App Einstellungen</value>
   </data>
   <data name="HideDefaultSitemap.Text" xml:space="preserve">
-    <value>Hide default sitemap (_default)</value>
+    <value>Standard Sitemap (_default) einblenden</value>
   </data>
   <data name="CertificateSettings.Text" xml:space="preserve">
-    <value>Certificate Settings</value>
+    <value>Zertifikatseinstellungen</value>
   </data>
   <data name="Loading.Text" xml:space="preserve">
-    <value>Loading data...</value>
+    <value>Lade Daten...</value>
   </data>
   <data name="MessageSettingsConnectionConfigInvalid" xml:space="preserve">
-    <value>Connection settings are invalid.
-Please select demo mode or configure local/remote connection.</value>
+    <value>Verbindungseinstellungen sind nicht korrekt.
+Bitte wählen Sie den Demo Modus oder die Lokalen/Remote Verbindunsinformation zur ihrem OpenHab Server.</value>
   </data>
   <data name="AppLanguage.Text" xml:space="preserve">
-    <value>App Language</value>
+    <value>App Sprache</value>
+  </data>
+  <data name="ConnectionDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Schliesen</value>
+  </data>
+  <data name="ConnectionDialog.Title" xml:space="preserve">
+    <value>Verbindungseinstellungen</value>
+  </data>
+  <data name="ConnectionProfile.Text" xml:space="preserve">
+    <value>Verbindungsprofil</value>
+  </data>
+  <data name="ConnectionNotConfigured" xml:space="preserve">
+    <value>Nicht konfiguriert</value>
+  </data>
+  <data name="EncryptedConnection" xml:space="preserve">
+    <value>Verbunden mit </value>
+  </data>
+  <data name="UnencryptedConnection" xml:space="preserve">
+    <value>Unsichere Verbindung mit</value>
+  </data>
+  <data name="LocalCustomConnection" xml:space="preserve">
+    <value>Benutzerdefiniertes Verbindungsprofil</value>
+  </data>
+  <data name="LocalDefaultConnection" xml:space="preserve">
+    <value>Standard Verbindungsprofil</value>
+  </data>
+  <data name="RemoteCustomConnection" xml:space="preserve">
+    <value>Benutzerdefiniertes Verbindungsprofil</value>
+  </data>
+  <data name="RemoteDefaultConnection" xml:space="preserve">
+    <value>OpenHab Cloud</value>
+  </data>
+  <data name="MenuLogsView.Content" xml:space="preserve">
+    <value>Log Anzeigen</value>
+  </data>
+  <data name="LogsSend.Content" xml:space="preserve">
+    <value>Logs per mail versenden</value>
+  </data>
+  <data name="LogFileLocation.Text" xml:space="preserve">
+    <value>Dateipfad Logdatei:</value>
+  </data>
+  <data name="LogsHeader.Text" xml:space="preserve">
+    <value>Logs</value>
+  </data>
+  <data name="LogsFolderOpen.Label" xml:space="preserve">
+    <value>Öffne Logverzeichnis</value>
+  </data>
+  <data name="Back.Label" xml:space="preserve">
+    <value>Zurück</value>
+  </data>
+  <data name="Log.Text" xml:space="preserve">
+    <value>Log</value>
+  </data>
+  <data name="MenuAppSettings.Content" xml:space="preserve">
+    <value>App Einstellungen</value>
+  </data>
+  <data name="MenuConnectionSettings.Content" xml:space="preserve">
+    <value>Verbindungseinstellungen</value>
+  </data>
+  <data name="ShowDefaultSitemap.Text" xml:space="preserve">
+    <value>Standard Sitemaps einblenden</value>
   </data>
 </root>

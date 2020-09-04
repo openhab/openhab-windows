@@ -21,8 +21,8 @@ namespace OpenHAB.Core.Common
         }
 
         /// <summary>
-        ///   Adds the specified error to the errors collection if it is not 
-        ///   already present, inserting it in the first position if isWarning is 
+        ///   Adds the specified error to the errors collection if it is not
+        ///   already present, inserting it in the first position if isWarning is
         ///   false. Raises the ErrorsChanged event if the collection changes.
         /// </summary>
         /// <param name = "propertyName">Name of the property.</param>
@@ -49,7 +49,6 @@ namespace OpenHAB.Core.Common
                 InvokeErrorsChanged(propertyName);
             }
         }
-
 
         /// <summary>
         ///   Removes the specified error from the errors collection if it is
@@ -93,7 +92,7 @@ namespace OpenHAB.Core.Common
         ///   Gets the validation errors for a specified property or for the entire object.
         /// </summary>
         /// <param name = "propertyName">The name of the property to retrieve validation errors for, or null or <see
-        ///    cref = "F:System.String.Empty" /> to retrieve errors for the entire object.</param>
+        ///    cref = "string.Empty" /> to retrieve errors for the entire object.</param>
         /// <returns>
         ///   The validation errors for the property or object.
         /// </returns>

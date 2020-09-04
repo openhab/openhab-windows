@@ -4,10 +4,9 @@ using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Extensions.Logging;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Messages;
-using OpenHAB.Core.Model;
 using Windows.ApplicationModel;
 
-namespace OpenHAB.Core.ViewModel
+namespace OpenHAB.Windows.ViewModel
 {
     /// <summary>
     /// Collects and formats all the data for user defined settings.
@@ -16,7 +15,7 @@ namespace OpenHAB.Core.ViewModel
     {
         private readonly ILogger<SettingsViewModel> _logger;
         private ConfigurationViewModel _configuration;
-        private ICommand _saveCommand;
+        private ActionCommand _saveCommand;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingsViewModel"/> class.
@@ -24,17 +23,21 @@ namespace OpenHAB.Core.ViewModel
         public SettingsViewModel(ConfigurationViewModel configurationViewModel, ILogger<SettingsViewModel> logger)
             : base(new object())
         {
-            Messenger.Default.Register<PersistSettingsMessage>(this, msg => PersistSettings(null));
-
             _configuration = configurationViewModel;
+            _configuration.PropertyChanged += Configuration_PropertyChanged;
             _logger = logger;
+        }
+
+        private void Configuration_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            SaveCommand.InvokeCanExecuteChanged(null);
         }
 
         /// <summary>
         /// Gets the save command to persist the settings.
         /// </summary>
         /// <value>The save command.</value>
-        public ICommand SaveCommand => _saveCommand ?? (_saveCommand = new ActionCommand(PersistSettings));
+        public ActionCommand SaveCommand => _saveCommand ?? (_saveCommand = new ActionCommand(PersistSettings, CanPersistSettings));
 
         /// <summary>
         /// Gets or sets the current user-defined settings.
@@ -46,7 +49,7 @@ namespace OpenHAB.Core.ViewModel
         }
 
         /// <summary>
-        /// Gets the app version number.
+        /// Gets the application version number.
         /// </summary>
         /// <value>The version number.</value>
         public string Version
@@ -76,6 +79,11 @@ namespace OpenHAB.Core.ViewModel
             }
 
             Messenger.Default.Send(new SettingsUpdatedMessage(_configuration.IsConnectionConfigValid()));
+        }
+
+        private bool CanPersistSettings(object arg)
+        {
+            return _configuration.IsConnectionConfigValid() && _configuration.IsDirty;
         }
     }
 }

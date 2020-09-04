@@ -15,7 +15,16 @@ namespace OpenHAB.Windows.Controls
         private Color _selectedColor;
 
         /// <summary>
-        /// Gets or sets the color currently selected in the colorpicker widget.
+        /// Initializes a new instance of the <see cref="ColorWidget"/> class.
+        /// </summary>
+        public ColorWidget()
+        {
+            InitializeComponent();
+            Loaded += OnLoaded;
+        }
+
+        /// <summary>
+        /// Gets or sets the color currently selected in the color picker widget.
         /// </summary>
         public Color SelectedColor
         {
@@ -31,20 +40,6 @@ namespace OpenHAB.Windows.Controls
                 _selectedColor = value;
                 RaisePropertyChanged();
             }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ColorWidget"/> class.
-        /// </summary>
-        public ColorWidget()
-        {
-            InitializeComponent();
-            Loaded += OnLoaded;
-        }
-
-        private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
-        {
-            SetState();
         }
 
         internal override void SetState()
@@ -69,6 +64,11 @@ namespace OpenHAB.Windows.Controls
             var colorMap = (ColorMap)sender;
             var hsv = Core.Common.ColorHelper.ToHSV(colorMap.Color);
             Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, $"{hsv.X},{hsv.Y},{hsv.Z}"));
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        {
+            SetState();
         }
     }
 }
