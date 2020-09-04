@@ -1,15 +1,15 @@
 ﻿<Page x:Class="OpenHAB.Windows.View.LogViewerPage"
-	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	  xmlns:core="using:Microsoft.Xaml.Interactions.Core"
-	  xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-	  mc:Ignorable="d">
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+      mc:Ignorable="d">
 
     <Page.Background>
         <ImageBrush ImageSource="/Assets/background.jpg"
-					Stretch="UniformToFill" />
+                    Stretch="UniformToFill" />
     </Page.Background>
 
     <Grid>
@@ -18,14 +18,14 @@
             <RowDefinition Height="95*" />
         </Grid.RowDefinitions>
         <CommandBar Grid.Row="0"
-					Background="{StaticResource DarkColor}"
-					DefaultLabelPosition="Right"  OverflowButtonVisibility="Collapsed">
+                    Background="{StaticResource DarkColor}"
+                    DefaultLabelPosition="Right"  OverflowButtonVisibility="Collapsed">
             <AppBarButton  x:Uid="LogsFolderOpen"
-						   Foreground="White"
+                           Foreground="White"
                               Icon="Folder"
-					Command="{Binding OpenLogFileCommand}" />
+                    Command="{Binding OpenLogFileCommand}" />
             <AppBarButton  x:Uid="Back"
-						   Foreground="White"
+                           Foreground="White"
                               Icon="Back">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Tapped">
@@ -34,18 +34,18 @@
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>
             <CommandBar.Content>
-				<StackPanel Orientation="Horizontal">
-					<SymbolIcon Symbol="Folder"
-								Margin="10,5,0,0"
-								VerticalAlignment="Center"
-								Foreground="{StaticResource OpenHABMenuColor}" />
-					<TextBlock x:Uid="LogsHeader"
-							   Margin="10,0,0,0"
-							   FontSize="28"
-							   VerticalAlignment="Center"
-							   TextWrapping="Wrap"
-							   Foreground="White" />
-				</StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Symbol="Folder"
+                                Margin="10,5,0,0"
+                                VerticalAlignment="Center"
+                                Foreground="{StaticResource OpenHABMenuColor}" />
+                    <TextBlock x:Uid="LogsHeader"
+                               Margin="10,0,0,0"
+                               FontSize="28"
+                               VerticalAlignment="Center"
+                               TextWrapping="Wrap"
+                               Foreground="White" />
+                </StackPanel>
               
             </CommandBar.Content>
         </CommandBar>
@@ -56,15 +56,15 @@
                 <RowDefinition Height="94*" />
             </Grid.RowDefinitions>
             <TextBlock x:Uid="Log" Grid.Row="0" 
-								   Style="{StaticResource TitleTextBlockStyle}"
-								   Margin="10,10,0,5" />
+                                   Style="{StaticResource TitleTextBlockStyle}"
+                                   Margin="10,10,0,5" />
             <ScrollViewer Grid.Row="1">
                 <TextBlock ScrollViewer.VerticalScrollBarVisibility="Visible"
-					   ScrollViewer.ZoomMode="Enabled"
+                       ScrollViewer.ZoomMode="Enabled"
                        ScrollViewer.VerticalScrollMode="Auto"
                        Padding="5,0,0,0"
-					   TextWrapping="Wrap"
-					   Text="{Binding LogContent}" />
+                       TextWrapping="Wrap"
+                       Text="{Binding LogContent}" />
             </ScrollViewer>
         </Grid>
     </Grid>
