@@ -198,6 +198,12 @@
       <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
     </SDKReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\openHAB.Core.Client\openHAB.Core.Client.csproj">
+      <Project>{e039af3e-25e9-4fc2-bd2e-219effce686e}</Project>
+      <Name>openHAB.Core.Client</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
