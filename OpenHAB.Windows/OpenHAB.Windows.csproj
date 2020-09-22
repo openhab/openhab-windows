@@ -117,7 +117,6 @@
     <PRIResource Include="..\Openhab.Core\Strings\en-us\Resources.resw">
       <Link>Strings\en-us\Resources.resw</Link>
     </PRIResource>
-    <None Include="OpenHAB.Windows_StoreKey.pfx" />
     <None Include="OpenHAB.Windows_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -380,9 +379,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OpenHAB.Core\OpenHAB.Core.csproj">
+    <ProjectReference Include="..\OpenHAB.Core\openHAB.Core.csproj">
       <Project>{2a8fd10e-4ee5-4e25-b47c-2296e071f482}</Project>
-      <Name>OpenHAB.Core</Name>
+      <Name>openHAB.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
