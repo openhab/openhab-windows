@@ -327,7 +327,7 @@ namespace OpenHAB.Windows.Controls
                             var eg = new EllipseGeometry
                             {
                                 Center = new Point(Radius, Radius),
-                                RadiusX = Radius - (percentageRing.ScaleWidth / 2)
+                                RadiusX = Radius - (percentageRing.ScaleWidth / 2),
                             };
 
                             eg.RadiusY = eg.RadiusX;
@@ -343,7 +343,7 @@ namespace OpenHAB.Windows.Controls
                             var pf = new PathFigure
                             {
                                 IsClosed = false,
-                                StartPoint = percentageRing.ScalePoint(percentageRing.NormalizedMinAngle, middleOfScale)
+                                StartPoint = percentageRing.ScalePoint(percentageRing.NormalizedMinAngle, middleOfScale),
                             };
 
                             var seg = new ArcSegment
@@ -353,7 +353,7 @@ namespace OpenHAB.Windows.Controls
                                 Size = new Size(middleOfScale, middleOfScale),
                                 Point =
                                     percentageRing.ScalePoint(
-                                        Math.Min(percentageRing.ValueAngle, percentageRing.NormalizedMaxAngle), middleOfScale)
+                                        Math.Min(percentageRing.ValueAngle, percentageRing.NormalizedMaxAngle), middleOfScale),
                             };
 
                             pf.Segments.Add(seg);
@@ -415,7 +415,7 @@ namespace OpenHAB.Windows.Controls
                     var eg = new EllipseGeometry
                     {
                         Center = new Point(Radius, Radius),
-                        RadiusX = Radius - (percentageRing.ScaleWidth / 2)
+                        RadiusX = Radius - (percentageRing.ScaleWidth / 2),
                     };
 
                     eg.RadiusY = eg.RadiusX;
@@ -436,7 +436,7 @@ namespace OpenHAB.Windows.Controls
                         SweepDirection = SweepDirection.Clockwise,
                         IsLargeArc = percentageRing.NormalizedMaxAngle > (percentageRing.NormalizedMinAngle + 180),
                         Size = new Size(middleOfScale, middleOfScale),
-                        Point = percentageRing.ScalePoint(percentageRing.NormalizedMaxAngle, middleOfScale)
+                        Point = percentageRing.ScalePoint(percentageRing.NormalizedMaxAngle, middleOfScale),
                     };
 
                     pf.Segments.Add(seg);
@@ -555,5 +555,4 @@ namespace OpenHAB.Windows.Controls
             return result;
         }
     }
-
 }

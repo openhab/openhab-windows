@@ -86,7 +86,7 @@ namespace OpenHAB.Windows.Controls
         /// Mark the <paramref name="item"/> as selected and ensures everything else is not.
         /// If the <paramref name="item"/> is null then everything is unselected.
         /// </summary>
-        /// <param name="item">The selected menu item</param>
+        /// <param name="item">The selected menu item.</param>
         public void SetSelectedItem(ListViewItem item)
         {
             int index = -1;
@@ -136,7 +136,7 @@ namespace OpenHAB.Windows.Controls
         /// Custom keyboarding logic to enable movement via the arrow keys without triggering selection
         /// until a 'Space' or 'Enter' key is pressed.
         /// </summary>
-        /// <param name="e">Routed event args</param>
+        /// <param name="e">Routed event args.</param>
         protected override void OnKeyDown(KeyRoutedEventArgs e)
         {
             var focusedItem = FocusManager.GetFocusedElement();
@@ -205,7 +205,7 @@ namespace OpenHAB.Windows.Controls
         /// <summary>
         /// This method is a work-around until the bug in FocusManager.TryMoveFocus is fixed.
         /// </summary>
-        /// <param name="direction">Navigated direction</param>
+        /// <param name="direction">Navigated direction.</param>
         private void TryMoveFocus(FocusNavigationDirection direction)
         {
             if (direction == FocusNavigationDirection.Next || direction == FocusNavigationDirection.Previous)
@@ -220,10 +220,10 @@ namespace OpenHAB.Windows.Controls
         }
 
         /// <summary>
-        /// Sets a menu item as the active one
+        /// Sets a menu item as the active one.
         /// </summary>
-        /// <param name="item">the item</param>
-        /// <returns>true when the item was set as active</returns>
+        /// <param name="item">the item.</param>
+        /// <returns>true when the item was set as active.</returns>
         public bool SetActiveItem(object item)
         {
             if (_splitViewHost == null)

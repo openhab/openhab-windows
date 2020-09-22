@@ -11,10 +11,7 @@
         <converters:StringToDoubleConverter x:Key="StringToDoubleConverter" />
     </local:WidgetBase.Resources>
 
-    <Grid Width="300"
-          Height="150"
-          Background="{StaticResource OpenHABLightColor}"
-          CornerRadius="5">
+	<Grid Style="{StaticResource Widget}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="1*" />
@@ -26,14 +23,14 @@
                           Tapped="Widget_OnTapped" />
 
         <local:RadialSlider Grid.Column="1"
-                            Width="100"
-                            Height="100"
+                            Width="80"
+                            Height="80"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             IsInteractive="True"
                             MaxAngle="150"
                             MinAngle="-150"
-                            ScaleBrush="{StaticResource OpenHABSplitviewBrush}"
+                            ScaleBrush="{StaticResource DarkAcrylicColor}"
                             ScaleWidth="10"
                             StepSize="1"
                             TrailBrush="{StaticResource OpenHABLightOrangeBrush}"

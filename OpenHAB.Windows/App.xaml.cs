@@ -1,4 +1,8 @@
 ﻿using System;
+using Microsoft.Extensions.Logging;
+using OpenHAB.Core.Contracts.Services;
+using OpenHAB.Core.Services;
+using OpenHAB.Windows.Services;
 using OpenHAB.Windows.View;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -9,7 +13,6 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.Toolkit.Uwp.Helpers;
 
 namespace OpenHAB.Windows
 {
@@ -18,6 +21,9 @@ namespace OpenHAB.Windows
     /// </summary>
     public sealed partial class App : Application
     {
+        private ILogger<App> _logger;
+        private ISettingsService _settingsService;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="App"/> class.
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -26,7 +32,12 @@ namespace OpenHAB.Windows
         public App()
         {
             InitializeComponent();
+
+            _logger = (ILogger<App>)DIService.Instance.Services.GetService(typeof(ILogger<App>));
+            _settingsService = (ISettingsService)DIService.Instance.Services.GetService(typeof(ISettingsService));
+
             Suspending += OnSuspending;
+            UnhandledException += App_UnhandledException;
         }
 
         /// <summary>
@@ -36,6 +47,8 @@ namespace OpenHAB.Windows
         /// <param name="e">Details about the launch request and process.</param>
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
+            _logger.LogInformation("=== Start Application ===");
+
             if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
                 var statusbar = StatusBar.GetForCurrentView();
@@ -44,6 +57,8 @@ namespace OpenHAB.Windows
                 statusbar.BackgroundOpacity = 1;
                 statusbar.ForegroundColor = Colors.White;
             }
+
+            _settingsService.SetProgramLanguage(null);
 
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
 
@@ -88,10 +103,10 @@ namespace OpenHAB.Windows
         }
 
         /// <summary>
-        /// Invoked when Navigation to a certain page fails
+        /// Invoked when Navigation to a certain page fails.
         /// </summary>
-        /// <param name="sender">The Frame which failed navigation</param>
-        /// <param name="e">Details about the navigation failure</param>
+        /// <param name="sender">The Frame which failed navigation.</param>
+        /// <param name="e">Details about the navigation failure.</param>
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
@@ -109,7 +124,17 @@ namespace OpenHAB.Windows
             var deferral = e.SuspendingOperation.GetDeferral();
 
             // TODO: Save application state and stop any background activity
+            _logger.LogInformation("=== Close Application ===");
+
             deferral.Complete();
+        }
+
+        /// <summary>Handles the UnhandledException event of the App control.</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Windows.UI.Xaml.UnhandledExceptionEventArgs"/> instance containing the event data.</param>
+        private void App_UnhandledException(object sender, global::Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+        {
+            _logger.LogCritical(e.Exception, "UnhandledException occurred");
         }
     }
 }

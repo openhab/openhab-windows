@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Input;
 namespace OpenHAB.Windows.Controls
 {
     /// <summary>
-    /// Widget control that represents an OpenHAB slider
+    /// Widget control that represents an OpenHAB slider.
     /// </summary>
     public sealed partial class SliderWidget : WidgetBase
     {

@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Data;
 namespace OpenHAB.Windows.Converters
 {
     /// <summary>
-    /// Converts a boolean string value to a .NET bool
+    /// Converts a boolean string value to a .NET bool.
     /// </summary>
     public class StateToBoolConverter : IValueConverter
     {
