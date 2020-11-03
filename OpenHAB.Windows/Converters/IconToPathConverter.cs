@@ -23,6 +23,7 @@ namespace OpenHAB.Windows.Converters
 
             var widget = value as OpenHABWidget;
             var state = widget.Item?.State ?? "ON";
+            string iconFormat = settings.UseSVGIcons ? "svg" : "png";
 
             var regMatch = Regex.Match(state, @"\d+");
             if (regMatch.Success)

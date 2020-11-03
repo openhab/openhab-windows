@@ -18,10 +18,11 @@ namespace OpenHAB.Core.Model
         {
             IsRunningInDemoMode = false;
             ShowDefaultSitemap = false;
+            UseSVGIcons = false;
         }
 
         /// <summary>
-        /// Gets or sets the if the default sitemap should be visible.
+        /// Gets or sets a value indicating whether the default sitemap should be visible.
         /// </summary>
         /// <value>The hide default sitemap.</value>
         public bool ShowDefaultSitemap
@@ -81,6 +82,15 @@ namespace OpenHAB.Core.Model
         /// </summary>
         /// <value>The application language.</value>
         public string AppLanguage
+        {
+            get;
+            set;
+        }
+
+        /// <summary>Gets or sets a value indicating whether [use SVG icons].</summary>
+        /// <value>
+        ///   <c>true</c> if [use SVG icons]; otherwise, <c>false</c>.</value>
+        public bool UseSVGIcons
         {
             get;
             set;

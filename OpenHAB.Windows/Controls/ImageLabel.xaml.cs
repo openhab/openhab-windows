@@ -27,6 +27,8 @@ namespace OpenHAB.Windows.Controls
 
             // fix IconPathState by removing empty space and special characters
             string iconPath = control.IconPath;
+
+            Match format = Regex.Match(iconPath, @"format=svg");
             Match state = Regex.Match(iconPath, @"state=(.+?)&");
             if (state != null)
             {
@@ -37,7 +39,14 @@ namespace OpenHAB.Windows.Controls
                 }
             }
 
-            control.Icon.Source = new BitmapImage(new Uri(iconPath));
+            if (format.Success)
+            {
+                control.Icon.Source = new SvgImageSource(new Uri(iconPath));
+            }
+            else
+            {
+                control.Icon.Source = new BitmapImage(new Uri(iconPath));
+            }
         }
 
         /// <summary>
