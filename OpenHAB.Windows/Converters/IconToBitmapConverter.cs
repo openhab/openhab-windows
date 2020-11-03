@@ -15,10 +15,13 @@ namespace OpenHAB.Windows.Converters
         /// <inheritdoc/>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var settingsService = (ISettingsService)DIService.Instance.Services.GetService(typeof(ISettingsService));
+            ISettingsService settingsService = (ISettingsService)DIService.Instance.Services.GetService(typeof(ISettingsService));
+            Settings settings = settingsService.Load();
+
             var serverUrl = Core.Common.OpenHABHttpClient.BaseUrl;
 
-            string url = settingsService.ServerVersion == OpenHABVersion.Two ? $"{serverUrl}icon/{value}?state=UNDEF&format=png" : $"{serverUrl}images/{value}.png";
+            string iconFormat = settings.UseSVGIcons ? "svg" : "png";
+            string url = settingsService.ServerVersion == OpenHABVersion.Two ? $"{serverUrl}icon/{value}?state=UNDEF&format={iconFormat}" : $"{serverUrl}images/{value}.{iconFormat}";
 
             return new BitmapImage(new Uri(url));
         }

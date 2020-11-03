@@ -17,10 +17,13 @@ namespace OpenHAB.Windows.Converters
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             var settingsService = (ISettingsService)DIService.Instance.Services.GetService(typeof(ISettingsService));
+            Settings settings = settingsService.Load();
+
             var serverUrl = OpenHABHttpClient.BaseUrl;
 
             var widget = value as OpenHABWidget;
             var state = widget.Item?.State ?? "ON";
+            string iconFormat = settings.UseSVGIcons ? "svg" : "png";
 
             var regMatch = Regex.Match(state, @"\d+");
             if (regMatch.Success)
@@ -29,8 +32,8 @@ namespace OpenHAB.Windows.Converters
             }
 
             return settingsService.ServerVersion == OpenHABVersion.Two ?
-                $"{serverUrl}icon/{widget.Icon}?state={state}&format=png" :
-                $"{serverUrl}images/{widget.Icon}.png";
+                $"{serverUrl}icon/{widget.Icon}?state={state}&format={iconFormat}" :
+                $"{serverUrl}images/{widget.Icon}.{iconFormat}";
         }
 
         /// <inheritdoc/>

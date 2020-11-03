@@ -22,7 +22,9 @@ namespace OpenHAB.Windows.ViewModel
         private ConnectionDialogViewModel _localConnection;
         private ConnectionDialogViewModel _remoteConnection;
         private LanguageViewModel _selectedAppLanguage;
+
         private bool _showDefaultSitemap;
+        private bool _useSVGIcons;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationViewModel"/> class.
@@ -42,6 +44,7 @@ namespace OpenHAB.Windows.ViewModel
 
             _isRunningInDemoMode = _settings.IsRunningInDemoMode;
             _showDefaultSitemap = _settings.ShowDefaultSitemap;
+            _useSVGIcons = _settings.UseSVGIcons;
 
             _appLanguages = InitalizeAppLanguages();
             _selectedAppLanguage =
@@ -165,6 +168,22 @@ namespace OpenHAB.Windows.ViewModel
                 if (Set(ref _showDefaultSitemap, value, true))
                 {
                     _settings.ShowDefaultSitemap = value;
+                }
+            }
+        }
+
+        public bool UseSVGIcons
+        {
+            get
+            {
+                return _useSVGIcons;
+            }
+
+            set
+            {
+                if (Set(ref _useSVGIcons, value, true))
+                {
+                    _settings.UseSVGIcons = value;
                 }
             }
         }

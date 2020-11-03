@@ -127,6 +127,13 @@
 										  HorizontalAlignment="Stretch"
 										  VerticalAlignment="Stretch"
 										  IsOn="{Binding Settings.ShowDefaultSitemap, Mode=TwoWay}" />
+							<TextBlock x:Uid="SVGIcons"
+									   Margin="0,0,0,10" />
+							<ToggleSwitch x:Name="CheckBoxSVGIcons"
+										  Margin="0,0,0,12"
+										  HorizontalAlignment="Stretch"
+										  VerticalAlignment="Stretch"
+										  IsOn="{Binding Settings.UseSVGIcons, Mode=TwoWay}" />
 							<TextBlock x:Uid="AppLanguage"
 									   Margin="0,0,0,10" />
 							<ComboBox Margin="0,0,0,12"
