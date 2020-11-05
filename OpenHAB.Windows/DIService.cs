@@ -50,6 +50,7 @@ namespace OpenHAB.Windows.Services
             _services.AddSingleton<ISettingsService, SettingsService>();
             _services.AddSingleton<INavigationService, NavigationService>();
             _services.AddSingleton<OpenHABHttpClient>();
+            _services.AddSingleton<IIconCaching, IconCaching>();
         }
 
         private void RegisterViewModels()

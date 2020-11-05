@@ -270,4 +270,10 @@ Please select demo mode or configure local/remote connection.</value>
   <data name="SVGIcons.Text" xml:space="preserve">
     <value>Use high resolution charts for sitemap tiles</value>
   </data>
+  <data name="ClearIconCache.Text" xml:space="preserve">
+    <value>Clear local chart cache</value>
+  </data>
+  <data name="ClearIconCacheButton.Content" xml:space="preserve">
+    <value>Clear</value>
+  </data>
 </root>

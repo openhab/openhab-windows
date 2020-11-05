@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using OpenHAB.Core.Services;
+using OpenHAB.Windows.Services;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
@@ -17,7 +21,7 @@ namespace OpenHAB.Windows.Controls
         public static readonly DependencyProperty IconPathProperty = DependencyProperty.Register(
             "IconPath", typeof(string), typeof(ImageLabel), new PropertyMetadata(default(string), IconChangedCallback));
 
-        private static void IconChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        private static async void IconChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             var control = (ImageLabel)dependencyObject;
             if (control == null)
@@ -38,6 +42,9 @@ namespace OpenHAB.Windows.Controls
                     iconPath = control.IconPath.Replace(state.Groups[1].Value, newstate, StringComparison.InvariantCulture);
                 }
             }
+
+            IIconCaching iconCaching = (IIconCaching)DIService.Instance.Services.GetService(typeof(IIconCaching));
+            iconPath = await iconCaching.ResolveIconPath(iconPath, format.Success ? "svg": "png");
 
             if (format.Success)
             {

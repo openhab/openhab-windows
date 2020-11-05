@@ -266,4 +266,10 @@ Bitte wählen Sie den Demo Modus oder die Lokalen/Remote Verbindunsinformation z
   <data name="SVGIcons.Text" xml:space="preserve">
     <value>Verwenden von Icons mit hoher Auflösung für Sitemapkacheln</value>
   </data>
+  <data name="ClearIconCache.Text" xml:space="preserve">
+    <value>Lokaler Zwischenspeicher für Icons löschen</value>
+  </data>
+  <data name="ClearIconCacheButton.Content" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
 </root>

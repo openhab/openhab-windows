@@ -27,28 +27,28 @@
 					<ControlTemplate TargetType="ListViewItem">
 
 						<ListViewItemPresenter 	CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" 
-                    ContentMargin="{TemplateBinding Padding}" 
-                    CheckMode="Overlay" 
-                    ContentTransitions="{TemplateBinding ContentTransitions}" 
-                    CheckBoxBrush="{ThemeResource SystemControlBackgroundChromeMediumBrush}" 
-                    DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" 
-                    DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" 
-                    DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" 
-                    DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" 
-                    FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}" 
-                    FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}" 
-                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                    PointerOverForeground="#FFFF5722" 
-                    PressedBackground="{ThemeResource SystemControlHighlightListMediumBrush}" 
-                    PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" 
-                    PointerOverBackground="{ThemeResource SystemControlHighlightListLowBrush}" 
-                    ReorderHintOffset="{ThemeResource GridViewItemReorderHintThemeOffset}" 
-                    SelectedPressedBackground="{ThemeResource SystemControlHighlightListAccentHighBrush}" 
-                    SelectionCheckMarkVisualEnabled="True" 
-                    SelectedForeground="#FFFF5722"
-                    SelectedPointerOverBackground="{ThemeResource SystemControlHighlightListAccentMediumBrush}" 
-                    SelectedBackground="#344040"
-                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+					ContentMargin="{TemplateBinding Padding}" 
+					CheckMode="Overlay" 
+					ContentTransitions="{TemplateBinding ContentTransitions}" 
+					CheckBoxBrush="{ThemeResource SystemControlBackgroundChromeMediumBrush}" 
+					DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" 
+					DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" 
+					DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" 
+					DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" 
+					FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}" 
+					FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}" 
+					HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+					PointerOverForeground="#FFFF5722" 
+					PressedBackground="{ThemeResource SystemControlHighlightListMediumBrush}" 
+					PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" 
+					PointerOverBackground="{ThemeResource SystemControlHighlightListLowBrush}" 
+					ReorderHintOffset="{ThemeResource GridViewItemReorderHintThemeOffset}" 
+					SelectedPressedBackground="{ThemeResource SystemControlHighlightListAccentHighBrush}" 
+					SelectionCheckMarkVisualEnabled="True" 
+					SelectedForeground="#FFFF5722"
+					SelectedPointerOverBackground="{ThemeResource SystemControlHighlightListAccentMediumBrush}" 
+					SelectedBackground="#344040"
+					VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
 					</ControlTemplate>
 				</Setter.Value>
 			</Setter>
@@ -134,6 +134,13 @@
 										  HorizontalAlignment="Stretch"
 										  VerticalAlignment="Stretch"
 										  IsOn="{Binding Settings.UseSVGIcons, Mode=TwoWay}" />
+							<TextBlock x:Uid="ClearIconCache"
+									   Margin="0,0,0,10" />
+							<Button x:Uid="ClearIconCacheButton"
+										  Margin="0,0,0,12"
+										  HorizontalAlignment="Left"
+										  VerticalAlignment="Center" 
+										  Command="{x:Bind Vm.ClearIconCacheCommand}" />
 							<TextBlock x:Uid="AppLanguage"
 									   Margin="0,0,0,10" />
 							<ComboBox Margin="0,0,0,12"
