@@ -111,6 +111,7 @@
     <Compile Include="Common\DataErrorInfo.cs" />
     <Compile Include="Common\ObservableCollectionExtensions.cs" />
     <Compile Include="Model\Connection\CloudConnectionProfile.cs" />
+    <Compile Include="Model\Connection\DemoConnectionProfile.cs" />
     <Compile Include="Model\Connection\RemoteConnectionProfile.cs" />
     <Compile Include="Model\Connection\LocalConnectionProfile.cs" />
     <Compile Include="Model\Connection\OpenHABHttpClientType.cs" />
