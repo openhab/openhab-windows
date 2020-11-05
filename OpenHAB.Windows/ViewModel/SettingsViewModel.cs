@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Extensions.Logging;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Messages;
+using OpenHAB.Core.Services;
 using Windows.ApplicationModel;
 
 namespace OpenHAB.Windows.ViewModel
@@ -13,18 +14,23 @@ namespace OpenHAB.Windows.ViewModel
     /// </summary>
     public class SettingsViewModel : ViewModelBase<object>
     {
+        private readonly IIconCaching _iconCaching;
         private readonly ILogger<SettingsViewModel> _logger;
         private ConfigurationViewModel _configuration;
         private ActionCommand _saveCommand;
+        private ActionCommand _clearIconCacheCommand;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingsViewModel"/> class.
         /// </summary>
-        public SettingsViewModel(ConfigurationViewModel configurationViewModel, ILogger<SettingsViewModel> logger)
+        public SettingsViewModel(ConfigurationViewModel configurationViewModel, IIconCaching iconCaching, ILogger<SettingsViewModel> logger)
             : base(new object())
         {
             _configuration = configurationViewModel;
             _configuration.PropertyChanged += Configuration_PropertyChanged;
+
+            _iconCaching = iconCaching;
+
             _logger = logger;
         }
 
@@ -38,6 +44,22 @@ namespace OpenHAB.Windows.ViewModel
         /// </summary>
         /// <value>The save command.</value>
         public ActionCommand SaveCommand => _saveCommand ?? (_saveCommand = new ActionCommand(PersistSettings, CanPersistSettings));
+
+        /// <summary>
+        /// Gets the clear icon cache command to persist the settings.
+        /// </summary>
+        /// <value>The save command.</value>
+        public ActionCommand ClearIconCacheCommand => _clearIconCacheCommand ?? (_clearIconCacheCommand = new ActionCommand(ClearIcons, CanClearIcons));
+
+        private bool CanClearIcons(object arg)
+        {
+            return true;
+        }
+
+        private void ClearIcons(object obj)
+        {
+            _iconCaching.ClearIconCache();
+        }
 
         /// <summary>
         /// Gets or sets the current user-defined settings.

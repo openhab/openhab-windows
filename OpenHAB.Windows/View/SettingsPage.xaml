@@ -144,6 +144,13 @@
 										  HorizontalAlignment="Stretch"
 										  VerticalAlignment="Stretch"
 										  IsOn="{Binding Settings.UseSVGIcons, Mode=TwoWay}" />
+							<TextBlock x:Uid="ClearIconCache"
+									   Margin="0,0,0,10" />
+							<Button x:Uid="ClearIconCacheButton"
+										  Margin="0,0,0,12"
+										  HorizontalAlignment="Left"
+										  VerticalAlignment="Center" 
+										  Command="{x:Bind Vm.ClearIconCacheCommand}" />
 							<TextBlock x:Uid="AppLanguage"
 									   Margin="0,0,0,10" />
 							<ComboBox Margin="0,0,0,12"
