@@ -349,6 +349,7 @@ namespace OpenHAB.Core.SDK
 
             if (isRunningInDemoMode)
             {
+                _connection = new DemoConnectionProfile().CreateConnection();
                 OpenHABHttpClient.BaseUrl = Constants.Api.DemoModeUrl;
                 return true;
             }
