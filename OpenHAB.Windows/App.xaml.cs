@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Extensions.Logging;
 using OpenHAB.Core.Contracts.Services;
+using OpenHAB.Core.Model;
 using OpenHAB.Core.Services;
 using OpenHAB.Windows.Services;
 using OpenHAB.Windows.View;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation.Metadata;
+using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -94,6 +98,20 @@ namespace OpenHAB.Windows
 
                 // Ensure the current window is active
                 Window.Current.Activate();
+
+                Settings settings = _settingsService.Load();
+
+                if (settings.StartAppMinimized.HasValue && settings.StartAppMinimized.Value)
+                {
+                    IList<AppDiagnosticInfo> infos = await AppDiagnosticInfo.RequestInfoForAppAsync();
+                    AppDiagnosticInfo appDiagnosticInfo = infos.FirstOrDefault();
+
+                    if (appDiagnosticInfo != null)
+                    {
+                        IList<AppResourceGroupInfo> resourceInfos = appDiagnosticInfo.GetResourceGroups();
+                        await resourceInfos[0].StartSuspendAsync();
+                    }
+                }
             }
         }
 

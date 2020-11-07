@@ -96,5 +96,10 @@ namespace OpenHAB.Core.Model
             get;
             set;
         }
+        public bool? StartAppMinimized
+        {
+            get;
+            set;
+        }
     }
 }

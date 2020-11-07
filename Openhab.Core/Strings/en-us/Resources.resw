@@ -276,4 +276,13 @@ Please select demo mode or configure local/remote connection.</value>
   <data name="ClearIconCacheButton.Content" xml:space="preserve">
     <value>Clear</value>
   </data>
+  <data name="AppAutostart.Text" xml:space="preserve">
+    <value>Launch app when system starts</value>
+  </data>
+  <data name="SitemapSetting.Text" xml:space="preserve">
+    <value>Sitemap</value>
+  </data>
+  <data name="StartAppMinimized.Text" xml:space="preserve">
+    <value>Start app minimized</value>
+  </data>
 </root>

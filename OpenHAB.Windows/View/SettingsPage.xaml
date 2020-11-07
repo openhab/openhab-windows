@@ -7,7 +7,8 @@
 	  xmlns:community="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	  xmlns:core="using:Microsoft.Xaml.Interactions.Core"
 	  xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-	  mc:Ignorable="d">
+	  mc:Ignorable="d"
+	  x:Name="SettingsView">
 
 	<Page.Background>
 		<ImageBrush ImageSource="/Assets/background.jpg"
@@ -26,29 +27,29 @@
 				<Setter.Value>
 					<ControlTemplate TargetType="ListViewItem">
 
-						<ListViewItemPresenter 	CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" 
-					ContentMargin="{TemplateBinding Padding}" 
-					CheckMode="Overlay" 
-					ContentTransitions="{TemplateBinding ContentTransitions}" 
-					CheckBoxBrush="{ThemeResource SystemControlBackgroundChromeMediumBrush}" 
-					DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" 
-					DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" 
-					DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" 
-					DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" 
-					FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}" 
-					FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}" 
-					HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
-					PointerOverForeground="#FFFF5722" 
-					PressedBackground="{ThemeResource SystemControlHighlightListMediumBrush}" 
-					PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" 
-					PointerOverBackground="{ThemeResource SystemControlHighlightListLowBrush}" 
-					ReorderHintOffset="{ThemeResource GridViewItemReorderHintThemeOffset}" 
-					SelectedPressedBackground="{ThemeResource SystemControlHighlightListAccentHighBrush}" 
-					SelectionCheckMarkVisualEnabled="True" 
-					SelectedForeground="#FFFF5722"
-					SelectedPointerOverBackground="{ThemeResource SystemControlHighlightListAccentMediumBrush}" 
-					SelectedBackground="#344040"
-					VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+						<ListViewItemPresenter 	CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
+												ContentMargin="{TemplateBinding Padding}"
+												CheckMode="Overlay"
+												ContentTransitions="{TemplateBinding ContentTransitions}"
+												CheckBoxBrush="{ThemeResource SystemControlBackgroundChromeMediumBrush}"
+												DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}"
+												DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+												DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}"
+												DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+												FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}"
+												FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}"
+												HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+												PointerOverForeground="#FFFF5722"
+												PressedBackground="{ThemeResource SystemControlHighlightListMediumBrush}"
+												PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}"
+												PointerOverBackground="{ThemeResource SystemControlHighlightListLowBrush}"
+												ReorderHintOffset="{ThemeResource GridViewItemReorderHintThemeOffset}"
+												SelectedPressedBackground="{ThemeResource SystemControlHighlightListAccentHighBrush}"
+												SelectionCheckMarkVisualEnabled="True"
+												SelectedForeground="#FFFF5722"
+												SelectedPointerOverBackground="{ThemeResource SystemControlHighlightListAccentMediumBrush}"
+												SelectedBackground="#344040"
+												VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
 					</ControlTemplate>
 				</Setter.Value>
 			</Setter>
@@ -97,10 +98,13 @@
 					OpenPaneLength="256"
 					PaneBackground="{ThemeResource DarkColor}">
 			<SplitView.Pane>
-				<ListView x:Name="SettingOptionsListView" Margin="0,10,0,0"
+				<ListView x:Name="SettingOptionsListView"
+						  Margin="0,10,0,0"
 						  ItemContainerStyle="{StaticResource SettingsMenuItem}">
-					<ListViewItem x:Uid="MenuAppSettings" Tapped="AppSettingsListViewItem_Tapped" />
-					<ListViewItem x:Uid="MenuConnectionSettings" Tapped="ConnectionSettingsListViewItem_Tapped" />
+					<ListViewItem x:Uid="MenuAppSettings"
+								  Tapped="AppSettingsListViewItem_Tapped" />
+					<ListViewItem x:Uid="MenuConnectionSettings"
+								  Tapped="ConnectionSettingsListViewItem_Tapped" />
 					<ListViewItem x:Uid="MenuLogsView">
 						<interactivity:Interaction.Behaviors>
 							<core:EventTriggerBehavior EventName="Tapped">
@@ -114,43 +118,68 @@
 				<Grid Margin="10">
 					<StackPanel Orientation="Vertical">
 						<!-- App Settings -->
-						<StackPanel x:Name="AppSettings" Margin="0,0,0,25"
-									Padding="12"
-									Background="{ThemeResource OpenHABLightColor}">
-							<TextBlock x:Uid="AppSettings"
-									   Style="{StaticResource TitleTextBlockStyle}"
-									   Margin="0,0,0,10" />
-							<TextBlock x:Uid="ShowDefaultSitemap"
-									   Margin="0,0,0,10" />
-							<ToggleSwitch x:Name="CheckBoxHideDefaultSitemap"
-										  Margin="0,0,0,12"
-										  HorizontalAlignment="Stretch"
-										  VerticalAlignment="Stretch"
-										  IsOn="{Binding Settings.ShowDefaultSitemap, Mode=TwoWay}" />
-							<TextBlock x:Uid="SVGIcons"
-									   Margin="0,0,0,10" />
-							<ToggleSwitch x:Name="CheckBoxSVGIcons"
-										  Margin="0,0,0,12"
-										  HorizontalAlignment="Stretch"
-										  VerticalAlignment="Stretch"
-										  IsOn="{Binding Settings.UseSVGIcons, Mode=TwoWay}" />
-							<TextBlock x:Uid="ClearIconCache"
-									   Margin="0,0,0,10" />
-							<Button x:Uid="ClearIconCacheButton"
-										  Margin="0,0,0,12"
-										  HorizontalAlignment="Left"
-										  VerticalAlignment="Center" 
-										  Command="{x:Bind Vm.ClearIconCacheCommand}" />
-							<TextBlock x:Uid="AppLanguage"
-									   Margin="0,0,0,10" />
-							<ComboBox Margin="0,0,0,12"
-									  ItemsSource="{Binding Settings.AppLanguages}"
-									  DisplayMemberPath="Name"
-									  SelectedItem="{Binding Settings.SelectedAppLanguage, Mode=TwoWay}" />
+						<StackPanel x:Name="AppSettings">
+							<StackPanel Margin="0,0,0,25"
+										Padding="12"
+										Background="{ThemeResource OpenHABLightColor}">
+								<TextBlock x:Uid="AppSettings"
+										   Style="{StaticResource TitleTextBlockStyle}"
+										   Margin="0,0,0,10" />
+								<TextBlock x:Uid="AppAutostart"
+										   Margin="0,0,0,10" />
+								<ToggleSwitch x:Name="AppAutostartSwitch"
+											  Margin="0,0,0,12"
+											  HorizontalAlignment="Stretch"
+											  VerticalAlignment="Stretch"
+											  IsEnabled="{Binding Settings.CanAppAutostartEnabled, Mode=TwoWay}"
+											  IsOn="{Binding Settings.IsAppAutostartEnabled, Mode=TwoWay}" />
+								<TextBlock x:Uid="StartAppMinimized"
+										   Margin="0,0,0,10" />
+								<ToggleSwitch x:Name="StartAppMinimizedSwitch"
+											  Margin="0,0,0,12"
+											  HorizontalAlignment="Stretch"
+											  VerticalAlignment="Stretch"
+											  IsOn="{Binding Settings.StartAppMinimized, Mode=TwoWay}" />
+								<TextBlock x:Uid="AppLanguage"
+										   Margin="0,0,0,10" />
+								<ComboBox Margin="0,0,0,12"
+										  ItemsSource="{Binding Settings.AppLanguages}"
+										  DisplayMemberPath="Name"
+										  SelectedItem="{Binding Settings.SelectedAppLanguage, Mode=TwoWay}" />
+							</StackPanel>
+
+							<StackPanel Margin="0,0,0,25"
+										Padding="12"
+										Background="{ThemeResource OpenHABLightColor}">
+								<TextBlock x:Uid="SitemapSetting"
+										   Style="{StaticResource TitleTextBlockStyle}"
+										   Margin="0,0,0,10" />
+								<TextBlock x:Uid="ShowDefaultSitemap"
+										   Margin="0,0,0,10" />
+								<ToggleSwitch x:Name="CheckBoxHideDefaultSitemap"
+											  Margin="0,0,0,12"
+											  HorizontalAlignment="Stretch"
+											  VerticalAlignment="Stretch"
+											  IsOn="{Binding Settings.ShowDefaultSitemap, Mode=TwoWay}" />
+								<TextBlock x:Uid="SVGIcons"
+										   Margin="0,0,0,10" />
+								<ToggleSwitch x:Name="CheckBoxSVGIcons"
+											  Margin="0,0,0,12"
+											  HorizontalAlignment="Stretch"
+											  VerticalAlignment="Stretch"
+											  IsOn="{Binding Settings.UseSVGIcons, Mode=TwoWay}" />
+								<TextBlock x:Uid="ClearIconCache"
+										   Margin="0,0,0,10" />
+								<Button x:Uid="ClearIconCacheButton"
+										Margin="0,0,0,12"
+										HorizontalAlignment="Left"
+										VerticalAlignment="Center"
+										Command="{x:Bind Vm.ClearIconCacheCommand}" />
+							</StackPanel>
 						</StackPanel>
 
 						<!-- Connection Settings -->
-						<Grid x:Name="ConnectionSettings" 
+						<Grid x:Name="ConnectionSettings"
 							  Margin="0,0,0,25"
 							  Padding="12"
 							  Background="{ThemeResource OpenHABLightColor}"
