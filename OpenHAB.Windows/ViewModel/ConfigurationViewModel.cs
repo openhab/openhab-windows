@@ -6,6 +6,7 @@ using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.Model.Connection;
 using OpenHAB.Core.SDK;
+using OpenHAB.Core.Services;
 
 namespace OpenHAB.Windows.ViewModel
 {
@@ -18,6 +19,8 @@ namespace OpenHAB.Windows.ViewModel
         private readonly Settings _settings;
         private readonly ISettingsService _settingsService;
         private List<LanguageViewModel> _appLanguages;
+        private bool? _canAppAutostartEnabled;
+        private bool? _isAppAutostartEnabled;
         private bool? _isRunningInDemoMode;
         private ConnectionDialogViewModel _localConnection;
         private ConnectionDialogViewModel _remoteConnection;
@@ -25,6 +28,7 @@ namespace OpenHAB.Windows.ViewModel
 
         private bool _showDefaultSitemap;
         private bool _useSVGIcons;
+        private bool? _startAppMinimized;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationViewModel"/> class.
@@ -45,6 +49,7 @@ namespace OpenHAB.Windows.ViewModel
             _isRunningInDemoMode = _settings.IsRunningInDemoMode;
             _showDefaultSitemap = _settings.ShowDefaultSitemap;
             _useSVGIcons = _settings.UseSVGIcons;
+            _startAppMinimized = _settings.StartAppMinimized;
 
             _appLanguages = InitalizeAppLanguages();
             _selectedAppLanguage =
@@ -67,6 +72,38 @@ namespace OpenHAB.Windows.ViewModel
             set
             {
                 Set(ref _appLanguages, value);
+            }
+        }
+
+        /// <summary>Gets or sets the can application autostart enabled.</summary>
+        /// <value>The can application autostart enabled.</value>
+        public bool? CanAppAutostartEnabled
+        {
+            get
+            {
+                return _canAppAutostartEnabled;
+            }
+
+            set
+            {
+                _canAppAutostartEnabled = value;
+                OnPropertyChanged(nameof(CanAppAutostartEnabled));
+            }
+        }
+
+        /// <summary>Gets or sets the is application autostart is enabled.</summary>
+        /// <value>The is application autostart enabled.</value>
+        public bool? IsAppAutostartEnabled
+        {
+            get
+            {
+                return _isAppAutostartEnabled;
+            }
+
+            set
+            {
+                _isAppAutostartEnabled = value;
+                OnPropertyChanged(nameof(IsAppAutostartEnabled));
             }
         }
 
@@ -96,6 +133,24 @@ namespace OpenHAB.Windows.ViewModel
                 if (Set(ref _isRunningInDemoMode, value, true))
                 {
                     _settings.IsRunningInDemoMode = value;
+                }
+            }
+        }
+
+        /// <summary>Gets or sets the start application minimized.</summary>
+        /// <value>The start application minimized.</value>
+        public bool? StartAppMinimized
+        {
+            get
+            {
+                return _startAppMinimized;
+            }
+
+            set
+            {
+                if (Set(ref _startAppMinimized, value, true))
+                {
+                    _settings.StartAppMinimized = value;
                 }
             }
         }
@@ -153,7 +208,7 @@ namespace OpenHAB.Windows.ViewModel
         }
 
         /// <summary>,
-        /// Gets or sets the if the default sitemap should be visible.
+        /// Gets or sets a value indicating whether the default sitemap should be visible.
         /// </summary>
         /// <value>The hide default sitemap.</value>
         public bool ShowDefaultSitemap
@@ -172,6 +227,9 @@ namespace OpenHAB.Windows.ViewModel
             }
         }
 
+        /// <summary>Gets or sets a value indicating whether [use SVG icons].</summary>
+        /// <value>
+        ///   <c>true</c> if [use SVG icons]; otherwise, <c>false</c>.</value>
         public bool UseSVGIcons
         {
             get

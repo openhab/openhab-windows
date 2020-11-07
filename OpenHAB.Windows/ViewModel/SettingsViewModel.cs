@@ -1,5 +1,4 @@
 using System;
-using System.Windows.Input;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Extensions.Logging;
 using OpenHAB.Core.Common;
@@ -16,9 +15,9 @@ namespace OpenHAB.Windows.ViewModel
     {
         private readonly IIconCaching _iconCaching;
         private readonly ILogger<SettingsViewModel> _logger;
+        private ActionCommand _clearIconCacheCommand;
         private ConfigurationViewModel _configuration;
         private ActionCommand _saveCommand;
-        private ActionCommand _clearIconCacheCommand;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingsViewModel"/> class.
@@ -34,32 +33,17 @@ namespace OpenHAB.Windows.ViewModel
             _logger = logger;
         }
 
-        private void Configuration_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            SaveCommand.InvokeCanExecuteChanged(null);
-        }
-
-        /// <summary>
-        /// Gets the save command to persist the settings.
-        /// </summary>
-        /// <value>The save command.</value>
-        public ActionCommand SaveCommand => _saveCommand ?? (_saveCommand = new ActionCommand(PersistSettings, CanPersistSettings));
-
         /// <summary>
         /// Gets the clear icon cache command to persist the settings.
         /// </summary>
         /// <value>The save command.</value>
         public ActionCommand ClearIconCacheCommand => _clearIconCacheCommand ?? (_clearIconCacheCommand = new ActionCommand(ClearIcons, CanClearIcons));
 
-        private bool CanClearIcons(object arg)
-        {
-            return true;
-        }
-
-        private void ClearIcons(object obj)
-        {
-            _iconCaching.ClearIconCache();
-        }
+        /// <summary>
+        /// Gets the save command to persist the settings.
+        /// </summary>
+        /// <value>The save command.</value>
+        public ActionCommand SaveCommand => _saveCommand ?? (_saveCommand = new ActionCommand(PersistSettings, CanPersistSettings));
 
         /// <summary>
         /// Gets or sets the current user-defined settings.
@@ -110,12 +94,27 @@ namespace OpenHAB.Windows.ViewModel
                (_configuration.IsRunningInDemoMode.HasValue && _configuration.IsRunningInDemoMode.Value);
         }
 
+        private bool CanClearIcons(object arg)
+        {
+            return true;
+        }
+
         private bool CanPersistSettings(object arg)
         {
             bool validConnectionConfig = CheckForValidConnectionConfig();
             Messenger.Default.Send(new SettingsUpdatedMessage(validConnectionConfig, false));
 
             return validConnectionConfig && _configuration.IsDirty;
+        }
+
+        private void ClearIcons(object obj)
+        {
+            _iconCaching.ClearIconCache();
+        }
+
+        private void Configuration_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            SaveCommand.InvokeCanExecuteChanged(null);
         }
     }
 }
