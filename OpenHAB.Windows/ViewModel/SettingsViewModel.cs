@@ -18,7 +18,6 @@ namespace OpenHAB.Windows.ViewModel
         private ActionCommand _clearIconCacheCommand;
         private ConfigurationViewModel _configuration;
         private ActionCommand _saveCommand;
-        private ActionCommand _clearIconCacheCommand;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingsViewModel"/> class.
@@ -41,26 +40,16 @@ namespace OpenHAB.Windows.ViewModel
         public ActionCommand ClearIconCacheCommand => _clearIconCacheCommand ?? (_clearIconCacheCommand = new ActionCommand(ClearIcons, CanClearIcons));
 
         /// <summary>
-        /// Gets the save command to persist the settings.
-        /// </summary>
-        /// <value>The save command.</value>
-        public ActionCommand SaveCommand => _saveCommand ?? (_saveCommand = new ActionCommand(PersistSettings, CanPersistSettings));
-
-        /// <summary>
         /// Gets the clear icon cache command to persist the settings.
         /// </summary>
         /// <value>The save command.</value>
         public ActionCommand ClearIconCacheCommand => _clearIconCacheCommand ?? (_clearIconCacheCommand = new ActionCommand(ClearIcons, CanClearIcons));
 
-        private bool CanClearIcons(object arg)
-        {
-            return true;
-        }
-
-        private void ClearIcons(object obj)
-        {
-            _iconCaching.ClearIconCache();
-        }
+        /// <summary>
+        /// Gets the save command to persist the settings.
+        /// </summary>
+        /// <value>The save command.</value>
+        public ActionCommand SaveCommand => _saveCommand ?? (_saveCommand = new ActionCommand(PersistSettings, CanPersistSettings));
 
         /// <summary>
         /// Gets or sets the current user-defined settings.
