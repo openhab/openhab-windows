@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Toolkit.Uwp.Helpers;
 using Newtonsoft.Json;
 using OpenHAB.Core.Messages;
+using OpenHAB.Core.Services;
 
 namespace OpenHAB.Core.Model
 {
@@ -13,6 +14,20 @@ namespace OpenHAB.Core.Model
     public class OpenHABItem : ObservableObject
     {
         private string _state;
+
+        /// <summary>Gets or sets the item category.</summary>
+        /// <value>The category.</value>
+        public string Category
+        {
+            get; set;
+        }
+
+        /// <summary>Gets or sets the item label with the display name.</summary>
+        /// <value>The item label.</value>
+        public string Label
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the name of the OpenHAB item.

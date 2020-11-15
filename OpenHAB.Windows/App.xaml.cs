@@ -42,6 +42,8 @@ namespace OpenHAB.Windows
 
             Suspending += OnSuspending;
             UnhandledException += App_UnhandledException;
+
+            INotificationManager notificationManager = (INotificationManager)DIService.Instance.Services.GetService(typeof(INotificationManager));
         }
 
         /// <summary>

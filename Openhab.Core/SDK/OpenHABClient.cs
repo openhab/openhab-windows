@@ -15,6 +15,7 @@ using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.Model.Connection;
+using OpenHAB.Core.Services;
 
 namespace OpenHAB.Core.SDK
 {
@@ -101,7 +102,7 @@ namespace OpenHAB.Core.SDK
                     return OpenHABVersion.None;
                 }
 
-                var result = await httpClient.GetAsync(Constants.Api.ServerVersion).ConfigureAwait(false);
+                var result = await httpClient.GetAsync(Constants.API.ServerVersion).ConfigureAwait(false);
                 if (!result.IsSuccessStatusCode)
                 {
                     _logger.LogError($"Http request get OpenHab version failed, ErrorCode:'{result.StatusCode}'");
@@ -164,6 +165,40 @@ namespace OpenHAB.Core.SDK
             }
         }
 
+        public async Task<OpenHABItem> GetItemByName(string itemName, OpenHABVersion version)
+        {
+            try
+            {
+                _logger.LogInformation($"Load item by name '{itemName}'");
+
+                var settings = _settingsService.Load();
+                var result = await _openHABHttpClient.Client(_connection, settings).GetAsync($"{Constants.API.Items}/{itemName}").ConfigureAwait(false);
+                if (!result.IsSuccessStatusCode)
+                {
+                    _logger.LogError($"Http request to fetch item '{itemName}' failed, ErrorCode:'{result.StatusCode}'");
+                    throw new OpenHABException($"{result.StatusCode} received from server");
+                }
+
+                string resultString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
+                OpenHABItem item = JsonConvert.DeserializeObject<OpenHABItem>(resultString);
+
+                _logger.LogInformation($"Loaded item '{itemName}' from server");
+
+                return null;
+            }
+            catch (ArgumentNullException ex)
+            {
+                _logger.LogError(ex, "LoadItemsFromSitemap failed.");
+                throw new OpenHABException("Invalid call", ex);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "LoadItemsFromSitemap failed.");
+                throw new OpenHABException("Invalid call", ex);
+            }
+        }
+
+
         /// <inheritdoc />
         public async Task<ICollection<OpenHABSitemap>> LoadSiteMaps(OpenHABVersion version, List<Func<OpenHABSitemap, bool>> filters)
         {
@@ -172,7 +207,7 @@ namespace OpenHAB.Core.SDK
                 _logger.LogInformation($"Load sitemaps for OpenHab server version '{version.ToString()}'");
 
                 var settings = _settingsService.Load();
-                var result = await _openHABHttpClient.Client(_connection, settings).GetAsync(Constants.Api.Sitemaps).ConfigureAwait(false);
+                var result = await _openHABHttpClient.Client(_connection, settings).GetAsync(Constants.API.Sitemaps).ConfigureAwait(false);
                 if (!result.IsSuccessStatusCode)
                 {
                     _logger.LogError($"Http request for loading sitemaps failed, ErrorCode:'{result.StatusCode}'");
@@ -274,7 +309,7 @@ namespace OpenHAB.Core.SDK
             {
                 var settings = _settingsService.Load();
                 var client = _openHABHttpClient.Client(_connection, settings);
-                var requestUri = Constants.Api.Events;
+                var requestUri = Constants.API.Events;
 
                 _logger.LogInformation($"Retrive item updates from '{client.BaseAddress.ToString()}'");
 
@@ -294,14 +329,11 @@ namespace OpenHAB.Core.SDK
                             var updateEvent = reader.ReadLine();
                             if (updateEvent?.StartsWith("data:", StringComparison.InvariantCultureIgnoreCase) == true)
                             {
-                                var data = JsonConvert.DeserializeObject<EventStreamData>(updateEvent.Remove(0, 6));
-                                if (!data.Topic.EndsWith("state", StringComparison.InvariantCultureIgnoreCase))
+                                OpenHABEvent ohEvent = OpenHABEventHandler.ParseEventMessage(updateEvent);
+                                if (ohEvent != null)
                                 {
-                                    continue;
+                                    _messenger.Send(new UpdateItemMessage(ohEvent.ItemName, ohEvent.Value));
                                 }
-
-                                var payload = JsonConvert.DeserializeObject<EventStreamPayload>(data.Payload);
-                                _messenger.Send(new UpdateItemMessage(data.Topic.Replace("smarthome/items/", string.Empty).Replace("/state", string.Empty), payload.Value));
                             }
                         }
                     }
@@ -350,7 +382,7 @@ namespace OpenHAB.Core.SDK
             if (isRunningInDemoMode)
             {
                 _connection = new DemoConnectionProfile().CreateConnection();
-                OpenHABHttpClient.BaseUrl = Constants.Api.DemoModeUrl;
+                OpenHABHttpClient.BaseUrl = Constants.API.DemoModeUrl;
                 return true;
             }
 

@@ -49,7 +49,7 @@ namespace OpenHAB.Core.Model.Connection
             return new OpenHABConnection()
             {
                 Type = OpenHABHttpClientType.Remote,
-                Url = Constants.Api.DemoModeUrl,
+                Url = Constants.API.DemoModeUrl,
             };
         }
     }
