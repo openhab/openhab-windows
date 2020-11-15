@@ -151,9 +151,16 @@
     <Compile Include="SDK\IOpenHAB.cs" />
     <Compile Include="SDK\OpenHABClient.cs" />
     <Compile Include="Services\AppManager.cs" />
+    <Compile Include="Model\OpenHABEvent.cs" />
+    <Compile Include="Model\ItemState.cs" />
+    <Compile Include="Services\IItemStateManager.cs" />
+    <Compile Include="Services\ItemStateManager.cs" />
+    <Compile Include="Services\OpenHABEventHandler.cs" />
     <Compile Include="Services\IAppManager.cs" />
     <Compile Include="Services\IconCaching.cs" />
     <Compile Include="Services\IIconCaching.cs" />
+    <Compile Include="Services\INotificationManager.cs" />
+    <Compile Include="Services\NotificationManager.cs" />
     <Compile Include="Services\SettingsService.cs" />
     <Compile Include="Services\WidgetNavigationService.cs" />
     <EmbeddedResource Include="Properties\OpenHAB.Core.rd.xml" />
