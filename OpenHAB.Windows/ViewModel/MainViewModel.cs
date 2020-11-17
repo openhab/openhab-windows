@@ -234,7 +234,8 @@ namespace OpenHAB.Windows.ViewModel
                 });
 
                 Settings settings = _settingsService.Load();
-                if (settings.LocalConnection == null && settings.RemoteConnection == null)
+                if (settings.LocalConnection == null && settings.RemoteConnection == null &&
+                    (!settings.IsRunningInDemoMode.HasValue || !settings.IsRunningInDemoMode.Value))
                 {
                     Messenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));
                 }
