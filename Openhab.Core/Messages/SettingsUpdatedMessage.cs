@@ -7,9 +7,11 @@
     {
         /// <summary>Initializes a new instance of the <see cref="SettingsUpdatedMessage"/> class.</summary>
         /// <param name="isSettingsValid">if set to <c>true</c> [is settings valid].</param>
-        public SettingsUpdatedMessage(bool isSettingsValid)
+        /// <param name="settingsPersisted">Indicates settings changes are persisted.</param>
+        public SettingsUpdatedMessage(bool isSettingsValid, bool settingsPersisted)
         {
             IsSettingsValid = isSettingsValid;
+            SettingsPersisted = settingsPersisted;
         }
 
         /// <summary>Gets a value indicating whether settings update valid.</summary>
@@ -18,6 +20,14 @@
         public bool IsSettingsValid
         {
             get;
+        }
+
+        /// <summary>Gets or sets a value indicating whether [settings was persisted] to disk.</summary>
+        /// <value>
+        ///   <c>true</c> if [settings persisted]; otherwise, <c>false</c>.</value>
+        public bool SettingsPersisted
+        {
+            get; set;
         }
     }
 }

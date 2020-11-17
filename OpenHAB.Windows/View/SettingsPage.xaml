@@ -116,7 +116,12 @@
 			</SplitView.Pane>
 			<ScrollViewer VerticalScrollBarVisibility="Auto">
 				<Grid Margin="10">
-					<StackPanel Orientation="Vertical">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*" />
+						<RowDefinition Height="auto" />
+					</Grid.RowDefinitions>
+					<StackPanel Grid.Row="0"
+								Orientation="Vertical">
 						<!-- App Settings -->
 						<StackPanel x:Name="AppSettings">
 							<StackPanel Margin="0,0,0,25"
@@ -229,17 +234,16 @@
 								</Button>
 							</StackPanel>
 						</Grid>
-						<community:InAppNotification x:Name="SettingsNotification"
-													 Grid.Row="1"
-													 Grid.RowSpan="2"
-													 Background="{StaticResource ErrorNotificationBackground}"
-													 ShowDismissButton="True"
-													 AnimationDuration="00:00:00.1000000"
-													 VerticalOffset="100"
-													 HorizontalOffset="0"
-													 StackMode="StackInFront" />
 
 					</StackPanel>
+					<community:InAppNotification x:Name="SettingsNotification"
+												 Grid.Row="1"
+												 Background="{StaticResource ErrorNotificationBackground}"
+												 ShowDismissButton="True"
+												 AnimationDuration="00:00:00.1000000"
+												 VerticalOffset="100"
+												 HorizontalOffset="0"
+												 StackMode="Replace" />
 				</Grid>
 			</ScrollViewer>
 		</SplitView>

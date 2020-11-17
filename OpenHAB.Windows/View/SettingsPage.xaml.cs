@@ -99,17 +99,26 @@ namespace OpenHAB.Windows.View
         {
             try
             {
-                if (msg.IsSettingsValid)
+                if (msg.IsSettingsValid && msg.SettingsPersisted)
                 {
                     Frame.BackStack.Clear();
                     Frame.Navigate(typeof(MainPage));
+
+                    return;
                 }
-                else
+                else if (!msg.IsSettingsValid)
                 {
                     string message = AppResources.Values.GetString("MessageSettingsConnectionConfigInvalid");
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
-                        SettingsNotification.Show(message, 30000);
+                        SettingsNotification.Show(message);
+                    });
+                }
+                else
+                {
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        SettingsNotification.Dismiss();
                     });
                 }
             }

@@ -79,12 +79,19 @@ namespace OpenHAB.Windows.ViewModel
         {
             _logger.LogInformation("Execute save settings command");
 
-            if (_configuration.IsConnectionConfigValid())
+            bool validConnectionConfig = CheckForValidConnectionConfig();
+            if (validConnectionConfig)
             {
                 _configuration.Save();
             }
 
-            Messenger.Default.Send(new SettingsUpdatedMessage(_configuration.IsConnectionConfigValid()));
+            Messenger.Default.Send(new SettingsUpdatedMessage(validConnectionConfig, true));
+        }
+
+        private bool CheckForValidConnectionConfig()
+        {
+            return _configuration.IsConnectionConfigValid() ||
+               (_configuration.IsRunningInDemoMode.HasValue && _configuration.IsRunningInDemoMode.Value);
         }
 
         private bool CanClearIcons(object arg)
@@ -94,7 +101,10 @@ namespace OpenHAB.Windows.ViewModel
 
         private bool CanPersistSettings(object arg)
         {
-            return _configuration.IsConnectionConfigValid() && _configuration.IsDirty;
+            bool validConnectionConfig = CheckForValidConnectionConfig();
+            Messenger.Default.Send(new SettingsUpdatedMessage(validConnectionConfig, false));
+
+            return validConnectionConfig && _configuration.IsDirty;
         }
 
         private void ClearIcons(object obj)
