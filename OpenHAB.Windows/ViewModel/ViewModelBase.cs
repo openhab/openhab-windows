@@ -69,13 +69,14 @@ namespace OpenHAB.Windows.ViewModel
         {
             if (!EqualityComparer<TS>.Default.Equals(field, value))
             {
+                field = value;
+
                 if (markDirty)
                 {
                     IsDirty = true;
                     OnPropertyChanged(nameof(IsDirty));
                 }
 
-                field = value;
                 var handler = PropertyChanged;
                 if (handler != null)
                 {
@@ -104,7 +105,7 @@ namespace OpenHAB.Windows.ViewModel
         ///   <c>true</c> if this instance is dirty; otherwise, <c>false</c>.</value>
         public bool IsDirty
         {
-            get; 
+            get;
             protected set;
         }
     }

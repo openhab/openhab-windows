@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Extensions.Logging;
 using OpenHAB.Core;
@@ -21,6 +20,7 @@ namespace OpenHAB.Windows.View
     public sealed partial class SettingsPage : Page
     {
         private ILogger<SettingsViewModel> _logger;
+        private SettingsViewModel _settingsViewModel;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingsPage"/> class.
@@ -29,7 +29,9 @@ namespace OpenHAB.Windows.View
         {
             InitializeComponent();
 
-            DataContext = (SettingsViewModel)DIService.Instance.Services.GetService(typeof(SettingsViewModel));
+            _settingsViewModel = (SettingsViewModel)DIService.Instance.Services.GetService(typeof(SettingsViewModel));
+            DataContext = _settingsViewModel;
+
             _logger = (ILogger<SettingsViewModel>)DIService.Instance.Services.GetService(typeof(ILogger<SettingsViewModel>));
 
             SettingOptionsListView.SelectedIndex = 0;
@@ -67,17 +69,26 @@ namespace OpenHAB.Windows.View
         {
             try
             {
-                if (msg.IsSettingsValid)
+                if (msg.IsSettingsValid && msg.SettingsPersisted)
                 {
                     Frame.BackStack.Clear();
                     Frame.Navigate(typeof(MainPage));
+
+                    return;
                 }
-                else
+                else if (!msg.IsSettingsValid)
                 {
                     string message = AppResources.Values.GetString("MessageSettingsConnectionConfigInvalid");
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
-                        SettingsNotification.Show(message, 30000);
+                        SettingsNotification.Show(message);
+                    });
+                }
+                else
+                {
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        SettingsNotification.Dismiss();
                     });
                 }
             }

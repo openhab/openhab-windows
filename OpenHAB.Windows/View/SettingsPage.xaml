@@ -26,29 +26,29 @@
 				<Setter.Value>
 					<ControlTemplate TargetType="ListViewItem">
 
-						<ListViewItemPresenter 	CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" 
-                    ContentMargin="{TemplateBinding Padding}" 
-                    CheckMode="Overlay" 
-                    ContentTransitions="{TemplateBinding ContentTransitions}" 
-                    CheckBoxBrush="{ThemeResource SystemControlBackgroundChromeMediumBrush}" 
-                    DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" 
-                    DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" 
-                    DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" 
-                    DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" 
-                    FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}" 
-                    FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}" 
-                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                    PointerOverForeground="#FFFF5722" 
-                    PressedBackground="{ThemeResource SystemControlHighlightListMediumBrush}" 
-                    PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" 
-                    PointerOverBackground="{ThemeResource SystemControlHighlightListLowBrush}" 
-                    ReorderHintOffset="{ThemeResource GridViewItemReorderHintThemeOffset}" 
-                    SelectedPressedBackground="{ThemeResource SystemControlHighlightListAccentHighBrush}" 
-                    SelectionCheckMarkVisualEnabled="True" 
-                    SelectedForeground="#FFFF5722"
-                    SelectedPointerOverBackground="{ThemeResource SystemControlHighlightListAccentMediumBrush}" 
-                    SelectedBackground="#344040"
-                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+						<ListViewItemPresenter 	CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
+												ContentMargin="{TemplateBinding Padding}"
+												CheckMode="Overlay"
+												ContentTransitions="{TemplateBinding ContentTransitions}"
+												CheckBoxBrush="{ThemeResource SystemControlBackgroundChromeMediumBrush}"
+												DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}"
+												DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+												DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}"
+												DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+												FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}"
+												FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}"
+												HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+												PointerOverForeground="#FFFF5722"
+												PressedBackground="{ThemeResource SystemControlHighlightListMediumBrush}"
+												PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}"
+												PointerOverBackground="{ThemeResource SystemControlHighlightListLowBrush}"
+												ReorderHintOffset="{ThemeResource GridViewItemReorderHintThemeOffset}"
+												SelectedPressedBackground="{ThemeResource SystemControlHighlightListAccentHighBrush}"
+												SelectionCheckMarkVisualEnabled="True"
+												SelectedForeground="#FFFF5722"
+												SelectedPointerOverBackground="{ThemeResource SystemControlHighlightListAccentMediumBrush}"
+												SelectedBackground="#344040"
+												VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
 					</ControlTemplate>
 				</Setter.Value>
 			</Setter>
@@ -97,10 +97,13 @@
 					OpenPaneLength="256"
 					PaneBackground="{ThemeResource DarkColor}">
 			<SplitView.Pane>
-				<ListView x:Name="SettingOptionsListView" Margin="0,10,0,0"
+				<ListView x:Name="SettingOptionsListView"
+						  Margin="0,10,0,0"
 						  ItemContainerStyle="{StaticResource SettingsMenuItem}">
-					<ListViewItem x:Uid="MenuAppSettings" Tapped="AppSettingsListViewItem_Tapped" />
-					<ListViewItem x:Uid="MenuConnectionSettings" Tapped="ConnectionSettingsListViewItem_Tapped" />
+					<ListViewItem x:Uid="MenuAppSettings"
+								  Tapped="AppSettingsListViewItem_Tapped" />
+					<ListViewItem x:Uid="MenuConnectionSettings"
+								  Tapped="ConnectionSettingsListViewItem_Tapped" />
 					<ListViewItem x:Uid="MenuLogsView">
 						<interactivity:Interaction.Behaviors>
 							<core:EventTriggerBehavior EventName="Tapped">
@@ -112,9 +115,15 @@
 			</SplitView.Pane>
 			<ScrollViewer VerticalScrollBarVisibility="Auto">
 				<Grid Margin="10">
-					<StackPanel Orientation="Vertical">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*" />
+						<RowDefinition Height="auto" />
+					</Grid.RowDefinitions>
+					<StackPanel Grid.Row="0"
+								Orientation="Vertical">
 						<!-- App Settings -->
-						<StackPanel x:Name="AppSettings" Margin="0,0,0,25"
+						<StackPanel x:Name="AppSettings"
+									Margin="0,0,0,25"
 									Padding="12"
 									Background="{ThemeResource OpenHABLightColor}">
 							<TextBlock x:Uid="AppSettings"
@@ -136,7 +145,7 @@
 						</StackPanel>
 
 						<!-- Connection Settings -->
-						<Grid x:Name="ConnectionSettings" 
+						<Grid x:Name="ConnectionSettings"
 							  Margin="0,0,0,25"
 							  Padding="12"
 							  Background="{ThemeResource OpenHABLightColor}"
@@ -186,17 +195,16 @@
 								</Button>
 							</StackPanel>
 						</Grid>
-						<community:InAppNotification x:Name="SettingsNotification"
-													 Grid.Row="1"
-													 Grid.RowSpan="2"
-													 Background="{StaticResource ErrorNotificationBackground}"
-													 ShowDismissButton="True"
-													 AnimationDuration="00:00:00.1000000"
-													 VerticalOffset="100"
-													 HorizontalOffset="0"
-													 StackMode="StackInFront" />
 
 					</StackPanel>
+					<community:InAppNotification x:Name="SettingsNotification"
+												 Grid.Row="1"
+												 Background="{StaticResource ErrorNotificationBackground}"
+												 ShowDismissButton="True"
+												 AnimationDuration="00:00:00.1000000"
+												 VerticalOffset="100"
+												 HorizontalOffset="0"
+												 StackMode="Replace" />
 				</Grid>
 			</ScrollViewer>
 		</SplitView>
