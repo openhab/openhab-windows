@@ -51,10 +51,10 @@ namespace OpenHAB.Core.Model
         /// </summary>
         public string State
         {
-            get => _state;
+            get =>_state;
             set
             {
-                if (_type != null)
+                if ((_type != null) && (Unit == null))
                 {
                     if (_type.Contains(":", System.StringComparison.OrdinalIgnoreCase) && value != null)
                     {

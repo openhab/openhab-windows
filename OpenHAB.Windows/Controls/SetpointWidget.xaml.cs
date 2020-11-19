@@ -21,32 +21,46 @@ namespace OpenHAB.Windows.Controls
 
         private void ButtonUp_Click(object sender, RoutedEventArgs e)
         {
-            double value = GetDoubleValue(Widget.Item.State);
-            value += Widget.Step;
+            // if Widget Step == 0 --> Step = 1
+            float step = Widget.Step;
+            if (step == 0)
+            {
+                step = 1;
+            }
 
-            //if Widget Step == 0 --> Step = 1
+            double value = GetDoubleValue(Widget.Item.State);
+            value += step;
 
             if (value > Widget.MaxValue)
             {
                 value = Widget.MaxValue;
             }
 
-            Widget.Item.State = value.ToString(CultureInfo.CurrentCulture);
-            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, value.ToString(CultureInfo.InvariantCulture)));
+            string newValue = value.ToString(CultureInfo.CurrentCulture) + Widget.Item.Unit;
+            Widget.Item.State = newValue;
+            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, newValue));
         }
 
         private void ButtonDown_Click(object sender, RoutedEventArgs e)
         {
+            // if Widget Step == 0 --> Step = 1
+            float step = Widget.Step;
+            if (step == 0)
+            {
+                step = 1;
+            }
+
             double value = GetDoubleValue(Widget.Item.State);
-            value -= Widget.Step;
+            value -= step;
 
             if (value < Widget.MinValue)
             {
                 value = Widget.MinValue;
             }
 
-            Widget.Item.State = value.ToString(CultureInfo.CurrentCulture);
-            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, value.ToString(CultureInfo.InvariantCulture)));
+            string newValue = value.ToString(CultureInfo.CurrentCulture) + Widget.Item.Unit;
+            Widget.Item.State = newValue;
+            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, newValue));
         }
 
         private double GetDoubleValue(string state)
@@ -57,6 +71,7 @@ namespace OpenHAB.Windows.Controls
 
             return value;
         }
+
 
         internal override void SetState()
         {
