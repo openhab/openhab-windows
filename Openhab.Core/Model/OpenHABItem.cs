@@ -13,6 +13,7 @@ namespace OpenHAB.Core.Model
     public class OpenHABItem : ObservableObject
     {
         private string _state;
+        private string _type;
 
         /// <summary>
         /// Gets or sets the name of the OpenHAB item
@@ -22,7 +23,23 @@ namespace OpenHAB.Core.Model
         /// <summary>
         /// Gets or sets the type of the OpenHAB item
         /// </summary>
-        public string Type { get; set; }
+        public string Type
+        {
+            get => _type;
+            set
+            {
+                if (value != null)
+                {
+                    if (value.Contains(":", System.StringComparison.OrdinalIgnoreCase) && _state != null)
+                    {
+                        int spaceIndex = _state.LastIndexOf(' ');
+                        Unit = _state.Substring(spaceIndex, _state.Length - spaceIndex);
+                    }
+                }
+
+                Set(ref _type, value);
+            }
+        }
 
         /// <summary>
         /// Gets or sets the grouptype of the OpenHAB item
@@ -35,7 +52,19 @@ namespace OpenHAB.Core.Model
         public string State
         {
             get => _state;
-            set => Set(ref _state, value);
+            set
+            {
+                if (_type != null)
+                {
+                    if (_type.Contains(":", System.StringComparison.OrdinalIgnoreCase) && value != null)
+                    {
+                        int spaceIndex = value.LastIndexOf(' ');
+                        Unit = value.Substring(spaceIndex, value.Length - spaceIndex);
+                    }
+                }
+
+                Set(ref _state, value);
+            }
         }
 
         /// <summary>
