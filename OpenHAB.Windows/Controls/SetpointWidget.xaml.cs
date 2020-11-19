@@ -21,8 +21,10 @@ namespace OpenHAB.Windows.Controls
 
         private void ButtonUp_Click(object sender, RoutedEventArgs e)
         {
-            double value = getDoubleValue(Widget.Item.State);
+            double value = GetDoubleValue(Widget.Item.State);
             value += Widget.Step;
+
+            //if Widget Step == 0 --> Step = 1
 
             if (value > Widget.MaxValue)
             {
@@ -35,7 +37,7 @@ namespace OpenHAB.Windows.Controls
 
         private void ButtonDown_Click(object sender, RoutedEventArgs e)
         {
-            double value = getDoubleValue(Widget.Item.State);
+            double value = GetDoubleValue(Widget.Item.State);
             value -= Widget.Step;
 
             if (value < Widget.MinValue)
@@ -47,15 +49,11 @@ namespace OpenHAB.Windows.Controls
             Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, value.ToString(CultureInfo.InvariantCulture)));
         }
 
-        private double getDoubleValue(string state)
+        private double GetDoubleValue(string state)
         {
             string newstate = Regex.Replace(state, "[^0-9,.]", string.Empty);
             double value = 0;
-            try
-            {
-                value = double.Parse(newstate);
-            }
-            catch { }
+            _ = double.TryParse(newstate, out value);
 
             return value;
         }
