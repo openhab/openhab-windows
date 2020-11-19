@@ -41,6 +41,11 @@ namespace OpenHAB.Core.Model
         /// <summary>
         /// Gets or sets the link of the OpenHAB item
         /// </summary>
+        public string Unit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the unit of the OpenHAB item
+        /// </summary>
         public string Link { get; set; }
 
         /// <summary>
