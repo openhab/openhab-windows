@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
@@ -143,6 +144,15 @@ namespace OpenHAB.Core.Model
                 string newValue = value.ToString() + this.Unit;
                 Messenger.Default.Send(new TriggerCommandMessage(this, newValue));
             }
+        }
+
+        public double GetStateAsDoubleValue()
+        {
+            string newstate = Regex.Replace(_state, "[^0-9,.]", string.Empty);
+            double value = 0;
+            _ = double.TryParse(newstate, out value);
+
+            return value;
         }
     }
 }
