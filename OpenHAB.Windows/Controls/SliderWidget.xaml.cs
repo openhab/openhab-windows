@@ -49,7 +49,7 @@ namespace OpenHAB.Windows.Controls
             }
             else
             {
-                Widget.Item.UpdateValue(minval);
+                Widget.Item.UpdateValue(Widget.MinValue);
             }
             RaisePropertyChanged(nameof(Widget));
         }
