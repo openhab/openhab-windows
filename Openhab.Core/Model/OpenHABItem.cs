@@ -35,7 +35,10 @@ namespace OpenHAB.Core.Model
                     if (value.Contains(":", System.StringComparison.OrdinalIgnoreCase) && _state != null)
                     {
                         int spaceIndex = _state.LastIndexOf(' ');
-                        Unit = _state.Substring(spaceIndex, _state.Length - spaceIndex);
+                        if (spaceIndex > 0)
+                        {
+                            Unit = _state.Substring(spaceIndex, _state.Length - spaceIndex);
+                        }
                     }
                 }
 
