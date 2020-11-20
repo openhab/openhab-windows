@@ -4,6 +4,7 @@ using OpenHAB.Core.Messages;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Controls;
+using System;
 
 namespace OpenHAB.Windows.Controls
 {
@@ -64,24 +65,41 @@ namespace OpenHAB.Windows.Controls
 
         internal override void SetState()
         {
-            //OpenHABWidgetMapping itemState = Widget?.Mappings.FirstOrDefault(_ => _.Command == Widget.Item.State);
-            //SelectionComboBox.SelectedItem = itemState;
+            UpdateComboBox();
+            try
+            {
+                //comboBox.SelectedItem = Widget.Item.GetStateAsDoubleValue().ToString() + Widget.Item.Unit;
+            }
+            catch (Exception ex) { };
+
+
         }
 
         private void SetPointWidget_Loaded(object sender, RoutedEventArgs e)
         {
+            
+            SetState();
+        }
+
+        private void UpdateComboBox()
+        {
+            comboBox.Items.Clear();
             float step = 1;
+            double currentValue = Widget.Item.GetStateAsDoubleValue();
             if (Widget.Step != 0)
             {
                 step = Widget.Step;
             }
-            for(float i = Widget.MinValue; i <= Widget.MaxValue; i += step)
+            for (float i = Widget.MinValue; i <= Widget.MaxValue; i += step)
             {
-                comboBox.Items.Add(i.ToString());
+                comboBox.Items.Add(i.ToString() + Widget.Item.Unit);
+                if (i < currentValue &&  currentValue < (i + step))
+                {
+                    comboBox.Items.Add(currentValue.ToString() + Widget.Item.Unit);
+                }
             }
-            SetState();
-        }
 
+        }
 
     }
 }
