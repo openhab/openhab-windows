@@ -19,6 +19,7 @@ namespace OpenHAB.Windows.Controls
         public SliderWidget()
         {
             InitializeComponent();
+            
         }
 
         private void RadialSlider_OnValueChanged(object sender, EventArgs e)
