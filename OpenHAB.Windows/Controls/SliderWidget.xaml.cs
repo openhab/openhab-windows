@@ -27,7 +27,7 @@ namespace OpenHAB.Windows.Controls
                 return;
             }
 
-            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, ((RadialSlider)sender)?.Value.ToString(CultureInfo.InvariantCulture)));
+            Widget.Item.UpdateValue(((RadialSlider)sender)?.Value);
             RaisePropertyChanged(nameof(Widget));
         }
 
