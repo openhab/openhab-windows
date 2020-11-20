@@ -19,7 +19,6 @@ namespace OpenHAB.Windows.Controls
         public SliderWidget()
         {
             InitializeComponent();
-            
         }
 
         private void RadialSlider_OnValueChanged(object sender, EventArgs e)
@@ -35,13 +34,21 @@ namespace OpenHAB.Windows.Controls
 
         private void Widget_OnTapped(object sender, TappedRoutedEventArgs e)
         {
-            if (Widget.Item.GetStateAsDoubleValue() <= Widget.MinValue)
+            double maxval = Widget.MaxValue;
+            double minval = Widget.MinValue;
+            if (maxval == minval)
             {
-                Widget.Item.UpdateValue(Widget.MaxValue);
+                // use default
+                maxval = 100;
+                minval = 0;
+            }
+            if (Widget.Item.GetStateAsDoubleValue() <= minval)
+            {
+                Widget.Item.UpdateValue(maxval);
             }
             else
             {
-                Widget.Item.UpdateValue(Widget.MinValue);
+                Widget.Item.UpdateValue(minval);
             }
             RaisePropertyChanged(nameof(Widget));
         }
