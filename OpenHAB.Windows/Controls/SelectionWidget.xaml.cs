@@ -22,7 +22,9 @@ namespace OpenHAB.Windows.Controls
             Loaded += SelectionWidget_Loaded;
         }
 
-
+        /// <summary>
+        /// Get's called after SelectionWidget was loaded and updates the Widgets Selection Dropdown
+        /// </summary>
         private void SelectionWidget_Loaded(object sender, global::Windows.UI.Xaml.RoutedEventArgs e)
         {
             selectionMappings = new System.Collections.Generic.List<SelectionMapping>();
@@ -70,6 +72,9 @@ namespace OpenHAB.Windows.Controls
             Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, mapping.Command));
         }
 
+        /// <summary>
+        /// A Class that is used for Mapping Selectionvalues to Labels
+        /// </summary>
         class SelectionMapping
         {
             /// <summary>
