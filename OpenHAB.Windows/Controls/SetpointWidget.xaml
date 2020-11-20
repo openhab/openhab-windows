@@ -6,7 +6,7 @@
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   d:DesignHeight="150"
                   d:DesignWidth="300"
-                  mc:Ignorable="d">
+                  mc:Ignorable="d" Loaded="SetPointWidget_Loaded">
 
     <Grid Width="300"
           Height="150"
@@ -35,10 +35,13 @@
                            FontFamily="Segoe MDL2 Assets"
                            Text="&#xE74A;" />
             </Button>
-            <TextBlock Margin="0,4,0,0"
-                       HorizontalAlignment="Center"
-                       FontSize="20"
-                       Text="{x:Bind Widget.Item.State, Mode=TwoWay}" />
+            <ComboBox Margin="0,4,0,0"
+                      x:Name="comboBox"
+                      HorizontalAlignment="Stretch"
+                      FontSize="20"
+                      SelectedItem="{x:Bind Widget.Item.State, Mode=TwoWay}" 
+                      Width="Auto" VerticalAlignment="Stretch"
+                      />
             <Button Height="40"
                     Margin="0,4,0,0"
                     HorizontalAlignment="Stretch"

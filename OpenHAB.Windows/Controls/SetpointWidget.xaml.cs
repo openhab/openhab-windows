@@ -2,6 +2,8 @@
 using GalaSoft.MvvmLight.Messaging;
 using OpenHAB.Core.Messages;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Controls;
 
 namespace OpenHAB.Windows.Controls
 {
@@ -62,6 +64,24 @@ namespace OpenHAB.Windows.Controls
 
         internal override void SetState()
         {
+            //OpenHABWidgetMapping itemState = Widget?.Mappings.FirstOrDefault(_ => _.Command == Widget.Item.State);
+            //SelectionComboBox.SelectedItem = itemState;
         }
+
+        private void SetPointWidget_Loaded(object sender, RoutedEventArgs e)
+        {
+            float step = 1;
+            if (Widget.Step != 0)
+            {
+                step = Widget.Step;
+            }
+            for(float i = Widget.MinValue; i <= Widget.MaxValue; i += step)
+            {
+                comboBox.Items.Add(i.ToString());
+            }
+            SetState();
+        }
+
+
     }
 }
