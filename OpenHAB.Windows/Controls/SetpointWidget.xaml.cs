@@ -1,9 +1,7 @@
 ﻿using System.Globalization;
-using System.Text.RegularExpressions;
 using GalaSoft.MvvmLight.Messaging;
 using OpenHAB.Core.Messages;
 using Windows.UI.Xaml;
-
 
 namespace OpenHAB.Windows.Controls
 {
@@ -29,7 +27,7 @@ namespace OpenHAB.Windows.Controls
                 step = 1;
             }
 
-            double value = GetDoubleValue(Widget.Item.State);
+            double value = Widget.Item.GetStateAsDoubleValue();
             value += step;
 
             if (value > Widget.MaxValue)
@@ -49,7 +47,7 @@ namespace OpenHAB.Windows.Controls
                 step = 1;
             }
 
-            double value = GetDoubleValue(Widget.Item.State);
+            double value = Widget.Item.GetStateAsDoubleValue();
             value -= step;
 
             if (value < Widget.MinValue)
@@ -59,16 +57,6 @@ namespace OpenHAB.Windows.Controls
 
             Widget.Item.UpdateValue(value);
         }
-
-        private double GetDoubleValue(string state)
-        {
-            string newstate = Regex.Replace(state, "[^0-9,.]", string.Empty);
-            double value = 0;
-            _ = double.TryParse(newstate, out value);
-
-            return value;
-        }
-
 
         internal override void SetState()
         {
