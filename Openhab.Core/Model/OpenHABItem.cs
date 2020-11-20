@@ -143,6 +143,7 @@ namespace OpenHAB.Core.Model
             {
                 string newValue = value.ToString() + this.Unit;
                 Messenger.Default.Send(new TriggerCommandMessage(this, newValue));
+                _state = newValue;
             }
         }
 
