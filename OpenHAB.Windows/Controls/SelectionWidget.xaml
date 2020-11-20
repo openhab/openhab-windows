@@ -27,9 +27,6 @@
                   Margin="0,0,12,0"
                   HorizontalAlignment="Right"
                   VerticalAlignment="Center"
-                  DisplayMemberPath="Label"
-                  
-                  SelectionChanged="Selector_OnSelectionChanged" />
-        <!--ItemsSource="{x:Bind Widget.Mappings}"-->
+                  DisplayMemberPath="Label"/>
     </Grid>
 </local:WidgetBase>
