@@ -57,7 +57,7 @@ namespace OpenHAB.Windows.Controls
         {
         }
 
-        private void WidgetBase_Loaded(object sender, RoutedEventArgs e)
+        private void SliderWidget_Loaded(object sender, RoutedEventArgs e)
         {
             if (Widget.MaxValue != 0)
             {
