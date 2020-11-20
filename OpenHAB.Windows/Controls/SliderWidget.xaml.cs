@@ -35,22 +35,13 @@ namespace OpenHAB.Windows.Controls
 
         private void Widget_OnTapped(object sender, TappedRoutedEventArgs e)
         {
-            double maxval = 100;
-            double minval = 0;
-            if (Widget.MaxValue != 0)
+            if (Widget.Item.GetStateAsDoubleValue() <= Widget.MinValue)
             {
-                maxval = Widget.MaxValue;
-            }
-
-            minval = Widget.MinValue;
-
-            if (Widget.Item.GetStateAsDoubleValue() <= minval)
-            {
-                Widget.Item.UpdateValue(maxval);
+                Widget.Item.UpdateValue(Widget.MaxValue);
             }
             else
             {
-                Widget.Item.UpdateValue(minval);
+                Widget.Item.UpdateValue(Widget.MinValue);
             }
             RaisePropertyChanged(nameof(Widget));
         }
