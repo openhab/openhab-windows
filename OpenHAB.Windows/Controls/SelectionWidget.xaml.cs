@@ -11,6 +11,7 @@ namespace OpenHAB.Windows.Controls
     /// </summary>
     public sealed partial class SelectionWidget : WidgetBase
     {
+        private System.Collections.Generic.List<SelectionMapping> selectionMappings;
         /// <summary>
         /// Initializes a new instance of the <see cref="SelectionWidget"/> class.
         /// </summary>
@@ -20,14 +21,36 @@ namespace OpenHAB.Windows.Controls
             Loaded += SelectionWidget_Loaded;
         }
 
+
         private void SelectionWidget_Loaded(object sender, global::Windows.UI.Xaml.RoutedEventArgs e)
         {
+            selectionMappings = new System.Collections.Generic.List<SelectionMapping>();
+            if (Widget?.Item.commandDescription?.CommandOptions?.Count > 0)
+            {
+                foreach (OpenHABCommandOptions option in Widget.Item.commandDescription.CommandOptions)
+                {
+                    SelectionMapping mapping = new SelectionMapping(option.Command, option.Label);
+                    selectionMappings.Add(mapping);
+                }
+            }
+
+            if (Widget?.Mappings.Count > 0)
+            {
+                foreach (OpenHABWidgetMapping option in Widget.Mappings)
+                {
+                    SelectionMapping mapping = new SelectionMapping(option.Command, option.Label);
+                    selectionMappings.Add(mapping);
+                }
+            }
+
+            SelectionComboBox.ItemsSource = selectionMappings;
             SetState();
         }
 
         internal override void SetState()
         {
-            OpenHABWidgetMapping itemState = Widget?.Mappings.FirstOrDefault(_ => _.Command == Widget.Item.State);
+            //OpenHABWidgetMapping itemState = Widget?.Mappings.FirstOrDefault(_ => _.Command == Widget.Item.State);
+            SelectionMapping itemState = selectionMappings.FirstOrDefault(_ => _.Command == Widget.Item.State);
             SelectionComboBox.SelectedItem = itemState;
         }
 
@@ -41,6 +64,25 @@ namespace OpenHAB.Windows.Controls
             }
 
             Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, mapping.Command));
+        }
+
+        class SelectionMapping
+        {
+            /// <summary>
+            /// Gets or sets the Command of the mapping
+            /// </summary>
+            public string Command { get; set; }
+
+            /// <summary>
+            /// Gets or sets the Label of the mapping
+            /// </summary>
+            public string Label { get; set; }
+
+            public SelectionMapping(string command, string label)
+            {
+                Command = command;
+                Label = label;
+            }
         }
     }
 }
