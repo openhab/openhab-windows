@@ -39,6 +39,9 @@
                             TrailBrush="{StaticResource OpenHABLightOrangeBrush}"
                             ValueBrush="Black"
                             ValueChanged="RadialSlider_OnValueChanged"
-                            Value="{x:Bind Widget.Item.GetStateAsDoubleValue(), Mode=OneWay}" />
+                            Value="{x:Bind Widget.Item.GetStateAsDoubleValue(), Mode=OneWay}"
+                            Minimum="{x:Bind Widget.MinValue, Mode=OneWay}"
+                            Maximum="{x:Bind Widget.MaxValue, Mode=OneWay}"
+                            />
     </Grid>
 </local:WidgetBase>
