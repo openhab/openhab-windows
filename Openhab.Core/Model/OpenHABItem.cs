@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System.Globalization;
+using System.Xml.Linq;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Toolkit.Uwp.Helpers;
@@ -133,6 +134,15 @@ namespace OpenHAB.Core.Model
             GroupType = startNode.Element("groupType")?.Value;
             State = startNode.Element("state")?.Value;
             Link = startNode.Element("link")?.Value;
+        }
+
+        public void UpdateValue (object value)
+        {
+            if (value != null)
+            {
+                string newValue = value.ToString() + this.Unit;
+                Messenger.Default.Send(new TriggerCommandMessage(this, newValue));
+            }
         }
     }
 }
