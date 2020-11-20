@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using GalaSoft.MvvmLight;
@@ -80,6 +81,12 @@ namespace OpenHAB.Core.Model
         public string Link { get; set; }
 
         /// <summary>
+        /// Gets or sets the CommandDescription of the OpenHAB item
+        /// </summary>
+        ///
+        public OpenHABCommandDescription commandDescription { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="OpenHABItem"/> class.
         /// </summary>
         public OpenHABItem()
@@ -121,6 +128,7 @@ namespace OpenHAB.Core.Model
             GroupType = item.GroupType;
             State = item.State;
             Link = item.Link;
+            commandDescription = item.commandDescription;
         }
 
         private void ParseNode(XElement startNode)
@@ -136,6 +144,7 @@ namespace OpenHAB.Core.Model
             State = startNode.Element("state")?.Value;
             Link = startNode.Element("link")?.Value;
         }
+
 
         public void UpdateValue (object value)
         {
