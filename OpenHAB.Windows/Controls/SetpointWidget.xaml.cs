@@ -6,6 +6,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Controls;
 using System;
 using Microsoft.Toolkit.Uwp.Helpers;
+using System.Linq;
 
 namespace OpenHAB.Windows.Controls
 {
@@ -41,6 +42,7 @@ namespace OpenHAB.Windows.Controls
 
             Widget.Item.UpdateValue(value);
             RaisePropertyChanged(nameof(Widget));
+            SetState();
         }
 
         private void ButtonDown_Click(object sender, RoutedEventArgs e)
@@ -62,15 +64,17 @@ namespace OpenHAB.Windows.Controls
 
             Widget.Item.UpdateValue(value);
             RaisePropertyChanged(nameof(Widget));
+            SetState();
         }
 
         internal override void SetState()
         {
-            
             DispatcherHelper.ExecuteOnUIThreadAsync(() =>
             {
+                comboBox.SelectionChanged -= comboBox_SelectionChanged;
                 UpdateComboBox();
                 comboBox.SelectedItem = Widget.Item.GetStateAsDoubleValue().ToString() + Widget.Item.Unit;
+                comboBox.SelectionChanged += comboBox_SelectionChanged;
             });
 
         }
@@ -100,5 +104,14 @@ namespace OpenHAB.Windows.Controls
 
         }
 
+        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string newValue = (string)e.AddedItems.FirstOrDefault();
+            if (newValue != null)
+            {
+                Widget.Item.UpdateValue(newValue);
+            }
+            
+        }
     }
 }
