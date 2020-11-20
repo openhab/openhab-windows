@@ -5,7 +5,7 @@
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                   xmlns:local="using:OpenHAB.Windows.Controls"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                  mc:Ignorable="d">
+                  mc:Ignorable="d" Loaded="WidgetBase_Loaded">
 
     <local:WidgetBase.Resources>
         <converters:StringToDoubleConverter x:Key="StringToDoubleConverter" />
@@ -25,7 +25,8 @@
                           LabelText="{x:Bind Widget.Label, Mode=OneWay}"
                           Tapped="Widget_OnTapped" />
 
-        <local:RadialSlider  
+        <local:RadialSlider 
+                            x:Name="radialSlider"
                             Grid.Column="1"
                             Width="100"
                             Height="100"
@@ -40,9 +41,7 @@
                             TrailBrush="{StaticResource OpenHABLightOrangeBrush}"
                             ValueBrush="Black"
                             ValueChanged="RadialSlider_OnValueChanged"
-                            Value="{x:Bind Widget.Item.GetStateAsDoubleValue(), Mode=OneWay}"
-                            Minimum="{x:Bind Widget.MinValue, Mode=OneWay}"
-                            Maximum="{x:Bind Widget.MaxValue, Mode=OneWay}" 
+                            Value="{x:Bind Widget.Item.GetStateAsDoubleValue(), Mode=OneWay}" 
                             />
     </Grid>
 </local:WidgetBase>

@@ -118,13 +118,13 @@ namespace OpenHAB.Windows.Controls
         /// Identifies the MinimumValue dependency property.
         /// </summary>
         protected static readonly DependencyProperty MinimumProperty =
-            DependencyProperty.Register(nameof(Minimum), typeof(double), typeof(RadialSlider), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(Minimum), typeof(double), typeof(RadialSlider), new PropertyMetadata(0.0, OnValueChanged));
 
         /// <summary>
         /// Identifies the MaximumValue dependency property.
         /// </summary>
         protected static readonly DependencyProperty MaximumProperty =
-            DependencyProperty.Register(nameof(Maximum), typeof(double), typeof(RadialSlider), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(Maximum), typeof(double), typeof(RadialSlider), new PropertyMetadata(100.0, OnValueChanged));
 
         // Template Parts.
         private const string ContainerPartName = "PART_Container";
@@ -544,7 +544,7 @@ namespace OpenHAB.Windows.Controls
 
         private double ValueToAngle(double value)
         {
-            if (Minimum == Maximum)
+            if (this.Minimum == this.Maximum)
             {
                 Minimum = 0;
                 Maximum = 100;
