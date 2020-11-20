@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Toolkit.Uwp.Helpers;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using Windows.UI.Xaml.Controls;
@@ -49,14 +50,17 @@ namespace OpenHAB.Windows.Controls
 
         internal override void SetState()
         {
-            //OpenHABWidgetMapping itemState = Widget?.Mappings.FirstOrDefault(_ => _.Command == Widget.Item.State);
             SelectionMapping itemState = selectionMappings.FirstOrDefault(_ => _.Command == Widget.Item.State);
-            SelectionComboBox.SelectedItem = itemState;
+            DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+            {
+                SelectionComboBox.SelectedItem = itemState;
+                SelectionComboBox.SelectionChanged += Selector_OnSelectionChanged;
+            });
         }
 
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            OpenHABWidgetMapping mapping = (OpenHABWidgetMapping)e.AddedItems.FirstOrDefault();
+            SelectionMapping mapping = (SelectionMapping)e.AddedItems.FirstOrDefault();
 
             if (mapping == null)
             {
