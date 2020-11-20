@@ -5,6 +5,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Controls;
 using System;
+using Microsoft.Toolkit.Uwp.Helpers;
 
 namespace OpenHAB.Windows.Controls
 {
@@ -65,19 +66,17 @@ namespace OpenHAB.Windows.Controls
 
         internal override void SetState()
         {
-            UpdateComboBox();
-            try
+            
+            DispatcherHelper.ExecuteOnUIThreadAsync(() =>
             {
-                //comboBox.SelectedItem = Widget.Item.GetStateAsDoubleValue().ToString() + Widget.Item.Unit;
-            }
-            catch (Exception ex) { };
-
+                UpdateComboBox();
+                comboBox.SelectedItem = Widget.Item.GetStateAsDoubleValue().ToString() + Widget.Item.Unit;
+            });
 
         }
 
         private void SetPointWidget_Loaded(object sender, RoutedEventArgs e)
         {
-            
             SetState();
         }
 

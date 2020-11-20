@@ -39,7 +39,6 @@
                       x:Name="comboBox"
                       HorizontalAlignment="Stretch"
                       FontSize="20"
-                      SelectedItem="{x:Bind Widget.Item.State, Mode=TwoWay}" 
                       Width="Auto" VerticalAlignment="Stretch"
                       />
             <Button Height="40"
