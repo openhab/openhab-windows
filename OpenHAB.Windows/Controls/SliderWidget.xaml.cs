@@ -33,16 +33,24 @@ namespace OpenHAB.Windows.Controls
 
         private void Widget_OnTapped(object sender, TappedRoutedEventArgs e)
         {
-            if (Widget.Item.State == "0")
+            double maxval = 100;
+            double minval = 0;
+            if (Widget.MaxValue != 0)
             {
-                Widget.Item.State = "100";
-                Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, "100"));
+                maxval = Widget.MaxValue;
+            }
+
+            minval = Widget.MinValue;
+
+            if (Widget.Item.GetStateAsDoubleValue() <= minval)
+            {
+                Widget.Item.UpdateValue(maxval);
             }
             else
             {
-                Widget.Item.State = "0";
-                Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, "0"));
+                Widget.Item.UpdateValue(minval);
             }
+            RaisePropertyChanged(nameof(Widget));
         }
 
         internal override void SetState()
