@@ -1,8 +1,9 @@
 ﻿using System.Globalization;
+using System.Text.RegularExpressions;
 using GalaSoft.MvvmLight.Messaging;
 using OpenHAB.Core.Messages;
 using Windows.UI.Xaml;
-using System.Text.RegularExpressions;
+
 
 namespace OpenHAB.Windows.Controls
 {
@@ -36,9 +37,7 @@ namespace OpenHAB.Windows.Controls
                 value = Widget.MaxValue;
             }
 
-            string newValue = value.ToString(CultureInfo.CurrentCulture) + Widget.Item.Unit;
-            Widget.Item.State = newValue;
-            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, newValue));
+            Widget.Item.UpdateValue(value);
         }
 
         private void ButtonDown_Click(object sender, RoutedEventArgs e)
@@ -58,9 +57,7 @@ namespace OpenHAB.Windows.Controls
                 value = Widget.MinValue;
             }
 
-            string newValue = value.ToString(CultureInfo.CurrentCulture) + Widget.Item.Unit;
-            Widget.Item.State = newValue;
-            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, newValue));
+            Widget.Item.UpdateValue(value);
         }
 
         private double GetDoubleValue(string state)
