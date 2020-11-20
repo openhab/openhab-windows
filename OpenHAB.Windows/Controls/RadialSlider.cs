@@ -135,8 +135,6 @@ namespace OpenHAB.Windows.Controls
         // For convenience.
         private const double Degrees2Radians = Math.PI / 180;
         private const double Radius = 100;
-        //private const double Minimum = 0;
-        //private const double Maximum = 100;
 
         private double _normalizedMinAngle;
         private double _normalizedMaxAngle;
@@ -146,9 +144,7 @@ namespace OpenHAB.Windows.Controls
         /// </summary>
         public RadialSlider()
         {
-            DefaultStyleKey = typeof(RadialSlider);
-            Minimum = 0;
-            Maximum = 100;
+            DefaultStyleKey = typeof(RadialSlider);            
         }
 
         /// <summary>
@@ -548,6 +544,11 @@ namespace OpenHAB.Windows.Controls
 
         private double ValueToAngle(double value)
         {
+            if (Minimum == Maximum)
+            {
+                Minimum = 0;
+                Maximum = 100;
+            }
             // Off-scale on the left.
             if (value < Minimum)
             {

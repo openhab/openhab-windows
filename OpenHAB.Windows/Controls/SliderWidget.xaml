@@ -25,7 +25,8 @@
                           LabelText="{x:Bind Widget.Label, Mode=OneWay}"
                           Tapped="Widget_OnTapped" />
 
-        <local:RadialSlider Grid.Column="1"
+        <local:RadialSlider  
+                            Grid.Column="1"
                             Width="100"
                             Height="100"
                             HorizontalAlignment="Center"
@@ -41,7 +42,7 @@
                             ValueChanged="RadialSlider_OnValueChanged"
                             Value="{x:Bind Widget.Item.GetStateAsDoubleValue(), Mode=OneWay}"
                             Minimum="{x:Bind Widget.MinValue, Mode=OneWay}"
-                            Maximum="{x:Bind Widget.MaxValue, Mode=OneWay}"
+                            Maximum="{x:Bind Widget.MaxValue, Mode=OneWay}" 
                             />
     </Grid>
 </local:WidgetBase>
