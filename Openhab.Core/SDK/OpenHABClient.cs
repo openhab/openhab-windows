@@ -181,6 +181,7 @@ namespace OpenHAB.Core.SDK
             }
         }
 
+        /// <inheritdoc />
         public async Task<OpenHABItem> GetItemByName(string itemName, OpenHABVersion version)
         {
             try
@@ -213,7 +214,6 @@ namespace OpenHAB.Core.SDK
                 throw new OpenHABException("Invalid call", ex);
             }
         }
-
 
         /// <inheritdoc />
         public async Task<ICollection<OpenHABSitemap>> LoadSiteMaps(OpenHABVersion version, List<Func<OpenHABSitemap, bool>> filters)
@@ -345,10 +345,27 @@ namespace OpenHAB.Core.SDK
                             var updateEvent = reader.ReadLine();
                             if (updateEvent?.StartsWith("data:", StringComparison.InvariantCultureIgnoreCase) == true)
                             {
-                                OpenHABEvent ohEvent = OpenHABEventHandler.ParseEventMessage(updateEvent);
-                                if (ohEvent != null)
+                                OpenHABEvent ohEvent = OpenHABEventParser.Parse(updateEvent);
+                                switch (ohEvent.EventType)
                                 {
-                                    _messenger.Send(new UpdateItemMessage(ohEvent.ItemName, ohEvent.Value));
+                                    case OpenHABEventType.ItemStateEvent:
+                                        _messenger.Send(new UpdateItemMessage(ohEvent.ItemName, ohEvent.Value));
+                                        break;
+                                    case OpenHABEventType.ThingUpdatedEvent:
+                                        break;
+                                    case OpenHABEventType.RuleStatusInfoEvent:
+                                        break;
+                                    case OpenHABEventType.ItemStatePredictedEvent:
+                                        break;
+                                    case OpenHABEventType.GroupItemStateChangedEvent:
+                                        break;
+                                    case OpenHABEventType.ItemStateChangedEvent:
+                                        _messenger.Send(new ItemStateChangedMessage(ohEvent.ItemName, ohEvent.Value, ohEvent.OldValue));
+                                        break;
+                                    case OpenHABEventType.Unknown:
+                                        break;
+                                    default:
+                                        break;
                                 }
                             }
                         }

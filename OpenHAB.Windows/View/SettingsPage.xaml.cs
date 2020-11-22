@@ -24,7 +24,6 @@ namespace OpenHAB.Windows.View
         private IAppManager _appManager;
         private SettingsViewModel _settingsViewModel;
         private ILogger<SettingsViewModel> _logger;
-        private IAppManager _appManager;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingsPage"/> class.

@@ -110,6 +110,7 @@
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\DataErrorInfo.cs" />
     <Compile Include="Common\ObservableCollectionExtensions.cs" />
+    <Compile Include="Messages\ItemStateChangedMessage.cs" />
     <Compile Include="Model\Connection\CloudConnectionProfile.cs" />
     <Compile Include="Model\Connection\DemoConnectionProfile.cs" />
     <Compile Include="Model\Connection\RemoteConnectionProfile.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="Messages\UpdateItemMessage.cs" />
     <Compile Include="Messages\WidgetClickedMessage.cs" />
     <Compile Include="Model\Connection\DefaultConnectionProfile.cs" />
+    <Compile Include="Model\OpenHABEventType.cs" />
     <Compile Include="Model\Link.cs" />
     <Compile Include="Model\OpernAPIInfo.cs" />
     <Compile Include="Model\RuntimeInfo.cs" />
@@ -155,7 +157,7 @@
     <Compile Include="Model\ItemState.cs" />
     <Compile Include="Services\IItemStateManager.cs" />
     <Compile Include="Services\ItemStateManager.cs" />
-    <Compile Include="Services\OpenHABEventHandler.cs" />
+    <Compile Include="Services\OpenHABEventParser.cs" />
     <Compile Include="Services\IAppManager.cs" />
     <Compile Include="Services\IconCaching.cs" />
     <Compile Include="Services\IIconCaching.cs" />

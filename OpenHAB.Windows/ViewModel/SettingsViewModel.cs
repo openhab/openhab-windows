@@ -40,12 +40,6 @@ namespace OpenHAB.Windows.ViewModel
         public ActionCommand ClearIconCacheCommand => _clearIconCacheCommand ?? (_clearIconCacheCommand = new ActionCommand(ClearIcons, CanClearIcons));
 
         /// <summary>
-        /// Gets the clear icon cache command to persist the settings.
-        /// </summary>
-        /// <value>The save command.</value>
-        public ActionCommand ClearIconCacheCommand => _clearIconCacheCommand ?? (_clearIconCacheCommand = new ActionCommand(ClearIcons, CanClearIcons));
-
-        /// <summary>
         /// Gets the save command to persist the settings.
         /// </summary>
         /// <value>The save command.</value>
