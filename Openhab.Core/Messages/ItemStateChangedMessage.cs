@@ -1,17 +1,16 @@
-﻿namespace OpenHAB.Core.Messages
+﻿
+namespace OpenHAB.Core.Messages
 {
     /// <summary>
     /// A message to trigger an item update coming from a server event.
     /// </summary>
-    public class UpdateItemMessage
+    public class ItemStateChangedMessage
     {
-        /// <summary>Initializes a new instance of the <see cref="UpdateItemMessage" /> class.</summary>
-        /// <param name="itemName">Name of the item.</param>
-        /// <param name="value">The value.</param>
-        public UpdateItemMessage(string itemName, string value)
+        public ItemStateChangedMessage(string itemName, string value, string oldValue)
         {
             ItemName = itemName;
             Value = value;
+            OldValue = oldValue;
         }
 
         /// <summary>
@@ -19,7 +18,16 @@
         /// </summary>
         public string ItemName
         {
-            get; 
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the old item value.
+        /// </summary>
+        public string OldValue
+        {
+            get;
             set;
         }
 
@@ -28,7 +36,8 @@
         /// </summary>
         public string Value
         {
-            get; set;
+            get;
+            set;
         }
     }
 }

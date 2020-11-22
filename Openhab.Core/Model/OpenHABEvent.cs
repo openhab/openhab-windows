@@ -1,6 +1,6 @@
 ﻿namespace OpenHAB.Core.Model
 {
-    public  class OpenHABEvent
+    public class OpenHABEvent
     {
         public string ItemName
         {
@@ -8,7 +8,25 @@
             set;
         }
 
-        public string Type
+        public string OldType
+        {
+            get;
+            set;
+        }
+
+        public string OldValue
+        {
+            get;
+            set;
+        }
+
+        public string Topic
+        {
+            get;
+            set;
+        }
+
+        public string ValueType
         {
             get;
             set;
@@ -19,11 +37,10 @@
             get;
             set;
         }
-
-        public string Topic
+        public OpenHABEventType EventType
         {
             get;
-            set;
+            internal set;
         }
     }
 }

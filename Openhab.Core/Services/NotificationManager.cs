@@ -16,25 +16,39 @@ namespace OpenHAB.Core.Services
         /// <param name="itemStateManager">The item state manager.</param>
         public NotificationManager(IItemStateManager itemStateManager)
         {
-            Messenger.Default.Register<UpdateItemMessage>(this, HandleUpdateItemMessage);
+            Messenger.Default.Register<ItemStateChangedMessage>(this, HandleUpdateItemMessage);
             _itemStateManager = itemStateManager;
         }
 
-        private void HandleUpdateItemMessage(UpdateItemMessage obj)
+        private void HandleUpdateItemMessage(ItemStateChangedMessage obj)
         {
             _itemStateManager.RegisterOrUpdateItemState(obj.ItemName, obj.Value);
-            TriggerToastNotificationForItem(obj.ItemName, obj.Value);
+            TriggerToastNotificationForItem(obj.ItemName, obj.Value, obj.OldValue);
         }
 
-        public void TriggerToastNotificationForItem(string itemName, string itemValue)
+        public void TriggerToastNotificationForItem(string itemName, string itemValue, string oldItemValue)
         {
             var notifier = ToastNotificationManager.CreateToastNotifier();
 
-            string message = $"{itemName}: {itemValue}";
+            string message = GetMessageFormat(!string.IsNullOrEmpty(oldItemValue));
+            message = string.Format(message, itemName, itemValue, oldItemValue);
+
             var xmdock = CreateToastMessage(message);
             var toast = new ToastNotification(xmdock);
 
             notifier.Show(toast);
+        }
+
+        private string GetMessageFormat(bool oldValueVailable)
+        {
+            if (oldValueVailable)
+            {
+                return "{0} changed from {1} to {2}";
+            }
+            else
+            {
+                return "{0}: State is {1}";
+            }
         }
 
         private static XmlDocument CreateToastMessage(string message)

@@ -14,5 +14,17 @@
         /// Gets or sets the value of the event.
         /// </summary>
         public string Value { get; set; }
+
+        public string OldType
+        {
+            get;
+            set;
+        }
+
+        public string OldValue
+        {
+            get;
+            set;
+        }
     }
 }
