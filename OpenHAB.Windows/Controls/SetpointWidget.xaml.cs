@@ -36,6 +36,7 @@ namespace OpenHAB.Windows.Controls
             }
 
             Widget.Item.UpdateValue(value);
+            RaisePropertyChanged(nameof(Widget));
         }
 
         private void ButtonDown_Click(object sender, RoutedEventArgs e)
@@ -56,6 +57,7 @@ namespace OpenHAB.Windows.Controls
             }
 
             Widget.Item.UpdateValue(value);
+            RaisePropertyChanged(nameof(Widget));
         }
 
         internal override void SetState()
