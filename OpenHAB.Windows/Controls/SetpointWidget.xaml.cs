@@ -71,10 +71,10 @@ namespace OpenHAB.Windows.Controls
         {
             DispatcherHelper.ExecuteOnUIThreadAsync(() =>
             {
-                comboBox.SelectionChanged -= comboBox_SelectionChanged;
+                comboBox.SelectionChanged -= ComboBox_SelectionChanged;
                 UpdateComboBox();
                 comboBox.SelectedItem = Widget.Item.GetStateAsDoubleValue().ToString() + Widget.Item.Unit;
-                comboBox.SelectionChanged += comboBox_SelectionChanged;
+                comboBox.SelectionChanged += ComboBox_SelectionChanged;
             });
 
         }
@@ -104,14 +104,14 @@ namespace OpenHAB.Windows.Controls
 
         }
 
-        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string newValue = (string)e.AddedItems.FirstOrDefault();
+            newValue = newValue.Replace(Widget.Item.Unit, string.Empty, StringComparison.InvariantCultureIgnoreCase);
             if (newValue != null)
             {
                 Widget.Item.UpdateValue(newValue);
             }
-            
         }
     }
 }
