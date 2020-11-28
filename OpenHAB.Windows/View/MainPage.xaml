@@ -126,7 +126,7 @@
                         IsSettingsVisible="False"
                         OpenPaneLength="200"
                         CompactPaneLength="45"
-                        PaneDisplayMode="LeftMinimal"
+						PaneDisplayMode="LeftMinimal"
                         HeaderTemplate="{StaticResource NavHeaderTemplate}">
             <NavigationView.PaneCustomContent>
                 <StackPanel Orientation="Vertical"

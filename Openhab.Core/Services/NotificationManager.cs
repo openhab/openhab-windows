@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Linq;
 using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Toolkit.Uwp.Notifications;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using Windows.UI.Notifications;
@@ -8,36 +9,89 @@ using XmlDocument = Windows.Data.Xml.Dom.XmlDocument;
 
 namespace OpenHAB.Core.Services
 {
+    /// <inheritdoc/>
     public class NotificationManager : INotificationManager
     {
-        private IItemStateManager _itemStateManager;
+        private IItemManager _itemManager;
 
         /// <summary>Initializes a new instance of the <see cref="NotificationManager" /> class.</summary>
         /// <param name="itemStateManager">The item state manager.</param>
-        public NotificationManager(IItemStateManager itemStateManager)
+        public NotificationManager(IItemManager itemStateManager)
         {
             Messenger.Default.Register<ItemStateChangedMessage>(this, HandleUpdateItemMessage);
-            _itemStateManager = itemStateManager;
+            _itemManager = itemStateManager;
         }
 
         private void HandleUpdateItemMessage(ItemStateChangedMessage obj)
         {
-            _itemStateManager.RegisterOrUpdateItemState(obj.ItemName, obj.Value);
-            TriggerToastNotificationForItem(obj.ItemName, obj.Value, obj.OldValue);
+            string itemName = obj.ItemName;
+            string itemImage = @"C:\Users\chrisho\AppData\Local\Packages\openHABFoundatione.V.openHAB_va1j9qbqnd8h6\LocalCache\icons\heating.png";
+            if (_itemManager.TryGetItem(obj.ItemName, out OpenHABItem item))
+            {
+                itemName = item.Label;
+                //itemImage = 
+            }
+
+            TriggerToastNotificationForItem(itemName, itemImage, obj.Value, obj.OldValue);
         }
 
-        public void TriggerToastNotificationForItem(string itemName, string itemValue, string oldItemValue)
+        #region Toast Notification
+
+        public void TriggerToastNotificationForItem(string itemName, string itemImage, string itemValue, string oldItemValue)
         {
             var notifier = ToastNotificationManager.CreateToastNotifier();
 
             string message = GetMessageFormat(!string.IsNullOrEmpty(oldItemValue));
             message = string.Format(message, itemName, itemValue, oldItemValue);
 
-            var xmdock = CreateToastMessage(message);
+            var xmdock = CreateToastMessage(message, itemImage);
             var toast = new ToastNotification(xmdock);
 
             notifier.Show(toast);
         }
+
+        private static XmlDocument CreateToastMessage(string message, string image)
+        {
+            var toastContent = new ToastContent()
+            {
+                Visual = new ToastVisual()
+                {
+                    BindingGeneric = new ToastBindingGeneric()
+                    {
+                        Children =
+                        {
+                            new AdaptiveText()
+                            {
+                                Text = "openHAB for Windows",
+                                HintMaxLines = 1,
+                            },
+                            new AdaptiveText()
+                            {
+                                Text = message
+                            }
+                        },
+                        AppLogoOverride = new ToastGenericAppLogo()
+                        {
+                            Source = image
+                        }
+                    }
+                },
+                Actions = new ToastActionsCustom()
+                {
+                    Buttons =
+                    {
+                        new ToastButton("Show Item", "action=show")
+                        {
+                            ActivationType = ToastActivationType.Foreground,
+                        }
+                    }
+                }
+            };
+
+            return toastContent.GetXml();
+        }
+
+        #endregion
 
         private string GetMessageFormat(bool oldValueVailable)
         {
@@ -49,26 +103,6 @@ namespace OpenHAB.Core.Services
             {
                 return "{0}: State is {1}";
             }
-        }
-
-        private static XmlDocument CreateToastMessage(string message)
-        {
-            var xDoc = new XDocument(
-               new XElement("toast",
-                   new XElement("visual",
-                       new XElement("binding", new XAttribute("template", "ToastGeneric"),
-                                   new XElement("text", "openHAB for Windows"),
-                                   new XElement("text", message))),
-                   new XElement("actions",
-                         new XElement("action", new XAttribute("activationType", "background"),
-                                                new XAttribute("content", "Show Item"), new XAttribute("arguments", "show")),
-                         new XElement("action", new XAttribute("activationType", "background"),
-                                                new XAttribute("content", "Discard notification"), new XAttribute("arguments", "discard")))));
-
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(xDoc.ToString());
-
-            return xmlDoc;
         }
     }
 }

@@ -150,8 +150,8 @@
     <Compile Include="Services\AppManager.cs" />
     <Compile Include="Model\OpenHABEvent.cs" />
     <Compile Include="Model\ItemState.cs" />
-    <Compile Include="Services\IItemStateManager.cs" />
-    <Compile Include="Services\ItemStateManager.cs" />
+    <Compile Include="Services\IItemManager.cs" />
+    <Compile Include="Services\ItemManager.cs" />
     <Compile Include="Services\OpenHABEventParser.cs" />
     <Compile Include="Services\IAppManager.cs" />
     <Compile Include="Services\IconCaching.cs" />
@@ -181,6 +181,9 @@
       <Version>6.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Connectivity">
+      <Version>6.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
       <Version>6.1.1</Version>
     </PackageReference>
     <PackageReference Include="MvvmLightLibs">
