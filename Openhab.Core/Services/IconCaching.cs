@@ -31,26 +31,33 @@ namespace OpenHAB.Core.Services
         /// <inheritdoc/>
         public async Task<string> ResolveIconPath(string iconUrl, string iconFormat)
         {
-            //https://myopenhab.org/icon/heating?state=NULL&format=png
-            Match iconName = Regex.Match(iconUrl, "icon/[0-9a-zA-Z]*");
-            if (!iconName.Success)
+            try
             {
-                throw new OpenHABException("Can not resolve icon name from url");
-            }
+                Match iconName = Regex.Match(iconUrl, "icon/[0-9a-zA-Z]*");
+                if (!iconName.Success)
+                {
+                    throw new OpenHABException("Can not resolve icon name from url");
+                }
 
-            StorageFolder storageFolder = await EnsureIconCacheFolder();
+                StorageFolder storageFolder = await EnsureIconCacheFolder();
 
-            string iconFileName = $"{iconName.Value.Replace("icon/","")}.{iconFormat}";
-            string iconFilePath = $"{storageFolder.Path}\\{iconFileName}";
+                string iconFileName = $"{iconName.Value.Replace("icon/", string.Empty)}.{iconFormat}";
+                string iconFilePath = $"{storageFolder.Path}\\{iconFileName}";
 
-            if (await storageFolder.FileExistsAsync(iconFileName))
-            {
+                if (await storageFolder.FileExistsAsync(iconFileName))
+                {
+                    return iconFilePath;
+                }
+
+                await DownloadAndSaveIconToCache(iconUrl, iconFileName, storageFolder);
                 return iconFilePath;
+
             }
-
-            await DownloadAndSaveIconToCache(iconUrl, iconFileName, storageFolder);
-
-            return iconFilePath;
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to cache icon");
+                return iconUrl;
+            }
         }
 
         private async Task DownloadAndSaveIconToCache(string iconUrl, string iconFileName, StorageFolder storageFolder)

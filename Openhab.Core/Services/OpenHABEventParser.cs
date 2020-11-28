@@ -14,6 +14,11 @@ namespace OpenHAB.Core.Services
         {
             var data = JsonConvert.DeserializeObject<EventStreamData>(message.Remove(0, 6));
 
+            if (data.Type == "ThingUpdatedEvent")
+            {
+                return null;
+            }
+
             var payload = JsonConvert.DeserializeObject<EventStreamPayload>(data.Payload);
             string itemName = data.Topic.Replace("smarthome/items/", string.Empty).Replace("/statechanged", string.Empty).Replace("/state", string.Empty);
 

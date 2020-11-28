@@ -59,7 +59,7 @@
             /// <summary>
             /// The call to get items.
             /// </summary>
-            public const string Items = "rest/events";
+            public const string Items = "rest/items";
         }
     }
 }
