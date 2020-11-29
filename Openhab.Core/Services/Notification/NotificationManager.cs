@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Globalization;
 using System.Xml.Linq;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Toolkit.Uwp.Notifications;
+using OpenHAB.Core.Common;
+using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using Windows.UI.Notifications;
@@ -13,23 +16,30 @@ namespace OpenHAB.Core.Services
     public class NotificationManager : INotificationManager
     {
         private IItemManager _itemManager;
+        private string _iconFormat;
 
         /// <summary>Initializes a new instance of the <see cref="NotificationManager" /> class.</summary>
         /// <param name="itemStateManager">The item state manager.</param>
-        public NotificationManager(IItemManager itemStateManager)
+        public NotificationManager(IItemManager itemStateManager, ISettingsService settingsService)
         {
             Messenger.Default.Register<ItemStateChangedMessage>(this, HandleUpdateItemMessage);
             _itemManager = itemStateManager;
+
+            Settings settings = settingsService.Load();
+            _iconFormat = settings.UseSVGIcons ? "svg" : "png";
         }
 
         private void HandleUpdateItemMessage(ItemStateChangedMessage obj)
         {
             string itemName = obj.ItemName;
-            string itemImage = @"C:\Users\chrisho\AppData\Local\Packages\openHABFoundatione.V.openHAB_va1j9qbqnd8h6\LocalCache\icons\heating.png";
+            string itemImage = string.Empty;
             if (_itemManager.TryGetItem(obj.ItemName, out OpenHABItem item))
             {
                 itemName = item.Label;
-                //itemImage = 
+
+                string state = item?.State ?? "ON";
+
+                itemImage = $"{OpenHABHttpClient.BaseUrl}icon/{item.Category}?state={state}&format={_iconFormat}";
             }
 
             TriggerToastNotificationForItem(itemName, itemImage, obj.Value, obj.OldValue);
@@ -41,9 +51,7 @@ namespace OpenHAB.Core.Services
         {
             var notifier = ToastNotificationManager.CreateToastNotifier();
 
-            string message = GetMessageFormat(!string.IsNullOrEmpty(oldItemValue));
-            message = string.Format(message, itemName, itemValue, oldItemValue);
-
+            string message = GetItemChangeMessage(itemName, itemValue, oldItemValue);
             var xmdock = CreateToastMessage(message, itemImage);
             var toast = new ToastNotification(xmdock);
 
@@ -93,16 +101,21 @@ namespace OpenHAB.Core.Services
 
         #endregion
 
-        private string GetMessageFormat(bool oldValueVailable)
+        private string GetItemChangeMessage(string itemName, string itemValue, string oldItemValue)
         {
-            if (oldValueVailable)
+            string message = string.Empty;
+            if (!string.IsNullOrEmpty(oldItemValue))
             {
-                return "{0} changed from {1} to {2}";
+                message = "{0} changed from {1} to {2}";
             }
             else
             {
-                return "{0}: State is {1}";
+                message = "{0}: State is {1}";
             }
+
+            message = string.Format(CultureInfo.InvariantCulture, message, itemName, oldItemValue, itemValue);
+
+            return message;
         }
     }
 }

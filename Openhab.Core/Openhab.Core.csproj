@@ -161,8 +161,8 @@
     <Compile Include="Services\IAppManager.cs" />
     <Compile Include="Services\IconCaching.cs" />
     <Compile Include="Services\IIconCaching.cs" />
-    <Compile Include="Services\INotificationManager.cs" />
-    <Compile Include="Services\NotificationManager.cs" />
+    <Compile Include="Services\Notification\INotificationManager.cs" />
+    <Compile Include="Services\Notification\NotificationManager.cs" />
     <Compile Include="Services\SettingsService.cs" />
     <Compile Include="Services\WidgetNavigationService.cs" />
     <EmbeddedResource Include="Properties\OpenHAB.Core.rd.xml" />
@@ -216,6 +216,9 @@
       <Project>{e039af3e-25e9-4fc2-bd2e-219effce686e}</Project>
       <Name>openHAB.Core.Client</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Services\Notification\ToastNotificationSchema.xml" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

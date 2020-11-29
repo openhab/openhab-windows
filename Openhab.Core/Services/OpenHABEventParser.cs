@@ -12,33 +12,40 @@ namespace OpenHAB.Core.Services
     {
         public static OpenHABEvent Parse(string message)
         {
-            var data = JsonConvert.DeserializeObject<EventStreamData>(message.Remove(0, 6));
+            try
+            {
+                var data = JsonConvert.DeserializeObject<EventStreamData>(message.Remove(0, 6));
 
-            if (data.Type == "ThingUpdatedEvent")
+                if (data.Type == "ThingUpdatedEvent" || data.Type == "ThingStatusInfoChangedEvent")
+                {
+                    return null;
+                }
+
+                var payload = JsonConvert.DeserializeObject<EventStreamPayload>(data.Payload);
+                string itemName = data.Topic.Replace("smarthome/items/", string.Empty).Replace("/statechanged", string.Empty).Replace("/state", string.Empty);
+
+                if (!Enum.TryParse(typeof(OpenHABEventType), data.Type, out object type))
+                {
+                    type = OpenHABEventType.Unknown;
+                }
+
+                OpenHABEvent openHABevent = new OpenHABEvent()
+                {
+                    ItemName = itemName,
+                    ValueType = payload.Type,
+                    Value = payload.Value,
+                    Topic = data.Topic,
+                    OldType = payload.OldType,
+                    OldValue = payload.OldValue,
+                    EventType = (OpenHABEventType)type,
+                };
+
+                return openHABevent;
+            }
+            catch (Exception ex)
             {
                 return null;
             }
-
-            var payload = JsonConvert.DeserializeObject<EventStreamPayload>(data.Payload);
-            string itemName = data.Topic.Replace("smarthome/items/", string.Empty).Replace("/statechanged", string.Empty).Replace("/state", string.Empty);
-
-            if (!Enum.TryParse(typeof(OpenHABEventType), data.Type, out object type))
-            {
-                type = OpenHABEventType.Unknown;
-            }
-
-            OpenHABEvent openHABevent = new OpenHABEvent()
-            {
-                ItemName = itemName,
-                ValueType = payload.Type,
-                Value = payload.Value,
-                Topic = data.Topic,
-                OldType = payload.OldType,
-                OldValue = payload.OldValue,
-                EventType = (OpenHABEventType)type,
-            };
-
-            return openHABevent;
         }
     }
 }
