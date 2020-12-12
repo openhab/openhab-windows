@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Controls;
 namespace OpenHAB.Windows.Controls
 {
     /// <summary>
-    /// Widget control that represents an OpenHAB frame
+    /// Widget control that represents an OpenHAB frame.
     /// </summary>
     public sealed partial class FrameWidget : WidgetBase
     {

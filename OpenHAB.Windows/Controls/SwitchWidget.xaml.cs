@@ -7,14 +7,14 @@ using Windows.UI.Xaml.Input;
 namespace OpenHAB.Windows.Controls
 {
     /// <summary>
-    /// Widget control that represents an OpenHAB switch
+    /// Widget control that represents an OpenHAB switch.
     /// </summary>
     public sealed partial class SwitchWidget : WidgetBase
     {
         private bool _isOn;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the switch is on or off
+        /// Gets or sets a value indicating whether the switch is on or off.
         /// </summary>
         public bool IsOn
         {

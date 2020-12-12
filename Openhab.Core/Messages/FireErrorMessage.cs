@@ -5,7 +5,6 @@
     /// </summary>
     public class FireErrorMessage
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="FireErrorMessage"/> class.
         /// </summary>
@@ -14,7 +13,6 @@
         {
             ErrorMessage = errorMessage;
         }
-
 
         /// <summary>
         /// Gets or sets the error text.
