@@ -1,4 +1,6 @@
-﻿using System.Xml.Linq;
+﻿using System.Globalization;
+using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Toolkit.Uwp.Helpers;
@@ -13,6 +15,7 @@ namespace OpenHAB.Core.Model
     public class OpenHABItem : ObservableObject
     {
         private string _state;
+        private string _type;
 
         /// <summary>
         /// Gets or sets the name of the OpenHAB item.
@@ -22,7 +25,26 @@ namespace OpenHAB.Core.Model
         /// <summary>
         /// Gets or sets the type of the OpenHAB item.
         /// </summary>
-        public string Type { get; set; }
+        public string Type
+        {
+            get => _type;
+            set
+            {
+                if (value != null)
+                {
+                    if (value.Contains(":", System.StringComparison.OrdinalIgnoreCase) && _state != null)
+                    {
+                        int spaceIndex = _state.LastIndexOf(' ');
+                        if (spaceIndex > 0)
+                        {
+                            Unit = _state.Substring(spaceIndex, _state.Length - spaceIndex);
+                        }
+                    }
+                }
+
+                Set(ref _type, value);
+            }
+        }
 
         /// <summary>
         /// Gets or sets the grouptype of the OpenHAB item.
@@ -34,12 +56,29 @@ namespace OpenHAB.Core.Model
         /// </summary>
         public string State
         {
-            get => _state;
-            set => Set(ref _state, value);
+            get =>_state;
+            set
+            {
+                if ((_type != null) && (Unit == null))
+                {
+                    if (_type.Contains(":", System.StringComparison.OrdinalIgnoreCase) && value != null)
+                    {
+                        int spaceIndex = value.LastIndexOf(' ');
+                        Unit = value.Substring(spaceIndex, value.Length - spaceIndex);
+                    }
+                }
+
+                Set(ref _state, value);
+            }
         }
 
         /// <summary>
         /// Gets or sets the link of the OpenHAB item.
+        /// </summary>
+        public string Unit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the unit of the OpenHAB item
         /// </summary>
         public string Link { get; set; }
 
@@ -99,6 +138,25 @@ namespace OpenHAB.Core.Model
             GroupType = startNode.Element("groupType")?.Value;
             State = startNode.Element("state")?.Value;
             Link = startNode.Element("link")?.Value;
+        }
+
+        public void UpdateValue (object value)
+        {
+            if (value != null)
+            {
+                string newValue = value.ToString() + this.Unit;
+                Messenger.Default.Send(new TriggerCommandMessage(this, newValue));
+                _state = newValue;
+            }
+        }
+
+        public double GetStateAsDoubleValue()
+        {
+            string newstate = Regex.Replace(_state, "[^0-9,.]", string.Empty);
+            double value = 0;
+            _ = double.TryParse(newstate, out value);
+
+            return value;
         }
     }
 }

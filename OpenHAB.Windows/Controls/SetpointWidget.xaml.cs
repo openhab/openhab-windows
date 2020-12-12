@@ -20,30 +20,44 @@ namespace OpenHAB.Windows.Controls
 
         private void ButtonUp_Click(object sender, RoutedEventArgs e)
         {
-            double value = double.Parse(Widget.Item.State);
-            value += Widget.Step;
+            // if Widget Step == 0 --> Step = 1
+            float step = Widget.Step;
+            if (step == 0)
+            {
+                step = 1;
+            }
+
+            double value = Widget.Item.GetStateAsDoubleValue();
+            value += step;
 
             if (value > Widget.MaxValue)
             {
                 value = Widget.MaxValue;
             }
 
-            Widget.Item.State = value.ToString(CultureInfo.CurrentCulture);
-            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, value.ToString(CultureInfo.InvariantCulture)));
+            Widget.Item.UpdateValue(value);
+            RaisePropertyChanged(nameof(Widget));
         }
 
         private void ButtonDown_Click(object sender, RoutedEventArgs e)
         {
-            double value = double.Parse(Widget.Item.State);
-            value -= Widget.Step;
+            // if Widget Step == 0 --> Step = 1
+            float step = Widget.Step;
+            if (step == 0)
+            {
+                step = 1;
+            }
+
+            double value = Widget.Item.GetStateAsDoubleValue();
+            value -= step;
 
             if (value < Widget.MinValue)
             {
                 value = Widget.MinValue;
             }
 
-            Widget.Item.State = value.ToString(CultureInfo.CurrentCulture);
-            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, value.ToString(CultureInfo.InvariantCulture)));
+            Widget.Item.UpdateValue(value);
+            RaisePropertyChanged(nameof(Widget));
         }
 
         internal override void SetState()
