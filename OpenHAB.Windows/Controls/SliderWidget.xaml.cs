@@ -3,6 +3,7 @@ using System.Globalization;
 using GalaSoft.MvvmLight.Messaging;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 
 namespace OpenHAB.Windows.Controls
@@ -27,26 +28,46 @@ namespace OpenHAB.Windows.Controls
                 return;
             }
 
-            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, ((RadialSlider)sender)?.Value.ToString(CultureInfo.InvariantCulture)));
+            Widget.Item.UpdateValue(((RadialSlider)sender)?.Value);
             RaisePropertyChanged(nameof(Widget));
         }
 
         private void Widget_OnTapped(object sender, TappedRoutedEventArgs e)
         {
-            if (Widget.Item.State == "0")
+            double maxval = Widget.MaxValue;
+            double minval = Widget.MinValue;
+            if (maxval == minval)
             {
-                Widget.Item.State = "100";
-                Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, "100"));
+                // use default
+                maxval = 100;
+                minval = 0;
+            }
+            if (Widget.Item.GetStateAsDoubleValue() <= minval)
+            {
+                Widget.Item.UpdateValue(maxval);
             }
             else
             {
-                Widget.Item.State = "0";
-                Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, "0"));
+                Widget.Item.UpdateValue(minval);
             }
+            RaisePropertyChanged(nameof(Widget));
         }
 
         internal override void SetState()
         {
+        }
+
+        private void SliderWidget_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (Widget.MaxValue != 0)
+            {
+                radialSlider.Maximum = Widget.MaxValue;
+            }
+
+            if (Widget.MinValue != 0)
+            {
+                radialSlider.Minimum = Widget.MinValue;
+            }
         }
     }
 }

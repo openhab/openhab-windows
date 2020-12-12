@@ -114,6 +114,18 @@ namespace OpenHAB.Windows.Controls
         protected static readonly DependencyProperty ValueAngleProperty =
             DependencyProperty.Register(nameof(ValueAngle), typeof(double), typeof(RadialSlider), new PropertyMetadata(null));
 
+        /// <summary>
+        /// Identifies the MinimumValue dependency property.
+        /// </summary>
+        protected static readonly DependencyProperty MinimumProperty =
+            DependencyProperty.Register(nameof(Minimum), typeof(double), typeof(RadialSlider), new PropertyMetadata(0.0, OnValueChanged));
+
+        /// <summary>
+        /// Identifies the MaximumValue dependency property.
+        /// </summary>
+        protected static readonly DependencyProperty MaximumProperty =
+            DependencyProperty.Register(nameof(Maximum), typeof(double), typeof(RadialSlider), new PropertyMetadata(100.0, OnValueChanged));
+
         // Template Parts.
         private const string ContainerPartName = "PART_Container";
         private const string ScalePartName = "PART_Scale";
@@ -123,8 +135,6 @@ namespace OpenHAB.Windows.Controls
         // For convenience.
         private const double Degrees2Radians = Math.PI / 180;
         private const double Radius = 100;
-        private const double Minimum = 0;
-        private const double Maximum = 100;
 
         private double _normalizedMinAngle;
         private double _normalizedMaxAngle;
@@ -134,7 +144,7 @@ namespace OpenHAB.Windows.Controls
         /// </summary>
         public RadialSlider()
         {
-            DefaultStyleKey = typeof(RadialSlider);
+            DefaultStyleKey = typeof(RadialSlider);            
         }
 
         /// <summary>
@@ -270,6 +280,22 @@ namespace OpenHAB.Windows.Controls
         {
             get { return (double)GetValue(ValueAngleProperty); }
             set { SetValue(ValueAngleProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the Minimum value for the Widget.
+        /// </summary>
+        public double Minimum {
+            get { return (double)GetValue(MinimumProperty); }
+            set { SetValue(MinimumProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the Maximum value for the Widget.
+        /// </summary>
+        public double Maximum {
+            get { return (double)GetValue(MaximumProperty); }
+            set { SetValue(MaximumProperty, value); }
         }
 
         /// <summary>
@@ -518,6 +544,11 @@ namespace OpenHAB.Windows.Controls
 
         private double ValueToAngle(double value)
         {
+            if (this.Minimum == this.Maximum)
+            {
+                Minimum = 0;
+                Maximum = 100;
+            }
             // Off-scale on the left.
             if (value < Minimum)
             {
