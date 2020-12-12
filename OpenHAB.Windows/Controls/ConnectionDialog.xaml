@@ -1,0 +1,97 @@
+﻿<ContentDialog x:Class="OpenHAB.Windows.Controls.ConnectionDialog"
+			   x:Uid="ConnectionDialog"
+			   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			   xmlns:local="using:OpenHAB.Windows.Controls"
+			   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			   xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+			   xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+			   xmlns:converters="using:OpenHAB.Windows.Converters"
+			   mc:Ignorable="d">
+
+	<ContentDialog.Resources>
+		<converters:NullToBooleanConverter x:Key="NullToBooleanConverter" />
+		<converters:OpenHabUrlStateToGlyph x:Key="OpenHabUrlStateToGlyph" />
+	</ContentDialog.Resources>
+	<Grid>
+		<StackPanel Margin="0,0,10,0">
+			<TextBlock x:Uid="ConnectionProfile" />
+			<ComboBox Margin="0,0,12,12"
+					  x:Name="ProfileSeletion"
+					  ItemsSource="{Binding Profiles, Mode=TwoWay}"
+					  PlaceholderText="No profile selected"
+					  DisplayMemberPath="Name"
+					  SelectedItem="{Binding Profile, Mode=TwoWay}">                    
+				<Interactivity:Interaction.Behaviors>
+					<Core:EventTriggerBehavior EventName="SelectionChanged">
+						<Core:InvokeCommandAction Command="{Binding Path=SelectProfile, Mode=TwoWay}"
+												  CommandParameter="{Binding ElementName=ProfileSeletion,Path=SelectedValue}" />
+					</Core:EventTriggerBehavior>
+				</Interactivity:Interaction.Behaviors>
+			</ComboBox>
+			<TextBlock x:Uid="LocalUrlHeader" />
+			<TextBox x:Uid="LocalUrl"
+					 x:Name="TextBoxUrl"
+					 IsEnabled="{Binding AllowHostUrlConfiguration, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+					 Margin="0,0,12,12"
+					 Text="{Binding Url, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+				<Interactivity:Interaction.Behaviors>
+					<Core:EventTriggerBehavior EventName="LostFocus">
+						<Core:InvokeCommandAction Command="{Binding Path=UrlCheckCommand, Mode=TwoWay}"
+												  CommandParameter="{Binding ElementName=TextBoxUrl,Path=Text}" />
+					</Core:EventTriggerBehavior>
+				</Interactivity:Interaction.Behaviors>
+			</TextBox>
+			<TextBlock x:Uid="UsernameHeader" />
+			<TextBox x:Name="TextBoxUsername"
+					 Margin="0,0,12,12"
+					 IsEnabled="{Binding Profile, Converter={StaticResource NullToBooleanConverter}}"
+					 Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+					 TextWrapping="Wrap">
+				<Interactivity:Interaction.Behaviors>
+					<Core:EventTriggerBehavior EventName="LostFocus">
+						<Core:InvokeCommandAction Command="{Binding Path=UrlCheckCommand, Mode=TwoWay}"
+												  CommandParameter="{Binding ElementName=TextBoxUrl,Path=Text}" />
+					</Core:EventTriggerBehavior>
+				</Interactivity:Interaction.Behaviors>
+			</TextBox>
+			<TextBlock x:Uid="PasswordHeader" />
+			<PasswordBox x:Name="TextBoxPassword"
+						 Margin="0,0,12,12"
+						 IsEnabled="{Binding Profile, Converter={StaticResource NullToBooleanConverter}}"
+						 Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+				<Interactivity:Interaction.Behaviors>
+					<Core:EventTriggerBehavior EventName="LostFocus">
+						<Core:InvokeCommandAction Command="{Binding Path=UrlCheckCommand, Mode=TwoWay}"
+												  CommandParameter="{Binding ElementName=TextBoxUrl,Path=Text}" />
+					</Core:EventTriggerBehavior>
+				</Interactivity:Interaction.Behaviors>
+			</PasswordBox>
+			<TextBlock x:Uid="IgnoreSSLCertErrors" />
+			<CheckBox x:Name="CheckBoxIgnoreSSL"
+					  Margin="0,0,0,12"
+					  IsEnabled="{Binding AllowIgnoreSSLCertificate, Mode=OneWay}"
+					  HorizontalAlignment="Stretch"
+					  VerticalAlignment="Stretch"
+					  IsChecked="{Binding WillIgnoreSSLCertificate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+			<TextBlock x:Uid="IgnoreSSLCertHostErrors" />
+			<CheckBox x:Name="CheckBoxIgnoreSSLHostname"
+					  Margin="0,0,0,12"
+					  IsEnabled="{Binding AllowIgnoreSSLHostname, Mode=OneWay}"
+					  HorizontalAlignment="Stretch"
+					  VerticalAlignment="Stretch"
+					  IsChecked="{Binding WillIgnoreSSLHostname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+			<StackPanel Orientation="Horizontal">
+				<TextBlock x:Uid="ConnectionCheck"
+						   Margin="0,0,10,0"
+						   VerticalAlignment="Center" />
+				<FontIcon x:Name="IconUrlStatusCheck"
+						  VerticalAlignment="Top"
+						  FontSize="32"
+						  FontFamily="{StaticResource SymbolThemeFontFamily}"
+						  Glyph="{Binding UrlState, Converter={StaticResource OpenHabUrlStateToGlyph}, Mode=TwoWay}" />
+			</StackPanel>
+		</StackPanel>
+	</Grid>
+</ContentDialog>

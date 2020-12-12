@@ -1,17 +1,17 @@
 ﻿namespace OpenHAB.Core.Model
 {
     /// <summary>
-    /// The payload coming from the event service
+    /// The payload coming from the event service.
     /// </summary>
     public class EventStreamPayload
     {
         /// <summary>
-        /// Gets or sets the type of event
+        /// Gets or sets the type of event.
         /// </summary>
         public string Type { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of the event
+        /// Gets or sets the value of the event.
         /// </summary>
         public string Value { get; set; }
     }

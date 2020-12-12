@@ -8,10 +8,7 @@
                   d:DesignWidth="300"
                   mc:Ignorable="d">
 
-    <Grid Width="300"
-          Height="150"
-          Background="{StaticResource OpenHABLightColor}"
-          CornerRadius="5">
+	<Grid Style="{StaticResource Widget}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
@@ -19,40 +16,62 @@
         <local:ImageLabel VerticalAlignment="Center"
                           IconPath="{x:Bind Widget, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
                           LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
+        
+        
 
         <StackPanel Grid.Column="1"
                     Width="100"
                     Margin="0,12,12,12"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    BorderBrush="{StaticResource OpenHABSplitviewBrush}"
+                    BorderBrush="{StaticResource DarkAcrylicColor}"
                     BorderThickness="0">
-            <Button Height="40"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Click="ButtonUp_Click">
-                <TextBlock AutomationProperties.Name="ArrowUp"
-                           FontFamily="Segoe MDL2 Assets"
-                           Text="&#xE74A;" />
-            </Button>
-            <TextBlock Margin="0,4,0,0"
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Margin="0,0,0,3"
                        HorizontalAlignment="Center"
                        FontSize="20"
                        Text="{x:Bind Widget.Item.State, Mode=TwoWay}" />
-            <Button Height="40"
-                    Margin="0,4,0,0"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Click="ButtonDown_Click">
-                <TextBlock AutomationProperties.Name="ArrowDown"
-                           FontFamily="Segoe MDL2 Assets"
-                           RenderTransformOrigin="0.5,0.5"
-                           Text="&#xE74A;">
-                    <TextBlock.RenderTransform>
-                        <RotateTransform Angle="180" />
-                    </TextBlock.RenderTransform>
-                </TextBlock>
-            </Button>
+                <Grid Grid.Row="1" Margin="0,3,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button 
+                        Grid.Column="0"
+                        Height="40"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Click="ButtonUp_Click">
+                            <TextBlock AutomationProperties.Name="ArrowUp"
+                            FontFamily="Segoe MDL2 Assets"
+                            Text="&#xE74A;" />
+                       </Button>
+                    <Button 
+                        Grid.Column="1"
+                        Height="40"
+                        Margin="1,0,0,0"                        
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Click="ButtonDown_Click">
+                            <TextBlock AutomationProperties.Name="ArrowDown"
+                               FontFamily="Segoe MDL2 Assets"
+                               RenderTransformOrigin="0.5,0.5"
+                               Text="&#xE74A;">
+                                <TextBlock.RenderTransform>
+                                    <RotateTransform Angle="180" />
+                                </TextBlock.RenderTransform>
+                            </TextBlock>
+                    </Button>
+                </Grid>
+                
+            </Grid>
+            
+            
+            
         </StackPanel>
     </Grid>
 </local:WidgetBase>
