@@ -1,6 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Xml.Linq;
+﻿using System.Globalization;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Toolkit.Uwp.Notifications;
 using OpenHAB.Core.Common;
@@ -13,10 +11,11 @@ using XmlDocument = Windows.Data.Xml.Dom.XmlDocument;
 namespace OpenHAB.Core.Services
 {
     /// <inheritdoc/>
+
     public class NotificationManager : INotificationManager
     {
-        private IItemManager _itemManager;
         private string _iconFormat;
+        private IItemManager _itemManager;
 
         /// <summary>Initializes a new instance of the <see cref="NotificationManager" /> class.</summary>
         /// <param name="itemStateManager">The item state manager.</param>
@@ -43,22 +42,23 @@ namespace OpenHAB.Core.Services
             }
 
             TriggerToastNotificationForItem(itemName, itemImage, obj.Value, obj.OldValue);
+            TriggerTileNotificationForItem(itemName, itemImage, obj.Value, obj.OldValue);
         }
 
         #region Toast Notification
 
-        public void TriggerToastNotificationForItem(string itemName, string itemImage, string itemValue, string oldItemValue)
+        private void TriggerToastNotificationForItem(string itemName, string itemImage, string value, string oldValue)
         {
-            var notifier = ToastNotificationManager.CreateToastNotifier();
+            string message = GetMessage(itemName, value, oldValue, "NotificationToast", "NotificationToastSimple");
 
-            string message = GetItemChangeMessage(itemName, itemValue, oldItemValue);
+            var notifier = ToastNotificationManager.CreateToastNotifier();
             var xmdock = CreateToastMessage(message, itemImage);
             var toast = new ToastNotification(xmdock);
 
             notifier.Show(toast);
         }
 
-        private static XmlDocument CreateToastMessage(string message, string image)
+        private XmlDocument CreateToastMessage(string message, string image)
         {
             var toastContent = new ToastContent()
             {
@@ -101,16 +101,183 @@ namespace OpenHAB.Core.Services
 
         #endregion
 
-        private string GetItemChangeMessage(string itemName, string itemValue, string oldItemValue)
+        #region Tile Notification
+
+        private void TriggerTileNotificationForItem(string itemName, string itemImage, string value, string oldValue)
+        {
+            string message = GetMessage(itemName, value, oldValue, "NotificationTile", "NotificationTileSimple");
+
+            TileUpdater tileUpdater = TileUpdateManager.CreateTileUpdaterForApplication();
+            XmlDocument tileNotifcationXML = CreateTileNotificaiton(itemName, message, value, itemImage);
+            TileNotification tileNotif = new TileNotification(tileNotifcationXML);
+
+            tileUpdater.Update(tileNotif);
+        }
+
+        private XmlDocument CreateTileNotificaiton(string itemName, string message, string value, string itemImage)
+        {
+            var tileContent = new TileContent()
+            {
+                Visual = new TileVisual()
+                {
+                    Branding = TileBranding.NameAndLogo,
+                    TileSmall = new TileBinding()
+                    {
+                        Branding = TileBranding.Name,
+                        Content = new TileBindingContentAdaptive()
+                        {
+                            TextStacking = TileTextStacking.Center,
+                            Children =
+                {
+                    new AdaptiveText()
+                    {
+                        Text = itemName,
+                        HintStyle = AdaptiveTextStyle.Body,
+                        HintAlign = AdaptiveTextAlign.Center
+                    },
+                    new AdaptiveText()
+                    {
+                        Text = value,
+                        HintStyle = AdaptiveTextStyle.Base,
+                        HintAlign = AdaptiveTextAlign.Center
+                    }
+                }
+                        }
+                    },
+                    TileMedium = new TileBinding()
+                    {
+                        Branding = TileBranding.Name,
+                        Content = new TileBindingContentAdaptive()
+                        {
+                            Children =
+                            {
+                                new AdaptiveText()
+                                {
+                                    Text = itemName,
+                                    HintStyle = AdaptiveTextStyle.Caption
+                                },
+                                new AdaptiveText()
+                                {
+                                    Text = message,
+                                    HintStyle = AdaptiveTextStyle.CaptionSubtle,
+                                    HintWrap = true,
+                                    HintMaxLines = 3
+                                }
+                            }
+                        }
+                    },
+                    TileWide = new TileBinding()
+                    {
+                        Content = new TileBindingContentAdaptive()
+                        {
+                            Children =
+                            {
+                                new AdaptiveGroup()
+                                {
+                                    Children =
+                                    {
+                                        new AdaptiveSubgroup()
+                                        {
+                                            HintWeight = 33,
+                                            Children =
+                                            {
+                                                new AdaptiveImage()
+                                                {
+                                                    Source = itemImage
+                                                }
+                                            }
+                                        },
+                                        new AdaptiveSubgroup()
+                                        {
+                                            Children =
+                                            {
+                                                new AdaptiveText()
+                                                {
+                                                    Text = itemName,
+                                                    HintStyle = AdaptiveTextStyle.Caption
+                                                },
+                                                new AdaptiveText()
+                                                {
+                                                    Text = message,
+                                                    HintStyle = AdaptiveTextStyle.CaptionSubtle,
+                                                    HintWrap = true,
+                                                    HintMaxLines = 3
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    TileLarge = new TileBinding()
+                    {
+                        Content = new TileBindingContentAdaptive()
+                        {
+                            Children =
+                            {
+                                new AdaptiveGroup()
+                                {
+                                    Children =
+                                    {
+                                        new AdaptiveSubgroup()
+                                        {
+                                            HintWeight = 1
+                                        },
+                                        new AdaptiveSubgroup()
+                                        {
+                                            HintWeight = 2,
+                                            Children =
+                                            {
+                                                new AdaptiveImage()
+                                                {
+                                                    Source = itemImage
+                                                }
+                                            }
+                                        },
+                                        new AdaptiveSubgroup()
+                                        {
+                                            HintWeight = 1
+                                        }
+                                    }
+                                },
+                                new AdaptiveText()
+                                {
+                                    Text = ""
+                                },
+                                new AdaptiveText()
+                                {
+                                    Text = itemName,
+                                    HintStyle = AdaptiveTextStyle.Caption
+                                },
+                                new AdaptiveText()
+                                {
+                                    Text = message,
+                                    HintStyle = AdaptiveTextStyle.CaptionSubtle,
+                                    HintWrap = true,
+                                    HintMaxLines = 3
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            return tileContent.GetXml();
+        }
+
+        #endregion
+
+        private string GetMessage(string itemName, string itemValue, string oldItemValue, string valueChangedMessageRessource, string stateChangedMessageRessource)
         {
             string message = string.Empty;
             if (!string.IsNullOrEmpty(oldItemValue))
             {
-                message = "{0} changed from {1} to {2}";
+                message = AppResources.Values.GetString(valueChangedMessageRessource);
             }
             else
             {
-                message = "{0}: State is {1}";
+                message = AppResources.Values.GetString(stateChangedMessageRessource);
             }
 
             message = string.Format(CultureInfo.InvariantCulture, message, itemName, oldItemValue, itemValue);

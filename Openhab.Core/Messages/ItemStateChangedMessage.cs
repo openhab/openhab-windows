@@ -6,6 +6,10 @@ namespace OpenHAB.Core.Messages
     /// </summary>
     public class ItemStateChangedMessage
     {
+        /// <summary>Initializes a new instance of the <see cref="ItemStateChangedMessage" /> class.</summary>
+        /// <param name="itemName">Name of the item.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="oldValue">The old value.</param>
         public ItemStateChangedMessage(string itemName, string value, string oldValue)
         {
             ItemName = itemName;

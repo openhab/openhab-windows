@@ -281,6 +281,18 @@ Bitte wählen Sie den Demo Modus oder die Lokalen/Remote Verbindunsinformation z
   <data name="StartAppMinimized.Text" xml:space="preserve">
     <value>Starte app minimiert</value>
   </data>
+  <data name="NotificationTile" xml:space="preserve">
+    <value>Änderte sich von {0} zu {1}</value>
+  </data>
+  <data name="NotificationTileSimple" xml:space="preserve">
+    <value>Zustand ist {1}</value>
+  </data>
+  <data name="NotificationToast" xml:space="preserve">
+    <value>{0} änderte sich von {1} zu {2}</value>
+  </data>
+  <data name="NotificationToastSimple" xml:space="preserve">
+    <value>{0}: Zustand ist {1}</value>
+  </data>
   <data name="InfoAppBarSettingsButton.Content" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
