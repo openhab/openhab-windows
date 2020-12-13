@@ -243,6 +243,7 @@ namespace OpenHAB.Windows.ViewModel
                 bool isSuccessful = await _openHabsdk.ResetConnection().ConfigureAwait(false);
                 if (!isSuccessful)
                 {
+                    Messenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));
                     return;
                 }
 
