@@ -107,7 +107,10 @@ namespace OpenHAB.Windows.Controls
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string newValue = (string)e.AddedItems.FirstOrDefault();
-            newValue = newValue.Replace(Widget.Item.Unit, string.Empty, StringComparison.InvariantCultureIgnoreCase);
+            if (Widget.Item.Unit != null)
+            {
+                newValue = newValue.Replace(Widget.Item.Unit, string.Empty, StringComparison.InvariantCultureIgnoreCase);
+            }
             if (newValue != null)
             {
                 Widget.Item.UpdateValue(newValue);
