@@ -359,12 +359,13 @@ namespace OpenHAB.Core.SDK
 
             if (meteredConnection)
             {
-                if (string.IsNullOrEmpty(settings.RemoteConnection.Url.Trim()))
+                if (string.IsNullOrEmpty(settings.RemoteConnection?.Url))
                 {
                     string message = "No remote url configured";
                     _logger.LogWarning(message);
 
-                    throw new OpenHABException(message);
+                    //throw new OpenHABException(message);
+                    return false;
                 }
 
                 OpenHABHttpClient.BaseUrl = settings.RemoteConnection.Url;
