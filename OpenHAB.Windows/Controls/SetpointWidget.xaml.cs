@@ -73,7 +73,7 @@ namespace OpenHAB.Windows.Controls
             {
                 comboBox.SelectionChanged -= ComboBox_SelectionChanged;
                 UpdateComboBox();
-                comboBox.SelectedItem = Widget.Item.GetStateAsDoubleValue().ToString() + Widget.Item.Unit;
+                comboBox.SelectedItem = Widget.Item.GetStateAsDoubleValue().ToString(CultureInfo.InvariantCulture) + Widget.Item.Unit;
                 comboBox.SelectionChanged += ComboBox_SelectionChanged;
             });
 
@@ -95,10 +95,10 @@ namespace OpenHAB.Windows.Controls
             }
             for (float i = Widget.MinValue; i <= Widget.MaxValue; i += step)
             {
-                comboBox.Items.Add(i.ToString() + Widget.Item.Unit);
+                comboBox.Items.Add(i.ToString(CultureInfo.InvariantCulture) + Widget.Item.Unit);
                 if (i < currentValue &&  currentValue < (i + step))
                 {
-                    comboBox.Items.Add(currentValue.ToString() + Widget.Item.Unit);
+                    comboBox.Items.Add(currentValue.ToString(CultureInfo.InvariantCulture) + Widget.Item.Unit);
                 }
             }
 
