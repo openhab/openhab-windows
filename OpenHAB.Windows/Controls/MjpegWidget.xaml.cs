@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Media.Imaging;
 namespace OpenHAB.Windows.Controls
 {
     /// <summary>
-    /// Widget control that represents an OpenHAB Image
+    /// Widget control that represents an OpenHAB Image.
     /// </summary>
     public sealed partial class MjpegWidget : WidgetBase
     {
@@ -16,7 +16,7 @@ namespace OpenHAB.Windows.Controls
         private MJPEGDecoder _mjpegDecoder;
 
         /// <summary>
-        /// Gets or sets the camera bitmapimage
+        /// Gets or sets the camera bitmapimage.
         /// </summary>
         public BitmapImage CameraBitmapImage
         {

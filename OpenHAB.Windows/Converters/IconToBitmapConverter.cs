@@ -1,7 +1,7 @@
 ﻿using System;
-using CommonServiceLocator;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Model;
+using OpenHAB.Windows.Services;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -15,7 +15,7 @@ namespace OpenHAB.Windows.Converters
         /// <inheritdoc/>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var settingsService = ServiceLocator.Current.GetInstance<ISettingsService>();
+            var settingsService = (ISettingsService)DIService.Instance.Services.GetService(typeof(ISettingsService));
             var serverUrl = Core.Common.OpenHABHttpClient.BaseUrl;
 
             string url = settingsService.ServerVersion == OpenHABVersion.Two ? $"{serverUrl}icon/{value}?state=UNDEF&format=png" : $"{serverUrl}images/{value}.png";

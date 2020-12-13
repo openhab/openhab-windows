@@ -11,7 +11,7 @@ using System.Linq;
 namespace OpenHAB.Windows.Controls
 {
     /// <summary>
-    /// Widget control that represents an OpenHAB switch
+    /// Widget control that represents an OpenHAB switch.
     /// </summary>
     public sealed partial class SetpointWidget : WidgetBase
     {

@@ -11,34 +11,12 @@
     <AssemblyName>OpenHAB.Core</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.18362.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.17134.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.19041.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <RuntimeIdentifiers>win10-arm;win10-arm-aot;win10-x86;win10-x86-aot;win10-x64;win10-x64-aot</RuntimeIdentifiers>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>..\OpenHAB.Windows\OpenHAB.Windows.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>bin\Debug\OpenHAB.Core.XML</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>..\OpenHAB.Windows\OpenHAB.Windows.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -50,7 +28,8 @@
     <PlatformTarget>x86</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>..\OpenHAB.Windows\OpenHAB.Windows.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
     <DocumentationFile>bin\x86\Debug\OpenHAB.Core.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
@@ -63,7 +42,8 @@
     <PlatformTarget>x86</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>..\OpenHAB.Windows\OpenHAB.Windows.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <PlatformTarget>ARM</PlatformTarget>
@@ -75,7 +55,8 @@
     <PlatformTarget>ARM</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>..\OpenHAB.Windows\OpenHAB.Windows.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
     <PlatformTarget>ARM</PlatformTarget>
@@ -87,7 +68,8 @@
     <PlatformTarget>ARM</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>..\OpenHAB.Windows\OpenHAB.Windows.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <PlatformTarget>x64</PlatformTarget>
@@ -99,7 +81,8 @@
     <PlatformTarget>x64</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>..\OpenHAB.Windows\OpenHAB.Windows.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <PlatformTarget>x64</PlatformTarget>
@@ -111,37 +94,49 @@
     <PlatformTarget>x64</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>..\OpenHAB.Windows\OpenHAB.Windows.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="OpenHAB.Windows.ruleset" />
+    <PRIResource Include="Strings\en-us\Resources.resw" />
+    <PRIResource Include="Strings\de-de\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppResources.cs" />
+    <Compile Include="Common\ActionCommand.cs" />
     <Compile Include="Common\ColorChangedEventArgs.cs" />
     <Compile Include="Common\ColorHelper.cs" />
     <Compile Include="Common\Constants.cs" />
+    <Compile Include="Common\DataErrorInfo.cs" />
     <Compile Include="Common\ObservableCollectionExtensions.cs" />
-    <Compile Include="Common\OpenHABHttpClientType.cs" />
+    <Compile Include="Model\Connection\CloudConnectionProfile.cs" />
+    <Compile Include="Model\Connection\DemoConnectionProfile.cs" />
+    <Compile Include="Model\Connection\RemoteConnectionProfile.cs" />
+    <Compile Include="Model\Connection\LocalConnectionProfile.cs" />
+    <Compile Include="Model\Connection\OpenHABHttpClientType.cs" />
+    <Compile Include="Contracts\IConnectionProfile.cs" />
     <Compile Include="Contracts\Services\ISettingsService.cs" />
-    <Compile Include="HABCore.cs" />
     <Compile Include="Messages\FireErrorMessage.cs" />
     <Compile Include="Messages\FireInfoMessage.cs" />
     <Compile Include="Messages\MessageType.cs" />
-    <Compile Include="Messages\PersistSettingsMessage.cs" />
     <Compile Include="Messages\SettingsUpdatedMessage.cs" />
     <Compile Include="Messages\TriggerCommandMessage.cs" />
     <Compile Include="Messages\UpdateItemMessage.cs" />
     <Compile Include="Messages\WidgetClickedMessage.cs" />
+    <Compile Include="Model\Connection\DefaultConnectionProfile.cs" />
+    <Compile Include="Model\WidgetTypeEnum.cs" />
     <Compile Include="Model\EventStreamData.cs" />
     <Compile Include="Model\EventStreamPayload.cs" />
-    <Compile Include="Model\ObservableBase.cs" />
     <Compile Include="Model\OpenHABCommand.cs" />
+    <Compile Include="Model\Connection\OpenHABConnection.cs" />
     <Compile Include="Model\OpenHABItem.cs" />
     <Compile Include="Model\OpenHABSitemap.cs" />
     <Compile Include="Model\OpenHABUrlState.cs" />
+    <Compile Include="Model\OpenHABWidgetFactory.cs" />
     <Compile Include="Model\OpenHABWidget.cs" />
     <Compile Include="Model\OpenHABWidgetMapping.cs" />
+    <Compile Include="Contracts\Services\IDependencyInjectionService.cs" />
     <Compile Include="Model\Settings.cs" />
     <Compile Include="Model\OpenHABCommands.cs" />
     <Compile Include="Model\OpenHABException.cs" />
@@ -149,37 +144,40 @@
     <Compile Include="Model\OpenHabVersion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SDK\IOpenHAB.cs" />
-    <Compile Include="SDK\OpenHAB.cs" />
+    <Compile Include="SDK\OpenHABClient.cs" />
     <Compile Include="Services\SettingsService.cs" />
     <Compile Include="Services\WidgetNavigationService.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\SettingsViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelLocator.cs" />
     <EmbeddedResource Include="Properties\OpenHAB.Core.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
-      <Version>2.9.7</Version>
+      <Version>3.3.0</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection">
+      <Version>3.1.7</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.9</Version>
+      <Version>6.2.10</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Services.Store.Engagement">
       <Version>10.1901.28001</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp">
-      <Version>5.1.1</Version>
+      <Version>6.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Connectivity">
-      <Version>5.1.1</Version>
+      <Version>6.1.1</Version>
     </PackageReference>
     <PackageReference Include="MvvmLightLibs">
       <Version>5.4.1.1</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="NLog.Extensions.Logging">
+      <Version>1.6.5</Version>
     </PackageReference>
     <PackageReference Include="StyleCop.Analyzers">
       <Version>1.1.118</Version>

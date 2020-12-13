@@ -10,15 +10,17 @@
 
     <StackPanel HorizontalAlignment="Stretch">
         <Image x:Name="Icon"
-               Width="80"
-               Height="80"
+               Width="60"
+               Height="60"
                Margin="12,0,0,0"
                HorizontalAlignment="Left"
                VerticalAlignment="Top" />
+        <ScrollViewer x:Name="LabelScrollViewer" HorizontalScrollMode="Enabled" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" >
         <TextBlock x:Name="Label"
                    Margin="8"
-                   Foreground="{StaticResource OpenHABSplitviewBrush}"
+                   Foreground="{StaticResource DarkAcrylicColor}"
                    Text="{x:Bind LabelText, Mode=OneWay}"
                    TextWrapping="Wrap" />
+        </ScrollViewer>
     </StackPanel>
 </UserControl>

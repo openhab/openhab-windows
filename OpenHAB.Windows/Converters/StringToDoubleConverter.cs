@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Data;
 namespace OpenHAB.Windows.Converters
 {
     /// <summary>
-    /// Converts a string to a double, returning 0 if the string is invalid
+    /// Converts a string to a double, returning 0 if the string is invalid.
     /// </summary>
     public class StringToDoubleConverter : IValueConverter
     {

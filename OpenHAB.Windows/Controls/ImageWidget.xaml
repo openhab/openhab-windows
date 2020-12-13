@@ -8,11 +8,8 @@
                   d:DesignWidth="400"
                   mc:Ignorable="d">
 
-    <Grid Width="300"
-          Height="150"
-          Background="{StaticResource OpenHABLightColor}"
-          CornerRadius="5"
-          Tapped="ImageWidget_OnTapped">
+	<Grid Style="{StaticResource Widget}"
+		  Tapped="ImageWidget_OnTapped">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />

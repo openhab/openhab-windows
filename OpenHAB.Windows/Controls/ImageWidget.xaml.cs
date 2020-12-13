@@ -8,7 +8,7 @@ using WinRTXamlToolkit.Imaging;
 namespace OpenHAB.Windows.Controls
 {
     /// <summary>
-    /// Widget control that represents an OpenHAB Image
+    /// Widget control that represents an OpenHAB Image.
     /// </summary>
     public sealed partial class ImageWidget : WidgetBase
     {

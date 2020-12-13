@@ -1,13 +1,16 @@
 ﻿using System;
 using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Extensions.Logging;
 using OpenHAB.Core;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.Services;
-using OpenHAB.Core.ViewModel;
+using OpenHAB.Windows.Services;
+using OpenHAB.Windows.ViewModel;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 
 namespace OpenHAB.Windows.View
@@ -17,7 +20,7 @@ namespace OpenHAB.Windows.View
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private DispatcherTimer _errorMessageTimer;
+        private ILogger<MainPage> _logger;
 
         /// <summary>
         /// Gets the datacontext, for use in compiled bindings.
@@ -29,16 +32,19 @@ namespace OpenHAB.Windows.View
         /// </summary>
         public MainPage()
         {
+            DataContext = (MainViewModel)DIService.Instance.Services.GetService(typeof(MainViewModel));
+            _logger = (ILogger<MainPage>)DIService.Instance.Services.GetService(typeof(ILogger<MainPage>));
+
             InitializeComponent();
 
-            Messenger.Default.Register<FireErrorMessage>(this, msg => ShowErrorMessage(msg));
-            Messenger.Default.Register<FireInfoMessage>(this, msg => ShowInfoMessage(msg));
-
-            Vm.CurrentWidgets.CollectionChanged += (sender, args) =>
+            Vm.CurrentWidgets.CollectionChanged += async (sender, args) =>
             {
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = WidgetNavigationService.CanGoBack
-                    ? AppViewBackButtonVisibility.Visible
-                    : AppViewBackButtonVisibility.Collapsed;
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                 {
+                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = WidgetNavigationService.CanGoBack
+                     ? AppViewBackButtonVisibility.Visible
+                     : AppViewBackButtonVisibility.Collapsed;
+                 });
             };
 
             SystemNavigationManager.GetForCurrentView().BackRequested += (sender, args) => Vm.WidgetGoBack();
@@ -47,40 +53,86 @@ namespace OpenHAB.Windows.View
         /// <inheritdoc/>
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            await Vm.LoadData();
-            base.OnNavigatedTo(e);
+            Messenger.Default.Register<FireErrorMessage>(this, msg => ShowErrorMessage(msg));
+            Messenger.Default.Register<FireInfoMessage>(this, msg => ShowInfoMessage(msg));
+
+            await Vm.LoadSitemapsAndItemData().ConfigureAwait(false);
         }
 
-        private void ShowErrorMessage(FireErrorMessage message)
+        /// <inheritdoc/>
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            ErrorNotification.Show(message.ErrorMessage);
+            Messenger.Default.Unregister<FireErrorMessage>(this, msg => ShowErrorMessage(msg));
+            Messenger.Default.Unregister<FireInfoMessage>(this, msg => ShowInfoMessage(msg));
+
+            ErrorNotification.Dismiss();
+            InfoNotification.Dismiss();
         }
 
-        private void ShowInfoMessage(FireInfoMessage msg)
+        private async void ShowErrorMessage(FireErrorMessage message)
         {
-            string message = null;
-            switch (msg.MessageType)
+            try
             {
-                case MessageType.NotConfigured:
-                    message = AppResources.Values.GetString("MessageNotConfigured");
-                    break;
-                case MessageType.NotReachable:
-                    message = AppResources.Values.GetString("MessagesNotReachable");
-                    break;
-                default:
-                    message = "Message not defined";
-                    break;
+                string errorMessage = null;
+                if (message == null || string.IsNullOrEmpty(message.ErrorMessage))
+                {
+                    errorMessage = AppResources.Values.GetString("MessageError");
+                    ErrorNotification.Show(errorMessage);
+                }
+                else
+                {
+                    errorMessage = message.ErrorMessage;
+                }
+
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    ErrorNotification.Show(errorMessage);
+                });
             }
-
-            Dispatcher.RunAsync(CoreDispatcherPriority.Normal,() =>
+            catch (Exception ex)
             {
-                InfoNotification.Show(message);
-            });
+                _logger.LogError(ex, "Show error message failed.");
+            }
+        }
+
+        private async void ShowInfoMessage(FireInfoMessage msg)
+        {
+            try
+            {
+                string message = null;
+                switch (msg.MessageType)
+                {
+                    case MessageType.NotConfigured:
+                        message = AppResources.Values.GetString("MessageNotConfigured");
+                        break;
+                    case MessageType.NotReachable:
+                        message = AppResources.Values.GetString("MessagesNotReachable");
+                        break;
+                    default:
+                        message = "Message not defined";
+                        break;
+                }
+
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                  {
+                      InfoNotification.Show(message, 30000);
+                  });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Show info message failed.");
+            }
         }
 
         private void MasterListView_OnItemClick(object sender, ItemClickEventArgs e)
         {
             Messenger.Default.Send(new WidgetClickedMessage(e.ClickedItem as OpenHABWidget));
+        }
+
+        private void StackPanel_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            e.Handled = true;
+            Frame.Navigate(typeof(SettingsPage));
         }
     }
 }

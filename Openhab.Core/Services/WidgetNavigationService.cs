@@ -5,7 +5,7 @@ using OpenHAB.Core.Model;
 namespace OpenHAB.Core.Services
 {
     /// <summary>
-    /// Service that keeps track of navigation between linkedpages
+    /// Service that keeps track of navigation between linkedpages.
     /// </summary>
     public static class WidgetNavigationService
     {
@@ -13,14 +13,14 @@ namespace OpenHAB.Core.Services
         private static OpenHABWidget _currentWidget;
 
         /// <summary>
-        /// Gets a value indicating whether there is a previous widget on the backstack
+        /// Gets a value indicating whether there is a previous widget on the backstack.
         /// </summary>
         public static bool CanGoBack => _currentWidget != null;
 
         /// <summary>
-        /// Navigates the backstack to the passed in target
+        /// Navigates the backstack to the passed in target.
         /// </summary>
-        /// <param name="target">The openHAB widget to navigate to</param>
+        /// <param name="target">The openHAB widget to navigate to.</param>
         public static void Navigate(OpenHABWidget target)
         {
             if (target == _currentWidget)
@@ -33,9 +33,9 @@ namespace OpenHAB.Core.Services
         }
 
         /// <summary>
-        /// Go back to the previous openHAB widget
+        /// Go back to the previous openHAB widget.
         /// </summary>
-        /// <returns>The previous visted widget</returns>
+        /// <returns>The previous visted widget.</returns>
         public static OpenHABWidget GoBack()
         {
             if (WidgetBackStack.Count == 0)

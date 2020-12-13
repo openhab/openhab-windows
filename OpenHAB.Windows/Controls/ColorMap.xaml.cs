@@ -19,7 +19,7 @@ using ColorHelper = OpenHAB.Core.Common.ColorHelper;
 namespace OpenHAB.Windows.Controls
 {
     /// <summary>
-    /// Colorpicker control
+    /// Colorpicker control.
     /// </summary>
     public sealed partial class ColorMap : UserControl
     {
@@ -55,7 +55,7 @@ namespace OpenHAB.Windows.Controls
             var lightnessGradient = new LinearGradientBrush
             {
                 StartPoint = new Point(0, 0),
-                EndPoint = new Point(0, 1)
+                EndPoint = new Point(0, 1),
             };
 
             _lightnessStart = new GradientStop();
@@ -68,7 +68,7 @@ namespace OpenHAB.Windows.Controls
         }
 
         /// <summary>
-        /// Gets or sets the Color property
+        /// Gets or sets the Color property.
         /// </summary>
         public Color Color
         {
@@ -77,7 +77,7 @@ namespace OpenHAB.Windows.Controls
         }
 
         /// <summary>
-        /// Bindable property for the Color property
+        /// Bindable property for the Color property.
         /// </summary>
         public static readonly DependencyProperty ColorProperty =
             DependencyProperty.Register("Color", typeof(Color), typeof(ColorMap), new PropertyMetadata(default(Color), OnColorChanged));

@@ -4,7 +4,7 @@ using System.Windows.Input;
 namespace OpenHAB.Core.Model
 {
     /// <summary>
-    /// A bindable command that can be triggered from an OpenHAB widget
+    /// A bindable command that can be triggered from an OpenHAB widget.
     /// </summary>
     public class OpenHABCommand : ICommand
     {
@@ -13,7 +13,7 @@ namespace OpenHAB.Core.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenHABCommand"/> class.
         /// </summary>
-        /// <param name="widget">The OpenHAB widget that can trigger the command</param>
+        /// <param name="widget">The OpenHAB widget that can trigger the command.</param>
         public OpenHABCommand(OpenHABWidget widget)
         {
             _widget = widget;

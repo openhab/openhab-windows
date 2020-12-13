@@ -1,7 +1,7 @@
 ﻿namespace OpenHAB.Core.Model
 {
     /// <summary>
-    /// Enum to differentiate between OpenHAB 1 and 2
+    /// Enum to differentiate between OpenHAB 1 and 2.
     /// </summary>
     public enum OpenHABVersion
     {
@@ -18,6 +18,6 @@
         /// <summary>
         /// Used when no connection is available
         /// </summary>
-        None
+        None,
     }
 }
