@@ -242,39 +242,16 @@
                                      HorizontalOffset="0"
                                      StackMode="StackInFront" />
 
-        <community:Loading x:Name="LoadingControl"
-                           IsLoading="{x:Bind Vm.IsDataLoading, Mode=TwoWay}"
-                           HorizontalContentAlignment="Center"
-                           VerticalContentAlignment="Center">
-            <community:Loading.Background>
-                <SolidColorBrush Color="Black"
-                                 Opacity="0.7" />
-            </community:Loading.Background>
-            <ContentControl x:Name="LoadingContentControl"
-                            ContentTemplate="{StaticResource WaitListTemplate}" />
-        </community:Loading>
-
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="WindowStates">
-                <VisualState x:Name="NarrowState">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0" />
-                    </VisualState.StateTriggers>
-                    <!--<VisualState.Setters>
-                        <Setter Target="SitemapNavigation.PaneDisplayMode"
-                                Value="LeftMinimal" />
-                    </VisualState.Setters>-->
-                </VisualState>
-                <VisualState x:Name="WideState">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="720" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="SitemapNavigation.PaneDisplayMode"
-                                Value="Left" />
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-    </Grid>
+		<community:Loading x:Name="LoadingControl"
+						   IsLoading="{x:Bind Vm.IsDataLoading, Mode=TwoWay}"
+						   HorizontalContentAlignment="Center"
+						   VerticalContentAlignment="Center">
+			<community:Loading.Background>
+				<SolidColorBrush Color="Black"
+								 Opacity="0.7" />
+			</community:Loading.Background>
+			<ContentControl x:Name="LoadingContentControl"
+							ContentTemplate="{StaticResource WaitListTemplate}" />
+		</community:Loading>
+	</Grid>
 </Page>
