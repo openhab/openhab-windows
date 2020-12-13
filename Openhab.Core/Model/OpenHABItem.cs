@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
@@ -147,7 +147,6 @@ namespace OpenHAB.Core.Model
             State = startNode.Element("state")?.Value;
             Link = startNode.Element("link")?.Value;
         }
-
 
         public void UpdateValue (object value)
         {
