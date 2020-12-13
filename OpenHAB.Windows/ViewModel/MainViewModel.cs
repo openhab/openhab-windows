@@ -264,7 +264,7 @@ namespace OpenHAB.Windows.ViewModel
 
                 List<SitemapViewModel> sitemapViewModels = await LoadSitemaps(settings).ConfigureAwait(false);
 
-                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
                     Sitemaps = new ObservableCollection<SitemapViewModel>(sitemapViewModels);
                     _openHabsdk.StartItemUpdates(cancellationToken);
@@ -272,6 +272,17 @@ namespace OpenHAB.Windows.ViewModel
                     OpenLastOrDefaultSitemap();
 
                     Subtitle = SelectedSitemap.Label;
+
+                    if (SelectedWidget != null)
+                    {
+                        await LoadWidgets().ConfigureAwait(false);
+                        OpenHABWidget widget = FindWidget(SelectedWidget.Label, SelectedSitemap.Widgets);
+                        if (widget != null)
+                        {
+                            OnWidgetClicked(widget);
+                        }
+                    }
+
                     IsDataLoading = false;
                 });
             }
@@ -391,6 +402,28 @@ namespace OpenHAB.Windows.ViewModel
                 CurrentWidgets.Clear();
                 CurrentWidgets.AddRange(widgets);
             });
+        }
+
+        private OpenHABWidget FindWidget(string label, ICollection<OpenHABWidget> widgets)
+        {
+            OpenHABWidget openHABWidget = null;
+            if (widgets == null || widgets.Count == 0)
+            {
+                return openHABWidget;
+            }
+
+            foreach (OpenHABWidget widget in widgets)
+            {
+                if (string.CompareOrdinal(widget.Label, label) == 0)
+                {
+                    openHABWidget = widget;
+                    break;
+                }
+              
+               openHABWidget = FindWidget(label, widget.Children);
+            }
+
+            return openHABWidget;
         }
 
         #endregion
