@@ -80,11 +80,6 @@ namespace OpenHAB.Core.Model
         /// <summary>
         /// Gets or sets the unit of the OpenHAB item
         /// </summary>
-        public string Unit { get; set; }
-
-        /// <summary>
-        /// Gets or sets the unit of the OpenHAB item
-        /// </summary>
         public string Link { get; set; }
 
         /// <summary>
@@ -159,7 +154,7 @@ namespace OpenHAB.Core.Model
         {
             string newstate = Regex.Replace(_state, "[^0-9,.]", string.Empty);
             double value = 0;
-            _ = double.TryParse(newstate, out value);
+            _ = double.TryParse(newstate, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out value);
 
             return value;
         }
