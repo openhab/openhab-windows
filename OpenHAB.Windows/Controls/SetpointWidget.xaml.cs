@@ -18,6 +18,9 @@ namespace OpenHAB.Windows.Controls
         /// <summary>
         /// Initializes a new instance of the <see cref="SetpointWidget"/> class.
         /// </summary>
+
+        private float step; // represents the stepwidth of the item
+
         public SetpointWidget()
         {
             InitializeComponent();
@@ -25,12 +28,6 @@ namespace OpenHAB.Windows.Controls
 
         private void ButtonUp_Click(object sender, RoutedEventArgs e)
         {
-            // if Widget Step == 0 --> Step = 1
-            float step = Widget.Step;
-            if (step == 0)
-            {
-                step = 1;
-            }
 
             double value = Widget.Item.GetStateAsDoubleValue();
             value += step;
@@ -47,13 +44,6 @@ namespace OpenHAB.Windows.Controls
 
         private void ButtonDown_Click(object sender, RoutedEventArgs e)
         {
-            // if Widget Step == 0 --> Step = 1
-            float step = Widget.Step;
-            if (step == 0)
-            {
-                step = 1;
-            }
-
             double value = Widget.Item.GetStateAsDoubleValue();
             value -= step;
 
@@ -81,6 +71,13 @@ namespace OpenHAB.Windows.Controls
 
         private void SetPointWidget_Loaded(object sender, RoutedEventArgs e)
         {
+            // if Widget Step == 0 --> Step = 1
+            step = Widget.Step;
+            if (step == 0)
+            {
+                step = 1;
+            }
+
             SetState();
         }
 
@@ -111,6 +108,7 @@ namespace OpenHAB.Windows.Controls
             {
                 newValue = newValue.Replace(Widget.Item.Unit, string.Empty, StringComparison.InvariantCultureIgnoreCase);
             }
+
             if (newValue != null)
             {
                 Widget.Item.UpdateValue(newValue);
