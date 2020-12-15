@@ -49,15 +49,6 @@ namespace OpenHAB.Windows
         {
             _logger.LogInformation("=== Start Application ===");
 
-            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            {
-                var statusbar = StatusBar.GetForCurrentView();
-                await statusbar.ShowAsync();
-                statusbar.BackgroundColor = Color.FromArgb(255, 34, 40, 40);
-                statusbar.BackgroundOpacity = 1;
-                statusbar.ForegroundColor = Colors.White;
-            }
-
             _settingsService.SetProgramLanguage(null);
 
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
