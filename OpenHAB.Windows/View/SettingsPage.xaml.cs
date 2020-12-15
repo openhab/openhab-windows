@@ -81,14 +81,15 @@ namespace OpenHAB.Windows.View
                     string message = AppResources.Values.GetString("MessageSettingsConnectionConfigInvalid");
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
-                        SettingsNotification.Show(message);
+                        SettingsNotification.Message = message;
+                        SettingsNotification.IsOpen = true;
                     });
                 }
                 else
                 {
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
-                        SettingsNotification.Dismiss();
+                        SettingsNotification.IsOpen = false;
                     });
                 }
             }
