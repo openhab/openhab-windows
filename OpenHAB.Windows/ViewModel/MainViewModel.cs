@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -129,6 +128,26 @@ namespace OpenHAB.Windows.ViewModel
                     {
                         SetWidgetsOnScreen(SelectedSitemap.Widgets);
                     }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the selected menu item.
+        /// </summary>
+        public object SelectedMenuItem
+        {
+            get
+            {
+                return SelectedSitemap;
+            }
+
+            set
+            {
+                SitemapViewModel sitemapViewModel = value as SitemapViewModel;
+                if (sitemapViewModel != null)
+                {
+                    SelectedSitemap = sitemapViewModel;
                 }
             }
         }
