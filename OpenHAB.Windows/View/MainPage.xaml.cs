@@ -65,8 +65,8 @@ namespace OpenHAB.Windows.View
             Messenger.Default.Unregister<FireErrorMessage>(this, msg => ShowErrorMessage(msg));
             Messenger.Default.Unregister<FireInfoMessage>(this, msg => ShowInfoMessage(msg));
 
-            ErrorNotification.Dismiss();
-            InfoNotification.Dismiss();
+            ErrorNotification.IsOpen = false;
+            InfoNotification.IsOpen = false;
         }
 
         private async void ShowErrorMessage(FireErrorMessage message)
@@ -77,7 +77,8 @@ namespace OpenHAB.Windows.View
                 if (message == null || string.IsNullOrEmpty(message.ErrorMessage))
                 {
                     errorMessage = AppResources.Values.GetString("MessageError");
-                    ErrorNotification.Show(errorMessage);
+                    ErrorNotification.Message = errorMessage;
+                    ErrorNotification.IsOpen = true;
                 }
                 else
                 {
@@ -86,7 +87,8 @@ namespace OpenHAB.Windows.View
 
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    ErrorNotification.Show(errorMessage);
+                    ErrorNotification.Message = errorMessage;
+                    ErrorNotification.IsOpen = true;
                 });
             }
             catch (Exception ex)
@@ -115,7 +117,8 @@ namespace OpenHAB.Windows.View
 
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                   {
-                      InfoNotification.Show(message, 30000);
+                      InfoNotification.Message = message;
+                      InfoNotification.IsOpen = true;
                   });
             }
             catch (Exception ex)
