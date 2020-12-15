@@ -7,6 +7,7 @@
 	  xmlns:community="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	  xmlns:core="using:Microsoft.Xaml.Interactions.Core"
 	  xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+	  xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	  mc:Ignorable="d">
 
 	<Page.Background>
@@ -197,14 +198,13 @@
 						</Grid>
 
 					</StackPanel>
-					<community:InAppNotification x:Name="SettingsNotification"
-												 Grid.Row="1"
-												 Background="{StaticResource ErrorNotificationBackground}"
-												 ShowDismissButton="True"
-												 AnimationDuration="00:00:00.1000000"
-												 VerticalOffset="100"
-												 HorizontalOffset="0"
-												 StackMode="Replace" />
+					<muxc:InfoBar x:Name="SettingsNotification"
+								  Grid.Row="1"
+								  Margin="10"
+								  IsClosable="True"
+								  Severity="Error"
+								  HorizontalAlignment="Stretch"
+								  VerticalAlignment="Center" />
 				</Grid>
 			</ScrollViewer>
 		</SplitView>
