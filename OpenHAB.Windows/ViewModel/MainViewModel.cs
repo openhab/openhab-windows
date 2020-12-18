@@ -273,6 +273,8 @@ namespace OpenHAB.Windows.ViewModel
                     return;
                 }
 
+                _settingsService.ServerVersion = _version;
+
                 if (cancellationToken.IsCancellationRequested)
                 {
                     return;

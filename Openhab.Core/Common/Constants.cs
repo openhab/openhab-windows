@@ -29,12 +29,22 @@
             /// <summary>
             /// Url used for Demo mode.
             /// </summary>
-            public const string DemoModeUrl = "http://demo.openhab.org:8080/";
+            public const string DemoModeUrl = "https://demo.openhab.org/";
 
             /// <summary>
-            /// The call to determine the OpenHAB version.
+            /// Username for demo system.
             /// </summary>
-            public const string ServerVersion = "rest/bindings";
+            public const string DemoModeUser = "demo";
+
+            /// <summary>
+            /// User password for demo system.
+            /// </summary>
+            public const string DemoModeUserPwd = "demo";
+
+            /// <summary>
+            /// The call to get information about OpenHAB instance.
+            /// </summary>
+            public const string ServerInformation = "rest/";
 
             /// <summary>
             /// The call to fetch the sitemaps.
