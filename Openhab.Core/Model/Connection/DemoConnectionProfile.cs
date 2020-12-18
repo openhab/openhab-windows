@@ -50,6 +50,8 @@ namespace OpenHAB.Core.Model.Connection
             {
                 Type = OpenHABHttpClientType.Remote,
                 Url = Constants.Api.DemoModeUrl,
+                Username = Constants.Api.DemoModeUser,
+                Password = Constants.Api.DemoModeUserPwd
             };
         }
     }
