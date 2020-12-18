@@ -17,6 +17,8 @@ namespace OpenHAB.Windows.Converters
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             var settingsService = (ISettingsService)DIService.Instance.Services.GetService(typeof(ISettingsService));
+            OpenHABVersion openHABVersion = settingsService.ServerVersion;
+
             var serverUrl = OpenHABHttpClient.BaseUrl;
 
             var widget = value as OpenHABWidget;
@@ -28,7 +30,7 @@ namespace OpenHAB.Windows.Converters
                 state = regMatch.Value;
             }
 
-            return settingsService.ServerVersion == OpenHABVersion.Two ?
+            return openHABVersion == OpenHABVersion.Two || openHABVersion == OpenHABVersion.Three ?
                 $"{serverUrl}icon/{widget.Icon}?state={state}&format=png" :
                 $"{serverUrl}images/{widget.Icon}.png";
         }
