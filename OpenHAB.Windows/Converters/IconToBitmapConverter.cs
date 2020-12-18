@@ -16,9 +16,10 @@ namespace OpenHAB.Windows.Converters
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             var settingsService = (ISettingsService)DIService.Instance.Services.GetService(typeof(ISettingsService));
-            var serverUrl = Core.Common.OpenHABHttpClient.BaseUrl;
+            OpenHABVersion openHABVersion = settingsService.ServerVersion;
 
-            string url = settingsService.ServerVersion == OpenHABVersion.Two ? $"{serverUrl}icon/{value}?state=UNDEF&format=png" : $"{serverUrl}images/{value}.png";
+            var serverUrl = Core.Common.OpenHABHttpClient.BaseUrl;
+            string url = openHABVersion == OpenHABVersion.Two || openHABVersion == OpenHABVersion.Three ? $"{serverUrl}icon/{value}?state=UNDEF&format=png" : $"{serverUrl}images/{value}.png";
 
             return new BitmapImage(new Uri(url));
         }
