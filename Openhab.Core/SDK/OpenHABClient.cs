@@ -101,16 +101,32 @@ namespace OpenHAB.Core.SDK
                     return OpenHABVersion.None;
                 }
 
-                var result = await httpClient.GetAsync(Constants.Api.ServerVersion).ConfigureAwait(false);
+                HttpResponseMessage result = await httpClient.GetAsync(Constants.Api.ServerInformation).ConfigureAwait(false);
                 if (!result.IsSuccessStatusCode)
                 {
                     _logger.LogError($"Http request get OpenHab version failed, ErrorCode:'{result.StatusCode}'");
                     throw new OpenHABException($"{result.StatusCode} received from server");
                 }
 
-                _settingsService.ServerVersion = !result.IsSuccessStatusCode ? OpenHABVersion.One : OpenHABVersion.Two;
+                string responseBody = await result.Content.ReadAsStringAsync();
 
-                return _settingsService.ServerVersion;
+                OpenHabAPIInfo apiInfo = JsonConvert.DeserializeObject<OpenHabAPIInfo>(responseBody);
+                if (apiInfo.Version < 4)
+                {
+                    return OpenHABVersion.Three;
+                }
+
+                if (!Version.TryParse(apiInfo?.RuntimeInfo.Version, out Version serverVersion))
+                 {
+                    string message = "Not able to parse runtime verion from openHAB server";
+                    _logger.LogError(message);
+
+                    throw new OpenHABException(message);
+                }
+
+                OpenHABVersion openHABVersion = (OpenHABVersion)serverVersion.Major;
+
+                return openHABVersion;
             }
             catch (ArgumentNullException ex)
             {
