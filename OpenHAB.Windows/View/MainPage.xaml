@@ -9,6 +9,7 @@
 	  xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:viewModel="using:OpenHAB.Windows.ViewModel"
+	  xmlns:controls="using:OpenHAB.Windows.Controls"
 	  mc:Ignorable="d"
 	  Name="Page">
 	<Page.Background>
@@ -35,15 +36,15 @@
 						 Color="#FFFF5722" />
 
 		<SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver"
-						 Color="white" />
+						 Color="#FFFF5722" />
 		<SolidColorBrush x:Key="NavigationViewItemForegroundSelected"
-						 Color="white" />
+						 Color="#FFFF5722" />
 		<SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPointerOver"
-						 Color="white" />
+						 Color="white"/>
 		<SolidColorBrush x:Key="NavigationViewItemForegroundPressed"
 						 Color="white" />
 		<SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPressed"
-						 Color="white" />
+						 Color="#FFFF5722" />
 		<SolidColorBrush x:Key="NavigationViewItemForeground"
 						 Color="White" />
 
@@ -56,20 +57,19 @@
 		<converters:MenuItemTemplateSelector x:Key="Selector">
 			<converters:MenuItemTemplateSelector.DefaultItemTemlate>
 				<DataTemplate x:DataType="muxc:NavigationViewItem">
-					<muxc:NavigationViewItem Content="{x:Bind Content}"
+					<muxc:NavigationViewItem FontSize="18"
+											  Content="{x:Bind Content}"
 											 Icon="{x:Bind Icon}">
 					</muxc:NavigationViewItem>
 				</DataTemplate>
 			</converters:MenuItemTemplateSelector.DefaultItemTemlate>
 			<converters:MenuItemTemplateSelector.SiteMapMenuItemTemplate>
 				<DataTemplate x:DataType="viewModel:SitemapViewModel">
-					<muxc:NavigationViewItem Content="{x:Bind Name, Mode=OneWay}"
-											 FontSize="24">
+					<muxc:NavigationViewItem Content="{x:Bind Name, Mode=OneWay}" FontSize="18">
 						<muxc:NavigationViewItem.Icon>
 							<BitmapIcon UriSource="ms-appx:///Assets/openhab.png"
-										VerticalAlignment="Center"
 										Width="25"
-										Height="25" />
+										Height="25"/>
 						</muxc:NavigationViewItem.Icon>
 					</muxc:NavigationViewItem>
 				</DataTemplate>
@@ -132,7 +132,7 @@
 							 IsSettingsVisible="True"
 							 OpenPaneLength="200"
 							 CompactPaneLength="45"
-							 PaneDisplayMode="LeftMinimal"
+							 PaneDisplayMode="Left"
 							 IsPaneOpen="False"
 							 SelectionChanged="SitemapNavigation_SelectionChanged"
 							 HeaderTemplate="{StaticResource NavHeaderTemplate}">
@@ -219,7 +219,7 @@
 			</Grid>
 		</muxc:NavigationView>
 
-		<community:Loading x:Name="LoadingControl"
+		<!--<community:Loading x:Name="LoadingControl"
 						   IsLoading="{x:Bind Vm.IsDataLoading, Mode=TwoWay}"
 						   HorizontalContentAlignment="Center"
 						   VerticalContentAlignment="Center">
@@ -229,6 +229,38 @@
 			</community:Loading.Background>
 			<ContentControl x:Name="LoadingContentControl"
 							ContentTemplate="{StaticResource WaitListTemplate}" />
-		</community:Loading>
+		</community:Loading>-->
+
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup>
+				<VisualState>
+					<VisualState.StateTriggers>
+						<controls:DeviceFamilyStateTrigger TargetDeviceFamily="Desktop" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="SitemapNavigation.PaneDisplayMode"
+								Value="Left" />
+					</VisualState.Setters>
+				</VisualState>
+				<VisualState>
+					<VisualState.StateTriggers>
+						<controls:DeviceFamilyStateTrigger TargetDeviceFamily="Mobile" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="SitemapNavigation.PaneDisplayMode"
+								Value="LeftCompact" />
+					</VisualState.Setters>
+				</VisualState>
+				<VisualState>
+					<VisualState.StateTriggers>
+						<controls:DeviceFamilyStateTrigger TargetDeviceFamily="Xbox" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="SitemapNavigation.PaneDisplayMode"
+								Value="LeftMinimal" />
+					</VisualState.Setters>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
 	</Grid>
 </Page>

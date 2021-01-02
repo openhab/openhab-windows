@@ -134,6 +134,7 @@
     <Compile Include="Controls\ConnectionDialog.xaml.cs">
       <DependentUpon>ConnectionDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DeviceFamilyStateTrigger.cs" />
     <Compile Include="Controls\FrameWidget.xaml.cs">
       <DependentUpon>FrameWidget.xaml</DependentUpon>
     </Compile>
@@ -393,6 +394,9 @@
   <ItemGroup>
     <SDKReference Include="Microsoft.Services.Store.Engagement, Version=10.0">
       <Name>Microsoft Engagement Framework</Name>
+    </SDKReference>
+    <SDKReference Include="WindowsDesktop, Version=10.0.19041.0">
+      <Name>Windows Desktop Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
