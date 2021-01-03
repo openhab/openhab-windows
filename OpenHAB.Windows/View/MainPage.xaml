@@ -234,14 +234,25 @@
 							  HorizontalAlignment="Stretch"
 							  VerticalAlignment="Center" />
 
-				<muxc:InfoBar x:Name="InfoNotification"
-							  Grid.Row="1"
-							  Margin="-25,10,10,10"
-							  Severity="Informational"
-							  IsClosable="True"
-							  HorizontalAlignment="Stretch"
-							  VerticalAlignment="Center" />
-			</Grid>
+                <muxc:InfoBar x:Name="InfoNotification"
+                              Grid.Row="1"
+                              Margin="-25,10,10,10"
+                              Severity="Informational"
+                              IsClosable="True"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Center">
+                    <muxc:InfoBar.ActionButton>
+                        <Button x:Name="SettingsButtonInfoNotification"
+                                x:Uid="InfoAppBarSettingsButton">
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="Tapped">
+                                    <core:NavigateToPageAction TargetPage="OpenHAB.Windows.View.SettingsPage" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                        </Button>
+                    </muxc:InfoBar.ActionButton>
+                </muxc:InfoBar>
+            </Grid>
 		</NavigationView>
 
 		<community:Loading x:Name="LoadingControl"
