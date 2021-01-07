@@ -6,7 +6,7 @@
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   d:DesignHeight="150"
                   d:DesignWidth="300"
-                  mc:Ignorable="d">
+                  mc:Ignorable="d" Loaded="SetPointWidget_Loaded">
 
 	<Grid Style="{StaticResource Widget}">
         <Grid.ColumnDefinitions>
@@ -31,10 +31,12 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Margin="0,0,0,3"
-                       HorizontalAlignment="Center"
-                       FontSize="20"
-                       Text="{x:Bind Widget.Item.State, Mode=TwoWay}" />
+                <ComboBox Margin="0,4,0,0"
+                      x:Name="comboBox"
+                      HorizontalAlignment="Stretch"
+                      FontSize="16"
+                      Width="Auto" VerticalAlignment="Stretch"
+                      />
                 <Grid Grid.Row="1" Margin="0,3,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -48,8 +50,9 @@
                         Click="ButtonUp_Click">
                             <TextBlock AutomationProperties.Name="ArrowUp"
                             FontFamily="Segoe MDL2 Assets"
+
                             Text="&#xE74A;" />
-                       </Button>
+                    </Button>
                     <Button 
                         Grid.Column="1"
                         Height="40"
@@ -57,6 +60,7 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         Click="ButtonDown_Click">
+                        
                             <TextBlock AutomationProperties.Name="ArrowDown"
                                FontFamily="Segoe MDL2 Assets"
                                RenderTransformOrigin="0.5,0.5"
@@ -64,8 +68,9 @@
                                 <TextBlock.RenderTransform>
                                     <RotateTransform Angle="180" />
                                 </TextBlock.RenderTransform>
-                            </TextBlock>
+                        </TextBlock>
                     </Button>
+                            
                 </Grid>
                 
             </Grid>

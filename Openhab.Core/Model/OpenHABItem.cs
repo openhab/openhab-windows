@@ -154,7 +154,7 @@ namespace OpenHAB.Core.Model
         {
             string newstate = Regex.Replace(_state, "[^0-9,.]", string.Empty);
             double value = 0;
-            _ = double.TryParse(newstate, out value);
+            _ = double.TryParse(newstate, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out value);
 
             return value;
         }
