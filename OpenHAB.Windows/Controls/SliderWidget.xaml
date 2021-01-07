@@ -22,7 +22,6 @@
                           LabelText="{x:Bind Widget.Label, Mode=OneWay}"
                           Tapped="Widget_OnTapped" />
 
-
         <local:RadialSlider 
                             x:Name="radialSlider"
                             Grid.Column="1"
