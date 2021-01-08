@@ -22,8 +22,8 @@ jobs:
       with:
         nuget-version:  'latest'
     
-    - name: Setup msbuild
-      uses: warrenbuckley/Setup-MSBuild@v1
+    - name: setup-msbuild
+      uses: microsoft/setup-msbuild@v1
 
     - name: Restore nuget packages
       run: nuget restore ${{github.workspace}}\OpenHAB.Windows.sln
