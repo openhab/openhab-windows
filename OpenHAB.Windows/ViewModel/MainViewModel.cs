@@ -117,6 +117,7 @@ namespace OpenHAB.Windows.ViewModel
                     if (_selectedSitemap != null)
                     {
                         _settingsService.SaveCurrentSitemap(_selectedSitemap.Name);
+                        Subtitle = _selectedSitemap.Label;
                     }
 
                     if (_selectedSitemap?.Widgets == null || _selectedSitemap?.Widgets.Count == 0)
@@ -385,9 +386,13 @@ namespace OpenHAB.Windows.ViewModel
             IsDataLoading = true;
 
             await SelectedSitemap.LoadWidgets(_version).ConfigureAwait(false);
-            SetWidgetsOnScreen(SelectedSitemap.Widgets);
+            await SetWidgetsOnScreen(SelectedSitemap.Widgets);
 
-            IsDataLoading = false;
+            CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
+            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                IsDataLoading = false;
+            });
         }
 
         private void OnWidgetClicked(OpenHABWidget widget)
@@ -404,10 +409,10 @@ namespace OpenHAB.Windows.ViewModel
             SetWidgetsOnScreen(SelectedWidget?.LinkedPage?.Widgets);
         }
 
-        private async void SetWidgetsOnScreen(ICollection<OpenHABWidget> widgets)
+        private async Task SetWidgetsOnScreen(ICollection<OpenHABWidget> widgets)
         {
             CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
-            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 CurrentWidgets.Clear();
                 CurrentWidgets.AddRange(widgets);

@@ -134,12 +134,14 @@
     <Compile Include="Model\EventStreamData.cs" />
     <Compile Include="Model\EventStreamPayload.cs" />
     <Compile Include="Model\OpenHABCommand.cs" />
+    <Compile Include="Model\OpenHABCommandOptions.cs" />
     <Compile Include="Model\Connection\OpenHABConnection.cs" />
     <Compile Include="Model\OpenHABItem.cs" />
     <Compile Include="Model\OpenHABSitemap.cs" />
     <Compile Include="Model\OpenHABUrlState.cs" />
     <Compile Include="Model\OpenHABWidgetFactory.cs" />
     <Compile Include="Model\OpenHABWidget.cs" />
+    <Compile Include="Model\OpenHABCommandDescription.cs" />
     <Compile Include="Model\OpenHABWidgetMapping.cs" />
     <Compile Include="Contracts\Services\IDependencyInjectionService.cs" />
     <Compile Include="Model\Settings.cs" />

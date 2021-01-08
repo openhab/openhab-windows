@@ -267,4 +267,7 @@ Please select demo mode or configure local/remote connection.</value>
   <data name="ShowDefaultSitemap.Text" xml:space="preserve">
     <value>Show default sitemaps</value>
   </data>
+  <data name="InfoAppBarSettingsButton.Content" xml:space="preserve">
+    <value>Settings</value>
+  </data>
 </root>

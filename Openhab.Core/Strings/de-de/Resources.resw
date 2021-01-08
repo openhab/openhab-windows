@@ -263,4 +263,7 @@ Bitte wählen Sie den Demo Modus oder die Lokalen/Remote Verbindunsinformation z
   <data name="ShowDefaultSitemap.Text" xml:space="preserve">
     <value>Standard Sitemaps einblenden</value>
   </data>
+  <data name="InfoAppBarSettingsButton.Content" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
 </root>
