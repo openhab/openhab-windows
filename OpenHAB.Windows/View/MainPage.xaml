@@ -40,7 +40,7 @@
 		<SolidColorBrush x:Key="NavigationViewItemForegroundSelected"
 						 Color="#FFFF5722" />
 		<SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPointerOver"
-						 Color="white"/>
+						 Color="white" />
 		<SolidColorBrush x:Key="NavigationViewItemForegroundPressed"
 						 Color="white" />
 		<SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPressed"
@@ -58,18 +58,19 @@
 			<converters:MenuItemTemplateSelector.DefaultItemTemlate>
 				<DataTemplate x:DataType="muxc:NavigationViewItem">
 					<muxc:NavigationViewItem FontSize="18"
-											  Content="{x:Bind Content}"
+											 Content="{x:Bind Content}"
 											 Icon="{x:Bind Icon}">
 					</muxc:NavigationViewItem>
 				</DataTemplate>
 			</converters:MenuItemTemplateSelector.DefaultItemTemlate>
 			<converters:MenuItemTemplateSelector.SiteMapMenuItemTemplate>
 				<DataTemplate x:DataType="viewModel:SitemapViewModel">
-					<muxc:NavigationViewItem Content="{x:Bind Name, Mode=OneWay}" FontSize="18">
+					<muxc:NavigationViewItem Content="{x:Bind Name, Mode=OneWay}"
+											 FontSize="18">
 						<muxc:NavigationViewItem.Icon>
 							<BitmapIcon UriSource="ms-appx:///Assets/openhab.png"
 										Width="25"
-										Height="25"/>
+										Height="25" />
 						</muxc:NavigationViewItem.Icon>
 					</muxc:NavigationViewItem>
 				</DataTemplate>
@@ -200,7 +201,7 @@
 						</GridView.ItemsPanel>
 					</GridView>
 				</ScrollViewer>
-				
+
 				<muxc:InfoBar x:Name="ErrorNotification"
 							  Grid.Row="1"
 							  Margin="0,10,10,10"
@@ -215,11 +216,22 @@
 							  Severity="Informational"
 							  IsClosable="True"
 							  HorizontalAlignment="Stretch"
-							  VerticalAlignment="Center" />
+							  VerticalAlignment="Center">
+					<muxc:InfoBar.ActionButton>
+						<Button x:Name="SettingsButtonInfoNotification"
+								x:Uid="InfoAppBarSettingsButton">
+							<interactivity:Interaction.Behaviors>
+								<core:EventTriggerBehavior EventName="Tapped">
+									<core:NavigateToPageAction TargetPage="OpenHAB.Windows.View.SettingsPage" />
+								</core:EventTriggerBehavior>
+							</interactivity:Interaction.Behaviors>
+						</Button>
+					</muxc:InfoBar.ActionButton>
+				</muxc:InfoBar>
 			</Grid>
 		</muxc:NavigationView>
 
-		<!--<community:Loading x:Name="LoadingControl"
+		<community:Loading x:Name="LoadingControl"
 						   IsLoading="{x:Bind Vm.IsDataLoading, Mode=TwoWay}"
 						   HorizontalContentAlignment="Center"
 						   VerticalContentAlignment="Center">
@@ -229,7 +241,7 @@
 			</community:Loading.Background>
 			<ContentControl x:Name="LoadingContentControl"
 							ContentTemplate="{StaticResource WaitListTemplate}" />
-		</community:Loading>-->
+		</community:Loading>
 
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup>
