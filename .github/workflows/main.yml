@@ -1,13 +1,19 @@
-name: CI
+name: 'CI_${{github.run_number}}'
+
+env:
+  releaseName: 'CI_${{github.run_number}}'
 
 on:
   push:
     branches: 
       - master
       - features/*
+      - fixes/*
+      - releases/* 
 
 jobs:
   build:
+    name: 'Build openHAB Windows App'
     runs-on: windows-latest
 
     steps:
@@ -32,28 +38,31 @@ jobs:
       run: msbuild.exe ${{github.workspace}}\OpenHAB.Windows.sln /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxPackageDir="${{github.workspace}}\build\" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="release"
 
     - name: Upload build assets
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2.2.2
       with:
         name: app
         path: ${{github.workspace}}\build\
-    
-    - name: Create a Release
-      if: github.ref == 'refs/heads/master'
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-         tag_name: ${{ github.sha }}
-         release_name: Release ${{ github.sha }}
       
-    - name: Upload Release Asset
+  release:
+      name: 'Creates an app release'
+      runs-on: windows-latest 
       if: github.ref == 'refs/heads/master'
-      id: upload-release-asset 
-      uses: actions/upload-release-asset@v1.0.1
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{steps.create_release.outputs.upload_url}} 
-        asset_path: ${{github.workspace}}\build\
-        asset_name: OpenHab UWP App
+      steps:
+          - name: Create a Release
+            id: create_release
+            uses: actions/create-release@v1.1.4
+            env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            with:
+               tag_name: ${{github.GITHUB_REF}
+               release_name: Release ${{env.releaseName}}
+               
+          - name: Upload Release Asset
+            id: upload-release-asset 
+            uses: actions/upload-release-asset@v1.0.2
+            env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            with:
+              upload_url: ${{steps.create_release.outputs.upload_url}} 
+              asset_path: ${{github.workspace}}\build\
+              asset_name: OpenHab UWP App
