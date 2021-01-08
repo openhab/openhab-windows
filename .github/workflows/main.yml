@@ -1,4 +1,4 @@
-name: 'CI_${{github.run_number}}'
+name: 'CI'
 
 env:
   releaseName: 'CI_${{github.run_number}}'
