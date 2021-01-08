@@ -65,7 +65,7 @@
 						   VerticalAlignment="Center"
 						   Foreground="{StaticResource OpenHABMenuColor}"
 						   Style="{StaticResource FlyoutPickerTitleTextBlockStyle}"
-						   Text="{x:Bind Name, Mode=OneWay}"
+						   Text="{x:Bind Label, Mode=OneWay}"
 						   TextWrapping="Wrap" />
 			</StackPanel>
 		</DataTemplate>
