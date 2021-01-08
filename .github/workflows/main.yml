@@ -16,11 +16,11 @@ jobs:
       with:
         path: src
         clean: true
-         
-    - name: Install latest Nuget
-      uses: NuGet/setup-nuget@v1.0.2
+    
+    - name: Setup NuGet.exe for use with actions
+      uses: NuGet/setup-nuget@v1.0.5
       with:
-        nuget-version: '5.x'
+        nuget-version:  'latest'
     
     - name: Setup msbuild
       uses: warrenbuckley/Setup-MSBuild@v1
