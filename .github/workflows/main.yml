@@ -16,7 +16,15 @@ jobs:
       with:
         path: src
         clean: true
-         
+
+    - name: Update Version Number
+      shell: pwsh
+      run: ./scripts/Set-Version.ps1 -SourceDirectory '${{github.workspace}}\' -Major '2021' -Minor '1' -Build '9'
+        
+    - name: Update Version Number
+      shell: pwsh
+      run: echo ${{$BUILD_NUMBER}}
+
     - name: Install latest Nuget
       uses: NuGet/setup-nuget@v1.0.2
       with:
