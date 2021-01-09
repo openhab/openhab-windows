@@ -28,11 +28,11 @@ jobs:
       shell: pwsh
       run: | 
             Set-Location '${{github.workspace}}\.github\workflows\scripts'
-            ./Set-Version.ps1 -SourceDirectory '${{github.workspace}}\' -Major '2021' -Minor '1' -Build '9'
+            ./Set-Version.ps1 -SourceDirectory '${{github.workspace}}\' -Major '2021' -Minor '1' -Build '9' -SetVersion
 
     - name: Printout Version Number
       shell: pwsh
-      run: echo 'New Version Number $BUILD_NUMBER'
+      run: echo 'New Version Number:' $BUILD_NUMBER
 
     - name: Setup NuGet.exe for use with actions
       uses: NuGet/setup-nuget@v1.0.5
