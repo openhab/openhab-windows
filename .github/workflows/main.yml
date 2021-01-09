@@ -26,8 +26,10 @@ jobs:
     
     - name: Update Version Number
       shell: pwsh
-      run: ./${{github.workspace}}/.github/workflows/scripts/Set-Version.ps1 -SourceDirectory '${{github.workspace}}\' -Major '2021' -Minor '1' -Build '9'
-        
+      run: | 
+            Set-Location '${{github.workspace}}/.github/workflow/scripts/' 
+            ./Set-Version.ps1 -SourceDirectory '${{github.workspace}}\' -Major '2021' -Minor '1' -Build '9'
+
     - name: Printout Version Number
       shell: pwsh
       run: echo 'New Version Number $BUILD_NUMBER'
