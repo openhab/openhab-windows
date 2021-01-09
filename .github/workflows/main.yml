@@ -2,6 +2,7 @@ name: 'CI'
 
 env:
   releaseName: 'CI_${{github.run_number}}'
+  BUILD_NUMBER: '1970.1.1'
 
 on:
   push:
@@ -29,7 +30,7 @@ jobs:
         
     - name: Update Version Number
       shell: pwsh
-      run: echo 'New Version Number ${{BUILD_NUMBER}}'
+      run: echo 'New Version Number $BUILD_NUMBER'
 
     - name: Setup NuGet.exe for use with actions
       uses: NuGet/setup-nuget@v1.0.5
