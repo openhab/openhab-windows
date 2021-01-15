@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
+using System.Xml.Linq;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Toolkit.Uwp.Notifications;
 using OpenHAB.Core.Common;
@@ -14,6 +16,7 @@ namespace OpenHAB.Core.Services
 
     public class NotificationManager : INotificationManager
     {
+        private IItemManager _itemManager;
         private string _iconFormat;
         private IItemManager _itemManager;
 
