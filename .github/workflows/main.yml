@@ -28,21 +28,22 @@ jobs:
       shell: pwsh
       run: |
            $version = "$([System.DateTime]::Now.Year).$([System.DateTime]::Now.Month).$([System.DateTime]::Now.Day)"
+           echo "BUILD_NUMBER=$version" >> $GITHUB_ENV
+
            Write-Host "Set version number for build to $version"
 
-           echo "BUILD_NUMBER=$version" >> $GITHUB_ENV
 
     - name: Update Version Number in app files
       shell: pwsh
       run: | 
             Set-Location '${{github.workspace}}\.github\workflows\scripts'
-            ./Set-Version.ps1 -SourceDirectory '${{github.workspace}}\' -Major [System.DateTime]::Now.Year -Minor [System.DateTime]::Now.Month -Build [System.DateTime]::Now.Day -SetVersion
-            
 
-    - name: Printout Version Number
-      shell: pwsh
-      run: echo New Version Number - $BUILD_NUMBER
+            $major = [System.DateTime]::Now.Year
+            $minor = [System.DateTime]::Now.Month
+            $build = [System.DateTime]::Now.Day 
 
+            ./Set-Version.ps1 -SourceDirectory '${{github.workspace}}\' -Major $major -Minor $minor -Build $build -SetVersion
+         
     - name: Setup NuGet.exe for use with actions
       uses: NuGet/setup-nuget@v1.0.5
       with:
@@ -76,7 +77,7 @@ jobs:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             with:
                tag_name: $BUILD_NUMBER
-               release_name: $BUILD_NUMBER}}
+               release_name: $BUILD_NUMBER
                
           - name: Upload Release Asset
             id: upload-release-asset 
