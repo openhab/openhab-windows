@@ -24,11 +24,17 @@ jobs:
         path: src
         clean: true
     
-    - name: Update Version Number
+    - name: Set version number for build
+      shell: pwsh
+      run: |
+           $version = "$([System.DateTime]::Now.Year).$([System.DateTime]::Now.Month).$([System.DateTime]::Now.Day)"
+           Write-Host "Set version number for build to $version"
+
+           echo "BUILD_NUMBER=$version" >> $GITHUB_ENV
+
+    - name: Update Version Number in app files
       shell: pwsh
       run: | 
-            echo "BUILD_NUMBER=$([System.DateTime]::Now.Year).$([System.DateTime]::Now.Month).$([System.DateTime]::Now.Day)" >> $GITHUB_ENV
-
             Set-Location '${{github.workspace}}\.github\workflows\scripts'
             ./Set-Version.ps1 -SourceDirectory '${{github.workspace}}\' -Major [System.DateTime]::Now.Year -Minor [System.DateTime]::Now.Month -Build [System.DateTime]::Now.Day -SetVersion
             
@@ -59,7 +65,8 @@ jobs:
       
   release:
       name: 'Creates an app release'
-      runs-on: windows-latest 
+      runs-on: windows-latest
+      needs: build
       #if: github.ref == 'refs/heads/master'
       steps:
           - name: Create a Release
