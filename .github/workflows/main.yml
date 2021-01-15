@@ -27,12 +27,15 @@ jobs:
     - name: Update Version Number
       shell: pwsh
       run: | 
+            echo "BUILD_NUMBER=$([System.DateTime]::Now.Year).$([System.DateTime]::Now.Month).$([System.DateTime]::Now.Day)" >> $GITHUB_ENV
+
             Set-Location '${{github.workspace}}\.github\workflows\scripts'
-            ./Set-Version.ps1 -SourceDirectory '${{github.workspace}}\' -Major '2021' -Minor '1' -Build '9' -SetVersion
+            ./Set-Version.ps1 -SourceDirectory '${{github.workspace}}\' -Major [System.DateTime]::Now.Year -Minor [System.DateTime]::Now.Month -Build [System.DateTime]::Now.Day -SetVersion
+            
 
     - name: Printout Version Number
       shell: pwsh
-      run: echo 'New Version Number:' $BUILD_NUMBER
+      run: echo New Version Number - $BUILD_NUMBER
 
     - name: Setup NuGet.exe for use with actions
       uses: NuGet/setup-nuget@v1.0.5
@@ -57,7 +60,7 @@ jobs:
   release:
       name: 'Creates an app release'
       runs-on: windows-latest 
-      if: github.ref == 'refs/heads/master'
+      #if: github.ref == 'refs/heads/master'
       steps:
           - name: Create a Release
             id: create_release
@@ -65,8 +68,8 @@ jobs:
             env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             with:
-               tag_name: ${{github.GITHUB_REF}}
-               release_name: Release ${{env.releaseName}}
+               tag_name: $BUILD_NUMBER
+               release_name: $BUILD_NUMBER}}
                
           - name: Upload Release Asset
             id: upload-release-asset 
