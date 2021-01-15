@@ -197,6 +197,7 @@
     <Compile Include="Converters\WidgetTemplateSelector.cs" />
     <Compile Include="Converters\ZeroToVisibilityConverter.cs" />
     <Compile Include="DIService.cs" />
+    <Compile Include="ErrorMessageTranslator.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ViewModel\ConfigurationViewModel.cs" />

@@ -45,11 +45,11 @@ namespace OpenHAB.Core.SDK
         }
 
         /// <inheritdoc/>
-        public async Task<bool> CheckUrlReachability(OpenHABConnection connection)
+        public async Task<HttpResponseResult<bool?, ErrorTypes?>> CheckUrlReachability(OpenHABConnection connection)
         {
             if (string.IsNullOrWhiteSpace(connection?.Url))
             {
-                return false;
+                return new HttpResponseResult<bool?, ErrorTypes?>(null, ErrorTypes.UrlNotDefined, null);
             }
 
             if (!connection.Url.EndsWith("/", StringComparison.InvariantCultureIgnoreCase))
@@ -65,27 +65,28 @@ namespace OpenHAB.Core.SDK
 
                 if (result.IsSuccessStatusCode)
                 {
-                    return true;
+                    return new HttpResponseResult<bool?, ErrorTypes?>(true, null, result.StatusCode);
                 }
             }
             catch (InvalidOperationException ex)
             {
                 _logger.LogError(ex, "CheckUrlReachability failed");
 
-                return false;
+                return new HttpResponseResult<bool?, ErrorTypes?>(null, ErrorTypes.HTTPError, null, ex);
             }
             catch (HttpRequestException ex)
             {
                 _logger.LogError(ex, "CheckUrlReachability failed");
 
-                return false;
+                return new HttpResponseResult<bool?, ErrorTypes?>(null, ErrorTypes.HTTPError, null, ex);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "CheckUrlReachability failed.");
+                return new HttpResponseResult<bool?, ErrorTypes?>(null, ErrorTypes.HTTPError, null, ex);
             }
 
-            return false;
+            return new HttpResponseResult<bool?, ErrorTypes?>(false, null, null);
         }
 
         /// <inheritdoc />
@@ -117,7 +118,7 @@ namespace OpenHAB.Core.SDK
                 }
 
                 if (!Version.TryParse(apiInfo?.RuntimeInfo.Version, out Version serverVersion))
-                 {
+                {
                     string message = "Not able to parse runtime verion from openHAB server";
                     _logger.LogError(message);
 
@@ -389,10 +390,16 @@ namespace OpenHAB.Core.SDK
                 return true;
             }
 
-            bool isReachable = await CheckUrlReachability(settings.LocalConnection).ConfigureAwait(false);
-            _logger.LogInformation($"OpenHab server is reachable: {isReachable}");
+            HttpResponseResult<bool?, ErrorTypes?> result = await CheckUrlReachability(settings.LocalConnection).ConfigureAwait(false);
+            _logger.LogInformation($"OpenHab server is reachable: {result.Content}");
 
-            if (isReachable)
+            if (result.Error.HasValue)
+            {
+                 Messenger.Default.Send<FireErrorMessage>(new FireErrorMessage(ErrorTypes.UrlNotDefined, null));
+                 return false;
+            }
+
+            if (result.Content.Value)
             {
                 OpenHABHttpClient.BaseUrl = settings.LocalConnection.Url;
                 _connection = settings.LocalConnection;
@@ -402,20 +409,28 @@ namespace OpenHAB.Core.SDK
             else
             {
                 // If remote URL is configured
-                if (!string.IsNullOrWhiteSpace(settings.RemoteConnection?.Url) &&
-                    await CheckUrlReachability(settings.RemoteConnection).ConfigureAwait(false))
+                if (string.IsNullOrWhiteSpace(settings.RemoteConnection?.Url))
                 {
-                    OpenHABHttpClient.BaseUrl = settings.RemoteConnection.Url;
-                    _connection = settings.RemoteConnection;
-                    return true;
+                    Messenger.Default.Send<FireInfoMessage>(new FireInfoMessage(MessageType.NotReachable));
+                    _logger.LogWarning($"OpenHab server url is not valid");
+
+                    return false;
                 }
 
-                Messenger.Default.Send<FireInfoMessage>(new FireInfoMessage(MessageType.NotReachable));
+                result = await CheckUrlReachability(settings.RemoteConnection).ConfigureAwait(false);
+                if (result.Error != null || !result.Content.Value)
+                {
+                    Messenger.Default.Send<FireInfoMessage>(new FireInfoMessage(MessageType.NotReachable));
+                    _logger.LogWarning($"OpenHab server url is not valid");
+
+                    return false;
+                }
+
+                OpenHABHttpClient.BaseUrl = settings.RemoteConnection.Url;
+                _connection = settings.RemoteConnection;
+
+                return true;
             }
-
-            _logger.LogWarning($"OpenHab server url is not valid");
-
-            return false;
         }
     }
 }

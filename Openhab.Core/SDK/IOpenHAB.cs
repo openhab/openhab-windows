@@ -56,6 +56,6 @@ namespace OpenHAB.Core.SDK
         /// <summary>Checks the URL reachability.</summary>
         /// <param name="connection">Defines settings for local or remote connections.</param>
         /// <returns>>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        Task<bool> CheckUrlReachability(OpenHABConnection connection);
+        Task<HttpResponseResult<bool?, ErrorTypes?>> CheckUrlReachability(OpenHABConnection connection);
     }
 }

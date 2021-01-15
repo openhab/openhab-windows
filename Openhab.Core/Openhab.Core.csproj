@@ -105,12 +105,14 @@
   <ItemGroup>
     <Compile Include="AppResources.cs" />
     <Compile Include="Common\ActionCommand.cs" />
+    <Compile Include="Common\ErrorTypes.cs" />
     <Compile Include="Common\ColorChangedEventArgs.cs" />
     <Compile Include="Common\ColorHelper.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\DataErrorInfo.cs" />
     <Compile Include="Common\DeviceFamily.cs" />
     <Compile Include="Common\DeviceTypeHelper.cs" />
+    <Compile Include="Common\HttpResponseResult.cs" />
     <Compile Include="Common\ObservableCollectionExtensions.cs" />
     <Compile Include="Model\Connection\CloudConnectionProfile.cs" />
     <Compile Include="Model\Connection\DemoConnectionProfile.cs" />
@@ -150,6 +152,7 @@
     <Compile Include="Common\OpenHABHttpClient.cs" />
     <Compile Include="Model\OpenHabVersion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SDK\ErrorMessageTranslator.cs" />
     <Compile Include="SDK\IOpenHAB.cs" />
     <Compile Include="SDK\OpenHABClient.cs" />
     <Compile Include="Services\SettingsService.cs" />
