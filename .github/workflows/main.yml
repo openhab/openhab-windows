@@ -2,7 +2,7 @@ name: 'CI'
 
 env:
   releaseName: 'CI_${{github.run_number}}'
-  BUILD_NUMBER: '1970.1.1'
+  #BUILD_NUMBER: '1970.1.1'
 
 on:
   push:
