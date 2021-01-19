@@ -33,6 +33,9 @@ jobs:
            $revision = ${{github.run_number}}
 
            $version = "$major.$minor.$build.$revision"
+
+           Write-Host "Generated version number: $version"
+
            echo "BUILD_NUMBER=$version" >> $GITHUB_ENV
 
            Write-Host "Set version number for build to $version"
