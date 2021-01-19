@@ -2,6 +2,7 @@ name: 'CI'
 
 env:
   releaseName: 'CI_${{github.run_number}}'
+  RUN_NUMBER: ${{GITHUB_RUN_NUMBER}}
   BUILD_NUMBER: '1970.1.1'
 
 on:
@@ -30,7 +31,7 @@ jobs:
            $major = [System.DateTime]::Now.Year
            $minor = [System.DateTime]::Now.Month
            $build = [System.DateTime]::Now.Day 
-           $revision = ${{GITHUB_RUN_NUMBER}}
+           $revision = ${RUN_NUMBER}
 
            $version = "$major.$minor.$build.$revision"
            echo "BUILD_NUMBER=$version" >> $GITHUB_ENV
