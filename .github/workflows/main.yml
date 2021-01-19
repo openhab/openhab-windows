@@ -27,11 +27,15 @@ jobs:
     - name: Set version number for build
       shell: pwsh
       run: |
-           $version = "$([System.DateTime]::Now.Year).$([System.DateTime]::Now.Month).$([System.DateTime]::Now.Day)"
+           $major = [System.DateTime]::Now.Year
+           $minor = [System.DateTime]::Now.Month
+           $build = [System.DateTime]::Now.Day 
+           $revision = ${{GITHUB_RUN_NUMBER}}
+
+           $version = "$major.$minor.$build.$revision"
            echo "BUILD_NUMBER=$version" >> $GITHUB_ENV
 
            Write-Host "Set version number for build to $version"
-
 
     - name: Update Version Number in app files
       shell: pwsh
