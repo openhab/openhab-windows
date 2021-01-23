@@ -7,11 +7,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Checkout master code
-      uses: actions/checkout@v1
-      with:
-        path: src
-        clean: true
 
     - name: Update Version Number in app files
       id: update-packageverion
