@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - name: Checkout main code
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
       with:
         path: src
         clean: true 
