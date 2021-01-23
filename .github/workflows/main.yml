@@ -9,9 +9,19 @@ on:
       - releases/* 
 
 jobs:
+  test:
+    name: 'Test job'
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: test
+      run: |
+           echo "BUILD_NUMBER=1980.1.1" >> $GITHUB_ENV
+
   build:
     name: 'Build openHAB Windows App'
     runs-on: windows-latest
+    needs: test
 
     steps:
     - name: Checkout master code
@@ -19,10 +29,6 @@ jobs:
       with:
         path: src
         clean: true
-    
-    - name: test
-      run: |
-           echo "BUILD_NUMBER=1980.1.1" >> $GITHUB_ENV
 
     - name: Set build number
       id: set-buildnumber
@@ -30,10 +36,10 @@ jobs:
       run: |
            Write-Host "${{ env.BUILD_NUMBER}}"
 
-           major= [System.DateTime]::Now.Year
-           minor = [System.DateTime]::Now.Month
-           build = [System.DateTime]::Now.Day 
-           revision = ${{github.run_number}}
+           $major= [System.DateTime]::Now.Year
+           $minor = [System.DateTime]::Now.Month
+           $build = [System.DateTime]::Now.Day 
+           $revision = ${{github.run_number}}
 
            $version = "$major.$minor.$build.$revision"
            Write-Host "Set version number for build to $version"
