@@ -10,7 +10,7 @@ inputs:
   output_directory: 
     description: 'Defines the output directory for the app package'
     required: false
-    default: '${{github.workspace}}\build\'
+    default: '${{github.workspace}}\build'
 
 runs:
   using: "composite"

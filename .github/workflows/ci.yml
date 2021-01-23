@@ -2,7 +2,7 @@ name: 'CI Build'
 
 env:
   BUILD_NUMBER: '1970.1.1'
-  build_directory: '${{github.workspace}}\build\'
+  build_directory: '${{github.workspace}}\build'
 
 on: [push, pull_request]
 
