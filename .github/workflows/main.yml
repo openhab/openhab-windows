@@ -24,6 +24,10 @@ jobs:
         path: src
         clean: true
     
+    - name: test
+      id: test_step
+      run: echo "BUILD_NUMBER=1980.1.1" >> $GITHUB_ENV
+
     - name: Set version number for build
       shell: pwsh
       run: |
