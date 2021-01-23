@@ -1,12 +1,13 @@
 name: 'App Build'
 description: 'Builds app package for openHAB Windows app'
+
 inputs:
   build_configuration:
     description: 'Defines build configuration (debug or release)'
     required: false
     default: 'release'
 
-  ouput_directory: 
+  output_directory: 
     description: 'Defines the output directory for the app package'
     required: false
     default: '${{github.workspace}}\build\'
@@ -14,7 +15,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-
     - name: Update Version Number in app files
       id: update-packageverion
       shell: pwsh
@@ -32,4 +32,4 @@ runs:
     
     - name: Build OpenHab Windows App
       shell: cmd
-      run: msbuild.exe ${{github.workspace}}\OpenHAB.Windows.sln /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxPackageDir="${{input.ouput_directory}}" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="${{input.build_configuration}}"
+      run: msbuild.exe ${{github.workspace}}\OpenHAB.Windows.sln /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxPackageDir="${{inputs.output_directory}}" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="${{inputs.build_configuration}}"
