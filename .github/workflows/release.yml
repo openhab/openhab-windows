@@ -2,86 +2,43 @@ name: 'Release'
 
 env:
   BUILD_NUMBER: '1970.1.1'
+  build_directory: '${{github.workspace}}\build\'
 
-on:
-  push:
-    branches: 
-      - master
-      - features/*
-      - fixes/*
-      - releases/* 
+on: workflow_dispatch
 
 jobs:
-  test:
-    name: 'Test job'
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Set build number
-      id: set-buildnumbe
-      run: |
-           CURRENTDATE=`date +"%Y.%m.%d"`
-           echo "BUILD_NUMBER=${CURRENTDATE}" >> $GITHUB_ENV
-
-    - name: Debug output variable
-      run: |
-           echo "${{ env.BUILD_NUMBER}}"
-
   build:
     name: 'Build openHAB Windows App'
     runs-on: windows-latest
     needs: test
 
     steps:
-    - name: Checkout master code
+    - name: Checkout main code
       uses: actions/checkout@v2
       with:
         path: src
-        clean: true
+        clean: true 
 
-    # - name: Set build number
-    #   id: set-buildnumber
-    #   shell: pwsh
-    #   run: |
-    #        $major= [System.DateTime]::Now.Year
-    #        $minor = [System.DateTime]::Now.Month
-    #        $build = [System.DateTime]::Now.Day 
-    #        $revision = ${{github.run_number}}
-
-    #        $version = "$major.$minor.$build.$revision"
-    #        Write-Host "Set version number for build to $version"
-    #        echo "BUILD_NUMBER=$($version)" >> $GITHUB_ENV
-
-    - name: Update Version Number in app files
-      id: update-packageverion
-      shell: pwsh
-      run: | 
-            Set-Location '${{github.workspace}}\.github\workflows\scripts'
-             $major= [System.DateTime]::Now.Year
-             $minor = [System.DateTime]::Now.Month
-             $build = [System.DateTime]::Now.Day
-
-            ./Set-Version.ps1 -SourceDirectory '${{github.workspace}}\' -Major $major -Minor $minor -Build $build -Revision 0 -SetVersion
-         
     - name: Setup NuGet.exe for use with actions
       uses: NuGet/setup-nuget@v1.0.5
       with:
-        nuget-version:  'latest'
-    
+        nuget-version: 'latest'
+
     - name: setup-msbuild
       uses: microsoft/setup-msbuild@v1
 
-    - name: Restore nuget packages
-      run: nuget restore ${{github.workspace}}\OpenHAB.Windows.sln
-    
-    - name: Build OpenHab Windows App
-      run: msbuild.exe ${{github.workspace}}\OpenHAB.Windows.sln /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxPackageDir="${{github.workspace}}\build\" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="release"
+    - name: Build App
+      id: create_app_package
+      uses: ./src/.github/workflows/actions/app-build
+      with:
+        build_configuration: 'release'
+        output_directory: '${{env.build_directory}}'
 
     - name: Upload build assets
       uses: actions/upload-artifact@v2.2.2
       with:
         name: app
-        path: ${{github.workspace}}\build\
+        path: '${{env.build_directory}}'
       
   release:
       name: 'Creates an app release'
