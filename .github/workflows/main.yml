@@ -1,7 +1,7 @@
 name: 'CI'
 
-# env:
-#   BUILD_NUMBER: '1970.1.1'  
+env:
+  BUILD_NUMBER: '1970.1.1'
 
 on:
   push:
@@ -20,7 +20,8 @@ jobs:
     - name: Set build number
       id: set-buildnumbe
       run: |
-           echo "BUILD_NUMBER=1980.1.1" >> $GITHUB_ENV
+           CURRENTDATE=`date +"%Y.%m.%d"`"
+           echo "BUILD_NUMBER=${CURRENTDATE}" >> $GITHUB_ENV
 
     - name: Debug output variable
       run: |
