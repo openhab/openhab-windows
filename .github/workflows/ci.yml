@@ -1,0 +1,31 @@
+name: 'CI'
+
+env:
+  BUILD_NUMBER: '1970.1.1'
+  asset_directory: '${{github.workspace}}\build\'
+
+on:
+  push:
+    branches: 
+      - features/*
+      - fixes/*
+
+jobs:
+  build:
+    name: 'Build openHAB Windows App'
+    runs-on: windows-latest
+    needs: test
+
+    steps:
+    - name: Build App
+      id: create_app_package
+      uses: ./.github/workflows/actions/app-build
+      with:
+        build_configuration: 'release'
+        ouput_directory: ${{env.asset_directory}}
+
+    - name: Upload build assets
+      uses: actions/upload-artifact@v2.2.2
+      with:
+        name: app
+        path: ${{env.asset_directory}}

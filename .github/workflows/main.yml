@@ -1,15 +1,7 @@
 name: 'CI'
 
 env:
-  BUILD_NUMBER: '1970.1.1'
-
-on:
-  push:
-    branches: 
-      - master
-      - features/*
-      - fixes/*
-      - releases/* 
+  BUILD_NUMBER: '1970.1.1' 
 
 jobs:
   test:
