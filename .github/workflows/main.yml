@@ -20,7 +20,7 @@ jobs:
     - name: Set build number
       id: set-buildnumbe
       run: |
-           CURRENTDATE=`date +"%Y.%m.%d"`"
+           CURRENTDATE=`date +"%Y.%m.%d"`
            echo "BUILD_NUMBER=${CURRENTDATE}" >> $GITHUB_ENV
 
     - name: Debug output variable
