@@ -40,9 +40,7 @@ jobs:
       run: | 
             Set-Location '${{github.workspace}}\.github\workflows\scripts'
 
-            $major = [System.DateTime]::Now.Year
-            $minor = [System.DateTime]::Now.Month
-            $build = [System.DateTime]::Now.Day 
+            Write-Host "BUILD_NUMBER: ${{env.BUILD_NUMBER}}"
 
             ./Set-Version.ps1 -SourceDirectory '${{github.workspace}}\' -Revision 0 -SetVersion
          
