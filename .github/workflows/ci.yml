@@ -22,6 +22,14 @@ jobs:
         path: src
         clean: true 
 
+    - name: Setup NuGet.exe for use with actions
+      uses: NuGet/setup-nuget@v1.0.5
+      with:
+        nuget-version: 'latest'
+    
+    - name: setup-msbuild
+      uses: microsoft/setup-msbuild@v1
+
     - name: Build App
       id: create_app_package
       uses: ./src/.github/workflows/actions/app-build

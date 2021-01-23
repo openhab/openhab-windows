@@ -25,17 +25,11 @@ runs:
             $build = [System.DateTime]::Now.Day
 
             ./Set-Version.ps1 -SourceDirectory '${{github.workspace}}\' -Major $major -Minor $minor -Build $build -Revision 0 -SetVersion
-          
-    - name: Setup NuGet.exe for use with actions
-      uses: NuGet/setup-nuget@v1.0.5
-      with:
-        nuget-version:  'latest'
-    
-    - name: setup-msbuild
-      uses: microsoft/setup-msbuild@v1
 
     - name: Restore nuget packages
+      shell: cmd
       run: nuget restore ${{github.workspace}}\OpenHAB.Windows.sln
     
     - name: Build OpenHab Windows App
+      shell: cmd
       run: msbuild.exe ${{github.workspace}}\OpenHAB.Windows.sln /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxPackageDir="${{input.ouput_directory}}" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="${{input.build_configuration}}"
