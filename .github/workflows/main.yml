@@ -19,19 +19,25 @@ jobs:
       with:
         path: src
         clean: true
+    
+    - name: test
+      run: |
+           echo "BUILD_NUMBER=1980.1.1" >> $GITHUB_ENV
 
     - name: Set build number
       id: set-buildnumber
       shell: pwsh
       run: |
-           $major = [System.DateTime]::Now.Year
-           $minor = [System.DateTime]::Now.Month
-           $build = [System.DateTime]::Now.Day 
-           $revision = ${{github.run_number}}
+           Write-Host "${{ env.BUILD_NUMBER}}"
+
+           major= [System.DateTime]::Now.Year
+           minor = [System.DateTime]::Now.Month
+           build = [System.DateTime]::Now.Day 
+           revision = ${{github.run_number}}
 
            $version = "$major.$minor.$build.$revision"
            Write-Host "Set version number for build to $version"
-           Write-Host "BUILD_NUMBER=$($version)" >> $GITHUB_ENV
+           echo "BUILD_NUMBER=$($version)" >> $GITHUB_ENV
 
     - name: Update Version Number in app files
       id: update-packageverion
