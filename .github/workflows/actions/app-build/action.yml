@@ -1,8 +1,15 @@
 name: 'App Build'
 description: 'Builds app package for openHAB Windows app'
 inputs:
-  build_configuration: 'release'
-  ouput_directory: '${{github.workspace}}\build\'
+  build_configuration:
+    description: 'Defines build configuration (debug or release)'
+    required: false
+    default: 'release'
+
+  ouput_directory: 
+    description: 'Defines the output directory for the app package'
+    required: false
+    default: '${{github.workspace}}\build\'
 
 runs:
   using: "composite"
