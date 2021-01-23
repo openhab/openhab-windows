@@ -39,30 +39,29 @@ jobs:
         path: src
         clean: true
 
-    - name: Set build number
-      id: set-buildnumber
-      shell: pwsh
-      run: |
-           Write-Host $env:BUILD_NUMBER
+    # - name: Set build number
+    #   id: set-buildnumber
+    #   shell: pwsh
+    #   run: |
+    #        $major= [System.DateTime]::Now.Year
+    #        $minor = [System.DateTime]::Now.Month
+    #        $build = [System.DateTime]::Now.Day 
+    #        $revision = ${{github.run_number}}
 
-           $major= [System.DateTime]::Now.Year
-           $minor = [System.DateTime]::Now.Month
-           $build = [System.DateTime]::Now.Day 
-           $revision = ${{github.run_number}}
-
-           $version = "$major.$minor.$build.$revision"
-           Write-Host "Set version number for build to $version"
-           echo "BUILD_NUMBER=$($version)" >> $GITHUB_ENV
+    #        $version = "$major.$minor.$build.$revision"
+    #        Write-Host "Set version number for build to $version"
+    #        echo "BUILD_NUMBER=$($version)" >> $GITHUB_ENV
 
     - name: Update Version Number in app files
       id: update-packageverion
       shell: pwsh
       run: | 
             Set-Location '${{github.workspace}}\.github\workflows\scripts'
+             $major= [System.DateTime]::Now.Year
+             $minor = [System.DateTime]::Now.Month
+             $build = [System.DateTime]::Now.Day
 
-            Write-Host "BUILD_NUMBER: ${{env.BUILD_NUMBER}}"
-
-            ./Set-Version.ps1 -SourceDirectory '${{github.workspace}}\' -Revision 0 -SetVersion
+            ./Set-Version.ps1 -SourceDirectory '${{github.workspace}}\' -Major $major -Minor $minor -Build $build -Revision 0 -SetVersion
          
     - name: Setup NuGet.exe for use with actions
       uses: NuGet/setup-nuget@v1.0.5
@@ -86,10 +85,16 @@ jobs:
       
   release:
       name: 'Creates an app release'
-      runs-on: windows-latest
+      runs-on: ubuntu-latest
       needs: build
       #if: github.ref == 'refs/heads/master'
       steps:
+          - name: Set build number
+            id: set-buildnumbe
+            run: |
+                CURRENTDATE=`date +"%Y.%m.%d"`
+                echo "BUILD_NUMBER=${CURRENTDATE}.${{github.run_number}}" >> $GITHUB_ENV
+
           - name: Create a Release
             id: create_release
             uses: actions/create-release@v1.1.4
