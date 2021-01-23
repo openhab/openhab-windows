@@ -19,10 +19,7 @@ runs:
       id: update-packageverion
       shell: pwsh
       run: | 
-            $PSScriptRoot = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-            Write-Host $PSScriptRoot
-
-            Set-Location $PSScriptRoot
+            Set-Location ${{github.action_path}}/
             $major= [System.DateTime]::Now.Year
             $minor = [System.DateTime]::Now.Month
             $build = [System.DateTime]::Now.Day
