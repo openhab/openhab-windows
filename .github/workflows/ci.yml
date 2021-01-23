@@ -16,15 +16,15 @@ jobs:
     runs-on: windows-latest
 
     steps:
+    - name: Checkout master code
+      uses: actions/checkout@v2
+      with:
+        path: src
+        clean: true 
+
     - name: Build App
       id: create_app_package
       uses: ./.github/workflows/actions/app-build
       with:
         build_configuration: 'release'
         ouput_directory: ${{env.asset_directory}}
-
-    - name: Upload build assets
-      uses: actions/upload-artifact@v2.2.2
-      with:
-        name: app
-        path: ${{env.asset_directory}}
