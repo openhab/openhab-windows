@@ -19,6 +19,8 @@ runs:
       id: update-packageverion
       shell: pwsh
       run: | 
+            $PSScriptRoot = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
+            Set-Location $PSScriptRoot
             $major= [System.DateTime]::Now.Year
             $minor = [System.DateTime]::Now.Month
             $build = [System.DateTime]::Now.Day
