@@ -24,12 +24,12 @@ runs:
             $minor = [System.DateTime]::Now.Month
             $build = [System.DateTime]::Now.Day
 
-            ./Set-Version.ps1 -SourceDirectory '${{github.workspace}}\' -Major $major -Minor $minor -Build $build -Revision 0 -SetVersion
+            ./Set-Version.ps1 -SourceDirectory '${{github.workspace}}\src\' -Major $major -Minor $minor -Build $build -Revision 0 -SetVersion
 
     - name: Restore nuget packages
       shell: cmd
-      run: nuget restore ${{github.workspace}}\OpenHAB.Windows.sln
+      run: nuget restore ${{github.workspace}}\src\OpenHAB.Windows.sln
     
     - name: Build OpenHab Windows App
       shell: cmd
-      run: msbuild.exe ${{github.workspace}}\OpenHAB.Windows.sln /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxPackageDir="${{inputs.output_directory}}" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="${{inputs.build_configuration}}"
+      run: msbuild.exe ${{github.workspace}}\src\OpenHAB.Windows.sln /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxPackageDir="${{inputs.output_directory}}" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="${{inputs.build_configuration}}"
