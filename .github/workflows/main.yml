@@ -1,8 +1,5 @@
 name: 'CI'
 
-env:
-  releaseName: 'CI_${{github.run_number}}'
-
 on:
   push:
     branches: 
@@ -23,7 +20,8 @@ jobs:
         path: src
         clean: true
 
-    - name: Set version number for build
+    - name: Set build number
+      id: set-buildnumber
       shell: pwsh
       run: |
            $major = [System.DateTime]::Now.Year
@@ -33,9 +31,10 @@ jobs:
 
            $version = "$major.$minor.$build.$revision"
            Write-Host "Set version number for build to $version"
-           echo "BUILD_NUMBER=$($version)" >> $GITHUB_ENV
+           Write-Host "BUILD_NUMBER=$($version)" >> $GITHUB_ENV
 
     - name: Update Version Number in app files
+      id: update-packageverion
       shell: pwsh
       run: | 
             Set-Location '${{github.workspace}}\.github\workflows\scripts'

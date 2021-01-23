@@ -1,17 +1,3 @@
-<#
-.Synopsis
-   Sets the assembly version of all assemblies in the source directory.
-.DESCRIPTION
-   A build script that can be included in TFS 2015 or Visual Studio Online (VSO) vNevt builds that update the version of all assemblies in a workspace.
-   It uses the name of the build to extract the version number and updates all AssemblyInfo.cs files to use the new version.
-.EXAMPLE
-   Set-AssemblyVersion
-.EXAMPLE
-   Set-AssemblyVersion -SourceDirectory $Env:BUILD_SOURCESDIRECTORY -BuildNumber $Env:BUILD_BUILDNUMBER
-.EXAMPLE
-   Set-AssemblyVersion -SourceDirectory ".\SourceDir" -BuildNumber "Dev_1.0.20150922.01" -VersionFormat "\d+\.\d+\.\d+\.\d+"
-#>
-
 [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium')]
 [Alias()]
 [OutputType([int])]
@@ -46,19 +32,6 @@ Param
 	[string]$VersionFormat = "\d+\.\d+\.\d+\.\d+"
 )
 
-<#
-.Synopsis
-   Sets the assembly version of all assemblies in the source directory.
-.DESCRIPTION
-   A build script that can be included in TFS 2015 or Visual Studio Online (VSO) vNevt builds that update the version of all assemblies in a workspace.
-   It uses the name of the build to extract the version number and updates all AssemblyInfo.cs files to use the new version.
-.EXAMPLE
-   Set-AssemblyVersion
-.EXAMPLE
-   Set-AssemblyVersion -SourceDirectory $Env:BUILD_SOURCESDIRECTORY -BuildNumber $Env:BUILD_BUILDNUMBER
-.EXAMPLE
-   Set-AssemblyVersion -SourceDirectory ".\SourceDir" -BuildNumber "Dev_1.0.20150922.01" -VersionFormat "\d+\.\d+\.\d+\.\d+"
-#>
 function Set-AssemblyVersion
 {
 	[CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium')]
@@ -119,7 +92,7 @@ function Set-AssemblyVersion
 	}
 
 	Write-Host "Update BUILD_BUILDNUMBER to $($UpdatedVersion.ToString())"
-	echo "BUILD_NUMBER=$($UpdatedVersion.ToString())" >> $GITHUB_ENV
+	Write-Host "BUILD_NUMBER=$($UpdatedVersion.ToString())" >> $GITHUB_ENV
 
 	if($SetVersion.IsPresent){
 		Set-FileContent -Files $files -Version $UpdatedVersion -VersionFormat $VersionFormat
