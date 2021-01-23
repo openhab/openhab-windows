@@ -83,8 +83,8 @@ jobs:
             env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             with:
-               tag_name: ${BUILD_NUMBER}
-               release_name: ${BUILD_NUMBER}
+               tag_name: $BUILD_NUMBER
+               release_name: $BUILD_NUMBER
                
           - name: Upload Release Asset
             id: upload-release-asset 
