@@ -1,5 +1,8 @@
 name: 'CI'
 
+# env:
+#   BUILD_NUMBER: '1970.1.1'  
+
 on:
   push:
     branches: 
@@ -39,7 +42,7 @@ jobs:
       id: set-buildnumber
       shell: pwsh
       run: |
-           Write-Host "${env.BUILD_NUMBER}"
+           Write-Host $env:BUILD_NUMBER
 
            $major= [System.DateTime]::Now.Year
            $minor = [System.DateTime]::Now.Month
