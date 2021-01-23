@@ -36,7 +36,7 @@ jobs:
 
            Write-Host "Generated version number: $version"
 
-           echo "BUILD_NUMBER=$version" >> $GITHUB_ENV
+           echo "BUILD_NUMBER=2020.1.1" >> $GITHUB_ENV
 
            Write-Host "Set version number for build to $version"
 
