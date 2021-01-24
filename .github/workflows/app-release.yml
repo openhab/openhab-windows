@@ -1,4 +1,4 @@
-name: 'Create App Release'
+name: 'App Release'
 
 env:
   BUILD_NUMBER: '1970.1.1'
