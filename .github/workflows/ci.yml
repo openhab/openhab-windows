@@ -2,7 +2,7 @@ name: 'CI Build'
 
 env:
   BUILD_NUMBER: '1970.1.1'
-  build_directory: '${{github.workspace}}\build'
+  BuildDirectory: '${{github.workspace}}\build'
 
 on: [push, pull_request]
 
@@ -31,4 +31,4 @@ jobs:
       uses: ./src/.github/workflows/actions/app-build
       with:
         build_configuration: 'release'
-        output_directory: '${{env.build_directory}}'
+        output_directory: '${{env.BuildDirectory}}'
