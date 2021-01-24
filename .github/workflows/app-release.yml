@@ -4,16 +4,19 @@ env:
   BUILD_NUMBER: '1970.1.1'
   BuildDirectory: '${{github.workspace}}\build'
   ReleaseName: 'N/A'
-  isBetaRelase: ${{ contains(github.event.inputs.betaRelease, 'true') }}
+  IsBetaRelease: ${{ contains(github.event.inputs.BetaRelease, 'true') }}
 
 on: 
   workflow_dispatch:
     inputs:
-      betaRelease:
+      BetaRelease:
         description: 'Specifices if a beta release should be created.'
         default: 'false'
         required: false
-  push:
+      BuildConfiguration:
+        description: 'Specifices if a release or debug package should be created.'
+        default: 'release'
+        required: false
     
 jobs:
   build:
@@ -39,7 +42,7 @@ jobs:
       id: create_app_package
       uses: ./src/.github/workflows/actions/app-build
       with:
-        build_configuration: 'release'
+        build_configuration: ${{github.event.inputs.BuildConfiguration}}
         output_directory: '${{env.BuildDirectory}}'
 
     - name: Upload build assets
@@ -60,7 +63,7 @@ jobs:
                 CURRENTDATE=`date +"%Y.%m.%d"`
                 echo "BUILD_NUMBER=${CURRENTDATE}.${{github.run_number}}" >> $GITHUB_ENV
 
-                IS_BETA_RELEASE= ${{ env.isBetaRelase }}
+                IS_BETA_RELEASE= ${{ env.IsBetaRelease }}
                 if[$IS_BETA_RELEASE]; then
                    echo "ReleaseName=Beta:${CURRENTDATE}.${{github.run_number}}" >> $GITHUB_ENV
                 else:
