@@ -25,28 +25,48 @@
 					Value="Stretch" />
 		</Style>
 
-		<!-- Navigation View Styling -->
+
+		<Style TargetType="muxc:NavigationViewItem">
+			<Setter Property="FontSize"
+					Value="18" />
+		</Style>
+
+				<!-- Navigation View Styling -->
 		<SolidColorBrush x:Key="NavigationViewDefaultPaneBackground"
 						 Color="{StaticResource DarkColor}" />
 
 		<SolidColorBrush x:Key="NavigationViewExpandedPaneBackground"
 						 Color="{StaticResource DarkColor}" />
 
-		<SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground"
-						 Color="#FFFF5722" />
-
+		<SolidColorBrush x:Key="NavigationViewItemForeground"
+						 Color="White" />
 		<SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver"
 						 Color="#FFFF5722" />
+		<SolidColorBrush x:Key="NavigationViewItemForegroundPressed"
+						 Color="White" />
+		<!--<SolidColorBrush x:Key="NavigationViewItemForegroundDisabled"
+						Color="Gray" /> -->
+		<SolidColorBrush x:Key="NavigationViewItemForegroundChecked"
+						 Color="#FFFF5722" />
+		
+		<SolidColorBrush x:Key="NavigationViewItemForegroundCheckedPointerOver"
+						 Color="White" />
+		<!--<SolidColorBrush x:Key="NavigationViewItemForegroundCheckedPressed"
+						Color="White" />
+		<SolidColorBrush x:Key="NavigationViewItemForegroundCheckedDisabled"
+						Color="Gray" /> -->
 		<SolidColorBrush x:Key="NavigationViewItemForegroundSelected"
 						 Color="#FFFF5722" />
 		<SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPointerOver"
-						 Color="white" />
-		<SolidColorBrush x:Key="NavigationViewItemForegroundPressed"
-						 Color="white" />
-		<SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPressed"
+						Color="White" />
+		<!--<SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPressed"
 						 Color="#FFFF5722" />
-		<SolidColorBrush x:Key="NavigationViewItemForeground"
-						 Color="White" />
+		<SolidColorBrush x:Key="NavigationViewItemForegroundSelectedDisabled"
+						 Color="Gray" />-->
+
+
+		<SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground"
+						 Color="#FFFF5722" />
 
 		<!-- Converters -->
 		<converters:ObjectToSitemapConverter x:Key="ObjectToSitemapConverter" />
@@ -57,20 +77,18 @@
 		<converters:MenuItemTemplateSelector x:Key="Selector">
 			<converters:MenuItemTemplateSelector.DefaultItemTemlate>
 				<DataTemplate x:DataType="muxc:NavigationViewItem">
-					<muxc:NavigationViewItem FontSize="18"
-											 Content="{x:Bind Content}"
+					<muxc:NavigationViewItem  Content="{x:Bind Content}"
 											 Icon="{x:Bind Icon}">
 					</muxc:NavigationViewItem>
 				</DataTemplate>
 			</converters:MenuItemTemplateSelector.DefaultItemTemlate>
 			<converters:MenuItemTemplateSelector.SiteMapMenuItemTemplate>
 				<DataTemplate x:DataType="viewModel:SitemapViewModel">
-					<muxc:NavigationViewItem Content="{x:Bind Name, Mode=OneWay}"
-											 FontSize="18">
+					<muxc:NavigationViewItem Content="{x:Bind Label, Mode=OneWay}">
 						<muxc:NavigationViewItem.Icon>
-							<BitmapIcon UriSource="ms-appx:///Assets/openhab.png"
-										Width="25"
-										Height="25" />
+							<muxc:ImageIcon Source="ms-appx:///Assets/openhab.png"
+											Width="48"
+											Height="48" />
 						</muxc:NavigationViewItem.Icon>
 					</muxc:NavigationViewItem>
 				</DataTemplate>
@@ -99,8 +117,8 @@
 						   Text="{Binding }" />
 				<Button Command="{Binding Vm.RefreshCommand, ElementName=Page}">
 					<SymbolIcon Symbol="Refresh"
-								VerticalAlignment="Center"
-								Foreground="{StaticResource OpenHABMenuColor}" />
+								Foreground="White"
+								VerticalAlignment="Center"/>
 				</Button>
 			</StackPanel>
 		</DataTemplate>
@@ -116,6 +134,7 @@
 						   Foreground="White" />
 			</StackPanel>
 		</DataTemplate>
+	
 	</Page.Resources>
 
 	<Grid>
@@ -128,6 +147,7 @@
 							 MenuItemsSource="{x:Bind Vm.Sitemaps, Mode=OneWay}"
 							 MenuItemTemplateSelector="{StaticResource Selector}"
 							 SelectedItem="{x:Bind Vm.SelectedMenuItem, Mode=TwoWay}"
+							 Foreground="White"
 							 IsBackButtonVisible="Collapsed"
 							 AlwaysShowHeader="True"
 							 IsSettingsVisible="True"
@@ -143,7 +163,7 @@
 					<TextBlock x:Name="textBlock"
 							   Margin="5,0,0,10"
 							   VerticalAlignment="Center"
-							   Style="{StaticResource HeaderText}"
+							   Style="{StaticResource MenuSubHeader}"
 							   Foreground="{StaticResource OpenHABMenuColor}"
 							   Text="Sitemaps" />
 					<TextBlock Grid.Row="1"
@@ -161,8 +181,7 @@
 						<FontIcon  VerticalAlignment="Center"
 								   AutomationProperties.Name="Favorite"
 								   FontFamily="Segoe MDL2 Assets"
-								   FontSize="24"
-								   Foreground="{StaticResource OpenHABMenuColor}"
+								   FontSize="18"
 								   Glyph="&#xE939;" />
 					</muxc:NavigationViewItem.Icon>
 					<interactivity:Interaction.Behaviors>

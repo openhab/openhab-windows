@@ -17,12 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{A82DABD0-6620-49F0-8C10-11FF7F339D77}"
-	ProjectSection(SolutionItems) = preProject
-		.github\workflows\main.yml = .github\workflows\main.yml
-		.github\workflows\scripts\Set-Version.ps1 = .github\workflows\scripts\Set-Version.ps1
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
