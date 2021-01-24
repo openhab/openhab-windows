@@ -1,0 +1,34 @@
+name: 'CI Build'
+
+env:
+  BUILD_NUMBER: '1970.1.1'
+  BuildDirectory: '${{github.workspace}}\build'
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: 'Build openHAB Windows App'
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout main code
+      uses: actions/checkout@v2
+      with:
+        path: src
+        clean: true
+
+    - name: Setup NuGet.exe for use with actions
+      uses: NuGet/setup-nuget@v1.0.5
+      with:
+        nuget-version: 'latest'
+    
+    - name: setup-msbuild
+      uses: microsoft/setup-msbuild@v1
+
+    - name: Build App
+      id: create_app_package
+      uses: ./src/.github/workflows/actions/app-build
+      with:
+        build_configuration: 'release'
+        output_directory: '${{env.BuildDirectory}}'
