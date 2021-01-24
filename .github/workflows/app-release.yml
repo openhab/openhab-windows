@@ -13,7 +13,8 @@ on:
         description: 'Specifices if a beta release should be created.'
         default: 'false'
         required: false
-
+  push:
+    
 jobs:
   build:
     name: 'Build openHAB Windows App'
