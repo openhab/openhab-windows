@@ -1,4 +1,4 @@
-name: 'App Release'
+name: App Release
 
 env:
   BUILD_NUMBER: '1970.1.1'
@@ -46,6 +46,7 @@ jobs:
         output_directory: '${{env.BuildDirectory}}'
 
     - name: Upload build assets
+      id: app_package_upload
       uses: actions/upload-artifact@v2.2.2
       with:
         name: app
@@ -78,13 +79,19 @@ jobs:
             with:
                tag_name: ${{env.BUILD_NUMBER}}
                release_name: ${{env.ReleaseName}}
-               
-          - name: Upload Release Asset
-            id: upload-release-asset 
+
+          - name: Download a App Package from Build Artifacts
+            uses: actions/download-artifact@v2.0.8
+            with:
+              name: app
+              path: '${{env.BuildDirectory}}'
+
+          - name: Upload Release App Package
+            id: upload-release-package 
             uses: actions/upload-release-asset@v1.0.2
             env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             with:
               upload_url: ${{steps.create_release.outputs.upload_url}} 
-              asset_path: ${{github.workspace}}\build\
+              asset_path: '${{env.BuildDirectory}}'
               asset_name: OpenHab UWP App
