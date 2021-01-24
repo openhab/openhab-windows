@@ -1,0 +1,35 @@
+name: 'App Build'
+description: 'Builds app package for openHAB Windows app'
+
+inputs:
+  build_configuration:
+    description: 'Defines build configuration (debug or release)'
+    required: false
+    default: 'release'
+
+  output_directory: 
+    description: 'Defines the output directory for the app package'
+    required: false
+    default: '${{github.workspace}}\build'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Update Version Number in app files
+      id: update-packageverion
+      shell: pwsh
+      run: | 
+            Set-Location ${{github.action_path}}/
+            $major= [System.DateTime]::Now.Year
+            $minor = [System.DateTime]::Now.Month
+            $build = [System.DateTime]::Now.Day
+
+            ./Set-Version.ps1 -SourceDirectory '${{github.workspace}}\src\' -Major $major -Minor $minor -Build $build -Revision 0 -SetVersion
+
+    - name: Restore nuget packages
+      shell: cmd
+      run: nuget restore ${{github.workspace}}\src\OpenHAB.Windows.sln
+    
+    - name: Build OpenHab Windows App
+      shell: cmd
+      run: msbuild.exe ${{github.workspace}}\src\OpenHAB.Windows.sln /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxPackageDir="${{inputs.output_directory}}" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="${{inputs.build_configuration}}"

@@ -1,0 +1,97 @@
+name: App Release
+
+env:
+  BUILD_NUMBER: '1970.1.1'
+  BuildDirectory: '${{github.workspace}}\build'
+  ReleaseName: 'N/A'
+  IsBetaRelease: ${{ contains(github.event.inputs.BetaRelease, 'true') }}
+
+on: 
+  workflow_dispatch:
+    inputs:
+      BetaRelease:
+        description: 'Specifices if a beta release should be created.'
+        default: 'false'
+        required: false
+      BuildConfiguration:
+        description: 'Specifices if a release or debug package should be created.'
+        default: 'release'
+        required: false
+    
+jobs:
+  build:
+    name: 'Build openHAB Windows App'
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout main code
+      uses: actions/checkout@v2
+      with:
+        path: src
+        clean: true 
+
+    - name: Setup NuGet.exe for use with actions
+      uses: NuGet/setup-nuget@v1.0.5
+      with:
+        nuget-version: 'latest'
+
+    - name: setup-msbuild
+      uses: microsoft/setup-msbuild@v1
+
+    - name: Build App
+      id: create_app_package
+      uses: ./src/.github/workflows/actions/app-build
+      with:
+        build_configuration: ${{github.event.inputs.BuildConfiguration}}
+        output_directory: '${{env.BuildDirectory}}'
+
+    - name: Upload build assets
+      id: app_package_upload
+      uses: actions/upload-artifact@v2.2.2
+      with:
+        name: app
+        path: '${{env.BuildDirectory}}'
+      
+  release:
+      name: 'Creates an app release'
+      runs-on: ubuntu-latest
+      needs: build
+      if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/release/beta'
+      steps:
+          - name: Set build number and release name
+            id: set-buildnumbe
+            run: |
+                CURRENTDATE=`date +"%Y.%m.%d"`
+                echo "BUILD_NUMBER=${CURRENTDATE}.${{github.run_number}}" >> $GITHUB_ENV
+
+                IS_BETA_RELEASE= ${{ env.IsBetaRelease }}
+                if[$IS_BETA_RELEASE]; then
+                   echo "ReleaseName=Beta:${CURRENTDATE}.${{github.run_number}}" >> $GITHUB_ENV
+                else:
+                   echo "ReleaseName=${CURRENTDATE}.${{github.run_number}}" >> $GITHUB_ENV
+                fi
+
+          - name: Create a Release
+            id: create_release
+            uses: actions/create-release@v1.1.4
+            env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            with:
+               tag_name: ${{env.BUILD_NUMBER}}
+               release_name: ${{env.ReleaseName}}
+
+          - name: Download a App Package from Build Artifacts
+            uses: actions/download-artifact@v2.0.8
+            with:
+              name: app
+              path: '${{env.BuildDirectory}}'
+
+          - name: Upload Release App Package
+            id: upload-release-package 
+            uses: actions/upload-release-asset@v1.0.2
+            env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            with:
+              upload_url: ${{steps.create_release.outputs.upload_url}} 
+              asset_path: '${{env.BuildDirectory}}'
+              asset_name: OpenHab UWP App
