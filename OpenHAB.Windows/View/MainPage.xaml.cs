@@ -9,7 +9,6 @@ using OpenHAB.Windows.Services;
 using OpenHAB.Windows.ViewModel;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 
 namespace OpenHAB.Windows.View
@@ -131,10 +130,14 @@ namespace OpenHAB.Windows.View
             Messenger.Default.Send(new WidgetClickedMessage(e.ClickedItem as OpenHABWidget));
         }
 
-        private void StackPanel_Tapped(object sender, TappedRoutedEventArgs e)
+        private void SitemapNavigation_SelectionChanged(
+            Microsoft.UI.Xaml.Controls.NavigationView sender,
+            Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
         {
-            e.Handled = true;
-            Frame.Navigate(typeof(SettingsPage));
+            if (args.IsSettingsSelected)
+            {
+                Frame.Navigate(typeof(SettingsPage));
+            }
         }
     }
 }

@@ -18,7 +18,6 @@ namespace OpenHAB.Core.Services
     {
         private IItemManager _itemManager;
         private string _iconFormat;
-        private IItemManager _itemManager;
 
         /// <summary>Initializes a new instance of the <see cref="NotificationManager" /> class.</summary>
         /// <param name="itemStateManager">The item state manager.</param>

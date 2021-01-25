@@ -18,6 +18,7 @@ namespace OpenHAB.Windows.Converters
         {
             var settingsService = (ISettingsService)DIService.Instance.Services.GetService(typeof(ISettingsService));
             OpenHABVersion openHABVersion = settingsService.ServerVersion;
+            Settings settings = settingsService.Load();
 
             var serverUrl = OpenHABHttpClient.BaseUrl;
 

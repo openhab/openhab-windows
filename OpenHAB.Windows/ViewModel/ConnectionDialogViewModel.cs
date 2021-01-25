@@ -267,11 +267,11 @@ namespace OpenHAB.Windows.ViewModel
 
             string url = parameter.ToString();
 
-            Task<bool> result = _openHabsdk.CheckUrlReachability(this.Model);
+            Task<HttpResponseResult<bool?, ErrorTypes?>> result = _openHabsdk.CheckUrlReachability(this.Model);
             result.ContinueWith(async (task) =>
             {
                 OpenHABUrlState urlState = OpenHABUrlState.Unknown;
-                if (task.IsCompletedSuccessfully && task.Result)
+                if (task.IsCompletedSuccessfully && task.Result.Content.Value)
                 {
                     urlState = OpenHABUrlState.OK;
                 }

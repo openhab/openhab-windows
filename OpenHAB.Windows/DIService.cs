@@ -73,8 +73,8 @@ namespace OpenHAB.Windows.Services
 
             layout.Columns.Add(new CsvColumn("time", @"${date:format=HH\:mm\:ss}"));
             layout.Columns.Add(new CsvColumn("level", "${level:upperCase=true}"));
-            layout.Columns.Add(new CsvColumn("message", "${message}"));
             layout.Columns.Add(new CsvColumn("callsite", "${callsite:includeSourcePath=false}"));
+            layout.Columns.Add(new CsvColumn("message", "${message}"));
             layout.Columns.Add(new CsvColumn("exception", "${exception:format=ToString}"));
             layout.Columns.Add(new CsvColumn("stacktrace", "${onexception:inner=${stacktrace:topFrames=10}}"));
 
