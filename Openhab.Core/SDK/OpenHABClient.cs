@@ -366,7 +366,7 @@ namespace OpenHAB.Core.SDK
             if (isRunningInDemoMode)
             {
                 _connection = new DemoConnectionProfile().CreateConnection();
-                OpenHABHttpClient.BaseUrl = Constants.Api.DemoModeUrl;
+                OpenHABHttpClient.BaseUrl = _connection.Url;
                 return true;
             }
 
@@ -380,7 +380,6 @@ namespace OpenHAB.Core.SDK
                     string message = "No remote url configured";
                     _logger.LogWarning(message);
 
-                    //throw new OpenHABException(message);
                     return false;
                 }
 

@@ -135,7 +135,7 @@
   <data name="MessageError" xml:space="preserve">
     <value>Oops, da ist etwas schief gelaufen.</value>
   </data>
-  <data name="FeedbackHeader.Text" xml:space="preserve">
+  <data name="FeedbackHeader.Content" xml:space="preserve">
     <value>Feedback</value>
   </data>
   <data name="IgnoreSSLCertErrors.Text" xml:space="preserve">
