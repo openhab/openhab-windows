@@ -44,26 +44,17 @@
 						 Color="#FFFF5722" />
 		<SolidColorBrush x:Key="NavigationViewItemForegroundPressed"
 						 Color="White" />
-		<!--<SolidColorBrush x:Key="NavigationViewItemForegroundDisabled"
-						Color="Gray" /> -->
 		<SolidColorBrush x:Key="NavigationViewItemForegroundChecked"
 						 Color="#FFFF5722" />
-		
+
 		<SolidColorBrush x:Key="NavigationViewItemForegroundCheckedPointerOver"
 						 Color="White" />
-		<!--<SolidColorBrush x:Key="NavigationViewItemForegroundCheckedPressed"
-						Color="White" />
-		<SolidColorBrush x:Key="NavigationViewItemForegroundCheckedDisabled"
-						Color="Gray" /> -->
 		<SolidColorBrush x:Key="NavigationViewItemForegroundSelected"
 						 Color="#FFFF5722" />
 		<SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPointerOver"
 						Color="White" />
-		<!--<SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPressed"
+		<SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPressed"
 						 Color="#FFFF5722" />
-		<SolidColorBrush x:Key="NavigationViewItemForegroundSelectedDisabled"
-						 Color="Gray" />-->
-
 
 		<SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground"
 						 Color="#FFFF5722" />
