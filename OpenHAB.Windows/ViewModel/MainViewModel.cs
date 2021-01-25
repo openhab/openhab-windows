@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -41,6 +40,7 @@ namespace OpenHAB.Windows.ViewModel
         private ObservableCollection<SitemapViewModel> _sitemaps;
         private string _subtitle;
         private OpenHABVersion _version;
+        private object _selectedMenuItem;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
@@ -122,15 +122,41 @@ namespace OpenHAB.Windows.ViewModel
 
                     if (_selectedSitemap?.Widgets == null || _selectedSitemap?.Widgets.Count == 0)
                     {
-#pragma warning disable 4014
-                        LoadWidgets();
-#pragma warning restore 4014
+                        CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
+                        dispatcher.RunAsync(CoreDispatcherPriority.Normal,  () =>
+                        {
+                            LoadWidgets();
+                        });
                     }
                     else
                     {
                         SetWidgetsOnScreen(SelectedSitemap.Widgets);
                     }
+
+                    SelectedMenuItem = value;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the selected menu item.
+        /// </summary>
+        public object SelectedMenuItem
+        {
+            get
+            {
+                return _selectedMenuItem;
+            }
+
+            set
+            {
+                SitemapViewModel sitemapViewModel = value as SitemapViewModel;
+                if (sitemapViewModel != null && SelectedSitemap != value)
+                {
+                    SelectedSitemap = sitemapViewModel;
+                }
+
+                Set(ref _selectedMenuItem, value);
             }
         }
 
