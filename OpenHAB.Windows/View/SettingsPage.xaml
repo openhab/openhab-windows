@@ -157,6 +157,20 @@
 							<StackPanel Margin="0,0,0,25"
 										Padding="12"
 										Background="{ThemeResource OpenHABLightColor}">
+								<TextBlock x:Uid="NotificationSetting"
+										   Style="{StaticResource TitleTextBlockStyle}"
+										   Margin="0,0,0,10" />
+								<TextBlock x:Uid="EnableWindowsNotifications"
+										   Margin="0,0,0,10" />
+								<ToggleSwitch Margin="0,0,0,12"
+											  HorizontalAlignment="Stretch"
+											  VerticalAlignment="Stretch"
+											  IsOn="{Binding Settings.NotificationsEnable, Mode=TwoWay}" />
+							</StackPanel>
+
+							<StackPanel Margin="0,0,0,25"
+										Padding="12"
+										Background="{ThemeResource OpenHABLightColor}">
 								<TextBlock x:Uid="SitemapSetting"
 										   Style="{StaticResource TitleTextBlockStyle}"
 										   Margin="0,0,0,10" />
@@ -183,6 +197,8 @@
 										Command="{x:Bind Vm.ClearIconCacheCommand}" />
 							</StackPanel>
 						</StackPanel>
+
+
 
 						<!-- Connection Settings -->
 						<Grid x:Name="ConnectionSettings"

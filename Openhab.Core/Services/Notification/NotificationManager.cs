@@ -1,6 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Xml.Linq;
+﻿using System.Globalization;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Toolkit.Uwp.Notifications;
 using OpenHAB.Core.Common;
@@ -13,33 +11,38 @@ using XmlDocument = Windows.Data.Xml.Dom.XmlDocument;
 namespace OpenHAB.Core.Services
 {
     /// <inheritdoc/>
-
     public class NotificationManager : INotificationManager
     {
         private IItemManager _itemManager;
         private string _iconFormat;
+        private ISettingsService _settingsService;
 
         /// <summary>Initializes a new instance of the <see cref="NotificationManager" /> class.</summary>
         /// <param name="itemStateManager">The item state manager.</param>
-        public NotificationManager(IItemManager itemStateManager, ISettingsService settingsService)
+        /// <param name="settingsService">Setting service.</param>
+        /// <param name="settings">Application Settings.</param>
+        public NotificationManager(IItemManager itemStateManager, ISettingsService settingsService, Settings settings)
         {
             Messenger.Default.Register<ItemStateChangedMessage>(this, HandleUpdateItemMessage);
             _itemManager = itemStateManager;
-
-            Settings settings = settingsService.Load();
             _iconFormat = settings.UseSVGIcons ? "svg" : "png";
+            _settingsService = settingsService;
         }
 
         private void HandleUpdateItemMessage(ItemStateChangedMessage obj)
         {
+            Settings settings = _settingsService.Load();
+            if (settings.NotificationsEnable.HasValue && !settings.NotificationsEnable.Value)
+            {
+                return;
+            }
+
             string itemName = obj.ItemName;
             string itemImage = string.Empty;
             if (_itemManager.TryGetItem(obj.ItemName, out OpenHABItem item))
             {
                 itemName = item.Label;
-
                 string state = item?.State ?? "ON";
-
                 itemImage = $"{OpenHABHttpClient.BaseUrl}icon/{item.Category}?state={state}&format={_iconFormat}";
             }
 
@@ -270,7 +273,12 @@ namespace OpenHAB.Core.Services
 
         #endregion
 
-        private string GetMessage(string itemName, string itemValue, string oldItemValue, string valueChangedMessageRessource, string stateChangedMessageRessource)
+        private string GetMessage(
+            string itemName,
+            string itemValue,
+            string oldItemValue,
+            string valueChangedMessageRessource,
+            string stateChangedMessageRessource)
         {
             string message = string.Empty;
             if (!string.IsNullOrEmpty(oldItemValue))

@@ -1,16 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using OpenHAB.Core.Model;
+using OpenHAB.Core.Model.Event;
 
 namespace OpenHAB.Core.Services
 {
-    public class OpenHABEventParser
+    /// <inheritdoc/>
+    public class OpenHABEventParser : IOpenHABEventParser
     {
-        public static OpenHABEvent Parse(string message)
+        private ILogger<OpenHABEventParser> _logger;
+
+        /// <summary>Initializes a new instance of the <see cref="OpenHABEventParser" /> class.</summary>
+        /// <param name="logger">The logger.</param>
+        public OpenHABEventParser(ILogger<OpenHABEventParser> logger)
+        {
+            _logger = logger;
+        }
+
+        /// <inheritdoc/>
+        public OpenHABEvent Parse(string message)
         {
             try
             {
@@ -18,11 +26,15 @@ namespace OpenHAB.Core.Services
 
                 if (data.Type == "ThingUpdatedEvent" || data.Type == "ThingStatusInfoChangedEvent")
                 {
+                    _logger.LogWarning($"Event type is not supported '{data.Type}'.");
                     return null;
                 }
 
                 var payload = JsonConvert.DeserializeObject<EventStreamPayload>(data.Payload);
-                string itemName = data.Topic.Replace("smarthome/items/", string.Empty).Replace("/statechanged", string.Empty).Replace("/state", string.Empty);
+                string itemName = data.Topic
+                                        .Replace("openhab/items/", string.Empty) // openHAB V3
+                                        .Replace("smarthome/items/", string.Empty) // openHAB V2
+                                        .Replace("/statechanged", string.Empty).Replace("/state", string.Empty);
 
                 if (!Enum.TryParse(typeof(OpenHABEventType), data.Type, out object type))
                 {
@@ -44,8 +56,10 @@ namespace OpenHAB.Core.Services
             }
             catch (Exception ex)
             {
-                return null;
+                _logger.LogError(ex, "Failed to parse openHAB event.");
             }
+
+            return null;
         }
     }
 }

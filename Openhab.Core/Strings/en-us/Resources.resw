@@ -300,4 +300,10 @@ Please select demo mode or configure local/remote connection.</value>
   <data name="InfoAppBarSettingsButton.Content" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="EnableWindowsNotifications.Text" xml:space="preserve">
+    <value>Enable notifications for openHAB events.</value>
+  </data>
+  <data name="NotificationSetting.Text" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
 </root>

@@ -15,6 +15,7 @@ using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.Model.Connection;
+using OpenHAB.Core.Model.Event;
 using OpenHAB.Core.Services;
 
 namespace OpenHAB.Core.SDK
@@ -29,20 +30,28 @@ namespace OpenHAB.Core.SDK
         private readonly ISettingsService _settingsService;
         private OpenHABConnection _connection;
         private OpenHABHttpClient _openHABHttpClient;
+        private IOpenHABEventParser _eventParser;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenHABClient"/> class.
         /// </summary>
         /// <param name="settingsService">The service to fetch the settings.</param>
         /// <param name="messenger">The messenger instance.</param>
+        /// <param name="eventParser">openHAB event parser.</param>
         /// <param name="logger">Logger class.</param>
         /// <param name="openHABHttpClient">OpenHab Http client factory.</param>
-        public OpenHABClient(ISettingsService settingsService, IMessenger messenger, ILogger<OpenHABClient> logger, OpenHABHttpClient openHABHttpClient)
+        public OpenHABClient(
+            ISettingsService settingsService,
+            IMessenger messenger,
+            IOpenHABEventParser eventParser,
+            ILogger<OpenHABClient> logger,
+            OpenHABHttpClient openHABHttpClient)
         {
             _settingsService = settingsService;
             _messenger = messenger;
             _logger = logger;
             _openHABHttpClient = openHABHttpClient;
+            _eventParser = eventParser;
         }
 
         /// <inheritdoc/>
@@ -348,7 +357,7 @@ namespace OpenHAB.Core.SDK
                             var updateEvent = reader.ReadLine();
                             if (updateEvent?.StartsWith("data:", StringComparison.InvariantCultureIgnoreCase) == true)
                             {
-                                OpenHABEvent ohEvent = OpenHABEventParser.Parse(updateEvent);
+                                OpenHABEvent ohEvent = _eventParser.Parse(updateEvent);
                                 if (ohEvent == null)
                                 {
                                     continue;

@@ -27,18 +27,19 @@ namespace OpenHAB.Windows.ViewModel
         private LanguageViewModel _selectedAppLanguage;
 
         private bool _showDefaultSitemap;
-        private bool _useSVGIcons;
         private bool? _startAppMinimized;
+        private bool _useSVGIcons;
+        private bool? _notificationsEnable;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationViewModel"/> class.
         /// </summary>
-        public ConfigurationViewModel(ISettingsService settingsService, IOpenHAB openHabsdk, ILogger<ConfigurationViewModel> logger)
+        public ConfigurationViewModel(ISettingsService settingsService, IOpenHAB openHabsdk, ILogger<ConfigurationViewModel> logger, Settings settings)
             : base(new object())
         {
             _settingsService = settingsService;
             _logger = logger;
-            _settings = settingsService.Load();
+            _settings = settings;
 
             _localConnection = new ConnectionDialogViewModel(_settings.LocalConnection, openHabsdk, OpenHABHttpClientType.Local);
             _localConnection.PropertyChanged += ConnectionPropertyChanged;
@@ -50,6 +51,7 @@ namespace OpenHAB.Windows.ViewModel
             _showDefaultSitemap = _settings.ShowDefaultSitemap;
             _useSVGIcons = _settings.UseSVGIcons;
             _startAppMinimized = _settings.StartAppMinimized;
+            _notificationsEnable = _settings.NotificationsEnable;
 
             _appLanguages = InitalizeAppLanguages();
             _selectedAppLanguage =
@@ -137,24 +139,6 @@ namespace OpenHAB.Windows.ViewModel
             }
         }
 
-        /// <summary>Gets or sets the start application minimized.</summary>
-        /// <value>The start application minimized.</value>
-        public bool? StartAppMinimized
-        {
-            get
-            {
-                return _startAppMinimized;
-            }
-
-            set
-            {
-                if (Set(ref _startAppMinimized, value, true))
-                {
-                    _settings.StartAppMinimized = value;
-                }
-            }
-        }
-
         /// <summary>
         /// Gets or sets local OpenHAB connection configuration.
         /// </summary>
@@ -168,6 +152,24 @@ namespace OpenHAB.Windows.ViewModel
             set
             {
                 Set(ref _localConnection, value);
+            }
+        }
+
+        /// <summary>Gets or sets the setting if notifications are enabled.</summary>
+        /// <value>The application triggers notification on openHAB events.</value>
+        public bool? NotificationsEnable
+        {
+            get
+            {
+                return _notificationsEnable;
+            }
+
+            set
+            {
+                if (Set(ref _notificationsEnable, value, true))
+                {
+                    _settings.NotificationsEnable = value;
+                }
             }
         }
 
@@ -223,6 +225,24 @@ namespace OpenHAB.Windows.ViewModel
                 if (Set(ref _showDefaultSitemap, value, true))
                 {
                     _settings.ShowDefaultSitemap = value;
+                }
+            }
+        }
+
+        /// <summary>Gets or sets the start application minimized.</summary>
+        /// <value>The start application minimized.</value>
+        public bool? StartAppMinimized
+        {
+            get
+            {
+                return _startAppMinimized;
+            }
+
+            set
+            {
+                if (Set(ref _startAppMinimized, value, true))
+                {
+                    _settings.StartAppMinimized = value;
                 }
             }
         }

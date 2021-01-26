@@ -1,4 +1,4 @@
-﻿namespace OpenHAB.Core.Model
+﻿namespace OpenHAB.Core.Model.Event
 {
     /// <summary>
     /// The payload coming from the event service.
@@ -15,12 +15,16 @@
         /// </summary>
         public string Value { get; set; }
 
+        /// <summary>Gets or sets the old type of the event.</summary>
+        /// <value>The old type.</value>
         public string OldType
         {
             get;
             set;
         }
 
+        /// <summary>Gets or sets the old value of the event.</summary>
+        /// <value>The old value.</value>
         public string OldValue
         {
             get;
