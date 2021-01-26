@@ -27,6 +27,7 @@ namespace OpenHAB.Windows.ViewModel
     /// <summary>
     /// MVVM ViewModel Base Class.
     /// </summary>
+    /// <typeparam name="T">Model type interface.</typeparam>
     public class ViewModelBase<T> : DataErrorInfo, INotifyPropertyChanged, IViewModel<T>
     {
         /// <summary>
@@ -100,7 +101,7 @@ namespace OpenHAB.Windows.ViewModel
             set;
         }
 
-        /// <summary>Gets a value indicating whether this object is dirty.</summary>
+        /// <summary>Gets or sets a value indicating whether this object is dirty.</summary>
         /// <value>
         ///   <c>true</c> if this instance is dirty; otherwise, <c>false</c>.</value>
         public bool IsDirty

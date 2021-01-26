@@ -13,6 +13,7 @@ namespace OpenHAB.Windows.Controls
     public sealed partial class SelectionWidget : WidgetBase
     {
         private System.Collections.Generic.List<SelectionMapping> selectionMappings;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SelectionWidget"/> class.
         /// </summary>
@@ -23,14 +24,14 @@ namespace OpenHAB.Windows.Controls
         }
 
         /// <summary>
-        /// Get's called after SelectionWidget was loaded and updates the Widgets Selection Dropdown
+        /// Get's called after SelectionWidget was loaded and updates the Widgets Selection Dropdown.
         /// </summary>
         private void SelectionWidget_Loaded(object sender, global::Windows.UI.Xaml.RoutedEventArgs e)
         {
             selectionMappings = new System.Collections.Generic.List<SelectionMapping>();
-            if (Widget?.Item.commandDescription?.CommandOptions?.Count > 0)
+            if (Widget?.Item.CommandDescription?.CommandOptions?.Count > 0)
             {
-                foreach (OpenHABCommandOptions option in Widget.Item.commandDescription.CommandOptions)
+                foreach (OpenHABCommandOptions option in Widget.Item.CommandDescription.CommandOptions)
                 {
                     SelectionMapping mapping = new SelectionMapping(option.Command, option.Label);
                     selectionMappings.Add(mapping);
@@ -73,20 +74,29 @@ namespace OpenHAB.Windows.Controls
         }
 
         /// <summary>
-        /// A Class that is used for Mapping Selectionvalues to Labels
+        /// A Class that is used for Mapping Selectionvalues to Labels.
         /// </summary>
-        class SelectionMapping
+        private class SelectionMapping
         {
             /// <summary>
-            /// Gets or sets the Command of the mapping
+            /// Gets or sets the Command of the mapping.
             /// </summary>
-            public string Command { get; set; }
+            public string Command
+            {
+                get; set;
+            }
 
             /// <summary>
-            /// Gets or sets the Label of the mapping
+            /// Gets or sets the Label of the mapping.
             /// </summary>
-            public string Label { get; set; }
+            public string Label
+            {
+                get; set;
+            }
 
+            /// <summary>Initializes a new instance of the <see cref="SelectionMapping" /> class.</summary>
+            /// <param name="command">The command.</param>
+            /// <param name="label">The label.</param>
             public SelectionMapping(string command, string label)
             {
                 Command = command;

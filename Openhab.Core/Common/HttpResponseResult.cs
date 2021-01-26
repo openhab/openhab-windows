@@ -13,7 +13,7 @@ namespace OpenHAB.Core.Common
         /// <param name="error">The error.</param>
         /// <param name="statusCode">The status code.</param>
         public HttpResponseResult(T content, TS error, HttpStatusCode? statusCode)
-            : this (content, error, statusCode, null)
+            : this(content, error, statusCode, null)
         {
         }
 

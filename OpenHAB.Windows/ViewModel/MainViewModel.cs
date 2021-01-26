@@ -123,10 +123,10 @@ namespace OpenHAB.Windows.ViewModel
                     if (_selectedSitemap?.Widgets == null || _selectedSitemap?.Widgets.Count == 0)
                     {
                         CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
-                        dispatcher.RunAsync(CoreDispatcherPriority.Normal,  () =>
-                        {
-                            LoadWidgets();
-                        });
+                        dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                       {
+                           LoadWidgets();
+                       });
                     }
                     else
                     {
@@ -445,8 +445,8 @@ namespace OpenHAB.Windows.ViewModel
                     openHABWidget = widget;
                     break;
                 }
-              
-               openHABWidget = FindWidget(label, widget.Children);
+
+                openHABWidget = FindWidget(label, widget.Children);
             }
 
             return openHABWidget;

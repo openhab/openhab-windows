@@ -2,7 +2,7 @@
 
 namespace OpenHAB.Core.Services
 {
-    /// <summary>Stores and Fetches data about openHabItems</summary>
+    /// <summary>Stores and Fetches data about openHabItems.</summary>
     public interface IItemManager
     {
         /// <summary>Tries to find openHabItem in dictionary, when not available queries data from openHab server.</summary>

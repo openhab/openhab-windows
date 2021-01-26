@@ -110,7 +110,6 @@
     <Compile Include="Common\ColorHelper.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\DataErrorInfo.cs" />
-    <Compile Include="Common\HttpResponseResult.cs" />
     <Compile Include="Common\DeviceFamily.cs" />
     <Compile Include="Common\DeviceTypeHelper.cs" />
     <Compile Include="Common\HttpResponseResult.cs" />

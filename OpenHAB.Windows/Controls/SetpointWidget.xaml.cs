@@ -1,12 +1,9 @@
-﻿using System.Globalization;
-using GalaSoft.MvvmLight.Messaging;
-using OpenHAB.Core.Messages;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Controls;
-using System;
-using Microsoft.Toolkit.Uwp.Helpers;
+﻿using System;
+using System.Globalization;
 using System.Linq;
+using Microsoft.Toolkit.Uwp.Helpers;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace OpenHAB.Windows.Controls
 {
@@ -16,11 +13,11 @@ namespace OpenHAB.Windows.Controls
     public sealed partial class SetpointWidget : WidgetBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SetpointWidget"/> class.
+        /// represents the stepwidth of the item.
         /// </summary>
+        private float step;
 
-        private float step; // represents the stepwidth of the item
-
+        /// <summary>Initializes a new instance of the <see cref="SetpointWidget" /> class.</summary>
         public SetpointWidget()
         {
             InitializeComponent();
@@ -28,7 +25,6 @@ namespace OpenHAB.Windows.Controls
 
         private void ButtonUp_Click(object sender, RoutedEventArgs e)
         {
-
             double value = Widget.Item.GetStateAsDoubleValue();
             value += step;
 
@@ -66,7 +62,6 @@ namespace OpenHAB.Windows.Controls
                 comboBox.SelectedItem = Widget.Item.GetStateAsDoubleValue().ToString(CultureInfo.InvariantCulture) + Widget.Item.Unit;
                 comboBox.SelectionChanged += ComboBox_SelectionChanged;
             });
-
         }
 
         private void SetPointWidget_Loaded(object sender, RoutedEventArgs e)
@@ -90,15 +85,15 @@ namespace OpenHAB.Windows.Controls
             {
                 step = Widget.Step;
             }
+
             for (float i = Widget.MinValue; i <= Widget.MaxValue; i += step)
             {
                 comboBox.Items.Add(i.ToString(CultureInfo.InvariantCulture) + Widget.Item.Unit);
-                if (i < currentValue &&  currentValue < (i + step))
+                if (i < currentValue && currentValue < (i + step))
                 {
                     comboBox.Items.Add(currentValue.ToString(CultureInfo.InvariantCulture) + Widget.Item.Unit);
                 }
             }
-
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

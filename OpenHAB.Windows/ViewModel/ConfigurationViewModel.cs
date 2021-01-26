@@ -209,7 +209,7 @@ namespace OpenHAB.Windows.ViewModel
             }
         }
 
-        /// <summary>,
+        /// <summary>
         /// Gets or sets a value indicating whether the default sitemap should be visible.
         /// </summary>
         /// <value>The hide default sitemap.</value>

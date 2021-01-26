@@ -248,7 +248,7 @@ namespace OpenHAB.Core.Services
                                 },
                                 new AdaptiveText()
                                 {
-                                    Text = ""
+                                    Text = string.Empty
                                 },
                                 new AdaptiveText()
                                 {

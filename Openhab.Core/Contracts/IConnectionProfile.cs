@@ -2,7 +2,7 @@
 
 namespace OpenHAB.Core.Contracts
 {
-    /// <summary>Interface for connection profiles</summary>
+    /// <summary>Interface for connection profiles.</summary>
     public interface IConnectionProfile
     {
         /// <summary>Gets a value indicating whether [host URL] value can be modified.</summary>

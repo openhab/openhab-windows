@@ -51,7 +51,6 @@ namespace OpenHAB.Core.Services
 
                 await DownloadAndSaveIconToCache(iconUrl, iconFileName, storageFolder);
                 return iconFilePath;
-
             }
             catch (Exception ex)
             {
