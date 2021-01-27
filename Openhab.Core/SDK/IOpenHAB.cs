@@ -39,8 +39,8 @@ namespace OpenHAB.Core.SDK
         /// </summary>
         /// <param name="item">The item.</param>
         /// <param name="command">The Command.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        Task SendCommand(OpenHABItem item, string command);
+        /// <returns>Operation result if the command was successful or not.</returns>
+        Task<HttpResponseResult<bool>> SendCommand(OpenHABItem item, string command);
 
         /// <summary>
         /// Reset the connection to the OpenHAB server after changing the settings in the app.
@@ -56,6 +56,6 @@ namespace OpenHAB.Core.SDK
         /// <summary>Checks the URL reachability.</summary>
         /// <param name="connection">Defines settings for local or remote connections.</param>
         /// <returns>>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        Task<bool> CheckUrlReachability(OpenHABConnection connection);
+        Task<HttpResponseResult<bool>> CheckUrlReachability(OpenHABConnection connection);
     }
 }
