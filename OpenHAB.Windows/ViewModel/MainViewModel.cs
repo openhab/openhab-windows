@@ -123,10 +123,10 @@ namespace OpenHAB.Windows.ViewModel
                     if (_selectedSitemap?.Widgets == null || _selectedSitemap?.Widgets.Count == 0)
                     {
                         CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
-                        dispatcher.RunAsync(CoreDispatcherPriority.Normal,  () =>
-                        {
-                            LoadWidgets();
-                        });
+                        dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                       {
+                           LoadWidgets();
+                       });
                     }
                     else
                     {
@@ -211,7 +211,14 @@ namespace OpenHAB.Windows.ViewModel
 
         private async Task TriggerCommand(TriggerCommandMessage message)
         {
-            await _openHabsdk.SendCommand(message.Item, message.Command).ConfigureAwait(false);
+            HttpResponseResult<bool> result = await _openHabsdk.SendCommand(message.Item, message.Command).ConfigureAwait(false);
+            if (!result.Content)
+            {
+                string errorMessage = AppResources.Errors.GetString("CommandFailed");
+                errorMessage = string.Format(errorMessage, message.Command, message.Item.Name);
+
+                Messenger.Default.Send<FireErrorMessage>(new FireErrorMessage(errorMessage));
+            }
         }
 
         #endregion

@@ -105,12 +105,14 @@
   <ItemGroup>
     <Compile Include="AppResources.cs" />
     <Compile Include="Common\ActionCommand.cs" />
+    <Compile Include="Common\ErrorTypes.cs" />
     <Compile Include="Common\ColorChangedEventArgs.cs" />
     <Compile Include="Common\ColorHelper.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\DataErrorInfo.cs" />
     <Compile Include="Common\DeviceFamily.cs" />
     <Compile Include="Common\DeviceTypeHelper.cs" />
+    <Compile Include="Common\HttpResponseResult.cs" />
     <Compile Include="Common\ObservableCollectionExtensions.cs" />
     <Compile Include="Model\Connection\CloudConnectionProfile.cs" />
     <Compile Include="Model\Connection\DemoConnectionProfile.cs" />
@@ -205,6 +207,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Program Files (x86)\Windows Kits\10\bin\10.0.19041.0\XamlCompiler\Microsoft.UI.Xaml.Markup.winmd</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\en-us\Errors.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\de-de\Errors.resw" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
