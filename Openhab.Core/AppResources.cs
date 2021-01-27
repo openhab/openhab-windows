@@ -10,7 +10,7 @@ namespace OpenHAB.Core
         private static ResourceLoader _resourceLoader;
 
         /// <summary>
-        ///   Gets the localized languages.
+        ///   Gets the localized UI values.
         /// </summary>
         public static ResourceLoader Values
         {
@@ -19,6 +19,22 @@ namespace OpenHAB.Core
                 if (_resourceLoader == null)
                 {
                     _resourceLoader = ResourceLoader.GetForViewIndependentUse("Resources");
+                }
+
+                return _resourceLoader;
+            }
+        }
+
+        /// <summary>
+        ///   Gets the localized error strings.
+        /// </summary>
+        public static ResourceLoader Errors
+        {
+            get
+            {
+                if (_resourceLoader == null)
+                {
+                    _resourceLoader = ResourceLoader.GetForViewIndependentUse("Errors");
                 }
 
                 return _resourceLoader;

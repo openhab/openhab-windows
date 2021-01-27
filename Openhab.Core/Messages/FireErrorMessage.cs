@@ -11,6 +11,16 @@ namespace OpenHAB.Core.Messages
         /// Initializes a new instance of the <see cref="FireErrorMessage"/> class.
         /// </summary>
         /// <param name="errorMessage">The error message.</param>
+        public FireErrorMessage(string errorMessage)
+        {
+            ErrorMessage = errorMessage;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FireErrorMessage"/> class.
+        /// </summary>
+        /// <param name="errorType"></param>
+        /// <param name="errorMessage">The error message.</param>
         public FireErrorMessage(ErrorTypes errorType, string errorMessage)
         {
             ErrorMessage = errorMessage;

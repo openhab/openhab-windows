@@ -6,26 +6,23 @@ namespace OpenHAB.Core.Common
     /// <summary>HTTP response result.</summary>
     /// <typeparam name="T">Content Type.</typeparam>
     /// <typeparam name="TS">Error Type.</typeparam>
-    public class HttpResponseResult<T, TS>
+    public class HttpResponseResult<T>
     {
-        /// <summary>Initializes a new instance of the <see cref="HttpResponseResult{T, S}" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="HttpResponseResult{T}" /> class.</summary>
         /// <param name="content">The content.</param>
-        /// <param name="error">The error.</param>
         /// <param name="statusCode">The status code.</param>
-        public HttpResponseResult(T content, TS error, HttpStatusCode? statusCode)
-            : this (content, error, statusCode, null)
+        public HttpResponseResult(T content, HttpStatusCode? statusCode)
+            : this (content, statusCode, null)
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="HttpResponseResult{T, TS}" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="HttpResponseResult{T}" /> class.</summary>
         /// <param name="content">The content.</param>
-        /// <param name="error">The error.</param>
         /// <param name="statusCode">The status code.</param>
         /// <param name="exception">The exception.</param>
-        public HttpResponseResult(T content, TS error, HttpStatusCode? statusCode, Exception exception)
+        public HttpResponseResult(T content, HttpStatusCode? statusCode, Exception exception)
         {
             Content = content;
-            Error = error;
             StatusCode = statusCode;
             Exception = exception;
         }
@@ -33,14 +30,6 @@ namespace OpenHAB.Core.Common
         /// <summary>Gets the deserailized HTTP response content.</summary>
         /// <value>Deserailized HTTP response content.</value>
         public T Content
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>Gets the custom error description.</summary>
-        /// <value>  Error description including error code and details.</value>
-        public TS Error
         {
             get;
             private set;

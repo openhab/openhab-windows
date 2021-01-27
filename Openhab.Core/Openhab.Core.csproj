@@ -152,7 +152,6 @@
     <Compile Include="Common\OpenHABHttpClient.cs" />
     <Compile Include="Model\OpenHabVersion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SDK\ErrorMessageTranslator.cs" />
     <Compile Include="SDK\IOpenHAB.cs" />
     <Compile Include="SDK\OpenHABClient.cs" />
     <Compile Include="Services\SettingsService.cs" />
@@ -208,6 +207,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Program Files (x86)\Windows Kits\10\bin\10.0.19041.0\XamlCompiler\Microsoft.UI.Xaml.Markup.winmd</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\en-us\Errors.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\de-de\Errors.resw" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

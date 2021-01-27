@@ -118,6 +118,12 @@
     <PRIResource Include="..\Openhab.Core\Strings\en-us\Resources.resw">
       <Link>Strings\en-us\Resources.resw</Link>
     </PRIResource>
+    <PRIResource Include="..\Openhab.Core\Strings\de-de\Errors.resw">
+      <Link>Strings\de-de\Errors.resw</Link>
+    </PRIResource>
+    <PRIResource Include="..\Openhab.Core\Strings\en-us\Errors.resw">
+      <Link>Strings\en-us\Errors.resw</Link>
+    </PRIResource>
     <None Include="OpenHAB.Windows_StoreKey.pfx" />
     <None Include="OpenHAB.Windows_TemporaryKey.pfx" />
   </ItemGroup>
@@ -387,12 +393,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OpenHAB.Core\OpenHAB.Core.csproj">
-      <Project>{2a8fd10e-4ee5-4e25-b47c-2296e071f482}</Project>
-      <Name>OpenHAB.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <SDKReference Include="Microsoft.Services.Store.Engagement, Version=10.0">
       <Name>Microsoft Engagement Framework</Name>
     </SDKReference>
@@ -438,6 +438,12 @@
     <PackageReference Include="WinRTXamlToolkit.UWP">
       <Version>2.3.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OpenHAB.Core\OpenHAB.Core.csproj">
+      <Project>{2a8fd10e-4ee5-4e25-b47c-2296e071f482}</Project>
+      <Name>OpenHAB.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

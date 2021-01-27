@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
-using Microsoft.Graphics.Canvas.Effects;
 using OpenHAB.Core;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts;
@@ -267,11 +266,11 @@ namespace OpenHAB.Windows.ViewModel
 
             string url = parameter.ToString();
 
-            Task<bool> result = _openHabsdk.CheckUrlReachability(this.Model);
+            Task<HttpResponseResult<bool>> result = _openHabsdk.CheckUrlReachability(this.Model);
             result.ContinueWith(async (task) =>
             {
                 OpenHABUrlState urlState = OpenHABUrlState.Unknown;
-                if (task.IsCompletedSuccessfully && task.Result)
+                if (task.IsCompletedSuccessfully && task.Result.Content)
                 {
                     urlState = OpenHABUrlState.OK;
                 }
