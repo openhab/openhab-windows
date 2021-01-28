@@ -319,7 +319,11 @@ namespace OpenHAB.Core.SDK
                                 }
 
                                 var payload = JsonConvert.DeserializeObject<EventStreamPayload>(data.Payload);
-                                _messenger.Send(new UpdateItemMessage(data.Topic.Replace("smarthome/items/", string.Empty).Replace("/state", string.Empty), payload.Value));
+                                string itemName = data.Topic.Replace("smarthome/items/", string.Empty) // OH2
+                                                            .Replace("openhab/items/", string.Empty) // OH3
+                                                            .Replace("/state", string.Empty);
+
+                                _messenger.Send(new UpdateItemMessage(itemName, payload.Value));
                             }
                         }
                     }

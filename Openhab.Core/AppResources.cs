@@ -8,6 +8,7 @@ namespace OpenHAB.Core
     public class AppResources
     {
         private static ResourceLoader _resourceLoader;
+        private static ResourceLoader _errorResourceLoader;
 
         /// <summary>
         ///   Gets the localized UI values.
@@ -32,12 +33,12 @@ namespace OpenHAB.Core
         {
             get
             {
-                if (_resourceLoader == null)
+                if (_errorResourceLoader == null)
                 {
-                    _resourceLoader = ResourceLoader.GetForViewIndependentUse("Errors");
+                    _errorResourceLoader = ResourceLoader.GetForViewIndependentUse("Errors");
                 }
 
-                return _resourceLoader;
+                return _errorResourceLoader;
             }
         }
     }
