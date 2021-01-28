@@ -57,12 +57,12 @@ namespace OpenHAB.Core.Model
         /// </summary>
         public string State
         {
-            get =>_state;
+            get => _state;
             set
             {
                 if ((_type != null) && (Unit == null))
                 {
-                    if (_type.Contains(":", System.StringComparison.OrdinalIgnoreCase) && value != null)
+                    if (_type.Contains(":", System.StringComparison.OrdinalIgnoreCase) && value != null && value.Contains(" "))
                     {
                         int spaceIndex = value.LastIndexOf(' ');
                         Unit = value.Substring(spaceIndex, value.Length - spaceIndex);
@@ -79,12 +79,12 @@ namespace OpenHAB.Core.Model
         public string Unit { get; set; }
 
         /// <summary>
-        /// Gets or sets the unit of the OpenHAB item
+        /// Gets or sets the unit of the OpenHAB item.
         /// </summary>
         public string Link { get; set; }
 
         /// <summary>
-        /// Gets or sets the CommandDescription of the OpenHAB item
+        /// Gets or sets the CommandDescription of the OpenHAB item.
         /// </summary>
         ///
         public OpenHABCommandDescription commandDescription { get; set; }

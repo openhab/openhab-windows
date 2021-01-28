@@ -13,6 +13,7 @@ namespace OpenHAB.Windows.Controls
     public sealed partial class SelectionWidget : WidgetBase
     {
         private System.Collections.Generic.List<SelectionMapping> selectionMappings;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SelectionWidget"/> class.
         /// </summary>
@@ -23,7 +24,7 @@ namespace OpenHAB.Windows.Controls
         }
 
         /// <summary>
-        /// Get's called after SelectionWidget was loaded and updates the Widgets Selection Dropdown
+        /// Get's called after SelectionWidget was loaded and updates the Widgets Selection Dropdown.
         /// </summary>
         private void SelectionWidget_Loaded(object sender, global::Windows.UI.Xaml.RoutedEventArgs e)
         {
@@ -52,10 +53,16 @@ namespace OpenHAB.Windows.Controls
 
         internal override void SetState()
         {
-            SelectionMapping itemState = selectionMappings.FirstOrDefault(_ => _.Command == Widget.Item.State);
+            SelectionMapping itemState = selectionMappings.FirstOrDefault(x => x.Command == Widget.Item.State);
             DispatcherHelper.ExecuteOnUIThreadAsync(() =>
             {
-                SelectionComboBox.SelectedItem = itemState;
+                SelectionMapping currentSelection = SelectionComboBox.SelectedItem as SelectionMapping;
+
+                if (string.CompareOrdinal(currentSelection?.Command, itemState.Command) != 0)
+                {
+                    SelectionComboBox.SelectedItem = itemState;
+                }
+
                 SelectionComboBox.SelectionChanged += Selector_OnSelectionChanged;
             });
         }
@@ -63,29 +70,35 @@ namespace OpenHAB.Windows.Controls
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SelectionMapping mapping = (SelectionMapping)e.AddedItems.FirstOrDefault();
-
-            if (mapping == null)
+            if (mapping == null || string.CompareOrdinal(Widget.Item.State, mapping.Command) == 0)
             {
                 return;
             }
 
+            Widget.Item.State = mapping.Command;
             Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, mapping.Command));
         }
 
         /// <summary>
-        /// A Class that is used for Mapping Selectionvalues to Labels
+        /// A Class that is used for Mapping Selectionvalues to Labels.
         /// </summary>
-        class SelectionMapping
+        private class SelectionMapping
         {
             /// <summary>
-            /// Gets or sets the Command of the mapping
+            /// Gets or sets the Command of the mapping.
             /// </summary>
-            public string Command { get; set; }
+            public string Command
+            {
+                get; set;
+            }
 
             /// <summary>
-            /// Gets or sets the Label of the mapping
+            /// Gets or sets the Label of the mapping.
             /// </summary>
-            public string Label { get; set; }
+            public string Label
+            {
+                get; set;
+            }
 
             public SelectionMapping(string command, string label)
             {
