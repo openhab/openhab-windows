@@ -22,8 +22,8 @@ namespace OpenHAB.Windows.View
     public sealed partial class SettingsPage : Page
     {
         private IAppManager _appManager;
-        private SettingsViewModel _settingsViewModel;
         private ILogger<SettingsViewModel> _logger;
+        private SettingsViewModel _settingsViewModel;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingsPage"/> class.

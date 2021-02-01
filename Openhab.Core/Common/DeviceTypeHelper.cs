@@ -1,4 +1,12 @@
-﻿namespace OpenHAB.Core.Common
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Windows.System.Profile;
+using Windows.UI.ViewManagement;
+
+namespace OpenHAB.Core.Common
 {
     /// <summary>Helper class to get the target platform the app is running on.</summary>
     public class DeviceTypeHelper

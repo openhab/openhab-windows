@@ -53,10 +53,16 @@ namespace OpenHAB.Windows.Controls
 
         internal override void SetState()
         {
-            SelectionMapping itemState = selectionMappings.FirstOrDefault(_ => _.Command == Widget.Item.State);
+            SelectionMapping itemState = selectionMappings.FirstOrDefault(x => x.Command == Widget.Item.State);
             DispatcherHelper.ExecuteOnUIThreadAsync(() =>
             {
-                SelectionComboBox.SelectedItem = itemState;
+                SelectionMapping currentSelection = SelectionComboBox.SelectedItem as SelectionMapping;
+
+                if (string.CompareOrdinal(currentSelection?.Command, itemState.Command) != 0)
+                {
+                    SelectionComboBox.SelectedItem = itemState;
+                }
+
                 SelectionComboBox.SelectionChanged += Selector_OnSelectionChanged;
             });
         }
@@ -64,12 +70,12 @@ namespace OpenHAB.Windows.Controls
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SelectionMapping mapping = (SelectionMapping)e.AddedItems.FirstOrDefault();
-
-            if (mapping == null)
+            if (mapping == null || string.CompareOrdinal(Widget.Item.State, mapping.Command) == 0)
             {
                 return;
             }
 
+            Widget.Item.State = mapping.Command;
             Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, mapping.Command));
         }
 

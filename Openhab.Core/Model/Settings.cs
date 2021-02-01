@@ -23,6 +23,16 @@ namespace OpenHAB.Core.Model
             NotificationsEnable = false;
         }
 
+        /// <summary>
+        /// Gets or sets the application language.
+        /// </summary>
+        /// <value>The application language.</value>
+        public string AppLanguage
+        {
+            get;
+            set;
+        }
+
         /// <summary>Gets the list of available connection profiles.</summary>
         /// <value>The connection profiles.</value>
         public static List<IConnectionProfile> ConnectionProfiles
@@ -36,21 +46,10 @@ namespace OpenHAB.Core.Model
                     _connectionProfiles.Add(new DefaultConnectionProfile());
                     _connectionProfiles.Add(new RemoteConnectionProfile());
                     _connectionProfiles.Add(new CloudConnectionProfile());
-                    _connectionProfiles.Add(new DemoConnectionProfile());
                 }
 
                 return _connectionProfiles;
             }
-        }
-
-        /// <summary>
-        /// Gets or sets the application language.
-        /// </summary>
-        /// <value>The application language.</value>
-        public string AppLanguage
-        {
-            get;
-            set;
         }
 
         /// <summary>

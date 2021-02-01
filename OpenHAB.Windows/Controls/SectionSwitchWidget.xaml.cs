@@ -49,6 +49,11 @@ namespace OpenHAB.Windows.Controls
         private void Button_OnClick(object sender, TappedRoutedEventArgs e)
         {
             ToggleButton button = sender as ToggleButton;
+            if (string.CompareOrdinal(button?.Tag?.ToString(), Widget.Item.State) == 0)
+            {
+                SetState();
+                return;
+            }
 
             UncheckEverything();
             button.IsChecked = true;

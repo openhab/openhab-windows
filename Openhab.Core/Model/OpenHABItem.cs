@@ -83,7 +83,7 @@ namespace OpenHAB.Core.Model
             {
                 if ((_type != null) && (Unit == null))
                 {
-                    if (_type.Contains(":", System.StringComparison.OrdinalIgnoreCase) && value != null)
+                    if (_type.Contains(":", System.StringComparison.OrdinalIgnoreCase) && value != null && value.Contains(" "))
                     {
                         int spaceIndex = value.LastIndexOf(' ');
                         Unit = value.Substring(spaceIndex, value.Length - spaceIndex);
@@ -118,6 +118,12 @@ namespace OpenHAB.Core.Model
         {
             get; set;
         }
+
+        /// <summary>
+        /// Gets or sets the CommandDescription of the OpenHAB item.
+        /// </summary>
+        ///
+        public OpenHABCommandDescription commandDescription { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenHABItem"/> class.

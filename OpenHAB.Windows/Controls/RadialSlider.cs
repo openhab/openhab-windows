@@ -144,7 +144,7 @@ namespace OpenHAB.Windows.Controls
         /// </summary>
         public RadialSlider()
         {
-            DefaultStyleKey = typeof(RadialSlider);
+            DefaultStyleKey = typeof(RadialSlider);            
         }
 
         /// <summary>

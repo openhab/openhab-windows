@@ -33,7 +33,7 @@ namespace OpenHAB.Windows.Controls
                 value = Widget.MaxValue;
             }
 
-            Widget.Item.UpdateValue(value);
+            Widget.Item.UpdateValue(value.ToString(CultureInfo.InvariantCulture));
             RaisePropertyChanged(nameof(Widget));
             SetState();
         }
@@ -48,7 +48,7 @@ namespace OpenHAB.Windows.Controls
                 value = Widget.MinValue;
             }
 
-            Widget.Item.UpdateValue(value);
+            Widget.Item.UpdateValue(value.ToString(CultureInfo.InvariantCulture));
             RaisePropertyChanged(nameof(Widget));
             SetState();
         }
