@@ -44,9 +44,9 @@ namespace OpenHAB.Windows.Controls
 
         internal override void SetState()
         {
-            var rgbString = Widget.Item.State.Split(',');
+            var rgbString = Widget.Item?.State.Split(',');
 
-            if (rgbString.Length == 0)
+            if (rgbString == null || rgbString.Length == 0)
             {
                 return;
             }
