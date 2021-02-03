@@ -14,12 +14,10 @@
 			   Margin="12,0,0,0"
 			   HorizontalAlignment="Left"
 			   VerticalAlignment="Top" />
-		<ScrollViewer x:Name="LabelScrollViewer" HorizontalScrollMode="Enabled" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" >
-			<TextBlock x:Name="Label"
+		<TextBlock x:Name="Label"
 				   Margin="8"
 				   Foreground="{x:Bind LabelForeground, Mode=OneWay}"
 				   Text="{x:Bind LabelText, Mode=OneWay}"
-				   TextWrapping="Wrap" />
-		</ScrollViewer>
+				   TextTrimming="WordEllipsis" />
 	</StackPanel>
 </UserControl>

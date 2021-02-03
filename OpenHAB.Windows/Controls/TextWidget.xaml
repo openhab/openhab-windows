@@ -27,6 +27,7 @@
 				   FontSize="18"
 				   Text="{x:Bind Widget.Value, Mode=OneWay}" 
 				   Foreground="{x:Bind Widget.ValueColor, Converter={StaticResource StringToColorConverter}}" 
-				   TextWrapping="Wrap"  />
+				   TextWrapping="Wrap"
+				   TextTrimming="WordEllipsis" />
 	</Grid>
 </local:WidgetBase>
