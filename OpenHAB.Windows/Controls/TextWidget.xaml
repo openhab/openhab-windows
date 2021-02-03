@@ -8,7 +8,7 @@
                   d:DesignWidth="400"
                   mc:Ignorable="d">
 
-	<Grid Style="{StaticResource Widget}">
+    <Grid Style="{StaticResource Widget}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="1*" />
@@ -16,7 +16,8 @@
 
         <local:ImageLabel VerticalAlignment="Center"
                           IconPath="{x:Bind Widget, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
-                          LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
+                          LabelText="{x:Bind Widget.Label, Mode=OneWay}" 
+                          LabelForeground="{x:Bind Widget.LabelColor, Converter={StaticResource StringToColorConverter}}" />
 
         <TextBlock Grid.Column="1"
                    Margin="0, 0, 12, 0"
@@ -24,6 +25,7 @@
                    VerticalAlignment="Center"
                    FontSize="18"
                    Text="{x:Bind Widget.Value, Mode=OneWay}" 
-				   TextWrapping="Wrap" />
+                   Foreground="{x:Bind Widget.ValueColor, Converter={StaticResource StringToColorConverter}}" 
+                   TextWrapping="Wrap"  />
     </Grid>
 </local:WidgetBase>

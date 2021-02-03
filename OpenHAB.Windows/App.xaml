@@ -13,6 +13,7 @@
 
 			<converters:StateToBoolConverter x:Key="StateToBoolConverter" />
 			<converters:IconToPathConverter x:Key="IconToPathConverter" />
+			<converters:StringToColorBrushConverter x:Key="StringToColorConverter" />
 
 			<DataTemplate x:Key="FrameTemplate">
 				<controls:FrameWidget Widget="{Binding Mode=OneWay}" />

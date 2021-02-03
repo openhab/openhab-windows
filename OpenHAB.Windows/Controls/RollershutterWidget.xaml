@@ -15,7 +15,8 @@
 		</Grid.ColumnDefinitions>
 		<local:ImageLabel VerticalAlignment="Center"
 						  IconPath="{x:Bind Widget, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
-						  LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
+						  LabelText="{x:Bind Widget.Label, Mode=OneWay}"
+						  LabelForeground="{x:Bind Widget.LabelColor,Converter={StaticResource StringToColorConverter}}"/>
 
 		<StackPanel Grid.Column="1"
 					Width="100"

@@ -8,15 +8,16 @@
                   d:DesignWidth="300"
                   mc:Ignorable="d">
 
-	<Grid Style="{StaticResource Widget}"
-		  Tapped="OnToggle">
+    <Grid Style="{StaticResource Widget}"
+          Tapped="OnToggle">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <local:ImageLabel VerticalAlignment="Center"
                           IconPath="{x:Bind Widget, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
-                          LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
+                          LabelText="{x:Bind Widget.Label, Mode=OneWay}"
+                          LabelForeground="{x:Bind Widget.LabelColor, Converter={StaticResource StringToColorConverter}}"/>
 
         <Grid Grid.Column="1"
               Width="100"

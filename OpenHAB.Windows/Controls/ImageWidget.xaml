@@ -10,31 +10,32 @@
 
 	<Grid Style="{StaticResource Widget}"
 		  Tapped="ImageWidget_OnTapped">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <local:ImageLabel Grid.Column="0"
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+		<local:ImageLabel Grid.Column="0"
                           IconPath="{x:Bind Widget, Mode=OneWay, Converter={StaticResource IconToPathConverter}}"
-                          LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
+                          LabelText="{x:Bind Widget.Label, Mode=OneWay}"
+						  LabelForeground="{x:Bind Widget.LabelColor,Converter={StaticResource StringToColorConverter}}"/>
 
-        <ContentDialog x:Name="PopupDialog"
+		<ContentDialog x:Name="PopupDialog"
                        Title="{x:Bind Widget.Label}"
                        Grid.Column="0"
                        Grid.ColumnSpan="2"
                        Background="{StaticResource OpenHABLightColor}"
                        IsPrimaryButtonEnabled="True"
                        PrimaryButtonText="Close">
-            <Image x:Name="FullImage"
+			<Image x:Name="FullImage"
                    HorizontalAlignment="Right"
                    Stretch="Uniform" />
-        </ContentDialog>
+		</ContentDialog>
 
-        <Image x:Name="ThumbImage"
+		<Image x:Name="ThumbImage"
                Grid.Column="1"
                Margin="8"
                HorizontalAlignment="Stretch"
                VerticalAlignment="Stretch"
                Stretch="UniformToFill" />
-    </Grid>
+	</Grid>
 </local:WidgetBase>

@@ -8,7 +8,7 @@
                   d:DesignWidth="300"
                   mc:Ignorable="d">
 
-	<Grid Style="{StaticResource Widget}">
+    <Grid Style="{StaticResource Widget}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
@@ -17,13 +17,15 @@
                           HorizontalAlignment="Left"
                           VerticalAlignment="Center"
                           IconPath="{x:Bind Widget, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
-                          LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
+                          LabelText="{x:Bind Widget.Label, Mode=OneWay}" 
+                          LabelForeground="{x:Bind Widget.LabelColor, Converter={StaticResource StringToColorConverter}}"/>
 
         <ComboBox x:Name="SelectionComboBox"
                   Grid.Column="1"
                   Margin="0,0,12,0"
                   HorizontalAlignment="Right"
                   VerticalAlignment="Center"
+                  Foreground="{x:Bind Widget.ValueColor, Converter={StaticResource StringToColorConverter}}"
                   DisplayMemberPath="Label"/>
     </Grid>
 </local:WidgetBase>

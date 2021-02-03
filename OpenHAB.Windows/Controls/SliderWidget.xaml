@@ -11,7 +11,7 @@
         <converters:StringToDoubleConverter x:Key="StringToDoubleConverter" />
     </local:WidgetBase.Resources>
 
-	<Grid Style="{StaticResource Widget}">
+    <Grid Style="{StaticResource Widget}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="1*" />
@@ -20,14 +20,15 @@
         <local:ImageLabel VerticalAlignment="Center"
                           IconPath="{x:Bind Widget, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
                           LabelText="{x:Bind Widget.Label, Mode=OneWay}"
+                          LabelForeground="{x:Bind Widget.LabelColor, Converter={StaticResource StringToColorConverter}}"
                           Tapped="Widget_OnTapped" />
 
-        <local:RadialSlider 
-                            x:Name="radialSlider"
+        <local:RadialSlider x:Name="radialSlider"
                             Grid.Column="1"
                             Width="80"
                             Height="80"
                             HorizontalAlignment="Center"
+                            Foreground="{x:Bind Widget.ValueColor, Converter={StaticResource StringToColorConverter}}"
                             VerticalAlignment="Center"
                             IsInteractive="True"
                             MaxAngle="150"
@@ -38,7 +39,6 @@
                             TrailBrush="{StaticResource OpenHABLightOrangeBrush}"
                             ValueBrush="Black"
                             ValueChanged="RadialSlider_OnValueChanged"
-                            Value="{x:Bind Widget.Item.GetStateAsDoubleValue(), Mode=OneWay}" 
-                            />
+                            Value="{x:Bind Widget.Item.GetStateAsDoubleValue(), Mode=OneWay}" />
     </Grid>
 </local:WidgetBase>
