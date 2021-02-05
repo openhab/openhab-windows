@@ -37,7 +37,7 @@
 			</DataTemplate>
 
 			<DataTemplate x:Key="SwitchTemplate">
-				<controls:SwitchWidget Widget="{Binding Mode=OneWay}" />
+				<controls:ToggleWidget Widget="{Binding Mode=OneWay}" />
 			</DataTemplate>
 
 			<DataTemplate x:Key="MapViewTemplate">
