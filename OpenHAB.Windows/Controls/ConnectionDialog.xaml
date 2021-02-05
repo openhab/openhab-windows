@@ -47,8 +47,7 @@
 			<TextBox x:Name="TextBoxUsername"
 					 Margin="0,0,12,12"
 					 IsEnabled="{Binding Profile, Converter={StaticResource NullToBooleanConverter}}"
-					 Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-					 TextWrapping="Wrap">
+					 Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 				<Interactivity:Interaction.Behaviors>
 					<Core:EventTriggerBehavior EventName="LostFocus">
 						<Core:InvokeCommandAction Command="{Binding Path=UrlCheckCommand, Mode=TwoWay}"
