@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using GalaSoft.MvvmLight.Messaging;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Messages;
@@ -51,7 +52,7 @@ namespace OpenHAB.Windows.Controls
                 return;
             }
 
-            SelectedColor = Core.Common.ColorHelper.FromHSV(Convert.ToDouble(rgbString[0]), Convert.ToDouble(rgbString[1]), Convert.ToDouble(rgbString[2]));
+            //SelectedColor = Core.Common.ColorHelper.FromHSV(Convert.ToDouble(rgbString[0]), Convert.ToDouble(rgbString[1]), Convert.ToDouble(rgbString[2]));
         }
 
         private void ColorMap_OnColorChanged(object sender, ColorChangedEventArgs e)
@@ -62,8 +63,7 @@ namespace OpenHAB.Windows.Controls
             }
 
             var colorMap = (ColorMap)sender;
-            var hsv = Core.Common.ColorHelper.ToHSV(colorMap.Color);
-            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, $"{hsv.X},{hsv.Y},{hsv.Z}"));
+            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, $"{colorMap.Angle.ToString(CultureInfo.InvariantCulture)},{colorMap.RadialPos.ToString(CultureInfo.InvariantCulture)}, 100"));
         }
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
