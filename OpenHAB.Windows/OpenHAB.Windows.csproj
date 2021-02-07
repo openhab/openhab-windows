@@ -182,6 +182,9 @@
     <Compile Include="Controls\ColorWidget.xaml.cs">
       <DependentUpon>ColorWidget.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ToggleWidget.xaml.cs">
+      <DependentUpon>ToggleWidget.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TextWidget.xaml.cs">
       <DependentUpon>TextWidget.xaml</DependentUpon>
     </Compile>
@@ -190,6 +193,7 @@
     </Compile>
     <Compile Include="Controls\WidgetBase.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\StringToColorBrushConverter.cs" />
     <Compile Include="Converters\BoolToBackgroundColorConverter.cs" />
     <Compile Include="Converters\IconToBitmapConverter.cs" />
     <Compile Include="Converters\IconToPathConverter.cs" />
@@ -350,6 +354,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ColorWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ToggleWidget.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

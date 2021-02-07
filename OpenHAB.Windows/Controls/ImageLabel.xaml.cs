@@ -6,6 +6,7 @@ using OpenHAB.Core.Services;
 using OpenHAB.Windows.Services;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace OpenHAB.Windows.Controls
@@ -15,6 +16,14 @@ namespace OpenHAB.Windows.Controls
     /// </summary>
     public sealed partial class ImageLabel : UserControl
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageLabel"/> class.
+        /// </summary>
+        public ImageLabel()
+        {
+            InitializeComponent();
+        }
+
         /// <summary>
         /// Bindable property for the control icon.
         /// </summary>
@@ -92,12 +101,16 @@ namespace OpenHAB.Windows.Controls
             control.Label.Text = control.LabelText;
         }
 
+        public static readonly DependencyProperty LabelForegroundProperty = DependencyProperty.Register(
+         nameof(LabelForeground), typeof(SolidColorBrush), typeof(WidgetBase), new PropertyMetadata(default(SolidColorBrush)));
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="ImageLabel"/> class.
+        /// Gets or sets the OpenHAB widget.
         /// </summary>
-        public ImageLabel()
+        public SolidColorBrush LabelForeground
         {
-            InitializeComponent();
+            get => (SolidColorBrush)GetValue(LabelForegroundProperty);
+            set => SetValue(LabelForegroundProperty, value);
         }
     }
 }
