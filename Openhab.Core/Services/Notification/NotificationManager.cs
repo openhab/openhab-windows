@@ -16,6 +16,7 @@ namespace OpenHAB.Core.Services
         private IItemManager _itemManager;
         private string _iconFormat;
         private ISettingsService _settingsService;
+        private int _notficationCounter;
 
         /// <summary>Initializes a new instance of the <see cref="NotificationManager" /> class.</summary>
         /// <param name="itemStateManager">The item state manager.</param>
@@ -27,6 +28,7 @@ namespace OpenHAB.Core.Services
             _itemManager = itemStateManager;
             _iconFormat = settings.UseSVGIcons ? "svg" : "png";
             _settingsService = settingsService;
+            _notficationCounter = 0;
         }
 
         private void HandleUpdateItemMessage(ItemStateChangedMessage obj)
@@ -36,6 +38,8 @@ namespace OpenHAB.Core.Services
             {
                 return;
             }
+
+            _notficationCounter++;
 
             string itemName = obj.ItemName;
             string itemImage = string.Empty;
@@ -48,6 +52,7 @@ namespace OpenHAB.Core.Services
 
             TriggerToastNotificationForItem(itemName, itemImage, obj.Value, obj.OldValue);
             TriggerTileNotificationForItem(itemName, itemImage, obj.Value, obj.OldValue);
+            SetBadgeNumber(_notficationCounter);
         }
 
         #region Toast Notification
@@ -269,6 +274,39 @@ namespace OpenHAB.Core.Services
             };
 
             return tileContent.GetXml();
+        }
+
+        #endregion
+
+        #region Badge Notification
+
+        /// <inheritdoc/>
+        public void ResetBadgeCount()
+        {
+            BadgeUpdateManager.CreateBadgeUpdaterForApplication().Clear();
+        }
+
+        private void SetBadgeNumber(int num)
+        {
+
+            // Get the blank badge XML payload for a badge number
+            XmlDocument badgeXml =
+                BadgeUpdateManager.GetTemplateContent(BadgeTemplateType.BadgeNumber);
+
+            // Set the value of the badge in the XML to our number
+            Windows.Data.Xml.Dom.XmlElement badgeElement = badgeXml.SelectSingleNode("/badge") as Windows.Data.Xml.Dom.XmlElement;
+            badgeElement.SetAttribute("value", num.ToString());
+
+            // Create the badge notification
+            BadgeNotification badge = new BadgeNotification(badgeXml);
+
+            // Create the badge updater for the application
+            BadgeUpdater badgeUpdater =
+                BadgeUpdateManager.CreateBadgeUpdaterForApplication();
+
+            // And update the badge
+            badgeUpdater.Update(badge);
+
         }
 
         #endregion

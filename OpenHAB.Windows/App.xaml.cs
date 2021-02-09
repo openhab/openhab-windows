@@ -44,6 +44,7 @@ namespace OpenHAB.Windows
             UnhandledException += App_UnhandledException;
 
             INotificationManager notificationManager = (INotificationManager)DIService.Instance.Services.GetService(typeof(INotificationManager));
+            notificationManager.ResetBadgeCount();
         }
 
         /// <summary>
