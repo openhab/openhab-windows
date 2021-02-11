@@ -287,7 +287,7 @@ namespace OpenHAB.Core.Model
         {
             if (ReferenceEquals(widget1, null))
             {
-                return false;
+                return ReferenceEquals(widget2, null);
             }
 
             return widget1.Equals(widget2);

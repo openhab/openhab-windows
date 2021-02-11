@@ -393,6 +393,7 @@ namespace OpenHAB.Windows.ViewModel
 
             if (SelectedSitemap == null)
             {
+                return;
             }
 
             Subtitle = widget == null ? SelectedSitemap?.Label : widget.Label;

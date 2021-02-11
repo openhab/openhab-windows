@@ -31,10 +31,9 @@
 					Value="18" />
 		</Style>
 
-				<!-- Navigation View Styling -->
+		<!-- Navigation View Styling -->
 		<SolidColorBrush x:Key="NavigationViewDefaultPaneBackground"
 						 Color="{StaticResource DarkColor}" />
-
 		<SolidColorBrush x:Key="NavigationViewExpandedPaneBackground"
 						 Color="{StaticResource DarkColor}" />
 
@@ -44,17 +43,20 @@
 						 Color="#FFFF5722" />
 		<SolidColorBrush x:Key="NavigationViewItemForegroundPressed"
 						 Color="White" />
+
 		<SolidColorBrush x:Key="NavigationViewItemForegroundChecked"
 						 Color="#FFFF5722" />
-
+		<SolidColorBrush x:Key="NavigationViewItemForegroundCheckedPressed"
+						 Color="#FFFF5722" />
 		<SolidColorBrush x:Key="NavigationViewItemForegroundCheckedPointerOver"
 						 Color="White" />
+
 		<SolidColorBrush x:Key="NavigationViewItemForegroundSelected"
 						 Color="#FFFF5722" />
-		<SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPointerOver"
-						Color="White" />
 		<SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPressed"
 						 Color="#FFFF5722" />
+		<SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPointerOver"
+						 Color="White" />
 
 		<SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground"
 						 Color="#FFFF5722" />
@@ -69,7 +71,7 @@
 			<converters:MenuItemTemplateSelector.DefaultItemTemlate>
 				<DataTemplate x:DataType="muxc:NavigationViewItem">
 					<muxc:NavigationViewItem  Content="{x:Bind Content}"
-											 Icon="{x:Bind Icon}">
+											  Icon="{x:Bind Icon}">
 					</muxc:NavigationViewItem>
 				</DataTemplate>
 			</converters:MenuItemTemplateSelector.DefaultItemTemlate>
@@ -109,7 +111,7 @@
 				<Button Command="{Binding Vm.RefreshCommand, ElementName=Page}">
 					<SymbolIcon Symbol="Refresh"
 								Foreground="White"
-								VerticalAlignment="Center"/>
+								VerticalAlignment="Center" />
 				</Button>
 			</StackPanel>
 		</DataTemplate>
@@ -125,7 +127,7 @@
 						   Foreground="White" />
 			</StackPanel>
 		</DataTemplate>
-	
+
 	</Page.Resources>
 
 	<Grid>

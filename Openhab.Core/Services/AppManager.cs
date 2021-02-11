@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Windows.ApplicationModel;
-using Windows.UI.Core;
 
 namespace OpenHAB.Core.Services
 {
@@ -36,12 +35,17 @@ namespace OpenHAB.Core.Services
         public async Task ToggleAutostart()
         {
             StartupTask startupTask = await StartupTask.GetAsync(_startupId);
+            StartupTaskState newState = StartupTaskState.Disabled;
+
             switch (startupTask.State)
             {
+                case StartupTaskState.DisabledByPolicy:
+                case StartupTaskState.DisabledByUser:
                 case StartupTaskState.Disabled:
-                    StartupTaskState newState = await startupTask.RequestEnableAsync();
+                    newState = await startupTask.RequestEnableAsync();
                     _logger.LogInformation($"App autostart: {newState.ToString()}");
                     break;
+                case StartupTaskState.EnabledByPolicy:
                 case StartupTaskState.Enabled:
                     startupTask.Disable();
                     _logger.LogInformation($"App autostart: disabled");
