@@ -2,6 +2,9 @@
 
 namespace OpenHAB.Core.Services
 {
+    /// <summary>
+    /// Caching mechanism for widget icons.
+    /// </summary>
     public interface IIconCaching
     {
         /// <summary>

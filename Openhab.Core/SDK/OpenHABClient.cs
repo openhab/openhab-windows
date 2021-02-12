@@ -121,7 +121,7 @@ namespace OpenHAB.Core.SDK
 
                 string responseBody = await result.Content.ReadAsStringAsync();
 
-                OpenHabAPIInfo apiInfo = JsonConvert.DeserializeObject<OpenHabAPIInfo>(responseBody);
+                OpenHABAPIInfo apiInfo = JsonConvert.DeserializeObject<OpenHABAPIInfo>(responseBody);
                 if (apiInfo.Version < 4)
                 {
                     return OpenHABVersion.Three;

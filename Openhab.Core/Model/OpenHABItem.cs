@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
@@ -7,7 +6,6 @@ using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Toolkit.Uwp.Helpers;
 using Newtonsoft.Json;
 using OpenHAB.Core.Messages;
-using OpenHAB.Core.Services;
 
 namespace OpenHAB.Core.Model
 {
@@ -118,12 +116,6 @@ namespace OpenHAB.Core.Model
         {
             get; set;
         }
-
-        /// <summary>
-        /// Gets or sets the CommandDescription of the OpenHAB item.
-        /// </summary>
-        ///
-        public OpenHABCommandDescription commandDescription { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenHABItem"/> class.

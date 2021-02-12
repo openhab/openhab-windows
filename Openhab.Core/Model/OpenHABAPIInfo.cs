@@ -6,7 +6,7 @@ namespace OpenHAB.Core.Model
     /// <summary>
     /// Response for REST Root call, which provides all information about openHAB instance.
     /// </summary>
-    public class OpenHabAPIInfo
+    public class OpenHABAPIInfo
     {
         /// <summary>Gets or sets the version.</summary>
         /// <value>The version.</value>

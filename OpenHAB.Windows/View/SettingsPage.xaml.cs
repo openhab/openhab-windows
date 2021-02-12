@@ -7,7 +7,6 @@ using OpenHAB.Core.Services;
 using OpenHAB.Windows.Controls;
 using OpenHAB.Windows.Services;
 using OpenHAB.Windows.ViewModel;
-using Windows.ApplicationModel;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -129,25 +128,25 @@ namespace OpenHAB.Windows.View
             }
         }
 
-        private void OpenLocalConnectionButton_Click(object sender, RoutedEventArgs e)
+        private async void OpenLocalConnectionButton_Click(object sender, RoutedEventArgs e)
         {
             ConnectionDialog connectionDialog = CreateConnectionDialog();
             connectionDialog.DataContext = Vm.Settings.LocalConnection;
 
-            connectionDialog.ShowAsync();
+            await connectionDialog.ShowAsync();
         }
 
-        private void OpenRemoteConnectionButton_Click(object sender, RoutedEventArgs e)
+        private async void OpenRemoteConnectionButton_Click(object sender, RoutedEventArgs e)
         {
             ConnectionDialog connectionDialog = CreateConnectionDialog();
             connectionDialog.DataContext = Vm.Settings.RemoteConnection;
 
-            connectionDialog.ShowAsync();
+            await connectionDialog.ShowAsync();
         }
 
         private async void AppAutostartSwitch_Toggled(object sender, RoutedEventArgs e)
         {
-            _appManager.ToggleAutostart();
+            await _appManager.ToggleAutostart();
 
             var autostartEnabled = await _appManager.IsStartupEnabled().ConfigureAwait(false);
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>

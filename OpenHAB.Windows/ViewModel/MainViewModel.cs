@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Extensions.Logging;
 using Microsoft.Services.Store.Engagement;
@@ -42,7 +41,7 @@ namespace OpenHAB.Windows.ViewModel
         private object _selectedMenuItem;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MainViewModel"/> class.W
+        /// Initializes a new instance of the <see cref="MainViewModel"/> class.
         /// </summary>
         /// <param name="openHabsdk">The OpenHAB SDK object.</param>
         /// <param name="settingsService">Setting service instance.</param>
@@ -115,7 +114,7 @@ namespace OpenHAB.Windows.ViewModel
                         CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
                         dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                         {
-                           LoadWidgets();
+                            LoadWidgets();
                             WidgetNavigationService.ClearWidgetNavigation();
                         });
                     }
@@ -228,7 +227,7 @@ namespace OpenHAB.Windows.ViewModel
         private async void CancelSyncCallbackAsync()
         {
             CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
-            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 Sitemaps?.Clear();
                 CurrentWidgets?.Clear();
@@ -324,7 +323,7 @@ namespace OpenHAB.Windows.ViewModel
             catch (OpenHABException ex)
             {
                 _logger.LogError(ex, "Load data failed.");
-                Messenger.Default.Send(new FireErrorMessage(ErrorTypes.HTTPError, ex.Message));
+                Messenger.Default.Send(new FireErrorMessage(ex.Message));
             }
             catch (Exception ex)
             {
@@ -435,7 +434,6 @@ namespace OpenHAB.Windows.ViewModel
 
                 WidgetNavigationService.Navigate(SelectedWidget);
                 SetWidgetsOnScreen(SelectedWidget?.LinkedPage?.Widgets);
-
             });
         }
 

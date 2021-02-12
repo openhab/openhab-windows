@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 using OpenHAB.Core.Services;
 using OpenHAB.Windows.Services;
 using Windows.UI.Xaml;
@@ -53,7 +51,7 @@ namespace OpenHAB.Windows.Controls
             }
 
             IIconCaching iconCaching = (IIconCaching)DIService.Instance.Services.GetService(typeof(IIconCaching));
-            iconPath = await iconCaching.ResolveIconPath(iconPath, format.Success ? "svg": "png");
+            iconPath = await iconCaching.ResolveIconPath(iconPath, format.Success ? "svg" : "png");
 
             if (format.Success)
             {
@@ -101,6 +99,9 @@ namespace OpenHAB.Windows.Controls
             control.Label.Text = control.LabelText;
         }
 
+        /// <summary>
+        /// The color for label text property.
+        /// </summary>
         public static readonly DependencyProperty LabelForegroundProperty = DependencyProperty.Register(
          nameof(LabelForeground), typeof(SolidColorBrush), typeof(WidgetBase), new PropertyMetadata(default(SolidColorBrush)));
 

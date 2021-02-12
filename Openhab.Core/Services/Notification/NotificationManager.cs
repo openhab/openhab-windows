@@ -288,7 +288,6 @@ namespace OpenHAB.Core.Services
 
         private void SetBadgeNumber(int num)
         {
-
             // Get the blank badge XML payload for a badge number
             XmlDocument badgeXml =
                 BadgeUpdateManager.GetTemplateContent(BadgeTemplateType.BadgeNumber);
@@ -306,7 +305,6 @@ namespace OpenHAB.Core.Services
 
             // And update the badge
             badgeUpdater.Update(badge);
-
         }
 
         #endregion

@@ -39,6 +39,7 @@ namespace OpenHAB.Windows.ViewModel
         /// </summary>
         /// <param name="connectionConfig">The connection configuration.</param>
         /// <param name="openHabsdk">OpenHABSDK class.</param>
+        /// <param name="type">Defines if openHAB instance is local or remote.</param>
         public ConnectionDialogViewModel(OpenHABConnection connectionConfig, IOpenHAB openHabsdk, OpenHABHttpClientType type)
             : base(connectionConfig)
         {
@@ -257,7 +258,7 @@ namespace OpenHAB.Windows.ViewModel
             }
         }
 
-        private async void CheckConnectionSettings(object parameter)
+        private void CheckConnectionSettings(object parameter)
         {
             if (parameter == null)
             {
@@ -280,7 +281,7 @@ namespace OpenHAB.Windows.ViewModel
                 }
 
                 CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
-                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     UrlState = urlState;
                 });

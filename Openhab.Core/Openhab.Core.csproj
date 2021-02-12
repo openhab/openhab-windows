@@ -105,7 +105,6 @@
   <ItemGroup>
     <Compile Include="AppResources.cs" />
     <Compile Include="Common\ActionCommand.cs" />
-    <Compile Include="Common\ErrorTypes.cs" />
     <Compile Include="Common\ColorChangedEventArgs.cs" />
     <Compile Include="Common\ColorHelper.cs" />
     <Compile Include="Common\Constants.cs" />
@@ -130,16 +129,16 @@
     <Compile Include="Messages\UpdateItemMessage.cs" />
     <Compile Include="Messages\WidgetClickedMessage.cs" />
     <Compile Include="Model\Connection\DefaultConnectionProfile.cs" />
+    <Compile Include="Common\Enum.cs" />
+    <Compile Include="Model\OpenHABAPIInfo.cs" />
     <Compile Include="Model\OpenHABConnectionProfile.cs" />
     <Compile Include="Model\OpenHABConnectionType.cs" />
     <Compile Include="Model\Event\OpenHABEventType.cs" />
     <Compile Include="Model\Link.cs" />
-    <Compile Include="Model\OpenAPIInfo.cs" />
     <Compile Include="Model\RuntimeInfo.cs" />
     <Compile Include="Model\WidgetTypeEnum.cs" />
     <Compile Include="Model\Event\EventStreamData.cs" />
     <Compile Include="Model\Event\EventStreamPayload.cs" />
-    <Compile Include="Model\OpenHABCommand.cs" />
     <Compile Include="Model\OpenHABCommandOptions.cs" />
     <Compile Include="Model\Connection\OpenHABConnection.cs" />
     <Compile Include="Model\OpenHABItem.cs" />
@@ -160,7 +159,6 @@
     <Compile Include="SDK\OpenHABClient.cs" />
     <Compile Include="Services\AppManager.cs" />
     <Compile Include="Model\Event\OpenHABEvent.cs" />
-    <Compile Include="Model\ItemState.cs" />
     <Compile Include="Services\IItemManager.cs" />
     <Compile Include="Services\ItemManager.cs" />
     <Compile Include="Services\Notification\IOpenHABEventParser.cs" />

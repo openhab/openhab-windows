@@ -63,7 +63,6 @@
 
 		<!-- Converters -->
 		<converters:ObjectToSitemapConverter x:Key="ObjectToSitemapConverter" />
-		<converters:BoolToBackgroundColorConverter x:Key="BoolToBackgroundColorConverter" />
 		<converters:ZeroToVisibilityConverter x:Key="ZeroToVisibility" />
 		<converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 
