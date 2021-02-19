@@ -39,6 +39,7 @@ namespace OpenHAB.Windows.ViewModel
         private string _subtitle;
         private OpenHABVersion _version;
         private object _selectedMenuItem;
+        private ActionCommand _reloadSitemapCommand;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
@@ -88,6 +89,10 @@ namespace OpenHAB.Windows.ViewModel
         /// <summary>Gets the command to refresh sitemap and widget data.</summary>
         /// <value>The refresh command.</value>
         public ActionCommand RefreshCommand => _refreshCommand ?? (_refreshCommand = new ActionCommand(ExecuteRefreshCommandAsync, CanExecuteRefreshCommand));
+
+        /// <summary>Gets the command to reload sitemap and widget data.</summary>
+        /// <value>The refresh command.</value>
+        public ActionCommand ReloadSitemapCommand => _reloadSitemapCommand ?? (_reloadSitemapCommand = new ActionCommand(ExecuteReloadSitemapCommand, CanExecuteReloadSitemapCommand));
 
         /// <summary>
         /// Gets or sets the sitemap currently selected by the user.
@@ -179,6 +184,11 @@ namespace OpenHAB.Windows.ViewModel
 
         #region Commands
 
+        private bool CanExecuteReloadSitemapCommand(object arg)
+        {
+            return !IsDataLoading;
+        }
+
         private bool CanExecuteFeedbackCommand(object obj)
         {
             return StoreServicesFeedbackLauncher.IsSupported();
@@ -197,6 +207,11 @@ namespace OpenHAB.Windows.ViewModel
         private async void ExecuteRefreshCommandAsync(object obj)
         {
             await LoadSitemapsAndItemData().ConfigureAwait(false);
+        }
+
+        private async void ExecuteReloadSitemapCommand(object obj)
+        {
+            await ReloadSitemap().ConfigureAwait(false);
         }
 
         private async Task TriggerCommand(TriggerCommandMessage message)
@@ -222,6 +237,39 @@ namespace OpenHAB.Windows.ViewModel
         public async Task LoadSitemapsAndItemData()
         {
             await LoadData(_cancellationTokenSource.Token).ConfigureAwait(false);
+        }
+
+        private async Task ReloadSitemap()
+        {
+            CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
+            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                CurrentWidgets?.Clear();
+                IsDataLoading = true;
+
+                if (SelectedWidget != null)
+                {
+                    await LoadWidgets().ConfigureAwait(false);
+                    OpenHABWidget widget = FindWidget(SelectedWidget.WidgetId, SelectedSitemap.Widgets);
+                    if (widget != null)
+                    {
+                        await OnWidgetClickedAsync(widget);
+                    }
+                    else
+                    {
+                        SelectedWidget = null;
+                        WidgetNavigationService.ClearWidgetNavigation();
+                    }
+                }
+                else
+                {
+                    await LoadWidgets().ConfigureAwait(false);
+                }
+
+                IsDataLoading = false;
+                ReloadSitemapCommand.InvokeCanExecuteChanged(null);
+                RefreshCommand.InvokeCanExecuteChanged(null);
+            });
         }
 
         private async void CancelSyncCallbackAsync()
@@ -295,8 +343,6 @@ namespace OpenHAB.Windows.ViewModel
 
                     OpenLastOrDefaultSitemap();
 
-                    Subtitle = SelectedSitemap.Label;
-
                     if (SelectedWidget != null)
                     {
                         await LoadWidgets().ConfigureAwait(false);
@@ -317,6 +363,7 @@ namespace OpenHAB.Windows.ViewModel
                     }
 
                     IsDataLoading = false;
+                    ReloadSitemapCommand.InvokeCanExecuteChanged(null);
                     RefreshCommand.InvokeCanExecuteChanged(null);
                 });
             }
@@ -377,6 +424,8 @@ namespace OpenHAB.Windows.ViewModel
                 _logger.LogInformation($"Unable to find sitemap '{sitemapName}' -> Pick first entry from list");
                 SelectedSitemap = Sitemaps.FirstOrDefault();
             }
+
+            Subtitle = SelectedSitemap.Label;
         }
 
         #endregion

@@ -81,6 +81,8 @@ namespace OpenHAB.Windows.ViewModel
 
         public async Task LoadWidgets(OpenHABVersion version)
         {
+            Widgets.Clear();
+
             ICollection<OpenHABWidget> widgetModels = await _openHabsdk.LoadItemsFromSitemap(Model, version).ConfigureAwait(false);
             widgetModels.ToList().ForEach(x => Widgets.Add(x));
         }
