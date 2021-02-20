@@ -14,7 +14,7 @@ namespace OpenHAB.Windows.Controls
     public sealed partial class ColorWidget : WidgetBase
     {
         private Color _selectedColor;
-
+        private double _brightness;
         /// <summary>
         /// Initializes a new instance of the <see cref="ColorWidget"/> class.
         /// </summary>
@@ -39,9 +39,12 @@ namespace OpenHAB.Windows.Controls
                 }
 
                 _selectedColor = value;
+                var hsvclr = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToHsv(_selectedColor);
+                Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, $"{hsvclr.H.ToString(CultureInfo.InvariantCulture)},{(hsvclr.S*100).ToString(CultureInfo.InvariantCulture)}, {((hsvclr.V)*100).ToString(CultureInfo.InvariantCulture)}"));
                 RaisePropertyChanged();
             }
         }
+
 
         internal override void SetState()
         {

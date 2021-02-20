@@ -21,13 +21,15 @@
 						  IconPath="{x:Bind Widget, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
 						  LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
 
-		<local:ColorMap Grid.Column="1"
-						Width="80"
-						Height="80"
-						Margin="8"
-						HorizontalAlignment="Right"
-						VerticalAlignment="Center"
-						ColorChanged="ColorMap_OnColorChanged"
-						Color="{x:Bind SelectedColor, Mode=TwoWay}" />
-	</Grid>
+        <Grid Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Viewbox Grid.Column="1"  MaxHeight="80" Stretch="Fill" >
+                <ColorPicker Name="ClrPicker" IsColorChannelTextInputVisible="False"  ColorSpectrumShape="Ring" IsColorPreviewVisible="False" IsHexInputVisible="False" IsColorSliderVisible="true" Color="{x:Bind SelectedColor, Mode=TwoWay}" >
+                </ColorPicker>
+            </Viewbox>
+        </Grid>
+    </Grid>
 </local:WidgetBase>
