@@ -34,10 +34,6 @@ namespace OpenHAB.Core.Services
         private void HandleUpdateItemMessage(ItemStateChangedMessage obj)
         {
             Settings settings = _settingsService.Load();
-            if (settings.NotificationsEnable.HasValue && !settings.NotificationsEnable.Value)
-            {
-                return;
-            }
 
             _notficationCounter++;
 
@@ -50,8 +46,14 @@ namespace OpenHAB.Core.Services
                 itemImage = $"{OpenHABHttpClient.BaseUrl}icon/{item.Category}?state={state}&format={_iconFormat}";
             }
 
-            TriggerToastNotificationForItem(itemName, itemImage, obj.Value, obj.OldValue);
             TriggerTileNotificationForItem(itemName, itemImage, obj.Value, obj.OldValue);
+
+            if (settings.NotificationsEnable.HasValue && !settings.NotificationsEnable.Value)
+            {
+                return;
+            }
+
+            TriggerToastNotificationForItem(itemName, itemImage, obj.Value, obj.OldValue);
             SetBadgeNumber(_notficationCounter);
         }
 
