@@ -259,6 +259,12 @@ namespace OpenHAB.Core.SDK
         {
             try
             {
+                if (item == null)
+                {
+                    _logger.LogInformation("Send command is canceled, because item is null (e.g. widget not linked to item)");
+                    return new HttpResponseResult<bool>(false, null, null);
+                }
+
                 _logger.LogInformation($"Send Command '{command}' for item '{item.Name} of type '{item.Type}'");
 
                 var settings = _settingsService.Load();

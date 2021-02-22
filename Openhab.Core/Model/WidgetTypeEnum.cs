@@ -23,6 +23,11 @@ namespace OpenHAB.Core.Model
     public enum WidgetTypeEnum
     {
         /// <summary>
+        /// Color
+        /// </summary>
+        ColorPicker,
+
+        /// <summary>
         /// Group
         /// </summary>
         Group,

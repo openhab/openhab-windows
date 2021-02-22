@@ -58,7 +58,7 @@ namespace OpenHAB.Windows.Controls
             {
                 SelectionMapping currentSelection = SelectionComboBox.SelectedItem as SelectionMapping;
 
-                if (string.CompareOrdinal(currentSelection?.Command, itemState.Command) != 0)
+                if (currentSelection != null && string.CompareOrdinal(currentSelection?.Command, itemState.Command) != 0)
                 {
                     SelectionComboBox.SelectedItem = itemState;
                 }
