@@ -38,28 +38,35 @@ namespace OpenHAB.Windows.Controls
                 }
 
                 _selectedColor = value;
-                
                 RaisePropertyChanged();
             }
         }
+
         internal override void SetState()
         {
-            ClrPicker.ColorChanged -= ClrPicker_ColorChanged;
-            BrightnessSlider.ValueChanged -= BrightnessSlider_ValueChanged;
             var rgbString = Widget.Item?.State.Split(',');
 
             if (rgbString == null || rgbString.Length == 0)
             {
                 return;
             }
+
             double h = Convert.ToDouble(rgbString[0], CultureInfo.InvariantCulture);
             double s = Convert.ToDouble(rgbString[1], CultureInfo.InvariantCulture) /100;
             double v = Convert.ToDouble(rgbString[2], CultureInfo.InvariantCulture);
+
+            // Disable Changed Events
+            ClrPicker.ColorChanged -= ClrPicker_ColorChanged;
+            BrightnessSlider.ValueChanged -= BrightnessSlider_ValueChanged;
+
+            // Check if brightness > 0 to prevent Widget from losing last Color
             if (v > 0)
             {
+                // Set Colorproperty
                 SelectedColor = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.FromHsv(h, s, 1);
             }
 
+            // Set Brightness to Slider
             BrightnessSlider.Value = v;
             BrightnessSlider.ValueChanged += BrightnessSlider_ValueChanged;
             ClrPicker.ColorChanged += ClrPicker_ColorChanged;
@@ -80,6 +87,8 @@ namespace OpenHAB.Windows.Controls
         {
             ColorChanged();
         }
+
+        /// <summary>Sends the Color to Openhab Messenger</summary>
         private void ColorChanged()
         {
             var hsvclr = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToHsv(ClrPicker.Color);
