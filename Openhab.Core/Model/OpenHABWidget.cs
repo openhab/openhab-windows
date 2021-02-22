@@ -240,5 +240,14 @@ namespace OpenHAB.Core.Model
         {
             get; set;
         }
+
+        /// <summary>Gets or sets a value indicating whether this <see cref="OpenHABWidget" /> is visibility.</summary>
+        /// <value>
+        ///   <c>true</c> if visibility; otherwise, <c>false</c>.</value>
+        public bool Visibility
+        {
+            get;
+            set;
+        }
     }
 }

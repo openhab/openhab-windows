@@ -41,7 +41,7 @@ namespace OpenHAB.Windows.Controls
                 RaisePropertyChanged();
             }
         }
-
+        
         internal override void SetState()
         {
             var rgbString = Widget.Item?.State.Split(',');
@@ -52,7 +52,7 @@ namespace OpenHAB.Windows.Controls
             }
 
             double h = Convert.ToDouble(rgbString[0], CultureInfo.InvariantCulture);
-            double s = Convert.ToDouble(rgbString[1], CultureInfo.InvariantCulture) /100;
+            double s = Convert.ToDouble(rgbString[1], CultureInfo.InvariantCulture) / 100;
             double v = Convert.ToDouble(rgbString[2], CultureInfo.InvariantCulture);
 
             // Disable Changed Events

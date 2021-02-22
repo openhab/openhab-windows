@@ -9,7 +9,8 @@
 				  d:DesignHeight="300"
 				  d:DesignWidth="400"
 				  VariableSizedWrapGrid.ColumnSpan="2"
-				  mc:Ignorable="d">
+				  mc:Ignorable="d"
+				  Visibility="{x:Bind Widget.Visibility, Converter={StaticResource BooleanToVisibilityConverter}}">
 
     <Grid Style="{StaticResource Widget}">
         <Grid.ColumnDefinitions>
@@ -19,7 +20,8 @@
 
         <local:ImageLabel VerticalAlignment="Center"
 						  IconPath="{x:Bind Widget, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
-						  LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
+						  LabelText="{x:Bind Widget.Label, Mode=OneWay}"
+						  LabelForeground="{x:Bind Widget.LabelColor,Converter={StaticResource StringToColorConverter}}"/>
 
         <Grid Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,10,0">
             <Grid.ColumnDefinitions>
