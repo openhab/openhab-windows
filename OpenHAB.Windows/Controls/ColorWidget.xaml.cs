@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using GalaSoft.MvvmLight.Messaging;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Messages;
@@ -13,7 +14,6 @@ namespace OpenHAB.Windows.Controls
     public sealed partial class ColorWidget : WidgetBase
     {
         private Color _selectedColor;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ColorWidget"/> class.
         /// </summary>
@@ -38,37 +38,39 @@ namespace OpenHAB.Windows.Controls
                 }
 
                 _selectedColor = value;
+                
                 RaisePropertyChanged();
             }
         }
 
+
         internal override void SetState()
         {
+            ClrPicker.ColorChanged -= ClrPicker_ColorChanged;
             var rgbString = Widget.Item?.State.Split(',');
 
             if (rgbString == null || rgbString.Length == 0)
             {
                 return;
             }
+            double h = Convert.ToDouble(rgbString[0], CultureInfo.InvariantCulture);
+            double s = Convert.ToDouble(rgbString[1], CultureInfo.InvariantCulture) /100;
+            double v = Convert.ToDouble(rgbString[2], CultureInfo.InvariantCulture) / 100;
 
-            SelectedColor = Core.Common.ColorHelper.FromHSV(Convert.ToDouble(rgbString[0]), Convert.ToDouble(rgbString[1]), Convert.ToDouble(rgbString[2]));
-        }
-
-        private void ColorMap_OnColorChanged(object sender, ColorChangedEventArgs e)
-        {
-            if (Widget == null)
-            {
-                return;
-            }
-
-            var colorMap = (ColorMap)sender;
-            var hsv = Core.Common.ColorHelper.ToHSV(colorMap.Color);
-            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, $"{hsv.X},{hsv.Y},{hsv.Z}"));
+            SelectedColor = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.FromHsv(h,s,v);
+            ClrPicker.ColorChanged += ClrPicker_ColorChanged;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
             SetState();
+            
+        }
+
+        private void ClrPicker_ColorChanged(global::Windows.UI.Xaml.Controls.ColorPicker sender, global::Windows.UI.Xaml.Controls.ColorChangedEventArgs args)
+        {
+            var hsvclr = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToHsv(sender.Color);
+            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, $"{hsvclr.H.ToString(CultureInfo.InvariantCulture)},{(hsvclr.S*100).ToString(CultureInfo.InvariantCulture)}, {((hsvclr.V)*100).ToString(CultureInfo.InvariantCulture)}"));
         }
     }
 }
