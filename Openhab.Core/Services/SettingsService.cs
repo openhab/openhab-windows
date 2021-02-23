@@ -72,12 +72,22 @@ namespace OpenHAB.Core.Services
         }
 
         /// <inheritdoc />
-        public void Save(Settings settings)
+        public bool Save(Settings settings)
         {
-            _logger.LogInformation("Save settings to disk");
+            try
+            {
+                _logger.LogInformation("Save settings to disk");
 
-            EnsureSettingsContainer();
-            _settingsContainer.Values[Constants.Local.SettingsKey] = JsonConvert.SerializeObject(settings, _serializerSettings);
+                EnsureSettingsContainer();
+                _settingsContainer.Values[Constants.Local.SettingsKey] = JsonConvert.SerializeObject(settings, _serializerSettings);
+
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                _logger.LogError(ex, "Failed to save settings.");
+                return false;
+            }
         }
 
         /// <inheritdoc />

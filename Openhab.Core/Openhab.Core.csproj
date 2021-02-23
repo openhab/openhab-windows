@@ -114,6 +114,7 @@
     <Compile Include="Common\HttpResponseResult.cs" />
     <Compile Include="Common\ObservableCollectionExtensions.cs" />
     <Compile Include="Messages\ItemStateChangedMessage.cs" />
+    <Compile Include="Messages\SettingsValidationMessage.cs" />
     <Compile Include="Model\Connection\CloudConnectionProfile.cs" />
     <Compile Include="Model\Connection\DemoConnectionProfile.cs" />
     <Compile Include="Model\Connection\RemoteConnectionProfile.cs" />

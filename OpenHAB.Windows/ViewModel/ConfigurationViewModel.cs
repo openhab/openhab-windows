@@ -272,8 +272,8 @@ namespace OpenHAB.Windows.ViewModel
         public bool IsConnectionConfigValid()
         {
             bool validConfig = IsRunningInDemoMode.Value ||
-                     !string.IsNullOrEmpty(LocalConnection?.Url) ||
-                     !string.IsNullOrEmpty(RemoteConnection?.Url);
+                     (!string.IsNullOrEmpty(LocalConnection?.Url) && LocalConnection?.State == OpenHABUrlState.OK) ||
+                     (!string.IsNullOrEmpty(RemoteConnection?.Url) && RemoteConnection?.State == OpenHABUrlState.OK);
 
             _logger.LogInformation($"Valid application configuration: {validConfig}");
 
@@ -283,13 +283,16 @@ namespace OpenHAB.Windows.ViewModel
         /// <summary>
         /// Persists the settings to disk.
         /// </summary>
-        public void Save()
+        /// <returns>True if settings saved successful, otherwise false.</returns>
+        public bool Save()
         {
             _settings.LocalConnection = _localConnection.Model;
             _settings.RemoteConnection = _remoteConnection.Model;
 
-            _settingsService.Save(_settings);
+            bool result = _settingsService.Save(_settings);
             _settingsService.SetProgramLanguage(null);
+
+            return result;
         }
 
         private void ConfigurationViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -302,7 +305,7 @@ namespace OpenHAB.Windows.ViewModel
 
         private void ConnectionPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            OnPropertyChanged(nameof(IsDirty));
+             OnPropertyChanged(nameof(IsDirty));
         }
 
         private List<LanguageViewModel> InitalizeAppLanguages()

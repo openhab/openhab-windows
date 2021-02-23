@@ -46,7 +46,8 @@ namespace OpenHAB.Windows.View
         /// <inheritdoc/>
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            Messenger.Default.Register<SettingsUpdatedMessage>(this, msg => HandleSettingsUpdate(msg));
+            Messenger.Default.Register<SettingsUpdatedMessage>(this, msg => HandleSettingsUpdate(msg), true);
+            Messenger.Default.Register<SettingsValidationMessage>(this, msg => NotificationSettingsValidation(msg), true);
 
             var autostartEnabled = await _appManager.IsStartupEnabled().ConfigureAwait(false);
             var canAppAutostartEnabled = await _appManager.CanEnableAutostart().ConfigureAwait(false);
@@ -64,6 +65,8 @@ namespace OpenHAB.Windows.View
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             Messenger.Default.Unregister<SettingsUpdatedMessage>(this, msg => HandleSettingsUpdate(msg));
+            Messenger.Default.Unregister<SettingsValidationMessage>(this, msg => NotificationSettingsValidation(msg));
+
             AppAutostartSwitch.Toggled -= AppAutostartSwitch_Toggled;
         }
 
@@ -94,7 +97,7 @@ namespace OpenHAB.Windows.View
             ConnectionSettings.Visibility = Visibility.Visible;
         }
 
-        private async void HandleSettingsUpdate(SettingsUpdatedMessage msg)
+        private void HandleSettingsUpdate(SettingsUpdatedMessage msg)
         {
             try
             {
@@ -105,21 +108,27 @@ namespace OpenHAB.Windows.View
 
                     return;
                 }
-                else if (!msg.IsSettingsValid)
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Show info message failed.");
+            }
+        }
+
+        private void NotificationSettingsValidation(SettingsValidationMessage msg)
+        {
+            try
+            {
+                if (!msg.IsSettingsValid)
                 {
                     string message = AppResources.Values.GetString("MessageSettingsConnectionConfigInvalid");
-                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                    {
-                        SettingsNotification.Message = message;
-                        SettingsNotification.IsOpen = true;
-                    });
+
+                    SettingsNotification.Message = message;
+                    SettingsNotification.IsOpen = true;
                 }
                 else
                 {
-                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                    {
-                        SettingsNotification.IsOpen = false;
-                    });
+                    SettingsNotification.IsOpen = false;
                 }
             }
             catch (Exception ex)

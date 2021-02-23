@@ -82,10 +82,9 @@ namespace OpenHAB.Windows.ViewModel
             bool validConnectionConfig = CheckForValidConnectionConfig();
             if (validConnectionConfig)
             {
-                _configuration.Save();
+                bool savedSuccessful = _configuration.Save();
+                Messenger.Default.Send(new SettingsUpdatedMessage(validConnectionConfig, savedSuccessful));
             }
-
-            Messenger.Default.Send(new SettingsUpdatedMessage(validConnectionConfig, true));
         }
 
         private bool CheckForValidConnectionConfig()
@@ -102,7 +101,7 @@ namespace OpenHAB.Windows.ViewModel
         private bool CanPersistSettings(object arg)
         {
             bool validConnectionConfig = CheckForValidConnectionConfig();
-            Messenger.Default.Send(new SettingsUpdatedMessage(validConnectionConfig, false));
+            Messenger.Default.Send(new SettingsValidationMessage(validConnectionConfig));
 
             return validConnectionConfig && _configuration.IsDirty;
         }

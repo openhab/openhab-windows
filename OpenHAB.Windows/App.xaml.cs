@@ -143,7 +143,7 @@ namespace OpenHAB.Windows
 
         /// <summary>Handles the UnhandledException event of the App control.</summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="UnhandledExceptionEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="global::Windows.UI.Xaml.UnhandledExceptionEventArgs"/> instance containing the event data.</param>
         private void App_UnhandledException(object sender, global::Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
             _logger.LogCritical(e.Exception, "UnhandledException occurred");
