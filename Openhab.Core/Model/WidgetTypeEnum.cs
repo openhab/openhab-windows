@@ -7,6 +7,11 @@
     public enum WidgetTypeEnum
     {
         /// <summary>
+        /// Color
+        /// </summary>
+        ColorPicker,
+
+        /// <summary>
         /// Group
         /// </summary>
         Group,

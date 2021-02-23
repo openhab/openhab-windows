@@ -220,7 +220,7 @@ namespace OpenHAB.Windows.ViewModel
             if (!result.Content)
             {
                 string errorMessage = AppResources.Errors.GetString("CommandFailed");
-                errorMessage = string.Format(errorMessage, message.Command, message.Item.Name);
+                errorMessage = string.Format(errorMessage, message.Command, message.Item?.Name);
 
                 Messenger.Default.Send<FireErrorMessage>(new FireErrorMessage(errorMessage));
             }
