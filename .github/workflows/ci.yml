@@ -71,8 +71,8 @@ jobs:
       with:
         build_configuration: 'Debug'
         output_directory: '${{env.BuildDirectory}}'
-        GITHUB_TOKEN: ${{inputs.GITHUB_TOKEN}}
-        SONAR_TOKEN: ${{inputs.SONAR_TOKEN}}
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
     
     # - name: End SonarQube analyze
     #   env:
