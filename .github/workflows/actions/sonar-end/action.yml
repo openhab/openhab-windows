@@ -1,13 +1,13 @@
-name: 'Begin SonarCloud scan'
-description: 'Initialize SonarQube scan'
+name: 'End SonarCloud scan'
+description: 'End SonarQube scan'
 
 runs:
   using: "composite"
   steps:
-  - name: Begin analyze
+  - name: End analyze
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     shell: powershell
     run: |
-      .\.sonar\scanner\dotnet-sonarscanner begin /k:"openhab_openhab-windows" /o:"openhab" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
