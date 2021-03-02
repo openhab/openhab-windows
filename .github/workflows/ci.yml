@@ -65,7 +65,7 @@ jobs:
       id: create_app_package
       uses: ./src/.github/workflows/actions/app-build
       with:
-        build_configuration: 'release'
+        build_configuration: 'debug'
         output_directory: '${{env.BuildDirectory}}'
     
     - name: End analyze
