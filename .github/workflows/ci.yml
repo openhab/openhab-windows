@@ -53,7 +53,7 @@ jobs:
         New-Item -Path .\.sonar\scanner -ItemType Directory
         # dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
 
-        $file = "\.sonar\sonar-scanner.zip"
+        $file = Join-Path $MyInvocation.MyCommand.Path "\.sonar\sonar-scanner.zip"
         Invoke-WebRequest -Uri "https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/5.0.4.24009/sonar-scanner-msbuild-5.0.4.24009-net46.zip" -OutFile $file
         Expand-Archive -LiteralPath $file -DestinationPath ".\.sonar\scanner"
 
