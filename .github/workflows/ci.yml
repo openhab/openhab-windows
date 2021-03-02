@@ -53,10 +53,11 @@ jobs:
         New-Item -Path .\.sonar\scanner -ItemType Directory
         dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
         
-    - name: Build App
+    - name: Build App and excute SonarQube analysis
       id: create_app_package
       uses: ./src/.github/workflows/actions/app-build
       with:
         build_configuration: 'debug'
         output_directory: '${{env.BuildDirectory}}'
         SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
+        GITHUB_Token: ${{secrets.GITHUB_TOKEN}}
