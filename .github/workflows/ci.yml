@@ -18,6 +18,9 @@ jobs:
         path: src
         clean: true
 
+    - name: SonarCloud Setup
+      uses: ./src/.github/workflows/actions/sonar-setup
+
     - name: Setup NuGet.exe for use with actions
       uses: NuGet/setup-nuget@v1.0.5
       with:
@@ -26,9 +29,15 @@ jobs:
     - name: setup-msbuild
       uses: microsoft/setup-msbuild@v1
 
+    - name: SonarCloud Scan Begin
+      uses: ./src/.github/workflows/actions/sonar-begin
+
     - name: Build App
       id: create_app_package
       uses: ./src/.github/workflows/actions/app-build
       with:
         build_configuration: 'release'
         output_directory: '${{env.BuildDirectory}}'
+    
+    - name: SonarCloud Scan End
+      uses: ./src/.github/workflows/actions/sonar-end
