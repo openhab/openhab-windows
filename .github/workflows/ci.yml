@@ -51,7 +51,11 @@ jobs:
       shell: powershell
       run: |
         New-Item -Path .\.sonar\scanner -ItemType Directory
-        dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+        # dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+
+        $file = "\.sonar\sonar-scanner.zip"
+        Invoke-WebRequest -Uri "https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/5.0.4.24009/sonar-scanner-msbuild-5.0.4.24009-net46.zip" -OutFile $file
+        Expand-Archive -LiteralPath $file -DestinationPath ".\.sonar\scanner"
 
     - name: Begin analyze
       env:
@@ -59,7 +63,7 @@ jobs:
         SONAR_TOKEN: ${{secrets.SONAR_TOKE }}
       shell: powershell
       run: |
-        .\.sonar\scanner\dotnet-sonarscanner begin /k:"openhab_openhab-windows" /o:"openhab" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.sources="${{github.workspace}}\src\"
+        .\.sonar\scanner\SonarScanner.MSBuild.exe begin /k:"openhab_openhab-windows" /o:"openhab" /d:sonar.login="${{secrets.SONAR_TOKEN}}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.sources="${{github.workspace}}\src\"
 
     - name: Build App
       id: create_app_package
@@ -74,4 +78,4 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       shell: powershell
       run: |
-          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+          .\.sonar\scanner\SonarScanner.MSBuild.exe end /d:sonar.login="${{secrets.SONAR_TOKEN}}"
