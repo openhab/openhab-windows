@@ -50,12 +50,12 @@ jobs:
       if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
       shell: powershell
       run: |
-        New-Item -Path .\.sonar\scanner -ItemType Directory
+        $directory = New-Item -Path .\.sonar\scanner -ItemType Directory
         # dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
 
-        $file = Join-Path $PSScriptRoot "\.sonar\sonar-scanner.zip"
+        $file = Join-Path $directory.FullName "sonar-scanner.zip"
         Invoke-WebRequest -Uri "https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/5.0.4.24009/sonar-scanner-msbuild-5.0.4.24009-net46.zip" -OutFile $file
-        Expand-Archive -LiteralPath $file -DestinationPath ".\.sonar\scanner"
+        Expand-Archive -LiteralPath $file -DestinationPath "$($directory.FullName)"
 
     - name: Begin analyze
       env:
