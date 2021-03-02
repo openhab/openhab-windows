@@ -57,13 +57,13 @@ jobs:
         Invoke-WebRequest -Uri "https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/5.0.4.24009/sonar-scanner-msbuild-5.0.4.24009-net46.zip" -OutFile $file
         Expand-Archive -LiteralPath $file -DestinationPath "$($directory.FullName)"
 
-    - name: Begin SonarQube analyze
-      env:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        SONAR_TOKEN: ${{secrets.SONAR_TOKE }}
-      shell: powershell
-      run: |
-        .\.sonar\scanner\SonarScanner.MSBuild.exe begin /k:"openhab_openhab-windows" /o:"openhab" /d:sonar.login="${{secrets.SONAR_TOKEN}}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.projectBaseDir="${{github.workspace}}" /d:sonar.sources="${{github.workspace}}\src\" /d:sonar.verbose=true
+    # - name: Begin SonarQube analyze
+    #   env:
+    #     GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    #     SONAR_TOKEN: ${{secrets.SONAR_TOKE }}
+    #   shell: powershell
+    #   run: |
+    #     .\.sonar\scanner\SonarScanner.MSBuild.exe begin /k:"openhab_openhab-windows" /o:"openhab" /d:sonar.login="${{secrets.SONAR_TOKEN}}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.projectBaseDir="${{github.workspace}}" /d:sonar.sources="${{github.workspace}}\src\" /d:sonar.verbose=true
 
     - name: Build App
       id: create_app_package
@@ -71,11 +71,13 @@ jobs:
       with:
         build_configuration: 'Debug'
         output_directory: '${{env.BuildDirectory}}'
+        GITHUB_TOKEN: ${{inputs.GITHUB_TOKEN}}
+        SONAR_TOKEN: ${{inputs.SONAR_TOKEN}}
     
-    - name: End SonarQube analyze
-      env:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
-      shell: powershell
-      run: |
-          .\.sonar\scanner\SonarScanner.MSBuild.exe end /d:sonar.login="${{secrets.SONAR_TOKEN}}"
+    # - name: End SonarQube analyze
+    #   env:
+    #     GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    #     SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
+    #   shell: powershell
+    #   run: |
+    #       .\.sonar\scanner\SonarScanner.MSBuild.exe end /d:sonar.login="${{secrets.SONAR_TOKEN}}"
