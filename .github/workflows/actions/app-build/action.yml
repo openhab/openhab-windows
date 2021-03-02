@@ -12,6 +12,10 @@ inputs:
     required: false
     default: '${{github.workspace}}\build'
 
+  SONAR_TOKEN: 
+    description: 'Authentication Token for SonarQube'
+    required: true
+
 runs:
   using: "composite"
   steps:
@@ -31,5 +35,10 @@ runs:
       run: nuget restore ${{github.workspace}}\src\OpenHAB.Windows.sln
     
     - name: Build OpenHab Windows App
-      shell: cmd
-      run: msbuild.exe ${{github.workspace}}\src\OpenHAB.Windows.sln /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxPackageDir="${{inputs.output_directory}}" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="${{inputs.build_configuration}}"
+      shell: pwsh
+      run: |
+        .\.sonar\scanner\dotnet-sonarscanner begin /k:"openhab_openhab-windows" /o:"openhab" /d:sonar.login="${{inputs.SONAR_TOKEN}}" /d:sonar.host.url="https://sonarcloud.io"
+        
+        msbuild.exe ${{github.workspace}}\src\OpenHAB.Windows.sln /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxPackageDir="${{inputs.output_directory}}" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="${{inputs.build_configuration}}"
+        
+        .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{inputs.SONAR_TOKEN}}"
