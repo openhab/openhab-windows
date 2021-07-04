@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using GalaSoft.MvvmLight.Messaging;
@@ -127,7 +128,8 @@ namespace OpenHAB.Core.SDK
                     return OpenHABVersion.Three;
                 }
 
-                if (!Version.TryParse(apiInfo?.RuntimeInfo.Version, out Version serverVersion))
+                string runtimeversion = Regex.Replace(apiInfo?.RuntimeInfo.Version, "[^.0-9]", string.Empty);
+                if (!Version.TryParse(runtimeversion, out Version serverVersion))
                 {
                     string message = "Not able to parse runtime verion from openHAB server";
                     _logger.LogError(message);
