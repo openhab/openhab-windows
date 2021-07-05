@@ -35,7 +35,6 @@
   <Capabilities>
     <Capability Name="internetClient" />
     <Capability Name="privateNetworkClientServer" />
-    <rescap:Capability Name="appDiagnostics"/>
     <rescap:Capability Name="extendedExecutionUnconstrained"/>
     <rescap:Capability Name="extendedBackgroundTaskTime"/>
   </Capabilities>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using GalaSoft.MvvmLight.Messaging;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Messages;
@@ -41,19 +42,23 @@ namespace OpenHAB.Windows.Controls
                 RaisePropertyChanged();
             }
         }
-        
+
         internal override void SetState()
         {
-            var rgbString = Widget.Item?.State.Split(',');
 
-            if (rgbString == null || rgbString.Length == 0)
+            string rgbString = Widget.Item?.State;
+            string[] rgbSegements = Widget.Item?.State.Split(',');
+
+            Regex rgbRegEx = new Regex(@"(\d{1,3}),(\d{1,3}),(\d{1,3})");
+
+            if (rgbString == null || rgbString.Length == 0 || !rgbRegEx.IsMatch(rgbString))
             {
                 return;
             }
 
-            double h = Convert.ToDouble(rgbString[0], CultureInfo.InvariantCulture);
-            double s = Convert.ToDouble(rgbString[1], CultureInfo.InvariantCulture) / 100;
-            double v = Convert.ToDouble(rgbString[2], CultureInfo.InvariantCulture);
+            double h = Convert.ToDouble(rgbSegements[0], CultureInfo.InvariantCulture);
+            double s = Convert.ToDouble(rgbSegements[1], CultureInfo.InvariantCulture) / 100;
+            double v = Convert.ToDouble(rgbSegements[2], CultureInfo.InvariantCulture);
 
             // Disable Changed Events
             ClrPicker.ColorChanged -= ClrPicker_ColorChanged;
