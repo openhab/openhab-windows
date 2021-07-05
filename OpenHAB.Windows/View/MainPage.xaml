@@ -12,129 +12,129 @@
 	  xmlns:controls="using:OpenHAB.Windows.Controls"
 	  mc:Ignorable="d"
 	  Name="Page">
-	<Page.Background>
-		<ImageBrush ImageSource="/Assets/background.jpg"
+    <Page.Background>
+        <ImageBrush ImageSource="/Assets/background.jpg"
 					Stretch="UniformToFill" />
-	</Page.Background>
+    </Page.Background>
 
-	<Page.Resources>
-		<Style TargetType="GridViewItem">
-			<Setter Property="HorizontalContentAlignment"
+    <Page.Resources>
+        <Style TargetType="GridViewItem">
+            <Setter Property="HorizontalContentAlignment"
 					Value="Stretch" />
-			<Setter Property="VerticalContentAlignment"
+            <Setter Property="VerticalContentAlignment"
 					Value="Stretch" />
-		</Style>
+        </Style>
 
 
-		<Style TargetType="muxc:NavigationViewItem">
-			<Setter Property="FontSize"
+        <Style TargetType="muxc:NavigationViewItem">
+            <Setter Property="FontSize"
 					Value="18" />
-		</Style>
+        </Style>
 
-		<!-- Navigation View Styling -->
-		<SolidColorBrush x:Key="NavigationViewDefaultPaneBackground"
+        <!-- Navigation View Styling -->
+        <SolidColorBrush x:Key="NavigationViewDefaultPaneBackground"
 						 Color="{StaticResource DarkColor}" />
-		<SolidColorBrush x:Key="NavigationViewExpandedPaneBackground"
+        <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground"
 						 Color="{StaticResource DarkColor}" />
 
-		<SolidColorBrush x:Key="NavigationViewItemForeground"
+        <SolidColorBrush x:Key="NavigationViewItemForeground"
 						 Color="White" />
-		<SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver"
+        <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver"
 						 Color="#FFFF5722" />
-		<SolidColorBrush x:Key="NavigationViewItemForegroundPressed"
-						 Color="White" />
-
-		<SolidColorBrush x:Key="NavigationViewItemForegroundChecked"
-						 Color="#FFFF5722" />
-		<SolidColorBrush x:Key="NavigationViewItemForegroundCheckedPressed"
-						 Color="#FFFF5722" />
-		<SolidColorBrush x:Key="NavigationViewItemForegroundCheckedPointerOver"
+        <SolidColorBrush x:Key="NavigationViewItemForegroundPressed"
 						 Color="White" />
 
-		<SolidColorBrush x:Key="NavigationViewItemForegroundSelected"
+        <SolidColorBrush x:Key="NavigationViewItemForegroundChecked"
 						 Color="#FFFF5722" />
-		<SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPressed"
+        <SolidColorBrush x:Key="NavigationViewItemForegroundCheckedPressed"
 						 Color="#FFFF5722" />
-		<SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPointerOver"
+        <SolidColorBrush x:Key="NavigationViewItemForegroundCheckedPointerOver"
 						 Color="White" />
 
-		<SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground"
+        <SolidColorBrush x:Key="NavigationViewItemForegroundSelected"
+						 Color="#FFFF5722" />
+        <SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPressed"
+						 Color="#FFFF5722" />
+        <SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPointerOver"
+						 Color="White" />
+
+        <SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground"
 						 Color="#FFFF5722" />
 
-		<!-- Converters -->
-		<converters:ObjectToSitemapConverter x:Key="ObjectToSitemapConverter" />
-		<converters:ZeroToVisibilityConverter x:Key="ZeroToVisibility" />
-		<converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <!-- Converters -->
+        <converters:ObjectToSitemapConverter x:Key="ObjectToSitemapConverter" />
+        <converters:ZeroToVisibilityConverter x:Key="ZeroToVisibility" />
+        <converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 
-		<converters:MenuItemTemplateSelector x:Key="Selector">
-			<converters:MenuItemTemplateSelector.DefaultItemTemlate>
-				<DataTemplate x:DataType="muxc:NavigationViewItem">
-					<muxc:NavigationViewItem  Content="{x:Bind Content}"
+        <converters:MenuItemTemplateSelector x:Key="Selector">
+            <converters:MenuItemTemplateSelector.DefaultItemTemlate>
+                <DataTemplate x:DataType="muxc:NavigationViewItem">
+                    <muxc:NavigationViewItem  Content="{x:Bind Content}"
 											  Icon="{x:Bind Icon}">
-					</muxc:NavigationViewItem>
-				</DataTemplate>
-			</converters:MenuItemTemplateSelector.DefaultItemTemlate>
-			<converters:MenuItemTemplateSelector.SiteMapMenuItemTemplate>
-				<DataTemplate x:DataType="viewModel:SitemapViewModel">
-					<muxc:NavigationViewItem Content="{x:Bind Label, Mode=OneWay}">
-						<muxc:NavigationViewItem.Icon>
-							<muxc:ImageIcon Source="ms-appx:///Assets/openhab.png"
+                    </muxc:NavigationViewItem>
+                </DataTemplate>
+            </converters:MenuItemTemplateSelector.DefaultItemTemlate>
+            <converters:MenuItemTemplateSelector.SiteMapMenuItemTemplate>
+                <DataTemplate x:DataType="viewModel:SitemapViewModel">
+                    <muxc:NavigationViewItem Content="{x:Bind Label, Mode=OneWay}">
+                        <muxc:NavigationViewItem.Icon>
+                            <muxc:ImageIcon Source="ms-appx:///Assets/openhab.png"
 											Width="48"
 											Height="48" />
-						</muxc:NavigationViewItem.Icon>
-					</muxc:NavigationViewItem>
-				</DataTemplate>
-			</converters:MenuItemTemplateSelector.SiteMapMenuItemTemplate>
-		</converters:MenuItemTemplateSelector>
+                        </muxc:NavigationViewItem.Icon>
+                    </muxc:NavigationViewItem>
+                </DataTemplate>
+            </converters:MenuItemTemplateSelector.SiteMapMenuItemTemplate>
+        </converters:MenuItemTemplateSelector>
 
-		<DataTemplate x:Key="NavMenuHeaderTemplate">
+        <DataTemplate x:Key="NavMenuHeaderTemplate">
 
-			<TextBlock x:Name="textBlock"
+            <TextBlock x:Name="textBlock"
 					   Margin="5,0,0,10"
 					   VerticalAlignment="Center"
 					   Style="{StaticResource HeaderText}"
 					   Foreground="{StaticResource OpenHABMenuColor}"
 					   Text="{Binding }" />
 
-		</DataTemplate>
+        </DataTemplate>
 
-		<DataTemplate x:Key="NavHeaderTemplate">
-			<StackPanel Orientation="Horizontal">
-				<TextBlock x:Name="textBlock"
+        <DataTemplate x:Key="NavHeaderTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="textBlock"
 						   Margin="5,0,10,10"
 						   VerticalAlignment="Center"
 						   Style="{StaticResource HeaderText}"
 						   FontSize="36"
 						   Foreground="White"
 						   Text="{Binding }" />
-				<Button Command="{Binding Vm.ReloadSitemapCommand, ElementName=Page}">
-					<SymbolIcon Symbol="Refresh"
+                <Button Command="{Binding Vm.ReloadSitemapCommand, ElementName=Page}">
+                    <SymbolIcon Symbol="Refresh"
 								Foreground="White"
 								VerticalAlignment="Center" />
-				</Button>
-			</StackPanel>
-		</DataTemplate>
+                </Button>
+            </StackPanel>
+        </DataTemplate>
 
-		<DataTemplate x:Key="WaitListTemplate">
-			<StackPanel Orientation="Horizontal"
+        <DataTemplate x:Key="WaitListTemplate">
+            <StackPanel Orientation="Horizontal"
 						Padding="12">
-				<ProgressRing IsActive="True"
+                <ProgressRing IsActive="True"
 							  Margin="0,0,12,0"
 							  Foreground="{ThemeResource OpenHABMenuColor}" />
-				<TextBlock x:Uid="Loading"
+                <TextBlock x:Uid="Loading"
 						   VerticalAlignment="Center"
 						   Foreground="White" />
-			</StackPanel>
-		</DataTemplate>
+            </StackPanel>
+        </DataTemplate>
 
-	</Page.Resources>
+    </Page.Resources>
 
-	<Grid>
-		<Grid.Background>
-			<SolidColorBrush Opacity="0.2"
+    <Grid>
+        <Grid.Background>
+            <SolidColorBrush Opacity="0.2"
 							 Color="Black" />
-		</Grid.Background>
-		<muxc:NavigationView x:Name="SitemapNavigation"
+        </Grid.Background>
+        <muxc:NavigationView x:Name="SitemapNavigation"
 							 Header="{x:Bind Vm.Subtitle, Mode=OneWay}"
 							 MenuItemsSource="{x:Bind Vm.Sitemaps, Mode=OneWay}"
 							 MenuItemTemplateSelector="{StaticResource Selector}"
@@ -148,65 +148,66 @@
 							 PaneDisplayMode="Left"
 							 IsPaneOpen="False"
 							 SelectionChanged="SitemapNavigation_SelectionChanged"
-							 HeaderTemplate="{StaticResource NavHeaderTemplate}">
-			<muxc:NavigationView.PaneCustomContent>
-				<StackPanel Orientation="Vertical"
+							 HeaderTemplate="{StaticResource NavHeaderTemplate}"
+                             CornerRadius="0">
+            <muxc:NavigationView.PaneCustomContent>
+                <StackPanel Orientation="Vertical"
 							Visibility="{Binding IsPaneOpen, ElementName=SitemapNavigation}">
-					<Grid>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="75*" />
-							<ColumnDefinition Width="25*" />
-						</Grid.ColumnDefinitions>
-						<TextBlock x:Name="textBlock"
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="70*" />
+                            <ColumnDefinition Width="30*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="textBlock"
 								   Grid.Column="0"
 								   Margin="5,-3,0,0"
 								   VerticalAlignment="Center"
 								   Style="{StaticResource MenuSubHeader}"
 								   Foreground="{StaticResource OpenHABMenuColor}"
 								   Text="Sitemaps" />
-						<Button Grid.Column="1"
+                        <Button Grid.Column="1"
 								Margin="0,0,10,0"
 								HorizontalAlignment="Right"
 								Command="{Binding Vm.RefreshCommand, ElementName=Page}">
-							<SymbolIcon Symbol="Refresh"
+                            <SymbolIcon Symbol="Refresh"
 										Foreground="White"
 										VerticalAlignment="Center" />
-						</Button>
-					</Grid>
-					<TextBlock Grid.Row="1"
+                        </Button>
+                    </Grid>
+                    <TextBlock Grid.Row="1"
 							   Margin="10,10,10,0"
 							   x:Uid="NoItemsOrOpenHabNotAvailable"
 							   Visibility="{x:Bind Vm.Sitemaps.Count, Converter={StaticResource ZeroToVisibility}, Mode=OneWay}"
 							   TextWrapping="Wrap"
 							   Foreground="{StaticResource OpenHABMenuColor}"
 							   Style="{StaticResource FlyoutPickerTitleTextBlockStyle}" />
-				</StackPanel>
-			</muxc:NavigationView.PaneCustomContent>
-			<muxc:NavigationView.FooterMenuItems>
-				<muxc:NavigationViewItem x:Uid="FeedbackHeader">
-					<muxc:NavigationViewItem.Icon>
-						<FontIcon  VerticalAlignment="Center"
+                </StackPanel>
+            </muxc:NavigationView.PaneCustomContent>
+            <muxc:NavigationView.FooterMenuItems>
+                <muxc:NavigationViewItem x:Uid="FeedbackHeader">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon  VerticalAlignment="Center"
 								   AutomationProperties.Name="Favorite"
 								   FontFamily="Segoe MDL2 Assets"
 								   FontSize="18"
 								   Glyph="&#xE939;" />
-					</muxc:NavigationViewItem.Icon>
-					<interactivity:Interaction.Behaviors>
-						<core:EventTriggerBehavior EventName="Tapped">
-							<core:InvokeCommandAction Command="{x:Bind Vm.FeedbackCommand}" />
-						</core:EventTriggerBehavior>
-					</interactivity:Interaction.Behaviors>
-				</muxc:NavigationViewItem>
-			</muxc:NavigationView.FooterMenuItems>
-			<Grid x:Name="MainContentGrid"
+                    </muxc:NavigationViewItem.Icon>
+                    <interactivity:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="Tapped">
+                            <core:InvokeCommandAction Command="{x:Bind Vm.FeedbackCommand}" />
+                        </core:EventTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
+                </muxc:NavigationViewItem>
+            </muxc:NavigationView.FooterMenuItems>
+            <Grid x:Name="MainContentGrid"
 				  Margin="35,0,0,0"
 				  VerticalAlignment="Stretch">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="*" />
-					<RowDefinition Height="auto" />
-				</Grid.RowDefinitions>
-				<ScrollViewer VerticalScrollBarVisibility="Auto">
-					<GridView x:Name="MasterListView"
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <GridView x:Name="MasterListView"
 							  Margin="12,0,0,0"
 							  HorizontalAlignment="Stretch"
 							  VerticalAlignment="Stretch"
@@ -218,87 +219,86 @@
 							  ItemTemplateSelector="{StaticResource WidgetTemplateSelector}"
 							  ItemsSource="{x:Bind Vm.CurrentWidgets, Mode=OneWay}"
 							  SelectionMode="None">
-						<GridView.ItemsPanel>
-							<ItemsPanelTemplate>
-								<VariableSizedWrapGrid ItemHeight="106"
+                        <GridView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VariableSizedWrapGrid ItemHeight="106"
 													   ItemWidth="310"
 													   Orientation="Horizontal" />
-							</ItemsPanelTemplate>
-						</GridView.ItemsPanel>
-					</GridView>
-				</ScrollViewer>
+                            </ItemsPanelTemplate>
+                        </GridView.ItemsPanel>
+                    </GridView>
+                </ScrollViewer>
 
-				<muxc:InfoBar x:Name="ErrorNotification"
-							  Grid.Row="1"
-							  Margin="0,10,10,10"
+                <StackPanel Orientation="Vertical" Grid.Row="1" Margin="-25,10,10,10">
+                    <muxc:InfoBar x:Name="ErrorNotification"
+							  Margin="0,0,0,5"
 							  Severity="Error"
 							  IsClosable="True"
 							  HorizontalAlignment="Stretch"
 							  VerticalAlignment="Center" />
 
-				<muxc:InfoBar x:Name="InfoNotification"
-							  Grid.Row="1"
-							  Margin="-25,10,10,10"
+                    <muxc:InfoBar x:Name="InfoNotification"
 							  Severity="Informational"
 							  IsClosable="True"
 							  HorizontalAlignment="Stretch"
 							  VerticalAlignment="Center">
-					<muxc:InfoBar.ActionButton>
-						<Button x:Name="SettingsButtonInfoNotification"
+                        <muxc:InfoBar.ActionButton>
+                            <Button x:Name="SettingsButtonInfoNotification"
 								x:Uid="InfoAppBarSettingsButton">
-							<interactivity:Interaction.Behaviors>
-								<core:EventTriggerBehavior EventName="Tapped">
-									<core:NavigateToPageAction TargetPage="OpenHAB.Windows.View.SettingsPage" />
-								</core:EventTriggerBehavior>
-							</interactivity:Interaction.Behaviors>
-						</Button>
-					</muxc:InfoBar.ActionButton>
-				</muxc:InfoBar>
-			</Grid>
-		</muxc:NavigationView>
+                                <interactivity:Interaction.Behaviors>
+                                    <core:EventTriggerBehavior EventName="Tapped">
+                                        <core:NavigateToPageAction TargetPage="OpenHAB.Windows.View.SettingsPage" />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                            </Button>
+                        </muxc:InfoBar.ActionButton>
+                    </muxc:InfoBar>
+                </StackPanel>
+            </Grid>
+        </muxc:NavigationView>
 
-		<community:Loading x:Name="LoadingControl"
+        <community:Loading x:Name="LoadingControl"
 						   IsLoading="{x:Bind Vm.IsDataLoading, Mode=TwoWay}"
 						   HorizontalContentAlignment="Center"
 						   VerticalContentAlignment="Center">
-			<community:Loading.Background>
-				<SolidColorBrush Color="Black"
+            <community:Loading.Background>
+                <SolidColorBrush Color="Black"
 								 Opacity="0.7" />
-			</community:Loading.Background>
-			<ContentControl x:Name="LoadingContentControl"
+            </community:Loading.Background> 
+            <ContentControl x:Name="LoadingContentControl"
 							ContentTemplate="{StaticResource WaitListTemplate}" />
-		</community:Loading>
+        </community:Loading>
 
-		<VisualStateManager.VisualStateGroups>
-			<VisualStateGroup>
-				<VisualState>
-					<VisualState.StateTriggers>
-						<controls:DeviceFamilyStateTrigger TargetDeviceFamily="Desktop" />
-					</VisualState.StateTriggers>
-					<VisualState.Setters>
-						<Setter Target="SitemapNavigation.PaneDisplayMode"
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <controls:DeviceFamilyStateTrigger TargetDeviceFamily="Desktop" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SitemapNavigation.PaneDisplayMode"
 								Value="Left" />
-					</VisualState.Setters>
-				</VisualState>
-				<VisualState>
-					<VisualState.StateTriggers>
-						<controls:DeviceFamilyStateTrigger TargetDeviceFamily="Mobile" />
-					</VisualState.StateTriggers>
-					<VisualState.Setters>
-						<Setter Target="SitemapNavigation.PaneDisplayMode"
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <controls:DeviceFamilyStateTrigger TargetDeviceFamily="Mobile" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SitemapNavigation.PaneDisplayMode"
 								Value="LeftCompact" />
-					</VisualState.Setters>
-				</VisualState>
-				<VisualState>
-					<VisualState.StateTriggers>
-						<controls:DeviceFamilyStateTrigger TargetDeviceFamily="Xbox" />
-					</VisualState.StateTriggers>
-					<VisualState.Setters>
-						<Setter Target="SitemapNavigation.PaneDisplayMode"
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <controls:DeviceFamilyStateTrigger TargetDeviceFamily="Xbox" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SitemapNavigation.PaneDisplayMode"
 								Value="LeftMinimal" />
-					</VisualState.Setters>
-				</VisualState>
-			</VisualStateGroup>
-		</VisualStateManager.VisualStateGroups>
-	</Grid>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
 </Page>
