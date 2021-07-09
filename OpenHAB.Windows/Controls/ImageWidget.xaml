@@ -18,7 +18,7 @@
 		<local:ImageLabel Grid.Column="0"
 						  IconPath="{x:Bind Widget, Mode=OneWay, Converter={StaticResource IconToPathConverter}}"
 						  LabelText="{x:Bind Widget.Label, Mode=OneWay}"
-						  LabelForeground="{x:Bind Widget.LabelColor,Converter={StaticResource StringToColorConverter}}"/>
+						  LabelForeground="{x:Bind Widget.LabelColor,Converter={StaticResource StringToColorConverter}, Mode=OneWay}"/>
 
 		<ContentDialog x:Name="PopupDialog"
 					   Title="{x:Bind Widget.Label}"
