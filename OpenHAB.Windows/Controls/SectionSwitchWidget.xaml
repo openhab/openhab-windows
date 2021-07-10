@@ -22,7 +22,7 @@
 						  VerticalAlignment="Center"
 						  IconPath="{x:Bind Widget, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
 						  LabelText="{x:Bind Widget.Label, Mode=OneWay}" 
-						  LabelForeground="{x:Bind Widget.LabelColor, Converter={StaticResource StringToColorConverter}}"/>
+						  LabelForeground="{x:Bind Widget.LabelColor, Converter={StaticResource StringToColorConverter}, Mode=OneWay}"/>
 		<ItemsControl x:Name="SectionsList"
 					  Grid.Column="1"
 					  Margin="2,2,8,2"
@@ -30,7 +30,7 @@
 					  VerticalAlignment="Center"
 					  HorizontalContentAlignment="Center"
 					  VerticalContentAlignment="Center"
-					  Foreground="{x:Bind Widget.ValueColor,Converter={StaticResource StringToColorConverter}}"
+					  Foreground="{x:Bind Widget.ValueColor,Converter={StaticResource StringToColorConverter}, Mode=OneWay}"
 					  Background="{StaticResource OpenHABLightColor}"
 					  ItemsSource="{x:Bind Widget.Mappings}">
 			<ItemsControl.ItemTemplate>

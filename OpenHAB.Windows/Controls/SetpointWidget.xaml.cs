@@ -107,6 +107,7 @@ namespace OpenHAB.Windows.Controls
             if (newValue != null)
             {
                 Widget.Item.UpdateValue(newValue);
+                RaisePropertyChanged(nameof(Widget));
             }
         }
     }
