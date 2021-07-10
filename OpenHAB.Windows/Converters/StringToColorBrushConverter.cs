@@ -39,8 +39,7 @@ namespace OpenHAB.Windows.Converters
         /// </returns>
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            Color color = (Color)value;
-            return color;
+            return null;
         }
     }
 }

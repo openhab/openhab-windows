@@ -59,7 +59,7 @@ namespace OpenHAB.Windows.Controls
                 Widget.Value = Widget.Item.State;
             }
 
-            RaisePropertyChanged(nameof(Widget.Value));
+            RaisePropertyChanged(nameof(Widget));
             RaisePropertyChanged(nameof(State));
         }
 
@@ -76,7 +76,6 @@ namespace OpenHAB.Windows.Controls
             {
                 Widget.Item.State = currentValue;
                 Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, currentValue));
-
                 return;
             }
         }
