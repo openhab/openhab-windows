@@ -22,7 +22,7 @@
 		<local:ImageLabel VerticalAlignment="Center"
 						  IconPath="{x:Bind Widget, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
 						  LabelText="{x:Bind Widget.Label, Mode=OneWay}"
-						  LabelForeground="{x:Bind Widget.LabelColor, Converter={StaticResource StringToColorConverter}}"
+						  LabelForeground="{x:Bind Widget.LabelColor, Converter={StaticResource StringToColorConverter}, Mode=OneWay}"
 						  Tapped="Widget_OnTapped" />
 
 		<local:RadialSlider x:Name="radialSlider"
@@ -30,7 +30,7 @@
 							Width="80"
 							Height="80"
 							HorizontalAlignment="Center"
-							Foreground="{x:Bind Widget.ValueColor, Converter={StaticResource StringToColorConverter}}"
+							Foreground="{x:Bind Widget.ValueColor, Converter={StaticResource StringToColorConverter}, Mode=OneWay}"
 							VerticalAlignment="Center"
 							IsInteractive="True"
 							MaxAngle="150"

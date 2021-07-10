@@ -18,7 +18,7 @@
 		<local:ImageLabel VerticalAlignment="Center"
 						  IconPath="{x:Bind Widget, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
 						  LabelText="{x:Bind Widget.Label, Mode=OneWay}" 
-						  LabelForeground="{x:Bind Widget.LabelColor, Converter={StaticResource StringToColorConverter}}" />
+						  LabelForeground="{x:Bind Widget.LabelColor, Converter={StaticResource StringToColorConverter}, Mode=OneWay}" />
 
 		<TextBlock Grid.Column="1"
 				   Margin="0, 0, 12, 0"
@@ -26,7 +26,7 @@
 				   VerticalAlignment="Center"
 				   FontSize="18"
 				   Text="{x:Bind Widget.Value, Mode=OneWay}" 
-				   Foreground="{x:Bind Widget.ValueColor, Converter={StaticResource StringToColorConverter}}" 
+				   Foreground="{x:Bind Widget.ValueColor, Converter={StaticResource StringToColorConverter}, Mode=OneWay}" 
 				   TextWrapping="Wrap"
 				   TextTrimming="WordEllipsis" />
 	</Grid>

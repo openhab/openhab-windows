@@ -34,14 +34,20 @@ namespace OpenHAB.Core.Services
             try
             {
                 Match iconName = Regex.Match(iconUrl, "icon/[0-9a-zA-Z]*");
+                Match iconState = Regex.Match(iconUrl, "state=[0-9a-zA-Z=]*");
                 if (!iconName.Success)
                 {
                     throw new OpenHABException("Can not resolve icon name from url");
                 }
+                if (!iconState.Success)
+                {
+                    throw new OpenHABException("Can not resolve icon state from url");
+                }
+
 
                 StorageFolder storageFolder = await EnsureIconCacheFolder();
 
-                string iconFileName = $"{iconName.Value.Replace("icon/", string.Empty)}.{iconFormat}";
+                string iconFileName = $"{iconName.Value.Replace("icon/", string.Empty)}{iconState.Value.Replace("state=", string.Empty)}.{iconFormat}";
                 string iconFilePath = $"{storageFolder.Path}\\{iconFileName}";
 
                 if (await storageFolder.FileExistsAsync(iconFileName))

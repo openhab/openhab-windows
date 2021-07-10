@@ -17,7 +17,7 @@
 		</Grid.ColumnDefinitions>
 		<local:ImageLabel VerticalAlignment="Center"
 						  IconPath="{x:Bind Widget, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
-						  LabelForeground="{x:Bind Widget.LabelColor, Converter={StaticResource StringToColorConverter}}"
+						  LabelForeground="{x:Bind Widget.LabelColor, Converter={StaticResource StringToColorConverter}, Mode=OneWay}"
 						  LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
 
 
@@ -38,7 +38,7 @@
 					  x:Name="comboBox"
 					  HorizontalAlignment="Stretch"
 					  FontSize="16"
-					  Foreground="{x:Bind Widget.ValueColor, Converter={StaticResource StringToColorConverter}}"
+					  Foreground="{x:Bind Widget.ValueColor, Converter={StaticResource StringToColorConverter}, Mode=OneWay}"
 					  Width="Auto" VerticalAlignment="Stretch"/>
 				<Grid Grid.Row="1" Margin="0,3,0,0">
 					<Grid.ColumnDefinitions>
