@@ -39,11 +39,11 @@ namespace OpenHAB.Core.Services
                 {
                     throw new OpenHABException("Can not resolve icon name from url");
                 }
+
                 if (!iconState.Success)
                 {
                     throw new OpenHABException("Can not resolve icon state from url");
                 }
-
 
                 StorageFolder storageFolder = await EnsureIconCacheFolder();
 

@@ -22,7 +22,7 @@ namespace OpenHAB.Windows.Controls
         }
 
         /// <summary>
-        /// Gets a value indicating whether the switch is on or off.
+        /// Gets or sets a value indicating whether the switch is on or off.
         /// </summary>
         public string State
         {
