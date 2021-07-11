@@ -1,6 +1,5 @@
 ﻿namespace OpenHAB.Core.Model
 {
-
     /// <summary>
     /// All different Widget Types.
     /// </summary>

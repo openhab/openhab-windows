@@ -5,7 +5,6 @@ using OpenHAB.Core.Common;
 
 namespace OpenHAB.Windows.ViewModel
 {
-
     /// <summary>
     /// MVVM ViewModel Base Class.
     /// </summary>

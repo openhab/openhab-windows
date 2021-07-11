@@ -2,8 +2,9 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
 using GalaSoft.MvvmLight.Messaging;
-using OpenHAB.Core.Common;
+using Microsoft.Extensions.Logging;
 using OpenHAB.Core.Messages;
+using OpenHAB.Windows.Services;
 using Windows.UI;
 using Windows.UI.Xaml;
 
@@ -15,6 +16,8 @@ namespace OpenHAB.Windows.Controls
     public sealed partial class ColorWidget : WidgetBase
     {
         private Color _selectedColor;
+        private ILogger<ColorWidget> _logger;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ColorWidget"/> class.
         /// </summary>
@@ -22,6 +25,8 @@ namespace OpenHAB.Windows.Controls
         {
             InitializeComponent();
             Loaded += OnLoaded;
+
+            _logger = (ILogger<ColorWidget>)DIService.Instance.Services.GetService(typeof(ILogger<ColorWidget>));
         }
 
         /// <summary>
@@ -45,7 +50,6 @@ namespace OpenHAB.Windows.Controls
 
         internal override void SetState()
         {
-
             string rgbString = Widget.Item?.State;
             string[] rgbSegements = Widget.Item?.State.Split(',');
 
@@ -53,6 +57,7 @@ namespace OpenHAB.Windows.Controls
 
             if (rgbString == null || rgbString.Length == 0 || !rgbRegEx.IsMatch(rgbString))
             {
+                _logger.LogWarning($"Item state '{rgbString}' is not a valid RGB value");
                 return;
             }
 
@@ -93,12 +98,11 @@ namespace OpenHAB.Windows.Controls
             ColorChanged();
         }
 
-        /// <summary>Sends the Color to Openhab Messenger</summary>
+        /// <summary>Sends the Color to Openhab Messenger.</summary>
         private void ColorChanged()
         {
             var hsvclr = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToHsv(ClrPicker.Color);
             Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, $"{hsvclr.H.ToString(CultureInfo.InvariantCulture)},{(hsvclr.S * 100).ToString(CultureInfo.InvariantCulture)}, {BrightnessSlider.Value.ToString(CultureInfo.InvariantCulture)}"));
         }
-
     }
 }

@@ -282,7 +282,10 @@ namespace OpenHAB.Core.Model
             return WidgetId.CompareTo(other.WidgetId) == 0;
         }
 
-        /// <inheritdoc/>
+        /// <summary>Implements the operator ==.</summary>
+        /// <param name="widget1">The widget1.</param>
+        /// <param name="widget2">The widget2.</param>
+        /// <returns>The result of the operator.</returns>
         public static bool operator ==(OpenHABWidget widget1, OpenHABWidget widget2)
         {
             if (ReferenceEquals(widget1, null))
@@ -293,7 +296,10 @@ namespace OpenHAB.Core.Model
             return widget1.Equals(widget2);
         }
 
-        /// <inheritdoc/>
+        /// <summary>Implements the operator !=.</summary>
+        /// <param name="widget1">The widget1.</param>
+        /// <param name="widget2">The widget2.</param>
+        /// <returns>The result of the operator.</returns>
         public static bool operator !=(OpenHABWidget widget1, OpenHABWidget widget2)
         {
             if (ReferenceEquals(widget1, null))

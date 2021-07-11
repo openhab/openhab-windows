@@ -5,8 +5,11 @@ using Windows.UI.Xaml.Controls;
 
 namespace OpenHAB.Windows.Extensions
 {
+    /// <summary>Extensions for ContentDialog control.</summary>
     public static class ContentDialogExtensions
     {
+        /// <summary>Adjusts the ContentDialog size.</summary>
+        /// <param name="dialog">The dialog.</param>
         public static void AdjustSize(this ContentDialog dialog)
         {
             var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
