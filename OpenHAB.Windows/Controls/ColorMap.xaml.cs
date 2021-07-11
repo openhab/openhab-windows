@@ -4,7 +4,6 @@ using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using OpenHAB.Core.Common;
 using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Input;
@@ -77,11 +76,19 @@ namespace OpenHAB.Windows.Controls
             get { return (Color)GetValue(ColorProperty); }
             set { SetValue(ColorProperty, value); }
         }
-        public double Angle {
+
+        /// <summary>Gets or sets the angle.</summary>
+        /// <value>The angle.</value>
+        public double Angle
+        {
             get { return _angle; }
             set { _angle = value; }
         }
-        public double RadialPos {
+
+        /// <summary>Gets or sets the radial position.</summary>
+        /// <value>The radial position.</value>
+        public double RadialPos
+        {
             get { return _radialpos; }
             set { _radialpos = value; }
         }
@@ -173,24 +180,24 @@ namespace OpenHAB.Windows.Controls
             var sizeY = ellipse.ActualHeight;
             var x = _colorX / sizeX;
             var y = 1 - (_colorY / sizeY);
-            var _intangle = Math.Abs( (Math.Atan((y - 0.5) / (x - 0.5)) * 180) / Math.PI); // Absolute Value
+            var intangle = Math.Abs((Math.Atan((y - 0.5) / (x - 0.5)) * 180) / Math.PI); // Absolute Value
 
-            //Check Quadrant
+            // Check Quadrant
             if (x >= 0.5 && y >= 0.5)
             {
-                _angle = 270 - _intangle;
+                _angle = 270 - intangle;
             }
             else if (x < 0.5 && y >= 0.5)
             {
-                _angle = 180 + _intangle;
+                _angle = 180 + intangle;
             }
             else if (x < 0.5 && y < 0.5)
             {
-                _angle = 180 - _intangle;
+                _angle = 180 - intangle;
             }
             else
             {
-                _angle = _intangle;
+                _angle = intangle;
             }
 
             _radialpos = Math.Sqrt(Math.Pow(x - 0.5, 2) + Math.Pow(y - 0.5, 2));

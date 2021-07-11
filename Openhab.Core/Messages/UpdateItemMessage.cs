@@ -19,7 +19,7 @@
         /// </summary>
         public string ItemName
         {
-            get; 
+            get;
             set;
         }
 
