@@ -5,7 +5,6 @@ sitemaps of your openHAB.
 ## Builds
 
 [![CI Build](https://github.com/openhab/openhab-windows/actions/workflows/ci.yml/badge.svg)](https://github.com/openhab/openhab-windows/actions/workflows/ci.yml)
-
 [![Latest App Release Build](https://github.com/openhab/openhab-windows/actions/workflows/app-release.yml/badge.svg)](https://github.com/openhab/openhab-windows/actions/workflows/app-release.yml)
 
 ## Code Analysis
