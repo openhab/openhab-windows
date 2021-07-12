@@ -1,14 +1,17 @@
 ## Introduction
-
-openHAB Windows application is a native client for openHAB. It uses REST API of openHAB to render
-sitemaps of your openHAB. 
-The app is currently under heavy development and far from MVP status.
+openHAB Windows application is a native client for openHAB 2 & 3. It uses REST API of openHAB to render
+sitemaps of your openHAB.
 
 ## Builds
 
-[![CI Build status](https://github.com/openhab/openhab-windows/workflows/CI/badge.svg)](https://github.com/openhab/openhab-windows/actions?query=workflow%3A%22CI+Build%22)
-[![Latest App Release Build](https://github.com/openhab/openhab-windows/workflows/App%20Release/badge.svg)](https://github.com/openhab/openhab-windows/actions?query=workflow%3A%22App+Release%22)
+[![CI Build](https://github.com/openhab/openhab-windows/actions/workflows/ci.yml/badge.svg)](https://github.com/openhab/openhab-windows/actions/workflows/ci.yml)
 
+[![Latest App Release Build](https://github.com/openhab/openhab-windows/actions/workflows/app-release.yml/badge.svg)](https://github.com/openhab/openhab-windows/actions/workflows/app-release.yml)
+
+# Code Analysis
+The app project is using SonarQube hosted by SonarCloud to analyse the code for issues and code quality.
+Checkout our project site: [openhab-windows
+](https://sonarcloud.io/dashboard?id=openhab_openhab-windows)
 
 ## Setting up development environment
 
@@ -16,7 +19,7 @@ If you want to contribute to the Windows application we are here to help you to 
 development environment. openHAB Windows app is developed using Visual Studio 2019 and later.
 
 - Download and install [Visual Studio Community Edition](https://www.visualstudio.com/downloads/)
-- During install, make sure to select UWP SDK 17134 and SDK 18362
+- During install, make sure to select UWP SDK 17763 and SDK 19041
 - Check out the latest code from github
 - Open the project in Visual Studio (File -> Open, Project/Solution)
 - Rebuild the solution to fetch all missing NuGet packages
