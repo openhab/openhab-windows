@@ -44,6 +44,6 @@ runs:
         GITHUB_TOKEN: ${{inputs.GITHUB_TOKEN}}
         SONAR_TOKEN: ${{inputs.SONAR_TOKEN}}
       run: |
-         .\.sonar\scanner\dotnet-sonarscanner begin /k:"openhab_openhab-windows" /o:"openhab" /d:sonar.login="${{inputs.SONAR_TOKEN}}" /d:sonar.host.url="https://sonarcloud.io"
+         .\.sonar\scanner\SonarScanner.MSBuild.exe begin /k:"openhab_openhab-windows" /o:"openhab" /d:sonar.login="${{inputs.SONAR_TOKEN}}" /d:sonar.host.url="https://sonarcloud.io"
          msbuild.exe ${{github.workspace}}\src\OpenHAB.Windows.sln /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxPackageDir="${{inputs.output_directory}}" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="${{inputs.build_configuration}}"
-         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{inputs.SONAR_TOKEN}}"
+         .\.sonar\scanner\SonarScanner.MSBuild.exe end /d:sonar.login="${{inputs.SONAR_TOKEN}}"
