@@ -8,10 +8,17 @@ sitemaps of your openHAB.
 
 [![Latest App Release Build](https://github.com/openhab/openhab-windows/actions/workflows/app-release.yml/badge.svg)](https://github.com/openhab/openhab-windows/actions/workflows/app-release.yml)
 
-# Code Analysis
+## Code Analysis
 The app project is using SonarQube hosted by SonarCloud to analyse the code for issues and code quality.
-Checkout our project site: [openhab-windows
-](https://sonarcloud.io/dashboard?id=openhab_openhab-windows)
+
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/dashboard?id=openhab_openhab-windows)
+
+### Quality Status
+
+| Branch | Quality Gate Status | Bugs |Code Smells
+|--------|---------------------|------ |------------|
+| beta ||||
+| main | [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=openhab_openhab-windows&metric=alert_status)](https://sonarcloud.io/dashboard?id=openhab_openhab-windows)| [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=openhab_openhab-windows&metric=bugs)](https://sonarcloud.io/dashboard?id=openhab_openhab-windows)|[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=openhab_openhab-windows&metric=code_smells)](https://sonarcloud.io/dashboard?id=openhab_openhab-windows)|
 
 ## Setting up development environment
 
