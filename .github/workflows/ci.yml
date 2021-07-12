@@ -58,27 +58,27 @@ jobs:
         Invoke-WebRequest -Uri "https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/5.2.1.31210/sonar-scanner-msbuild-5.2.1.31210-net46.zip" -OutFile $file
         Expand-Archive -LiteralPath $file -DestinationPath "$($directory.FullName)"
 
-    # - name: Begin SonarQube analyze
-    #   env:
-    #     GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-    #     SONAR_TOKEN: ${{secrets.SONAR_TOKE }}
-    #   shell: pwsh
-    #   run: |
-    #       .\.sonar\scanner\SonarScanner.MSBuild.exe begin /k:"openhab_openhab-windows" /o:"openhab" /d:sonar.login="${{inputs.SONAR_TOKEN}}" /d:sonar.host.url="https://sonarcloud.io"
+    - name: Begin SonarQube analyze
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        SONAR_TOKEN: ${{secrets.SONAR_TOKE }}
+      shell: pwsh
+      run: |
+          .\.sonar\scanner\SonarScanner.MSBuild.exe begin /k:"openhab_openhab-windows" /o:"openhab" /d:sonar.login="${{inputs.SONAR_TOKEN}}" /d:sonar.host.url="https://sonarcloud.io"
 
     - name: Build App
       id: create_app_package
       uses: .\src\.github\workflows\actions\app-build
       with:
-        build_configuration: 'release'
+        build_configuration: 'debug'
         output_directory: '${{env.BuildDirectory}}'
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
     
-    # - name: End SonarQube analyze
-    #   env:
-    #     GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-    #     SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
-    #   shell: pwsh
-    #   run: |
-    #       .\.sonar\scanner\SonarScanner.MSBuild.exe end /d:sonar.login="${{inputs.SONAR_TOKEN}}"
+    - name: End SonarQube analyze
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
+      shell: pwsh
+      run: |
+          .\.sonar\scanner\SonarScanner.MSBuild.exe end /d:sonar.login="${{inputs.SONAR_TOKEN}}"
