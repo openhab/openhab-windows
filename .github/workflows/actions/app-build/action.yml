@@ -35,7 +35,7 @@ runs:
             ./Set-Version.ps1 -SourceDirectory '${{github.workspace}}\src\' -Major $major -Minor $minor -Build $build -Revision 0 -SetVersion
 
     - name: Restore nuget packages
-      shell: cmd
+      shell: pwsh
       run: nuget restore ${{github.workspace}}\src\OpenHAB.Windows.sln
     
     - name: Build OpenHab Windows App
@@ -44,6 +44,4 @@ runs:
         GITHUB_TOKEN: ${{inputs.GITHUB_TOKEN}}
         SONAR_TOKEN: ${{inputs.SONAR_TOKEN}}
       run: |
-         .\.sonar\scanner\SonarScanner.MSBuild.exe begin /k:"openhab_openhab-windows" /o:"openhab" /d:sonar.login="${{inputs.SONAR_TOKEN}}" /d:sonar.host.url="https://sonarcloud.io"
          msbuild.exe ${{github.workspace}}\src\OpenHAB.Windows.sln /p:Platform="x86" /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxPackageDir="${{inputs.output_directory}}" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="${{inputs.build_configuration}} /t:rebuild
-         .\.sonar\scanner\SonarScanner.MSBuild.exe end /d:sonar.login="${{inputs.SONAR_TOKEN}}"
