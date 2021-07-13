@@ -64,7 +64,7 @@ jobs:
         SONAR_TOKEN: ${{secrets.SONAR_TOKE }}
       shell: pwsh
       run: |
-          .\.sonar\scanner\SonarScanner.MSBuild.exe begin /k:"openhab_openhab-windows" /o:"openhab" /d:sonar.login="${{secrets.SONAR_TOKEN}}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.verbose=true"
+          .\.sonar\scanner\SonarScanner.MSBuild.exe begin /k:"openhab_openhab-windows" /o:"openhab" /d:sonar.login="${{secrets.SONAR_TOKEN}}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.verbose="true"
 
     - name: Build App
       id: create_app_package
