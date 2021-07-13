@@ -12,6 +12,11 @@ inputs:
     required: false
     default: '${{github.workspace}}\build'
 
+  bundle_Platforms: 
+    description: 'Defines the platforms the app package is build for.'
+    required: false
+    default: ' x86|x64|ARM'
+
   GITHUB_TOKEN: 
     description: 'Token for Authentication with GitHub'
     required: true
@@ -47,4 +52,4 @@ runs:
         SONAR_TOKEN: ${{inputs.SONAR_TOKEN}}
       run: |
           Write-Host "==== Build app package ====" -ForegroundColor Green
-          msbuild.exe ${{github.workspace}}\src\OpenHAB.Windows.sln /p:Platform="x86" /p:AppxBundlePlatforms="x86|x64|ARM" /p:AppxPackageDir="${{inputs.output_directory}}" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="${{inputs.build_configuration}}" /t:rebuild
+          msbuild.exe ${{github.workspace}}\src\OpenHAB.Windows.sln /p:Platform="x86" /p:AppxBundlePlatforms="${{inputs. bundle_Platforms}}" /p:AppxPackageDir="${{inputs.output_directory}}" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="${{inputs.build_configuration}}" /t:rebuild
