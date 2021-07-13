@@ -13,7 +13,7 @@ inputs:
     default: '${{github.workspace}}\build'
 
   bundle_Platforms: 
-    description: 'Defines the platforms the app package is build for.'
+    description: 'Defines the platforms for the app package.'
     required: false
     default: ' x86|x64|ARM'
 
