@@ -12,11 +12,12 @@ namespace OpenHAB.Windows.Controls
     /// </summary>
     public sealed partial class SetpointWidget : WidgetBase
     {
-        private float step; // represents the stepwidth of the item
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="SetpointWidget"/> class.
+        /// represents the stepwidth of the item.
         /// </summary>
+        private float step;
+
+        /// <summary>Initializes a new instance of the <see cref="SetpointWidget" /> class.</summary>
         public SetpointWidget()
         {
             InitializeComponent();
@@ -106,6 +107,7 @@ namespace OpenHAB.Windows.Controls
             if (newValue != null)
             {
                 Widget.Item.UpdateValue(newValue);
+                RaisePropertyChanged(nameof(Widget));
             }
         }
     }

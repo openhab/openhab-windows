@@ -4,7 +4,6 @@ using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using OpenHAB.Core.Common;
 using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Input;
@@ -33,6 +32,8 @@ namespace OpenHAB.Windows.Controls
         private double _colorY;
         private bool _settingColor;
         private bool _isloaded;
+        private double _angle;
+        private double _radialpos;
 
         /// <summary>
         /// Event that fires whenever a new color is selected
@@ -76,6 +77,22 @@ namespace OpenHAB.Windows.Controls
             set { SetValue(ColorProperty, value); }
         }
 
+        /// <summary>Gets or sets the angle.</summary>
+        /// <value>The angle.</value>
+        public double Angle
+        {
+            get { return _angle; }
+            set { _angle = value; }
+        }
+
+        /// <summary>Gets or sets the radial position.</summary>
+        /// <value>The radial position.</value>
+        public double RadialPos
+        {
+            get { return _radialpos; }
+            set { _radialpos = value; }
+        }
+
         /// <summary>
         /// Bindable property for the Color property.
         /// </summary>
@@ -117,6 +134,7 @@ namespace OpenHAB.Windows.Controls
             _colorX = _lastPoint.Position.X;
             _colorY = _lastPoint.Position.Y;
             UpdateColor();
+            UpdateAnglePos();
             UpdateThumb();
             e.Handled = true;
         }
@@ -154,6 +172,42 @@ namespace OpenHAB.Windows.Controls
             Canvas.SetLeft(thumb, _colorX - (thumb.ActualWidth / 2));
             Canvas.SetTop(thumb, _colorY - (thumb.ActualHeight / 2));
             thumb.Visibility = Visibility.Visible;
+        }
+
+        private void UpdateAnglePos()
+        {
+            var sizeX = ellipse.ActualWidth;
+            var sizeY = ellipse.ActualHeight;
+            var x = _colorX / sizeX;
+            var y = 1 - (_colorY / sizeY);
+            var intangle = Math.Abs((Math.Atan((y - 0.5) / (x - 0.5)) * 180) / Math.PI); // Absolute Value
+
+            // Check Quadrant
+            if (x >= 0.5 && y >= 0.5)
+            {
+                _angle = 270 - intangle;
+            }
+            else if (x < 0.5 && y >= 0.5)
+            {
+                _angle = 180 + intangle;
+            }
+            else if (x < 0.5 && y < 0.5)
+            {
+                _angle = 180 - intangle;
+            }
+            else
+            {
+                _angle = intangle;
+            }
+
+            _radialpos = Math.Sqrt(Math.Pow(x - 0.5, 2) + Math.Pow(y - 0.5, 2));
+            _radialpos = _radialpos * 2.2; // 2times because we are working with 0.5 as max. .2 to give a bit more value and make it easier to catch max value;
+            if (_radialpos > 1)
+            {
+                _radialpos = 1;
+            }
+
+            _radialpos = _radialpos * 100;
         }
 
         private bool UpdateColor()
