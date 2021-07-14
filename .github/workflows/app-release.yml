@@ -27,7 +27,7 @@ jobs:
     - name: Checkout main code
       uses: actions/checkout@v2
       with:
-        path: src
+        path: repo
         clean: true 
 
     - name: Setup NuGet.exe for use with actions
@@ -40,7 +40,7 @@ jobs:
 
     - name: Build App
       id: create_app_package
-      uses: ./src/.github/workflows/actions/app-build
+      uses: ./repo/.github/workflows/actions/app-build
       with:
         build_configuration: ${{github.event.inputs.BuildConfiguration}}
         output_directory: '${{env.BuildDirectory}}'
