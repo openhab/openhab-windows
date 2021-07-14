@@ -400,14 +400,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Program Files (x86)\Windows Kits\10\bin\10.0.19041.0\XamlCompiler\Microsoft.UI.Xaml.Markup.winmd</HintPath>
     </Reference>
-    <Reference Include="MJPEGDecoderWinRTLib">
-      <HintPath>..\Libs\MJPEGDecoderWinRTLib.dll</HintPath>
+    <Reference Include="MJPEGDecoderWinRTLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\libaries\MJPEGDecoderWinRTLib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OpenHAB.Core\openHAB.Core.csproj">
+    <ProjectReference Include="..\openHAB.Core\Openhab.Core.csproj">
       <Project>{2a8fd10e-4ee5-4e25-b47c-2296e071f482}</Project>
-      <Name>openHAB.Core</Name>
+      <Name>Openhab.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
