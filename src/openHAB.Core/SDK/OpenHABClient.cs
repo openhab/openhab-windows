@@ -125,7 +125,7 @@ namespace OpenHAB.Core.SDK
                 OpenHABAPIInfo apiInfo = JsonConvert.DeserializeObject<OpenHABAPIInfo>(responseBody);
                 if (apiInfo.Version < 4)
                 {
-                    return OpenHABVersion.Three;
+                    return OpenHABVersion.Two;
                 }
 
                 string runtimeversion = Regex.Replace(apiInfo?.RuntimeInfo.Version, "[^.0-9]", string.Empty);
@@ -165,16 +165,16 @@ namespace OpenHAB.Core.SDK
                 string resultString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 ICollection<OpenHABWidget> items = null;
-                if (version == OpenHABVersion.One)
+                if (version == OpenHABVersion.Two || version == OpenHABVersion.Three)
                 {
-                    // V1 = xml
-                    items = ParseWidgets(resultString);
+                    var jsonObject = JObject.Parse(resultString);
+                    items = JsonConvert.DeserializeObject<List<OpenHABWidget>>(jsonObject["homepage"]["widgets"].ToString());
                 }
                 else
                 {
-                    // V2 = JSON
-                    var jsonObject = JObject.Parse(resultString);
-                    items = JsonConvert.DeserializeObject<List<OpenHABWidget>>(jsonObject["homepage"]["widgets"].ToString());
+                    string message = "openHAB version is not supported.";
+                    _logger.LogError(message);
+                    throw new OpenHABException(message);
                 }
 
                 _logger.LogInformation($"Loaded '{items.Count}' sitemaps items from server");
@@ -247,22 +247,6 @@ namespace OpenHAB.Core.SDK
                 string resultString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 var sitemaps = new List<OpenHABSitemap>();
-
-                // V1 = xml
-                if (version == OpenHABVersion.One)
-                {
-                    XDocument xml = XDocument.Parse(resultString);
-
-                    foreach (XElement xElement in xml.Element("sitemaps").Elements())
-                    {
-                        var sitemap = new OpenHABSitemap(xElement);
-                        sitemaps.Add(sitemap);
-                    }
-
-                    return sitemaps;
-                }
-
-                // V2 = JSON
                 sitemaps = JsonConvert.DeserializeObject<List<OpenHABSitemap>>(resultString);
 
                 _logger.LogInformation($"Loaded '{sitemaps.Count}' sitemaps from server");
@@ -408,18 +392,6 @@ namespace OpenHAB.Core.SDK
             })).ConfigureAwait(false);
         }
 
-        private ICollection<OpenHABWidget> ParseWidgets(string resultString)
-        {
-            var xml = XDocument.Parse(resultString);
-
-            return
-                xml.Element("sitemap")
-                    .Element("homepage")
-                    .Elements("widget")
-                    .Select(xElement => OpenHABWidgetFactory.Parse(xElement))
-                    .ToList();
-        }
-
         private async Task<bool> SetValidUrl(Settings settings)
         {
             _logger.LogInformation("Validate Url");
@@ -467,8 +439,8 @@ namespace OpenHAB.Core.SDK
 
             if (!result.Content)
             {
-                 Messenger.Default.Send<FireErrorMessage>(new FireErrorMessage(AppResources.Errors.GetString("ConnectionTestFailed")));
-                 return false;
+                Messenger.Default.Send<FireErrorMessage>(new FireErrorMessage(AppResources.Errors.GetString("ConnectionTestFailed")));
+                return false;
             }
 
             if (result.Content)
