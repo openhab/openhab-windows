@@ -37,7 +37,7 @@ runs:
             $minor = [System.DateTime]::Now.Month
             $build = [System.DateTime]::Now.Day
 
-            ./Set-Version.ps1 -SourceDirectory '${{github.workspace}}\src\' -Major $major -Minor $minor -Build $build -Revision 0 -SetVersion
+            ./Set-Version.ps1 -SourceDirectory '${{github.workspace}}\repo\src\' -Major $major -Minor $minor -Build $build -Revision 0 -SetVersion
 
     - name: Restore nuget packages
       shell: pwsh
