@@ -43,7 +43,7 @@ runs:
       shell: pwsh
       run: |
             Write-Host "==== Restore Nuget packages ====" -ForegroundColor Green
-            nuget restore ${{github.workspace}}\src\OpenHAB.Windows.sln
+            nuget restore ${{github.workspace}}\repo\OpenHAB.Windows.sln
     
     - name: Build OpenHab Windows App
       shell: pwsh
@@ -52,4 +52,4 @@ runs:
         SONAR_TOKEN: ${{inputs.SONAR_TOKEN}}
       run: |
           Write-Host "==== Build app package ====" -ForegroundColor Green
-          msbuild.exe ${{github.workspace}}\repo\src\OpenHAB.Windows.sln /p:Platform="x86" /p:AppxBundlePlatforms="${{inputs. bundle_Platforms}}" /p:AppxPackageDir="${{inputs.output_directory}}" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="${{inputs.build_configuration}}" /t:rebuild
+          msbuild.exe ${{github.workspace}}\repo\OpenHAB.Windows.sln /p:Platform="x86" /p:AppxBundlePlatforms="${{inputs. bundle_Platforms}}" /p:AppxPackageDir="${{inputs.output_directory}}" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="${{inputs.build_configuration}}" /t:rebuild
