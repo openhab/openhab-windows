@@ -401,7 +401,7 @@
       <HintPath>..\..\..\..\..\Program Files (x86)\Windows Kits\10\bin\10.0.19041.0\XamlCompiler\Microsoft.UI.Xaml.Markup.winmd</HintPath>
     </Reference>
     <Reference Include="MJPEGDecoderWinRTLib">
-      <HintPath>..\Libs\MJPEGDecoderWinRTLib.dll</HintPath>
+      <HintPath>..\..\libs\MJPEGDecoderWinRTLib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
