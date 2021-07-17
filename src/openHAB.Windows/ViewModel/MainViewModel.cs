@@ -37,7 +37,7 @@ namespace OpenHAB.Windows.ViewModel
         private OpenHABWidget _selectedWidget;
         private ObservableCollection<SitemapViewModel> _sitemaps;
         private string _subtitle;
-        private OpenHABVersion _version;
+        private ServerInfo _serverInfo;
         private object _selectedMenuItem;
         private ActionCommand _reloadSitemapCommand;
 
@@ -320,14 +320,16 @@ namespace OpenHAB.Windows.ViewModel
                     return;
                 }
 
-                _version = await _openHabsdk.GetOpenHABVersion().ConfigureAwait(false);
-                if (_version == OpenHABVersion.None)
+                var result = await _openHabsdk.GetOpenHABServerInfo().ConfigureAwait(false);
+                _serverInfo = result?.Content;
+
+                if (_serverInfo.Version == OpenHABVersion.None)
                 {
                     Messenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));
                     return;
                 }
 
-                _settingsService.ServerVersion = _version;
+                _settingsService.ServerVersion = _serverInfo.Version;
 
                 if (cancellationToken.IsCancellationRequested)
                 {
@@ -399,7 +401,7 @@ namespace OpenHAB.Windows.ViewModel
                 filters.Add(defaultSitemapFilter);
             }
 
-            ICollection<OpenHABSitemap> sitemaps = await _openHabsdk.LoadSiteMaps(_version, filters).ConfigureAwait(false);
+            ICollection<OpenHABSitemap> sitemaps = await _openHabsdk.LoadSiteMaps(_serverInfo.Version, filters).ConfigureAwait(false);
             List<SitemapViewModel> sitemapViewModels = new List<SitemapViewModel>();
             sitemaps.ToList().ForEach(x => sitemapViewModels.Add(new SitemapViewModel(x)));
 
@@ -458,7 +460,7 @@ namespace OpenHAB.Windows.ViewModel
             CurrentWidgets.Clear();
             IsDataLoading = true;
 
-            await SelectedSitemap.LoadWidgets(_version).ConfigureAwait(false);
+            await SelectedSitemap.LoadWidgets(_serverInfo.Version).ConfigureAwait(false);
 
             CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
             await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>

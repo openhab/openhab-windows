@@ -306,4 +306,13 @@ Please select demo mode or configure local/remote connection.</value>
   <data name="NotificationSetting.Text" xml:space="preserve">
     <value>Notifications</value>
   </data>
+  <data name="BuildNumber.Text" xml:space="preserve">
+    <value>Build:</value>
+  </data>
+  <data name="ServiceInstanceInfo.Text" xml:space="preserve">
+    <value>openHAB Server Information</value>
+  </data>
+  <data name="VersionNumber.Text" xml:space="preserve">
+    <value>Version:</value>
+  </data>
 </root>

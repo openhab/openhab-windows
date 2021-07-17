@@ -157,6 +157,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SDK\IOpenHAB.cs" />
     <Compile Include="SDK\OpenHABClient.cs" />
+    <Compile Include="Model\ServerInfo.cs" />
     <Compile Include="Services\AppManager.cs" />
     <Compile Include="Model\Event\OpenHABEvent.cs" />
     <Compile Include="Services\IItemManager.cs" />

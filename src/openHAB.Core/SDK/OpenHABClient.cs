@@ -68,49 +68,38 @@ namespace OpenHAB.Core.SDK
                 connection.Url = connection.Url + "/";
             }
 
-            try
+            OpenHABHttpClient.BaseUrl = connection.Url;
+            HttpResponseResult<ServerInfo> result = await GetOpenHABServerInfo(connection).ConfigureAwait(false);
+            if (result.Content == null)
             {
-                Settings settings = _settingsService.Load();
-                var client = _openHABHttpClient.DisposableClient(connection, settings);
-                var result = await client.GetAsync(connection.Url + "rest").ConfigureAwait(false);
-
-                if (!result.IsSuccessStatusCode)
-                {
-                    _logger.LogError($"Http request for command failed, ErrorCode:'{result.StatusCode}'");
-                }
-
-                return new HttpResponseResult<bool>(result.IsSuccessStatusCode, result.StatusCode);
+                return new HttpResponseResult<bool>(false, null, result.Exception);
             }
-            catch (InvalidOperationException ex)
+            else
             {
-                _logger.LogError(ex, "CheckUrlReachability failed");
-
-                return new HttpResponseResult<bool>(false, null, ex);
-            }
-            catch (HttpRequestException ex)
-            {
-                _logger.LogError(ex, "CheckUrlReachability failed");
-
-                return new HttpResponseResult<bool>(false, null, ex);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "CheckUrlReachability failed.");
-                return new HttpResponseResult<bool>(false, null, ex);
+                return new HttpResponseResult<bool>(true, result.StatusCode);
             }
         }
 
         /// <inheritdoc />
-        public async Task<OpenHABVersion> GetOpenHABVersion()
+        public async Task<HttpResponseResult<ServerInfo>> GetOpenHABServerInfo()
+        {
+            return await GetOpenHABServerInfo(_connection);
+        }
+
+        /// <inheritdoc />
+        public async Task<HttpResponseResult<ServerInfo>> GetOpenHABServerInfo(OpenHABConnection connection)
         {
             try
             {
                 var settings = _settingsService.Load();
-                var httpClient = _openHABHttpClient.Client(_connection, settings);
+                var httpClient = _openHABHttpClient.DisposableClient(connection, settings);
+                httpClient.BaseAddress = new Uri(connection.Url);
+
+                ServerInfo serverInfo = new ServerInfo();
 
                 if (httpClient == null)
                 {
-                    return OpenHABVersion.None;
+                    return null;
                 }
 
                 HttpResponseMessage result = await httpClient.GetAsync(Constants.API.ServerInformation).ConfigureAwait(false);
@@ -125,7 +114,8 @@ namespace OpenHAB.Core.SDK
                 OpenHABAPIInfo apiInfo = JsonConvert.DeserializeObject<OpenHABAPIInfo>(responseBody);
                 if (apiInfo.Version < 4)
                 {
-                    return OpenHABVersion.Two;
+                    serverInfo.Version = OpenHABVersion.Two;
+                    return new HttpResponseResult<ServerInfo>(serverInfo, result.StatusCode);
                 }
 
                 string runtimeversion = Regex.Replace(apiInfo?.RuntimeInfo.Version, "[^.0-9]", string.Empty);
@@ -139,11 +129,32 @@ namespace OpenHAB.Core.SDK
 
                 OpenHABVersion openHABVersion = (OpenHABVersion)serverVersion.Major;
 
-                return openHABVersion;
+                serverInfo.Version = openHABVersion;
+                serverInfo.RuntimeVersion = apiInfo?.RuntimeInfo.Version;
+                serverInfo.Build = apiInfo.RuntimeInfo.BuildString;
+
+                return new HttpResponseResult<ServerInfo>(serverInfo, result.StatusCode);
             }
             catch (ArgumentNullException ex)
             {
                 throw new OpenHABException("Invalid call", ex);
+            }
+            catch (InvalidOperationException ex)
+            {
+                _logger.LogError(ex, "GetOpenHABServerInfo failed");
+
+                return new HttpResponseResult<ServerInfo>(null, null, ex);
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError(ex, "GetOpenHABServerInfo failed");
+
+                return new HttpResponseResult<ServerInfo>(null, null, ex);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "GetOpenHABServerInfo failed.");
+                return new HttpResponseResult<ServerInfo>(null, null, ex);
             }
         }
 

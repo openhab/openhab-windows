@@ -33,6 +33,8 @@ namespace OpenHAB.Windows.ViewModel
         private string _username;
         private bool? _willIgnoreSSLCertificate;
         private bool? _willIgnoreSSLHostname;
+        private string _runtimeVersion;
+        private string _build;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConnectionDialogViewModel"/> class.
@@ -92,11 +94,7 @@ namespace OpenHAB.Windows.ViewModel
         /// </summary>
         public string Password
         {
-            get
-            {
-                return Model?.Password;
-            }
-
+            get => Model?.Password;
             set
             {
                 Set(ref _password, value, true);
@@ -108,11 +106,7 @@ namespace OpenHAB.Windows.ViewModel
         /// <value>The profile.</value>
         public ConnectionProfileViewModel Profile
         {
-            get
-            {
-                return _profile;
-            }
-
+            get => _profile;
             set
             {
                 Set(ref _profile, value);
@@ -128,11 +122,7 @@ namespace OpenHAB.Windows.ViewModel
         /// <value>The profiles.</value>
         public ObservableCollection<ConnectionProfileViewModel> Profiles
         {
-            get
-            {
-                return _profiles;
-            }
-
+            get => _profiles;
             set
             {
                 Set(ref _profiles, value);
@@ -173,11 +163,7 @@ namespace OpenHAB.Windows.ViewModel
         /// </summary>
         public string Url
         {
-            get
-            {
-                return Model?.Url;
-            }
-
+            get => Model?.Url;
             set
             {
                 string tempUrl;
@@ -213,16 +199,28 @@ namespace OpenHAB.Windows.ViewModel
             set => Set(ref _connectionState, value);
         }
 
+        /// <summary>Gets or sets the runtime version.</summary>
+        /// <value>The runtime version.</value>
+        public string RuntimeVersion
+        {
+            get => _runtimeVersion;
+            set => Set(ref _runtimeVersion, value, true);
+        }
+
+        /// <summary>Gets or sets the build.</summary>
+        /// <value>The build.</value>
+        public string Build
+        {
+            get => _build;
+            set => Set(ref _build, value, true);
+        }
+
         /// <summary>
         /// Gets or sets the username for the local OpenHAB server connection.
         /// </summary>
         public string Username
         {
-            get
-            {
-                return Model?.Username;
-            }
-
+            get => Model?.Username;
             set
             {
                 Set(ref _username, value, true);
@@ -235,11 +233,7 @@ namespace OpenHAB.Windows.ViewModel
         /// </summary>
         public bool? WillIgnoreSSLCertificate
         {
-            get
-            {
-                return Model?.WillIgnoreSSLCertificate;
-            }
-
+            get => Model?.WillIgnoreSSLCertificate;
             set
             {
                 Set(ref _willIgnoreSSLCertificate, value, true);
@@ -252,11 +246,7 @@ namespace OpenHAB.Windows.ViewModel
         /// </summary>
         public bool? WillIgnoreSSLHostname
         {
-            get
-            {
-                return Model?.WillIgnoreSSLHostname;
-            }
-
+            get => Model?.WillIgnoreSSLHostname;
             set
             {
                 Set(ref _willIgnoreSSLHostname, value, true);
@@ -273,12 +263,19 @@ namespace OpenHAB.Windows.ViewModel
 
             string url = parameter.ToString();
 
-            Task<HttpResponseResult<bool>> result = _openHabsdk.CheckUrlReachability(this.Model);
+            Task<HttpResponseResult<ServerInfo>> result = _openHabsdk.GetOpenHABServerInfo(this.Model);
             result.ContinueWith(async (task) =>
             {
                 OpenHABUrlState urlState = OpenHABUrlState.Unknown;
-                if (task.IsCompletedSuccessfully && task.Result.Content)
+                string runtimeVersion = string.Empty;
+                string build = string.Empty;
+
+                if (task.IsCompletedSuccessfully && task.Result.Content != null)
                 {
+                    ServerInfo serverInfo = task.Result.Content;
+
+                    runtimeVersion = serverInfo.RuntimeVersion;
+                    build = serverInfo.Build;
                     urlState = OpenHABUrlState.OK;
                 }
                 else
@@ -290,6 +287,8 @@ namespace OpenHAB.Windows.ViewModel
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     State = urlState;
+                    RuntimeVersion = runtimeVersion;
+                    Build = build;
                 });
             });
         }
