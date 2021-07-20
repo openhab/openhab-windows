@@ -9,7 +9,7 @@
 			   xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
 			   xmlns:converters="using:OpenHAB.Windows.Converters"
 			   mc:Ignorable="d"
-			   Background="{StaticResource OpenHABLightColor}">
+               Background="{StaticResource OpenHABLightColor}">
 
 	<ContentDialog.Resources>
 		<converters:NullToBooleanConverter x:Key="NullToBooleanConverter" />
@@ -84,14 +84,14 @@
 					  IsChecked="{Binding WillIgnoreSSLHostname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 			<Grid BorderBrush="Gray"
 				  BorderThickness="1"
-				  Background="{StaticResource OpenHABLightGreyBrush}">
+                  Background="{StaticResource OpenHABLightColor}">
 				<Grid.RowDefinitions>
 					<RowDefinition/>
 					<RowDefinition/>
 					<RowDefinition/>
 					<RowDefinition/>
 				</Grid.RowDefinitions>
-				<TextBlock Grid.Row="0" x:Uid="ServiceInstanceInfo" Margin="5,0,0,5" FontSize="14" FontWeight="Bold" />
+				<TextBlock Grid.Row="0" x:Uid="ServiceInstanceInfo" Margin="5,0,0,5" FontSize="14" FontWeight="Bold"/>
 				<StackPanel Grid.Row="1" Margin="5,0,0,0" Orientation="Horizontal">
 					<TextBlock x:Uid="VersionNumber"
 						   Margin="0,0,5,0"

@@ -256,7 +256,7 @@ Please select demo mode or configure local/remote connection.</value>
     <value>Back</value>
   </data>
   <data name="Log.Text" xml:space="preserve">
-    <value>Log</value>
+    <value>Log:</value>
   </data>
   <data name="MenuAppSettings.Content" xml:space="preserve">
     <value>App Settings</value>

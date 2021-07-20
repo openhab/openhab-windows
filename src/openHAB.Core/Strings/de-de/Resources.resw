@@ -252,7 +252,7 @@ Bitte wählen Sie den Demo Modus oder die Lokalen/Remote Verbindunsinformation z
     <value>Zurück</value>
   </data>
   <data name="Log.Text" xml:space="preserve">
-    <value>Log</value>
+    <value>Log:</value>
   </data>
   <data name="MenuAppSettings.Content" xml:space="preserve">
     <value>App Einstellungen</value>
