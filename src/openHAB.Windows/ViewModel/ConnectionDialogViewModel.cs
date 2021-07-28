@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using OpenHAB.Core;
@@ -11,8 +10,6 @@ using OpenHAB.Core.Contracts;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.Model.Connection;
 using OpenHAB.Core.SDK;
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
 
 namespace OpenHAB.Windows.ViewModel
 {
@@ -21,7 +18,6 @@ namespace OpenHAB.Windows.ViewModel
     /// </summary>
     public class ConnectionDialogViewModel : ViewModelBase<OpenHABConnection>
     {
-        private readonly IOpenHAB _openHabsdk;
         private readonly OpenHABHttpClientType _type;
         private string _password;
         private ConnectionProfileViewModel _profile;
@@ -29,12 +25,11 @@ namespace OpenHAB.Windows.ViewModel
         private ICommand _selectProfile;
         private string _url;
         private ICommand _urlCheckCommand;
-        private OpenHABUrlState _connectionState;
+        private ConnectionStatusViewModel _connectionStatus;
         private string _username;
         private bool? _willIgnoreSSLCertificate;
         private bool? _willIgnoreSSLHostname;
-        private string _runtimeVersion;
-        private string _build;
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConnectionDialogViewModel"/> class.
@@ -45,9 +40,7 @@ namespace OpenHAB.Windows.ViewModel
         public ConnectionDialogViewModel(OpenHABConnection connectionConfig, IOpenHAB openHabsdk, OpenHABHttpClientType type)
             : base(connectionConfig)
         {
-            _openHabsdk = openHabsdk;
             _type = type;
-            _connectionState = OpenHABUrlState.Unknown;
 
             List<ConnectionProfileViewModel> list
                 = new List<ConnectionProfileViewModel>(Settings.ConnectionProfiles.Where(x => x.Type == _type).OrderBy(x => x.Id).Select(x => new ConnectionProfileViewModel(x)));
@@ -59,9 +52,10 @@ namespace OpenHAB.Windows.ViewModel
                 _profile = list.FirstOrDefault(x => x.Id == Model.Profile.Id);
             }
 
+            _connectionStatus = new ConnectionStatusViewModel(openHabsdk);
             if (!string.IsNullOrEmpty(Model?.Url))
             {
-                CheckConnectionSettings(Model.Url);
+                CheckConnectionSettings(null);
             }
         }
 
@@ -115,6 +109,17 @@ namespace OpenHAB.Windows.ViewModel
                 {
                     Model.Profile = value.Model;
                 }
+            }
+        }
+
+        /// <summary>Gets or sets the connection status.</summary>
+        /// <value>The connection status.</value>
+        public ConnectionStatusViewModel Status
+        {
+            get => _connectionStatus;
+            set
+            {
+                Set(ref _connectionStatus, value);
             }
         }
 
@@ -190,32 +195,6 @@ namespace OpenHAB.Windows.ViewModel
         public ICommand UrlCheckCommand => _urlCheckCommand ?? (_urlCheckCommand = new RelayCommand<object>(CheckConnectionSettings));
 
         /// <summary>
-        /// Gets or sets the state for OpenHab connection.
-        /// </summary>
-        /// <value>The state of the connection.</value>
-        public OpenHABUrlState State
-        {
-            get => _connectionState;
-            set => Set(ref _connectionState, value);
-        }
-
-        /// <summary>Gets or sets the runtime version.</summary>
-        /// <value>The runtime version.</value>
-        public string RuntimeVersion
-        {
-            get => _runtimeVersion;
-            set => Set(ref _runtimeVersion, value, true);
-        }
-
-        /// <summary>Gets or sets the build.</summary>
-        /// <value>The build.</value>
-        public string Build
-        {
-            get => _build;
-            set => Set(ref _build, value, true);
-        }
-
-        /// <summary>
         /// Gets or sets the username for the local OpenHAB server connection.
         /// </summary>
         public string Username
@@ -256,41 +235,7 @@ namespace OpenHAB.Windows.ViewModel
 
         private void CheckConnectionSettings(object parameter)
         {
-            if (parameter == null)
-            {
-                return;
-            }
-
-            string url = parameter.ToString();
-
-            Task<HttpResponseResult<ServerInfo>> result = _openHabsdk.GetOpenHABServerInfo(this.Model);
-            result.ContinueWith(async (task) =>
-            {
-                OpenHABUrlState urlState = OpenHABUrlState.Unknown;
-                string runtimeVersion = string.Empty;
-                string build = string.Empty;
-
-                if (task.IsCompletedSuccessfully && task.Result.Content != null)
-                {
-                    ServerInfo serverInfo = task.Result.Content;
-
-                    runtimeVersion = serverInfo.RuntimeVersion;
-                    build = serverInfo.Build;
-                    urlState = OpenHABUrlState.OK;
-                }
-                else
-                {
-                    urlState = OpenHABUrlState.Failed;
-                }
-
-                CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
-                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    State = urlState;
-                    RuntimeVersion = runtimeVersion;
-                    Build = build;
-                });
-            });
+            _connectionStatus.CheckConnectionSettings(Model.Url, Model);
         }
 
         private void CreateProfile(IConnectionProfile value)

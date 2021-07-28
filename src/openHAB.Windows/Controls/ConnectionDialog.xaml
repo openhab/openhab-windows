@@ -96,13 +96,13 @@
 					<TextBlock x:Uid="VersionNumber"
 						   Margin="0,0,5,0"
 						   VerticalAlignment="Center" />
-					<TextBlock Text="{Binding RuntimeVersion, Mode=OneWay}" />
+                    <TextBlock Text="{Binding Status.RuntimeVersion, Mode=OneWay}" />
 				</StackPanel>
 				<StackPanel Grid.Row="2" Margin="5,0,0,0" Orientation="Horizontal">
 					<TextBlock x:Uid="BuildNumber"
 						   Margin="0,0,5,0"
 						   VerticalAlignment="Center" />
-					<TextBlock Text="{Binding Build, Mode=OneWay}" />
+                    <TextBlock Text="{Binding Status.Build, Mode=OneWay}" />
 				</StackPanel>
 				<StackPanel Grid.Row="3" Margin="5,0,0,0" Orientation="Horizontal">
 					<TextBlock x:Uid="ConnectionCheck"
@@ -112,7 +112,7 @@
 						  VerticalAlignment="Top"
 						  FontSize="32"
 						  FontFamily="{StaticResource SymbolThemeFontFamily}"
-						  Glyph="{Binding State, Converter={StaticResource OpenHabUrlStateToGlyph}, Mode=TwoWay}" />
+                              Glyph="{Binding Status.State, Converter={StaticResource OpenHabUrlStateToGlyph}, Mode=TwoWay}" />
 				</StackPanel>
 			</Grid>
 		</StackPanel>

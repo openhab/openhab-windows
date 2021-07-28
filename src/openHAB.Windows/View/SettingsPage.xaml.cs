@@ -49,15 +49,6 @@ namespace OpenHAB.Windows.View
             Messenger.Default.Register<SettingsUpdatedMessage>(this, msg => HandleSettingsUpdate(msg), true);
             Messenger.Default.Register<SettingsValidationMessage>(this, msg => NotificationSettingsValidation(msg), true);
 
-            var autostartEnabled = await _appManager.IsStartupEnabled().ConfigureAwait(false);
-            var canAppAutostartEnabled = await _appManager.CanEnableAutostart().ConfigureAwait(false);
-
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-              {
-                  _settingsViewModel.Settings.IsAppAutostartEnabled = autostartEnabled;
-                  _settingsViewModel.Settings.CanAppAutostartEnabled = canAppAutostartEnabled;
-              });
-
             AppAutostartSwitch.Toggled += AppAutostartSwitch_Toggled;
         }
 

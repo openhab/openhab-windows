@@ -214,6 +214,7 @@
     <Compile Include="Extensions\ContentDialogExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ViewModel\ConfigurationViewModel.cs" />
+    <Compile Include="ViewModel\ConnectionStatusViewModel.cs" />
     <Compile Include="ViewModel\ConnectionDialogViewModel.cs" />
     <Compile Include="ViewModel\ConnectionProfileViewModel.cs" />
     <Compile Include="ViewModel\IViewModel.cs" />

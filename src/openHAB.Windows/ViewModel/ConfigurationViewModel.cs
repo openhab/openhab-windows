@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.Model.Connection;
 using OpenHAB.Core.SDK;
 using OpenHAB.Core.Services;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
 
 namespace OpenHAB.Windows.ViewModel
 {
@@ -17,6 +20,7 @@ namespace OpenHAB.Windows.ViewModel
     {
         private readonly ILogger<ConfigurationViewModel> _logger;
         private readonly Settings _settings;
+        private readonly IAppManager _appManager;
         private readonly ISettingsService _settingsService;
         private List<LanguageViewModel> _appLanguages;
         private bool? _canAppAutostartEnabled;
@@ -34,12 +38,13 @@ namespace OpenHAB.Windows.ViewModel
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationViewModel"/> class.
         /// </summary>
-        public ConfigurationViewModel(ISettingsService settingsService, IOpenHAB openHabsdk, ILogger<ConfigurationViewModel> logger, Settings settings)
+        public ConfigurationViewModel(ISettingsService settingsService, IAppManager appManager, IOpenHAB openHabsdk, ILogger<ConfigurationViewModel> logger, Settings settings)
             : base(new object())
         {
             _settingsService = settingsService;
             _logger = logger;
             _settings = settings;
+            _appManager = appManager;
 
             _localConnection = new ConnectionDialogViewModel(_settings.LocalConnection, openHabsdk, OpenHABHttpClientType.Local);
             _localConnection.PropertyChanged += ConnectionPropertyChanged;
@@ -52,6 +57,25 @@ namespace OpenHAB.Windows.ViewModel
             _useSVGIcons = _settings.UseSVGIcons;
             _startAppMinimized = _settings.StartAppMinimized;
             _notificationsEnable = _settings.NotificationsEnable;
+
+            CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
+            Task<bool> taskCanEnableAutostart = _appManager.CanEnableAutostart();
+            taskCanEnableAutostart.ContinueWith(result =>
+            {
+                dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    CanAppAutostartEnabled = result.Result;
+                });
+            });
+
+            Task<bool> taskStartupEnbabled = _appManager.IsStartupEnabled();
+            taskStartupEnbabled.ContinueWith(result =>
+            {
+                dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    IsAppAutostartEnabled = result.Result;
+                });
+            });
 
             _appLanguages = InitalizeAppLanguages();
             _selectedAppLanguage =
@@ -272,8 +296,8 @@ namespace OpenHAB.Windows.ViewModel
         public bool IsConnectionConfigValid()
         {
             bool validConfig = IsRunningInDemoMode.Value ||
-                     (!string.IsNullOrEmpty(LocalConnection?.Url) && LocalConnection?.State == OpenHABUrlState.OK) ||
-                     (!string.IsNullOrEmpty(RemoteConnection?.Url) && RemoteConnection?.State == OpenHABUrlState.OK);
+                     (!string.IsNullOrEmpty(LocalConnection?.Url) && LocalConnection?.Status.State == OpenHABUrlState.OK) ||
+                     (!string.IsNullOrEmpty(RemoteConnection?.Url) && RemoteConnection?.Status.State == OpenHABUrlState.OK);
 
             _logger.LogInformation($"Valid application configuration: {validConfig}");
 
@@ -297,7 +321,7 @@ namespace OpenHAB.Windows.ViewModel
 
         private void ConfigurationViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName != nameof(IsDirty))
+            if (e.PropertyName != nameof(IsDirty) && e.PropertyName != nameof(CanAppAutostartEnabled) && e.PropertyName != nameof(IsAppAutostartEnabled))
             {
                 OnPropertyChanged(nameof(IsDirty));
             }
@@ -305,7 +329,7 @@ namespace OpenHAB.Windows.ViewModel
 
         private void ConnectionPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-             OnPropertyChanged(nameof(IsDirty));
+            OnPropertyChanged(nameof(IsDirty));
         }
 
         private List<LanguageViewModel> InitalizeAppLanguages()
