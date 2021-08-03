@@ -113,6 +113,7 @@
     <Compile Include="Common\DeviceTypeHelper.cs" />
     <Compile Include="Common\HttpResponseResult.cs" />
     <Compile Include="Common\ObservableCollectionExtensions.cs" />
+    <Compile Include="Messages\ConnectionStatusChanged.cs" />
     <Compile Include="Messages\ItemStateChangedMessage.cs" />
     <Compile Include="Messages\SettingsValidationMessage.cs" />
     <Compile Include="Model\Connection\CloudConnectionProfile.cs" />
@@ -144,7 +145,7 @@
     <Compile Include="Model\Connection\OpenHABConnection.cs" />
     <Compile Include="Model\OpenHABItem.cs" />
     <Compile Include="Model\OpenHABSitemap.cs" />
-    <Compile Include="Model\OpenHABUrlState.cs" />
+    <Compile Include="Model\ConnectionState.cs" />
     <Compile Include="Model\OpenHABWidget.cs" />
     <Compile Include="Model\OpenHABCommandDescription.cs" />
     <Compile Include="Model\OpenHABWidgetMapping.cs" />

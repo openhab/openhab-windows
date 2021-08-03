@@ -1,9 +1,9 @@
 ﻿namespace OpenHAB.Core.Model
 {
     /// <summary>
-    /// Reflects the State for an url check.
+    /// Reflects the State for an connection.
     /// </summary>
-    public enum OpenHABUrlState
+    public enum ConnectionState
     {
         /// <summary>
         /// OpenHAB instance is reachable via url

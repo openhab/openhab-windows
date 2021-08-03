@@ -448,12 +448,6 @@ namespace OpenHAB.Core.SDK
             HttpResponseResult<bool> result = await CheckUrlReachability(settings.LocalConnection).ConfigureAwait(false);
             _logger.LogInformation($"OpenHab server is reachable: {result.Content}");
 
-            if (!result.Content)
-            {
-                Messenger.Default.Send<FireErrorMessage>(new FireErrorMessage(AppResources.Errors.GetString("ConnectionTestFailed")));
-                return false;
-            }
-
             if (result.Content)
             {
                 OpenHABHttpClient.BaseUrl = settings.LocalConnection.Url;

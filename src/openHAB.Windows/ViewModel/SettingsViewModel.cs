@@ -31,6 +31,8 @@ namespace OpenHAB.Windows.ViewModel
             _iconCaching = iconCaching;
 
             _logger = logger;
+
+            Messenger.Default.Register<ConnectionStatusChanged>(this, msg => SaveCommand.InvokeCanExecuteChanged(null));
         }
 
         /// <summary>

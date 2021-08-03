@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using GalaSoft.MvvmLight.Messaging;
 using OpenHAB.Core.Common;
+using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.Model.Connection;
 using OpenHAB.Core.SDK;
@@ -16,7 +18,7 @@ namespace OpenHAB.Windows.ViewModel
     {
         private readonly IOpenHAB _openHabsdk;
 
-        private OpenHABUrlState _connectionState;
+        private ConnectionState _connectionState;
 
         private string _runtimeVersion;
         private string _build;
@@ -29,14 +31,14 @@ namespace OpenHAB.Windows.ViewModel
             : base(null)
         {
             _openHabsdk = openHabsdk;
-            _connectionState = OpenHABUrlState.Unknown;
+            _connectionState = ConnectionState.Unknown;
         }
 
         /// <summary>
         /// Gets or sets the state for OpenHab connection.
         /// </summary>
         /// <value>The state of the connection.</value>
-        public OpenHABUrlState State
+        public ConnectionState State
         {
             get => _connectionState;
             set => Set(ref _connectionState, value);
@@ -66,7 +68,7 @@ namespace OpenHAB.Windows.ViewModel
             Task<HttpResponseResult<ServerInfo>> result = _openHabsdk.GetOpenHABServerInfo(connection);
             result.ContinueWith(async (task) =>
             {
-                OpenHABUrlState urlState = OpenHABUrlState.Unknown;
+                ConnectionState connectionState = ConnectionState.Unknown;
                 string runtimeVersion = string.Empty;
                 string build = string.Empty;
 
@@ -76,20 +78,22 @@ namespace OpenHAB.Windows.ViewModel
 
                     runtimeVersion = serverInfo.RuntimeVersion;
                     build = serverInfo.Build;
-                    urlState = OpenHABUrlState.OK;
+                    connectionState = ConnectionState.OK;
                 }
                 else
                 {
-                    urlState = OpenHABUrlState.Failed;
+                    connectionState = ConnectionState.Failed;
                 }
 
                 CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    State = urlState;
+                    State = connectionState;
                     RuntimeVersion = runtimeVersion;
                     Build = build;
                 });
+
+                Messenger.Default.Send<ConnectionStatusChanged>(new ConnectionStatusChanged(connectionState));
             });
         }
     }

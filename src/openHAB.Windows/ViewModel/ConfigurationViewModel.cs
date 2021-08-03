@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Extensions.Logging;
 using OpenHAB.Core.Contracts.Services;
+using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.Model.Connection;
 using OpenHAB.Core.SDK;
@@ -296,8 +298,8 @@ namespace OpenHAB.Windows.ViewModel
         public bool IsConnectionConfigValid()
         {
             bool validConfig = IsRunningInDemoMode.Value ||
-                     (!string.IsNullOrEmpty(LocalConnection?.Url) && LocalConnection?.Status.State == OpenHABUrlState.OK) ||
-                     (!string.IsNullOrEmpty(RemoteConnection?.Url) && RemoteConnection?.Status.State == OpenHABUrlState.OK);
+                     (!string.IsNullOrEmpty(LocalConnection?.Url) && LocalConnection?.Status.State == ConnectionState.OK) ||
+                     (!string.IsNullOrEmpty(RemoteConnection?.Url) && RemoteConnection?.Status.State == ConnectionState.OK);
 
             _logger.LogInformation($"Valid application configuration: {validConfig}");
 
