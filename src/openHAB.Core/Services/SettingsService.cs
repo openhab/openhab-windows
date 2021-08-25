@@ -39,8 +39,6 @@ namespace OpenHAB.Core.Services
         /// <inheritdoc />
         public Settings Load()
         {
-            _logger.LogInformation("Load settings from disk");
-
             EnsureSettingsContainer();
 
             if (!_settingsContainer.Values.ContainsKey(Constants.Local.SettingsKey))
