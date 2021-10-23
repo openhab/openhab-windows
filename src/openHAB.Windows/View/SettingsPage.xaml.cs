@@ -1,5 +1,4 @@
-﻿using System;
-using GalaSoft.MvvmLight.Messaging;
+﻿using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Extensions.Logging;
 using OpenHAB.Core;
 using OpenHAB.Core.Messages;
@@ -7,6 +6,7 @@ using OpenHAB.Core.Services;
 using OpenHAB.Windows.Controls;
 using OpenHAB.Windows.Services;
 using OpenHAB.Windows.ViewModel;
+using System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -32,13 +32,12 @@ namespace OpenHAB.Windows.View
             InitializeComponent();
 
             _settingsViewModel = (SettingsViewModel)DIService.Instance.Services.GetService(typeof(SettingsViewModel));
+            _logger = (ILogger<SettingsViewModel>)DIService.Instance.Services.GetService(typeof(ILogger<SettingsViewModel>));
+            _appManager = (IAppManager)DIService.Instance.Services.GetService(typeof(IAppManager));
+
             DataContext = _settingsViewModel;
 
-            _logger = (ILogger<SettingsViewModel>)DIService.Instance.Services.GetService(typeof(ILogger<SettingsViewModel>));
-
             SettingOptionsListView.SelectedIndex = 0;
-
-            _appManager = (IAppManager)DIService.Instance.Services.GetService(typeof(IAppManager));
         }
 
         #region Page Navigation
@@ -146,12 +145,19 @@ namespace OpenHAB.Windows.View
 
         private async void AppAutostartSwitch_Toggled(object sender, RoutedEventArgs e)
         {
-            await _appManager.ToggleAutostart();
+            ToggleSwitch toggleSwitch = (ToggleSwitch)e.OriginalSource;
 
+            bool toggleIsOn = toggleSwitch.IsOn;
             var autostartEnabled = await _appManager.IsStartupEnabled().ConfigureAwait(false);
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
-                _settingsViewModel.Settings.IsAppAutostartEnabled = autostartEnabled;
+                if (autostartEnabled != toggleIsOn)
+                {
+                    await _appManager.ToggleAutostart();
+                }
+
+                _settingsViewModel.Settings.IsAppAutostartEnabled = toggleIsOn;
             });
         }
     }
