@@ -68,7 +68,7 @@ jobs:
 
     - name: Build App
       id: create_app_package
-      uses: .\repo\.github\workflows\actions\app-build
+      uses: .\repo\.github\workflows\actions\app-build@v1
       with:
         build_configuration: 'debug'
         output_directory: '${{env.BuildDirectory}}'
