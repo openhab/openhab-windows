@@ -35,5 +35,10 @@
 	<Capabilities>
 		<Capability Name="internetClient" />
 		<Capability Name="privateNetworkClientServer" />
+		<uap:Capability Name="contacts"/>
+		<DeviceCapability Name="bluetooth"/>
+		<DeviceCapability Name="microphone"/>
+		<DeviceCapability Name="location"/>
+		<DeviceCapability Name="webcam"/>
 	</Capabilities>
 </Package>
