@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "openhab.openhab",
+        "zainchen.json",
+        "redhat.vscode-yaml",
+        "fabiospampinato.vscode-install-vsix"
+    ]
+}

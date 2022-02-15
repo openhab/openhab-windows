@@ -1,4 +1,6 @@
-## Introduction
+
+# Introduction
+
 openHAB Windows application is a native client for openHAB 2 & 3. It uses REST API of openHAB to render
 sitemaps of your openHAB.
 
@@ -8,6 +10,7 @@ sitemaps of your openHAB.
 [![Latest App Release Build](https://github.com/openhab/openhab-windows/actions/workflows/app-release.yml/badge.svg)](https://github.com/openhab/openhab-windows/actions/workflows/app-release.yml)
 
 ## Code Analysis
+
 The app project is using SonarQube hosted by SonarCloud to analyse the code for issues and code quality.
 
 [![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/dashboard?id=openhab_openhab-windows)

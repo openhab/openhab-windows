@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"name": "openhab-windows",
+			"path": ".."
+		}
+	],
+	"settings": {
+		"openhab.connection.port": 4443,
+		"JSON-zain.json.autorefresh": true,
+		"yaml.trace.server": "messages",
+		"installVSIX.force": true
+	},
+	"extensions": {
+		"recommendations": [
+			"zainchen.json",
+			"fabiospampinato.vscode-install-vsix"
+		]
+	}
+}
