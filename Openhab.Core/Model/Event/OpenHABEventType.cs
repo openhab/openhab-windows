@@ -1,7 +1,7 @@
 ﻿namespace OpenHAB.Core.Model.Event
 {
     /// <summary>openHAB event types.</summary>
-    public enum OpenHABEventType
+    public enum OpenHabEventType
     {
         /// <summary>Item state event.</summary>
         ItemStateEvent = 0,
