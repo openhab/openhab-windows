@@ -5,7 +5,7 @@ namespace OpenHAB.Core.Model
     /// <summary>
     /// A mapping for an OpenHAB Widget.
     /// </summary>
-    public class OpenHABCommandDescription
+    public class OpenHabCommandDescription
     {
         /// <summary>
         /// Gets or sets the CommandOptions.
