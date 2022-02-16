@@ -17,7 +17,8 @@ on:
         description: 'Specifices if a release or debug package should be created.'
         default: 'release'
         required: false
-    
+
+
 jobs:
   build:
     name: 'Build openHAB Windows App'
