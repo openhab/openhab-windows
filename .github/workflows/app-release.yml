@@ -9,7 +9,7 @@ env:
 on: 
   workflow_dispatch:
     inputs:
-      BetaRelease:
+      BetaRelease: 
         description: 'Specifices if a beta release should be created.'
         default: 'false'
         required: false
