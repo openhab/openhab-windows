@@ -18,6 +18,7 @@ on:
         default: 'release'
         required: false
     
+    
 jobs:
   build:
     name: 'Build openHAB Windows App'
