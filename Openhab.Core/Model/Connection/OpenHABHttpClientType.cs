@@ -3,7 +3,7 @@
     /// <summary>
     /// Defines the connection type to a local or remote openHAB instance.
     /// </summary>
-    public enum OpenHABHttpClientType
+    public enum OpenHabHttpClientType
     {
         /// <summary>
         /// Local openHab http connection.
