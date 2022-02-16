@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppVersion.Text" xml:space="preserve">
-    <value>OpenHab App Version:</value>
+    <value>OpenHAB-App-Version:</value>
   </data>
   <data name="SettingsCancelButton.Label" xml:space="preserve">
     <value>Abbrechen</value>
@@ -130,7 +130,7 @@
     <value>Verbindungseinstellungen</value>
   </data>
   <data name="DemoModeHeader.Text" xml:space="preserve">
-    <value>Demo Modus</value>
+    <value>Demo-Modus</value>
   </data>
   <data name="MessageError" xml:space="preserve">
     <value>Oops, da ist etwas schief gelaufen.</value>
@@ -139,38 +139,38 @@
     <value>Feedback</value>
   </data>
   <data name="IgnoreSSLCertErrors.Text" xml:space="preserve">
-    <value>Ignoriere SSL Zertifkatsfehler</value>
+    <value>Ignoriere SSL-Zertifkatsfehler</value>
   </data>
   <data name="IgnoreSSLCertHostErrors.Text" xml:space="preserve">
-    <value>Ignoriere SSL Hostname Fehler</value>
+    <value>Ignoriere SSL-Hostname-Fehler</value>
   </data>
   <data name="LocalSettings.Text" xml:space="preserve">
     <value>Lokale Einstellungen</value>
   </data>
   <data name="LocalUrl.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Url der lokalen OpenHab Instanz. Standard Url ist http://openhab:8080</value>
+    <value>URL der lokalen OpenHAB-Instanz. Standard-URL ist http://openhab:8080</value>
   </data>
   <data name="LocalUrlHeader.Text" xml:space="preserve">
-    <value>openHAB URL</value>
+    <value>OpenHAB-URL</value>
   </data>
   <data name="MessageNotConfigured" xml:space="preserve">
-    <value>Es scheint kein OpenHab Server url konfiguriert zu sein. Gehe Sie in die App Einstellungen (Zahnrad Icon) um die Verbindungseinstellung zur ihrem OpenHab Server zukonfigurieren.</value>
+    <value>Es scheint keine OpenHAB-Server-URL konfiguriert zu sein. Gehen Sie in die App-Einstellungen (Zahnrad-Icon) um die Verbindungseinstellungen zur Ihrem OpenHAB-Server zu konfigurieren.</value>
   </data>
   <data name="MessagesNotReachable" xml:space="preserve">
-    <value>Im Moment ist der OpenHab Service nicht erreichbar.
-ehe Sie in die App Einstellungen (Zahnrad Icon) um die Verbindungseinstellung zu prüfen.</value>
+    <value>Im Moment ist der OpenHAB-Service nicht erreichbar.
+Gehen Sie in die App-Einstellungen (Zahnrad-Icon) um die Verbindungseinstellungen zu prüfen.</value>
   </data>
   <data name="PasswordHeader.Text" xml:space="preserve">
     <value>Passwort</value>
   </data>
   <data name="RemoteSettings.Text" xml:space="preserve">
-    <value>Remote Einstellungen</value>
+    <value>Remote-Einstellungen</value>
   </data>
   <data name="RemoteUrl.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Url für den Zugriff auf den OpenHab Server von außerhalb des Heimnetzwerks.</value>
+    <value>URL für den Zugriff auf den OpenHAB-Server von außerhalb des Heimnetzwerks.</value>
   </data>
   <data name="RemoteUrlHeader.Text" xml:space="preserve">
-    <value>OpenHAB Remote URL</value>
+    <value>OpenHAB-Remote-URL</value>
   </data>
   <data name="SettingsSaveButton.Label" xml:space="preserve">
     <value>Speichern</value>
@@ -185,10 +185,10 @@ ehe Sie in die App Einstellungen (Zahnrad Icon) um die Verbindungseinstellung zu
     <value>Keine Sitemaps verfügbar</value>
   </data>
   <data name="AppSettings.Text" xml:space="preserve">
-    <value>App Einstellungen</value>
+    <value>App-Einstellungen</value>
   </data>
   <data name="HideDefaultSitemap.Text" xml:space="preserve">
-    <value>Standard Sitemap (_default) einblenden</value>
+    <value>Standard-Sitemap (_default) einblenden</value>
   </data>
   <data name="CertificateSettings.Text" xml:space="preserve">
     <value>Zertifikatseinstellungen</value>
@@ -198,13 +198,13 @@ ehe Sie in die App Einstellungen (Zahnrad Icon) um die Verbindungseinstellung zu
   </data>
   <data name="MessageSettingsConnectionConfigInvalid" xml:space="preserve">
     <value>Verbindungseinstellungen sind nicht korrekt.
-Bitte wählen Sie den Demo Modus oder die Lokalen/Remote Verbindunsinformation zur ihrem OpenHab Server.</value>
+Bitte wählen Sie den Demo-Modus oder die Lokalen/Remote Verbindunsinformation zur ihrem OpenHAB-Server.</value>
   </data>
   <data name="AppLanguage.Text" xml:space="preserve">
-    <value>App Sprache</value>
+    <value>App-Sprache</value>
   </data>
   <data name="ConnectionDialog.PrimaryButtonText" xml:space="preserve">
-    <value>Schliesen</value>
+    <value>Schließen</value>
   </data>
   <data name="ConnectionDialog.Title" xml:space="preserve">
     <value>Verbindungseinstellungen</value>
@@ -225,19 +225,19 @@ Bitte wählen Sie den Demo Modus oder die Lokalen/Remote Verbindunsinformation z
     <value>Benutzerdefiniertes Verbindungsprofil</value>
   </data>
   <data name="LocalDefaultConnection" xml:space="preserve">
-    <value>Standard Verbindungsprofil</value>
+    <value>Standardverbindungsprofil</value>
   </data>
   <data name="RemoteCustomConnection" xml:space="preserve">
     <value>Benutzerdefiniertes Verbindungsprofil</value>
   </data>
   <data name="RemoteDefaultConnection" xml:space="preserve">
-    <value>OpenHab Cloud</value>
+    <value>OpenHAB-Cloud</value>
   </data>
   <data name="MenuLogsView.Content" xml:space="preserve">
-    <value>Log Anzeigen</value>
+    <value>Log anzeigen</value>
   </data>
   <data name="LogsSend.Content" xml:space="preserve">
-    <value>Logs per mail versenden</value>
+    <value>Logs per Mail versenden</value>
   </data>
   <data name="LogFileLocation.Text" xml:space="preserve">
     <value>Dateipfad Logdatei:</value>
@@ -255,31 +255,31 @@ Bitte wählen Sie den Demo Modus oder die Lokalen/Remote Verbindunsinformation z
     <value>Log</value>
   </data>
   <data name="MenuAppSettings.Content" xml:space="preserve">
-    <value>App Einstellungen</value>
+    <value>App-Einstellungen</value>
   </data>
   <data name="MenuConnectionSettings.Content" xml:space="preserve">
     <value>Verbindungseinstellungen</value>
   </data>
   <data name="ShowDefaultSitemap.Text" xml:space="preserve">
-    <value>Standard Sitemaps einblenden</value>
+    <value>Standard-Sitemaps einblenden</value>
   </data>
   <data name="SVGIcons.Text" xml:space="preserve">
     <value>Verwenden von Icons mit hoher Auflösung für Sitemapkacheln</value>
   </data>
   <data name="ClearIconCache.Text" xml:space="preserve">
-    <value>Lokaler Zwischenspeicher für Icons löschen</value>
+    <value>Lokalen Zwischenspeicher für Icons löschen</value>
   </data>
   <data name="ClearIconCacheButton.Content" xml:space="preserve">
     <value>Löschen</value>
   </data>
   <data name="AppAutostart.Text" xml:space="preserve">
-    <value>Start app wenn das System startet</value>
+    <value>Starte App beim Systemstart</value>
   </data>
   <data name="SitemapSetting.Text" xml:space="preserve">
     <value>Sitemap</value>
   </data>
   <data name="StartAppMinimized.Text" xml:space="preserve">
-    <value>Starte app minimiert</value>
+    <value>Starte App minimiert</value>
   </data>
   <data name="NotificationTile" xml:space="preserve">
     <value>Änderte sich von {0} zu {1}</value>
@@ -297,7 +297,7 @@ Bitte wählen Sie den Demo Modus oder die Lokalen/Remote Verbindunsinformation z
     <value>Einstellungen</value>
   </data>
   <data name="EnableWindowsNotifications.Text" xml:space="preserve">
-    <value>Einschlaten der Benachrichtigung für openHAB Events.</value>
+    <value>Einschalten der Benachrichtigungen für OpenHAB-Events.</value>
   </data>
   <data name="Et" xml:space="preserve">
     <value />

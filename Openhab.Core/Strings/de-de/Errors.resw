@@ -118,9 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CommandFailed" xml:space="preserve">
-    <value>Kommando '{0}' für Item '{1}' konnte nicht an den openHAB Server gesendet werden.</value>
+    <value>Kommando '{0}' für Item '{1}' konnte nicht an den OpenHAB-Server gesendet werden.</value>
   </data>
   <data name="ConnectionTestFailed" xml:space="preserve">
-    <value>Überprüfung der Verbindungskonfiguration des openHAB Server nicht möglich.</value>
+    <value>Überprüfung der Verbindungskonfiguration des OpenHAB-Servers nicht möglich.</value>
   </data>
 </root>
