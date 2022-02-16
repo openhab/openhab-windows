@@ -3,7 +3,7 @@
     /// <summary>
     /// A mapping for an OpenHAB Widget.
     /// </summary>
-    public class OpenHABWidgetMapping
+    public class OpenHabWidgetMapping
     {
         /// <summary>
         /// Gets or sets the Command of the mapping.
