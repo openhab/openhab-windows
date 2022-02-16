@@ -5,7 +5,7 @@ namespace OpenHAB.Core.Model
     /// <summary>
     /// An Exception class used to throw unexpected errors.
     /// </summary>
-    public class OpenHABException : Exception
+    public class OpenHabException : Exception
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenHABException"/> class.
