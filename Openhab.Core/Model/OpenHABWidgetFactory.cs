@@ -10,7 +10,7 @@ namespace OpenHAB.Core.Model
     /// <summary>
     /// Factory class for OpenHAB widgets.
     /// </summary>
-    public class OpenHABWidgetFactory
+    public class OpenHabWidgetFactory
     {
         public static OpenHABWidget Parse(XElement startNode)
         {
