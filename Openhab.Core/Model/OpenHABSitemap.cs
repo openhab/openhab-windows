@@ -11,7 +11,7 @@ namespace OpenHAB.Core.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenHABSitemap"/> class.
         /// </summary>
-        public OpenHABSitemap()
+        public OpenHabSitemap()
         {
         }
 
