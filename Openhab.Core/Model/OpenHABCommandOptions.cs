@@ -3,7 +3,7 @@
     /// <summary>
     /// A CommandOptions for commandDescription.
     /// </summary>
-    public class OpenHABCommandOptions
+    public class OpenHabCommandOptions
     {
         /// <summary>
         /// Gets or sets the Command of the mapping.
