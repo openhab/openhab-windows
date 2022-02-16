@@ -3,7 +3,7 @@
     /// <summary>
     /// A list of constants used for sending commands to OpenHAB.
     /// </summary>
-    public sealed class OpenHABCommands
+    public sealed class OpenHabCommands
     {
         /// <summary>
         /// The command to toggle a switch ON.
