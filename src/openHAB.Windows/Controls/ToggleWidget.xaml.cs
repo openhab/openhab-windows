@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using Windows.UI.Xaml;
@@ -75,8 +75,7 @@ namespace OpenHAB.Windows.Controls
             if (string.CompareOrdinal(currentValue, Widget?.Item?.State) != 0)
             {
                 Widget.Item.State = currentValue;
-                Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, currentValue));
-                return;
+                StrongReferenceMessenger.Default.Send(new TriggerCommandMessage(Widget.Item, currentValue));
             }
         }
     }

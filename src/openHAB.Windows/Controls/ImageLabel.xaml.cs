@@ -28,7 +28,9 @@ namespace OpenHAB.Windows.Controls
         public static readonly DependencyProperty IconPathProperty = DependencyProperty.Register(
             "IconPath", typeof(string), typeof(ImageLabel), new PropertyMetadata(default(string), IconChangedCallback));
 
+#pragma warning disable S3168 // "async" methods should not return "void"
         private static async void IconChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+#pragma warning restore S3168 // "async" methods should not return "void"
         {
             var control = (ImageLabel)dependencyObject;
             if (control == null)

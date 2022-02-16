@@ -1,5 +1,6 @@
 ﻿using System;
-using GalaSoft.MvvmLight.Messaging;
+using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
 using OpenHAB.Core;
 using OpenHAB.Core.Messages;
@@ -51,8 +52,8 @@ namespace OpenHAB.Windows.View
         /// <inheritdoc/>
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            Messenger.Default.Register<FireErrorMessage>(this, msg => ShowErrorMessage(msg));
-            Messenger.Default.Register<FireInfoMessage>(this, msg => ShowInfoMessage(msg));
+            StrongReferenceMessenger.Default.Register<FireErrorMessage>(this, async (recipient,  msg) => await ShowErrorMessage(recipient, msg));
+            StrongReferenceMessenger.Default.Register<FireInfoMessage>(this, async (recipient, msg) => await ShowInfoMessage(recipient, msg));
 
             await Vm.LoadSitemapsAndItemData().ConfigureAwait(false);
         }
@@ -60,14 +61,14 @@ namespace OpenHAB.Windows.View
         /// <inheritdoc/>
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            Messenger.Default.Unregister<FireErrorMessage>(this, msg => ShowErrorMessage(msg));
-            Messenger.Default.Unregister<FireInfoMessage>(this, msg => ShowInfoMessage(msg));
+            StrongReferenceMessenger.Default.Unregister<FireErrorMessage>(this);
+            StrongReferenceMessenger.Default.Unregister<FireInfoMessage>(this);
 
             ErrorNotification.IsOpen = false;
             InfoNotification.IsOpen = false;
         }
 
-        private async void ShowErrorMessage(FireErrorMessage message)
+        private async Task ShowErrorMessage(object recipient, FireErrorMessage message)
         {
             try
             {
@@ -95,7 +96,7 @@ namespace OpenHAB.Windows.View
             }
         }
 
-        private async void ShowInfoMessage(FireInfoMessage msg)
+        private async Task ShowInfoMessage(object recipient, FireInfoMessage msg)
         {
             try
             {
@@ -127,7 +128,7 @@ namespace OpenHAB.Windows.View
 
         private void MasterListView_OnItemClick(object sender, ItemClickEventArgs e)
         {
-            Messenger.Default.Send(new WidgetClickedMessage(e.ClickedItem as OpenHABWidget));
+            StrongReferenceMessenger.Default.Send(new WidgetClickedMessage(e.ClickedItem as OpenHABWidget));
         }
 
         private void SitemapNavigation_SelectionChanged(

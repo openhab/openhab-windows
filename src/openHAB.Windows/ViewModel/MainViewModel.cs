@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using GalaSoft.MvvmLight.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
 using Microsoft.Services.Store.Engagement;
 using OpenHAB.Core;
@@ -58,9 +58,11 @@ namespace OpenHAB.Windows.ViewModel
             _feedbackLauncher = StoreServicesFeedbackLauncher.GetDefault();
             _cancellationTokenSource = new CancellationTokenSource();
 
-            Messenger.Default.Register<TriggerCommandMessage>(this, async msg => await TriggerCommand(msg).ConfigureAwait(false));
-            Messenger.Default.Register<WidgetClickedMessage>(this, msg => OnWidgetClickedAsync(msg.Widget));
+            StrongReferenceMessenger.Default.Register<TriggerCommandMessage>(this, async (recipient, msg) => await TriggerCommand(recipient, msg).ConfigureAwait(false));
+            StrongReferenceMessenger.Default.Register<WidgetClickedMessage>(this, (recipient, msg) => OnWidgetClickedAction(recipient, msg.Widget));
         }
+
+
 
         /// <summary>
         /// Gets or sets the widgets currently on screen.
@@ -214,7 +216,7 @@ namespace OpenHAB.Windows.ViewModel
             await ReloadSitemap().ConfigureAwait(false);
         }
 
-        private async Task TriggerCommand(TriggerCommandMessage message)
+        private async Task TriggerCommand(object recipient, TriggerCommandMessage message)
         {
             HttpResponseResult<bool> result = await _openHabsdk.SendCommand(message.Item, message.Command).ConfigureAwait(false);
             if (!result.Content)
@@ -222,8 +224,13 @@ namespace OpenHAB.Windows.ViewModel
                 string errorMessage = AppResources.Errors.GetString("CommandFailed");
                 errorMessage = string.Format(errorMessage, message.Command, message.Item?.Name);
 
-                Messenger.Default.Send<FireErrorMessage>(new FireErrorMessage(errorMessage));
+                StrongReferenceMessenger.Default.Send<FireErrorMessage>(new FireErrorMessage(errorMessage));
             }
+        }
+
+        private void OnWidgetClickedAction(object recipient, OpenHABWidget widget)
+        {
+            OnWidgetClickedAsync(widget);
         }
 
         #endregion
@@ -310,13 +317,13 @@ namespace OpenHAB.Windows.ViewModel
                 if (settings.LocalConnection == null && settings.RemoteConnection == null &&
                     (!settings.IsRunningInDemoMode.HasValue || !settings.IsRunningInDemoMode.Value))
                 {
-                    Messenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));
+                    StrongReferenceMessenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));
                 }
 
                 bool isSuccessful = await _openHabsdk.ResetConnection().ConfigureAwait(false);
                 if (!isSuccessful)
                 {
-                    Messenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));
+                    StrongReferenceMessenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));
                     return;
                 }
 
@@ -325,7 +332,7 @@ namespace OpenHAB.Windows.ViewModel
 
                 if (_serverInfo.Version == OpenHABVersion.None)
                 {
-                    Messenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));
+                    StrongReferenceMessenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));
                     return;
                 }
 
@@ -372,7 +379,7 @@ namespace OpenHAB.Windows.ViewModel
             catch (OpenHABException ex)
             {
                 _logger.LogError(ex, "Load data failed.");
-                Messenger.Default.Send(new FireErrorMessage(ex.Message));
+                StrongReferenceMessenger.Default.Send(new FireErrorMessage(ex.Message));
             }
             catch (Exception ex)
             {

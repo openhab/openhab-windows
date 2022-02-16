@@ -1,8 +1,9 @@
+using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Messaging;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Toolkit.Uwp.Helpers;
 using Newtonsoft.Json;
 using OpenHAB.Core.Messages;
@@ -59,7 +60,7 @@ namespace OpenHAB.Core.Model
                     }
                 }
 
-                Set(ref _type, value);
+                SetProperty(ref _type, value);
             }
         }
 
@@ -88,7 +89,7 @@ namespace OpenHAB.Core.Model
                     }
                 }
 
-                Set(ref _state, value);
+                SetProperty(ref _state, value);
             }
         }
 
@@ -122,10 +123,10 @@ namespace OpenHAB.Core.Model
         /// </summary>
         public OpenHABItem()
         {
-            Messenger.Default.Register<UpdateItemMessage>(this, HandleUpdateItemMessage);
+            StrongReferenceMessenger.Default.Register<UpdateItemMessage>(this, HandleUpdateItemMessage);
         }
 
-        private void HandleUpdateItemMessage(UpdateItemMessage message)
+        private void HandleUpdateItemMessage(object recipient, UpdateItemMessage message)
         {
             if (message.ItemName != Name)
             {
@@ -183,7 +184,7 @@ namespace OpenHAB.Core.Model
             if (value != null)
             {
                 string newValue = value.ToString() + this.Unit;
-                Messenger.Default.Send(new TriggerCommandMessage(this, newValue));
+                StrongReferenceMessenger.Default.Send(new TriggerCommandMessage(this, newValue));
                 _state = newValue;
             }
         }

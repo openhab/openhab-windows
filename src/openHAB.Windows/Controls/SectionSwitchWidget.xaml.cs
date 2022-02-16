@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using GalaSoft.MvvmLight.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using Windows.UI.Xaml;
@@ -58,7 +58,7 @@ namespace OpenHAB.Windows.Controls
             UncheckEverything();
             button.IsChecked = true;
 
-            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, button?.Tag.ToString()));
+            StrongReferenceMessenger.Default.Send(new TriggerCommandMessage(Widget.Item, button?.Tag.ToString()));
         }
 
         private void UncheckEverything()

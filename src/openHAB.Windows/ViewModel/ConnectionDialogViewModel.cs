@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
-using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
+using CommunityToolkit.Mvvm.Input;
 using OpenHAB.Core;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts;
@@ -31,7 +30,6 @@ namespace OpenHAB.Windows.ViewModel
         private bool? _willIgnoreSSLCertificate;
         private bool? _willIgnoreSSLHostname;
 
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ConnectionDialogViewModel"/> class.
         /// </summary>
@@ -54,7 +52,7 @@ namespace OpenHAB.Windows.ViewModel
             }
 
             _connectionStatus = new ConnectionStatusViewModel(openHabsdk);
-            
+
             if (!string.IsNullOrEmpty(Model?.Url))
             {
                 CheckConnectionSettings(null);

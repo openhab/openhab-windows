@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using GalaSoft.MvvmLight.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
 using Microsoft.Toolkit.Uwp.Connectivity;
 using Newtonsoft.Json;
@@ -96,11 +96,6 @@ namespace OpenHAB.Core.SDK
                 httpClient.BaseAddress = new Uri(connection.Url);
 
                 ServerInfo serverInfo = new ServerInfo();
-
-                if (httpClient == null)
-                {
-                    return null;
-                }
 
                 HttpResponseMessage result = await httpClient.GetAsync(Constants.API.ServerInformation).ConfigureAwait(false);
                 if (!result.IsSuccessStatusCode)
@@ -460,7 +455,7 @@ namespace OpenHAB.Core.SDK
                 // If remote URL is configured
                 if (string.IsNullOrWhiteSpace(settings.RemoteConnection?.Url))
                 {
-                    Messenger.Default.Send<FireErrorMessage>(new FireErrorMessage(AppResources.Errors.GetString("ConnectionTestFailed")));
+                    StrongReferenceMessenger.Default.Send<FireErrorMessage>(new FireErrorMessage(AppResources.Errors.GetString("ConnectionTestFailed")));
                     _logger.LogWarning($"OpenHab server url is not valid");
 
                     return false;
@@ -469,7 +464,7 @@ namespace OpenHAB.Core.SDK
                 result = await CheckUrlReachability(settings.RemoteConnection).ConfigureAwait(false);
                 if (!result.Content)
                 {
-                    Messenger.Default.Send<FireErrorMessage>(new FireErrorMessage(AppResources.Errors.GetString("ConnectionTestFailed")));
+                    StrongReferenceMessenger.Default.Send<FireErrorMessage>(new FireErrorMessage(AppResources.Errors.GetString("ConnectionTestFailed")));
                     _logger.LogWarning($"OpenHab server url is not valid");
 
                     return false;

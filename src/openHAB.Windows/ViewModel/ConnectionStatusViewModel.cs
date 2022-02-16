@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using GalaSoft.MvvmLight.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
@@ -93,7 +93,7 @@ namespace OpenHAB.Windows.ViewModel
                     Build = build;
                 });
 
-                Messenger.Default.Send<ConnectionStatusChanged>(new ConnectionStatusChanged(connectionState));
+                StrongReferenceMessenger.Default.Send<ConnectionStatusChanged>(new ConnectionStatusChanged(connectionState));
             });
         }
     }

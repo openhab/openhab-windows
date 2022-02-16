@@ -1,5 +1,4 @@
-﻿using GalaSoft.MvvmLight.Messaging;
-using GalaSoft.MvvmLight.Views;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Config;
@@ -46,7 +45,7 @@ namespace OpenHAB.Windows.Services
                  loggingBuilder.AddNLog(GetLoggingConfiguration());
              });
 
-            _services.AddSingleton(Messenger.Default);
+            _services.AddSingleton<IMessenger>(StrongReferenceMessenger.Default);
             _services.AddSingleton<IOpenHAB, OpenHABClient>();
             _services.AddSingleton<ISettingsService, SettingsService>();
             _services.AddTransient<Settings>(x =>
@@ -55,7 +54,7 @@ namespace OpenHAB.Windows.Services
                 return settingsService.Load();
             });
 
-            _services.AddSingleton<INavigationService, NavigationService>();
+            //_services.AddSingleton<INavigationService, NavigationService>();
             _services.AddSingleton<OpenHABHttpClient>();
             _services.AddSingleton<IIconCaching, IconCaching>();
             _services.AddSingleton<IAppManager, AppManager>();

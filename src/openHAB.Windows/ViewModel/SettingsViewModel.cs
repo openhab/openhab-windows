@@ -1,5 +1,5 @@
 using System;
-using GalaSoft.MvvmLight.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Messages;
@@ -32,7 +32,7 @@ namespace OpenHAB.Windows.ViewModel
 
             _logger = logger;
 
-            Messenger.Default.Register<ConnectionStatusChanged>(this, msg => SaveCommand.InvokeCanExecuteChanged(null));
+            StrongReferenceMessenger.Default.Register<ConnectionStatusChanged>(this, (recipient, msg) => SaveCommand.InvokeCanExecuteChanged(null));
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace OpenHAB.Windows.ViewModel
             if (validConnectionConfig)
             {
                 bool savedSuccessful = _configuration.Save();
-                Messenger.Default.Send(new SettingsUpdatedMessage(validConnectionConfig, savedSuccessful));
+                StrongReferenceMessenger.Default.Send(new SettingsUpdatedMessage(validConnectionConfig, savedSuccessful));
             }
         }
 
@@ -103,7 +103,7 @@ namespace OpenHAB.Windows.ViewModel
         private bool CanPersistSettings(object arg)
         {
             bool validConnectionConfig = CheckForValidConnectionConfig();
-            Messenger.Default.Send(new SettingsValidationMessage(validConnectionConfig));
+            StrongReferenceMessenger.Default.Send(new SettingsValidationMessage(validConnectionConfig));
 
             return validConnectionConfig && _configuration.IsDirty;
         }

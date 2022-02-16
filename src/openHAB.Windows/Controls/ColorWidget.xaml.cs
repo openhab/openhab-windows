@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using GalaSoft.MvvmLight.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
 using OpenHAB.Core.Messages;
 using OpenHAB.Windows.Services;
@@ -55,7 +55,7 @@ namespace OpenHAB.Windows.Controls
 
             Regex rgbRegEx = new Regex(@"^(([1-9][\.\d]*)(,)){2}([1-9][\.\d]*)");
 
-            if (rgbString == null || rgbString.Length == 0 || !rgbRegEx.IsMatch(rgbString))
+            if (rgbString == null || rgbString.Length == 0 || !rgbRegEx.IsMatch(rgbString) || rgbSegements == null)
             {
                 _logger.LogWarning($"Item state '{rgbString}' is not a valid RGB value");
                 return;
@@ -102,7 +102,7 @@ namespace OpenHAB.Windows.Controls
         private void ColorChanged()
         {
             var hsvclr = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToHsv(ClrPicker.Color);
-            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, $"{hsvclr.H.ToString(CultureInfo.InvariantCulture)},{(hsvclr.S * 100).ToString(CultureInfo.InvariantCulture)}, {BrightnessSlider.Value.ToString(CultureInfo.InvariantCulture)}"));
+            StrongReferenceMessenger.Default.Send(new TriggerCommandMessage(Widget.Item, $"{hsvclr.H.ToString(CultureInfo.InvariantCulture)},{(hsvclr.S * 100).ToString(CultureInfo.InvariantCulture)}, {BrightnessSlider.Value.ToString(CultureInfo.InvariantCulture)}"));
         }
     }
 }

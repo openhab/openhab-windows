@@ -1,5 +1,5 @@
 ﻿using System.Globalization;
-using GalaSoft.MvvmLight.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Toolkit.Uwp.Notifications;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts.Services;
@@ -24,14 +24,14 @@ namespace OpenHAB.Core.Services
         /// <param name="settings">Application Settings.</param>
         public NotificationManager(IItemManager itemStateManager, ISettingsService settingsService, Settings settings)
         {
-            Messenger.Default.Register<ItemStateChangedMessage>(this, HandleUpdateItemMessage);
+            StrongReferenceMessenger.Default.Register<ItemStateChangedMessage>(this, HandleUpdateItemMessage);
             _itemManager = itemStateManager;
             _iconFormat = settings.UseSVGIcons ? "svg" : "png";
             _settingsService = settingsService;
             _notficationCounter = 0;
         }
 
-        private void HandleUpdateItemMessage(ItemStateChangedMessage obj)
+        private void HandleUpdateItemMessage(object receipts, ItemStateChangedMessage obj)
         {
             Settings settings = _settingsService.Load();
 

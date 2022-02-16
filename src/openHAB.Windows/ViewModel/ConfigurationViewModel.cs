@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Extensions.Logging;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Messages;

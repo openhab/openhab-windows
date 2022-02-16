@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using Windows.UI.Xaml;
@@ -65,7 +65,7 @@ namespace OpenHAB.Windows.Controls
         private void OnToggle()
         {
             IsOn = !IsOn;
-            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, IsOn ? OpenHABCommands.OnCommand : OpenHABCommands.OffCommand));
+            StrongReferenceMessenger.Default.Send(new TriggerCommandMessage(Widget.Item, IsOn ? OpenHABCommands.OnCommand : OpenHABCommands.OffCommand));
         }
 
         private void OnToggle(object sender, TappedRoutedEventArgs e)

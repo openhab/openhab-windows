@@ -3,11 +3,11 @@ using OpenHAB.Core.Model;
 
 namespace OpenHAB.Core.Messages
 {
-
-    /// <summary>Event for connection state updates.</summary>
+    /// <summary>
+    /// Event for connection state updates.
+    /// </summary>
     public class ConnectionStatusChanged
     {
-
         /// <summary>Initializes a new instance of the <see cref="ConnectionStatusChanged" /> class.</summary>
         /// <param name="state">The connection state.</param>
         public ConnectionStatusChanged(ConnectionState state)

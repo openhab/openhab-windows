@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using System;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
 using OpenHAB.Core;
 using OpenHAB.Core.Messages;
@@ -6,7 +7,6 @@ using OpenHAB.Core.Services;
 using OpenHAB.Windows.Controls;
 using OpenHAB.Windows.Services;
 using OpenHAB.Windows.ViewModel;
-using System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -45,8 +45,8 @@ namespace OpenHAB.Windows.View
         /// <inheritdoc/>
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            Messenger.Default.Register<SettingsUpdatedMessage>(this, msg => HandleSettingsUpdate(msg), true);
-            Messenger.Default.Register<SettingsValidationMessage>(this, msg => NotificationSettingsValidation(msg), true);
+            StrongReferenceMessenger.Default.Register<SettingsUpdatedMessage>(this, (recipient, msg) => HandleSettingsUpdate(recipient, msg));
+            StrongReferenceMessenger.Default.Register<SettingsValidationMessage>(this, (recipient, msg) => NotificationSettingsValidation(recipient, msg));
 
             AppAutostartSwitch.Toggled += AppAutostartSwitch_Toggled;
         }
@@ -54,8 +54,8 @@ namespace OpenHAB.Windows.View
         /// <inheritdoc/>
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
-            Messenger.Default.Unregister<SettingsUpdatedMessage>(this, msg => HandleSettingsUpdate(msg));
-            Messenger.Default.Unregister<SettingsValidationMessage>(this, msg => NotificationSettingsValidation(msg));
+            StrongReferenceMessenger.Default.Unregister<SettingsUpdatedMessage>(this);
+            StrongReferenceMessenger.Default.Unregister<SettingsValidationMessage>(this);
 
             AppAutostartSwitch.Toggled -= AppAutostartSwitch_Toggled;
         }
@@ -87,7 +87,7 @@ namespace OpenHAB.Windows.View
             ConnectionSettings.Visibility = Visibility.Visible;
         }
 
-        private void HandleSettingsUpdate(SettingsUpdatedMessage msg)
+        private void HandleSettingsUpdate(object recipient, SettingsUpdatedMessage msg)
         {
             try
             {
@@ -105,7 +105,7 @@ namespace OpenHAB.Windows.View
             }
         }
 
-        private void NotificationSettingsValidation(SettingsValidationMessage msg)
+        private void NotificationSettingsValidation(object recipient, SettingsValidationMessage msg)
         {
             try
             {
