@@ -6,7 +6,7 @@ namespace OpenHAB.Core.Model.Connection
     /// <summary>
     /// Connection configuration for OpenHAB service or cloud instance.
     /// </summary>
-    public class OpenHABConnection
+    public class OpenHabConnection
     {
         /// <summary>Gets or sets the connection profile.</summary>
         /// <value>The profile.</value>
