@@ -1,7 +1,7 @@
 ﻿namespace OpenHAB.Core.Model.Event
 {
     /// <summary>OpenHAB event.</summary>
-    public class OpenHABEvent
+    public class OpenHabEvent
     {
         /// <summary>Gets the type of the event.</summary>
         /// <value>The type of the event.</value>
