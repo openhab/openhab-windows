@@ -57,6 +57,12 @@ namespace OpenHAB.Windows.ViewModel
             {
                 CheckConnectionSettings(null);
             }
+
+            _username = Model?.Username;
+            _password = Model?.Password;
+            _url = Model?.Url;
+            _willIgnoreSSLHostname = Model?.WillIgnoreSSLHostname;
+            _willIgnoreSSLCertificate = Model?.WillIgnoreSSLCertificate;
         }
 
         /// <summary>Gets a value indicating whether [host URL] value can be modified.</summary>
@@ -88,7 +94,7 @@ namespace OpenHAB.Windows.ViewModel
         /// </summary>
         public string Password
         {
-            get => Model?.Password;
+            get => _password;
             set
             {
                 Set(ref _password, value, true);
@@ -168,7 +174,7 @@ namespace OpenHAB.Windows.ViewModel
         /// </summary>
         public string Url
         {
-            get => Model?.Url;
+            get => _url;
             set
             {
                 string tempUrl;
@@ -199,7 +205,7 @@ namespace OpenHAB.Windows.ViewModel
         /// </summary>
         public string Username
         {
-            get => Model?.Username;
+            get => _username;
             set
             {
                 Set(ref _username, value, true);
@@ -212,7 +218,7 @@ namespace OpenHAB.Windows.ViewModel
         /// </summary>
         public bool? WillIgnoreSSLCertificate
         {
-            get => Model?.WillIgnoreSSLCertificate;
+            get => _willIgnoreSSLCertificate;
             set
             {
                 Set(ref _willIgnoreSSLCertificate, value, true);
@@ -225,7 +231,7 @@ namespace OpenHAB.Windows.ViewModel
         /// </summary>
         public bool? WillIgnoreSSLHostname
         {
-            get => Model?.WillIgnoreSSLHostname;
+            get => _willIgnoreSSLHostname;
             set
             {
                 Set(ref _willIgnoreSSLHostname, value, true);

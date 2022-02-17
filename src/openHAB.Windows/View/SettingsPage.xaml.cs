@@ -87,7 +87,9 @@ namespace OpenHAB.Windows.View
             ConnectionSettings.Visibility = Visibility.Visible;
         }
 
+#pragma warning disable S1172 // Unused method parameters should be removed
         private void HandleSettingsUpdate(object recipient, SettingsUpdatedMessage msg)
+#pragma warning restore S1172 // Unused method parameters should be removed
         {
             try
             {
@@ -105,7 +107,9 @@ namespace OpenHAB.Windows.View
             }
         }
 
+#pragma warning disable S1172 // Unused method parameters should be removed
         private void NotificationSettingsValidation(object recipient, SettingsValidationMessage msg)
+#pragma warning restore S1172 // Unused method parameters should be removed
         {
             try
             {

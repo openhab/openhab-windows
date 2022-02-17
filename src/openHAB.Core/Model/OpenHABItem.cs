@@ -48,15 +48,12 @@ namespace OpenHAB.Core.Model
             get => _type;
             set
             {
-                if (value != null)
+                if (value != null && value.Contains(":", System.StringComparison.OrdinalIgnoreCase) && _state != null)
                 {
-                    if (value.Contains(":", System.StringComparison.OrdinalIgnoreCase) && _state != null)
+                    int spaceIndex = _state.LastIndexOf(' ');
+                    if (spaceIndex > 0)
                     {
-                        int spaceIndex = _state.LastIndexOf(' ');
-                        if (spaceIndex > 0)
-                        {
-                            Unit = _state.Substring(spaceIndex, _state.Length - spaceIndex);
-                        }
+                        Unit = _state.Substring(spaceIndex, _state.Length - spaceIndex);
                     }
                 }
 
@@ -80,13 +77,10 @@ namespace OpenHAB.Core.Model
             get => _state;
             set
             {
-                if ((_type != null) && (Unit == null))
+                if ((_type != null) && (Unit == null) && _type.Contains(":", System.StringComparison.OrdinalIgnoreCase) && value != null && value.Contains(" "))
                 {
-                    if (_type.Contains(":", System.StringComparison.OrdinalIgnoreCase) && value != null && value.Contains(" "))
-                    {
-                        int spaceIndex = value.LastIndexOf(' ');
-                        Unit = value.Substring(spaceIndex, value.Length - spaceIndex);
-                    }
+                    int spaceIndex = value.LastIndexOf(' ');
+                    Unit = value.Substring(spaceIndex, value.Length - spaceIndex);
                 }
 
                 SetProperty(ref _state, value);

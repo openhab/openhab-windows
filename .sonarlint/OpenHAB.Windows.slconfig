@@ -1,0 +1,15 @@
+{
+  "ServerUri": "https://sonarcloud.io/",
+  "Organization": {
+    "Key": "openhab",
+    "Name": "openHAB"
+  },
+  "ProjectKey": "openhab_openhab-windows",
+  "ProjectName": "openhab-windows",
+  "Profiles": {
+    "CSharp": {
+      "ProfileKey": "AXflIL33YGfeNt47qUY1",
+      "ProfileTimestamp": "2021-11-22T10:44:23Z"
+    }
+  }
+}

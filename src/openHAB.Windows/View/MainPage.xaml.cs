@@ -68,7 +68,9 @@ namespace OpenHAB.Windows.View
             InfoNotification.IsOpen = false;
         }
 
+#pragma warning disable S1172 // Unused method parameters should be removed
         private async Task ShowErrorMessage(object recipient, FireErrorMessage message)
+#pragma warning restore S1172 // Unused method parameters should be removed
         {
             try
             {
@@ -96,7 +98,9 @@ namespace OpenHAB.Windows.View
             }
         }
 
+#pragma warning disable S1172 // Unused method parameters should be removed
         private async Task ShowInfoMessage(object recipient, FireInfoMessage msg)
+#pragma warning restore S1172 // Unused method parameters should be removed
         {
             try
             {

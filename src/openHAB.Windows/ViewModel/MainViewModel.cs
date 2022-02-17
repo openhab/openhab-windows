@@ -201,22 +201,30 @@ namespace OpenHAB.Windows.ViewModel
             return !IsDataLoading;
         }
 
+#pragma warning disable S3168 // "async" methods should not return "void"
         private async void ExecuteFeedbackCommand(object obj)
+#pragma warning restore S3168 // "async" methods should not return "void"
         {
             await _feedbackLauncher.LaunchAsync();
         }
 
+#pragma warning disable S3168 // "async" methods should not return "void"
         private async void ExecuteRefreshCommandAsync(object obj)
+#pragma warning restore S3168 // "async" methods should not return "void"
         {
             await LoadSitemapsAndItemData().ConfigureAwait(false);
         }
 
+#pragma warning disable S3168 // "async" methods should not return "void"
         private async void ExecuteReloadSitemapCommand(object obj)
+#pragma warning restore S3168 // "async" methods should not return "void"
         {
             await ReloadSitemap().ConfigureAwait(false);
         }
 
+#pragma warning disable S1172 // Unused method parameters should be removed
         private async Task TriggerCommand(object recipient, TriggerCommandMessage message)
+#pragma warning restore S1172 // Unused method parameters should be removed
         {
             HttpResponseResult<bool> result = await _openHabsdk.SendCommand(message.Item, message.Command).ConfigureAwait(false);
             if (!result.Content)
@@ -228,9 +236,11 @@ namespace OpenHAB.Windows.ViewModel
             }
         }
 
-        private void OnWidgetClickedAction(object recipient, OpenHABWidget widget)
+#pragma warning disable S1172 // Unused method parameters should be removed
+        private async void OnWidgetClickedAction(object recipient, OpenHABWidget widget)
+#pragma warning restore S1172 // Unused method parameters should be removed
         {
-            OnWidgetClickedAsync(widget);
+            await OnWidgetClickedAsync(widget);
         }
 
         #endregion
@@ -330,7 +340,7 @@ namespace OpenHAB.Windows.ViewModel
                 var result = await _openHabsdk.GetOpenHABServerInfo().ConfigureAwait(false);
                 _serverInfo = result?.Content;
 
-                if (_serverInfo.Version == OpenHABVersion.None)
+                if (_serverInfo == null || _serverInfo.Version == OpenHABVersion.None)
                 {
                     StrongReferenceMessenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));
                     return;
