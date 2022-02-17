@@ -8,8 +8,7 @@
 			   xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
 			   xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
 			   xmlns:converters="using:OpenHAB.Windows.Converters"
-			   mc:Ignorable="d"
-               Background="{StaticResource OpenHABLightColor}">
+			   mc:Ignorable="d">
 
 	<ContentDialog.Resources>
 		<converters:NullToBooleanConverter x:Key="NullToBooleanConverter" />
@@ -23,7 +22,7 @@
 					  ItemsSource="{Binding Profiles, Mode=TwoWay}"
 					  PlaceholderText="No profile selected"
 					  DisplayMemberPath="Name"
-					  SelectedItem="{Binding Profile, Mode=TwoWay}">
+					  SelectedItem="{Binding Profile, Mode=TwoWay}">                    
 				<Interactivity:Interaction.Behaviors>
 					<Core:EventTriggerBehavior EventName="SelectionChanged">
 						<Core:InvokeCommandAction Command="{Binding Path=SelectProfile, Mode=TwoWay}"
@@ -82,39 +81,16 @@
 					  HorizontalAlignment="Stretch"
 					  VerticalAlignment="Stretch"
 					  IsChecked="{Binding WillIgnoreSSLHostname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-			<Grid BorderBrush="Gray"
-				  BorderThickness="1"
-                  Background="{StaticResource OpenHABLightColor}">
-				<Grid.RowDefinitions>
-					<RowDefinition/>
-					<RowDefinition/>
-					<RowDefinition/>
-					<RowDefinition/>
-				</Grid.RowDefinitions>
-				<TextBlock Grid.Row="0" x:Uid="ServiceInstanceInfo" Margin="5,0,0,5" FontSize="14" FontWeight="Bold"/>
-				<StackPanel Grid.Row="1" Margin="5,0,0,0" Orientation="Horizontal">
-					<TextBlock x:Uid="VersionNumber"
-						   Margin="0,0,5,0"
+			<StackPanel Orientation="Horizontal">
+				<TextBlock x:Uid="ConnectionCheck"
+						   Margin="0,0,10,0"
 						   VerticalAlignment="Center" />
-                    <TextBlock Text="{Binding Status.RuntimeVersion, Mode=OneWay}" />
-				</StackPanel>
-				<StackPanel Grid.Row="2" Margin="5,0,0,0" Orientation="Horizontal">
-					<TextBlock x:Uid="BuildNumber"
-						   Margin="0,0,5,0"
-						   VerticalAlignment="Center" />
-                    <TextBlock Text="{Binding Status.Build, Mode=OneWay}" />
-				</StackPanel>
-				<StackPanel Grid.Row="3" Margin="5,0,0,0" Orientation="Horizontal">
-					<TextBlock x:Uid="ConnectionCheck"
-						   Margin="0,0,5,0"
-						   VerticalAlignment="Center" />
-					<FontIcon x:Name="IconUrlStatusCheck"
+				<FontIcon x:Name="IconUrlStatusCheck"
 						  VerticalAlignment="Top"
 						  FontSize="32"
 						  FontFamily="{StaticResource SymbolThemeFontFamily}"
-                              Glyph="{Binding Status.State, Converter={StaticResource OpenHabUrlStateToGlyph}, Mode=TwoWay}" />
-				</StackPanel>
-			</Grid>
+						  Glyph="{Binding State, Converter={StaticResource OpenHabUrlStateToGlyph}, Mode=TwoWay}" />
+			</StackPanel>
 		</StackPanel>
 	</Grid>
 </ContentDialog>
