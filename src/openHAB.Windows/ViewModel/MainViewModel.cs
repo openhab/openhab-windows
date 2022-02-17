@@ -289,7 +289,9 @@ namespace OpenHAB.Windows.ViewModel
             });
         }
 
+#pragma warning disable S3168 // "async" methods should not return "void"
         private async void CancelSyncCallbackAsync()
+#pragma warning restore S3168 // "async" methods should not return "void"
         {
             CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
             await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
