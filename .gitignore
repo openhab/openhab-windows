@@ -243,5 +243,4 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
-/OpenHAB.Windows
-/Openhab.Core/OpenHAB.Core.GeneratedMSBuildEditorConfig.editorconfig
+

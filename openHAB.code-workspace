@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\openhab-3.2.0"
+		}
+	],
+	"settings": {
+		"git.autofetch": "all"
+	},
+	"extensions": {
+		"recommendations": [
+			"selcukermaya.se-csproj-extensions"
+		]
+	}
+}
