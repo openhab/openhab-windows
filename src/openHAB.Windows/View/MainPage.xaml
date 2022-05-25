@@ -9,8 +9,9 @@
 	  xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:viewModel="using:OpenHAB.Windows.ViewModel"
-	  xmlns:controls="using:OpenHAB.Windows.Controls"
-	  mc:Ignorable="d"
+	  xmlns:controls="using:OpenHAB.Windows.Controls" 
+      xmlns:media="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      mc:Ignorable="d"
 	  Name="Page">
 	<Page.Background>
 		<ImageBrush ImageSource="/Assets/background.jpg"
@@ -32,12 +33,24 @@
 		</Style>
 
 		<!-- Navigation View Styling -->
-		<SolidColorBrush x:Key="NavigationViewDefaultPaneBackground"
+		<!--<SolidColorBrush x:Key="NavigationViewDefaultPaneBackground"
 						 Color="{StaticResource DarkColor}" />
 		<SolidColorBrush x:Key="NavigationViewExpandedPaneBackground"
-						 Color="{StaticResource DarkColor}" />
+						 Color="{StaticResource DarkColor}" />-->
 
-		<SolidColorBrush x:Key="NavigationViewItemForeground"
+        <media:AcrylicBrush x:Key="NavigationViewDefaultPaneBackground"
+                        BackgroundSource="Backdrop"
+                        TintOpacity="0.7"
+                        FallbackColor="{StaticResource DarkColor}"
+                        TintColor="{StaticResource DarkColor}" />
+
+        <media:AcrylicBrush x:Key="NavigationViewExpandedPaneBackground"
+                        BackgroundSource="Backdrop"
+                        TintOpacity="0.7"
+                        FallbackColor="{StaticResource DarkColor}"
+                        TintColor="{StaticResource DarkColor}" />
+
+        <SolidColorBrush x:Key="NavigationViewItemForeground"
 						 Color="White" />
 		<SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver"
 						 Color="#FFFF5722" />

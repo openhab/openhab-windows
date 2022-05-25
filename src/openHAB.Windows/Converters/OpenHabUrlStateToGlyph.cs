@@ -12,11 +12,11 @@ namespace OpenHAB.Windows.Converters
     /// <seealso cref="IValueConverter" />
     public class OpenHabUrlStateToGlyph : IValueConverter
     {
-        private static Dictionary<OpenHABUrlState, string> _stateToGlyphMapping = new Dictionary<OpenHABUrlState, string>()
+        private static Dictionary<ConnectionState, string> _stateToGlyphMapping = new Dictionary<ConnectionState, string>()
         {
-            { OpenHABUrlState.Unknown, "\uF142" },
-            { OpenHABUrlState.OK, "\uF13E" },
-            { OpenHABUrlState.Failed, "\uF13D" },
+            { ConnectionState.Unknown, "\uF142" },
+            { ConnectionState.OK, "\uF13E" },
+            { ConnectionState.Failed, "\uF13D" },
         };
 
         /// <summary>Converts the specified value.</summary>
@@ -27,7 +27,7 @@ namespace OpenHAB.Windows.Converters
         /// <returns>Returns a glyph for an url state.</returns>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            OpenHABUrlState state = (OpenHABUrlState)value;
+            ConnectionState state = (ConnectionState)value;
             _stateToGlyphMapping.TryGetValue(state, out string glyph);
 
             return glyph;

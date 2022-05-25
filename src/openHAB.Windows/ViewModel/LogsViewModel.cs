@@ -63,6 +63,21 @@ namespace OpenHAB.Windows.ViewModel
             }
         }
 
+        /// <summary>Gets the log file name including extension.</summary>
+        /// <value>The log file.</value>
+        public string LogFile
+        {
+            get
+            {
+                if (_logFile != null)
+                {
+                    return _logFile.Name;
+                }
+
+                return string.Empty;
+            }
+        }
+
         private async Task LoadLogfileAsync()
         {
             await LoadLogFileContent().ConfigureAwait(false);

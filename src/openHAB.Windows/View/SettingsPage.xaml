@@ -56,28 +56,19 @@
 		</Style>
 	</Page.Resources>
 	<Grid>
+        <SplitView IsPaneOpen="True"
+                   DisplayMode="CompactInline"
+                   OpenPaneLength="256"
+                   PaneBackground="{ThemeResource DarkAcrylicColor}">
+            <SplitView.Pane>
+                <Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="auto" />
-			<RowDefinition Height="*" />
+                        <RowDefinition Height="100*" />
+                        <RowDefinition Height="auto" />
 		</Grid.RowDefinitions>
-		<CommandBar Grid.Row="0"
-					Background="{StaticResource DarkColor}"
-					DefaultLabelPosition="Right">
-			<AppBarButton  x:Uid="SettingsSaveButton"
-						   Icon="Save"
-						   Foreground="White"
-						   Command="{x:Bind Vm.SaveCommand}" />
-			<AppBarButton  x:Uid="SettingsCancelButton"
-						   Foreground="White"
-						   Icon="Cancel">
-				<interactivity:Interaction.Behaviors>
-					<core:EventTriggerBehavior EventName="Tapped">
-						<core:NavigateToPageAction TargetPage="OpenHAB.Windows.View.MainPage" />
-					</core:EventTriggerBehavior>
-				</interactivity:Interaction.Behaviors>
-			</AppBarButton>
-			<CommandBar.Content>
-				<StackPanel Orientation="Horizontal">
+                    <StackPanel Grid.Row="0"
+                                Orientation="Horizontal">
 					<SymbolIcon Symbol="Setting"
 								Margin="10,5,0,0"
 								VerticalAlignment="Center"
@@ -89,16 +80,8 @@
 							   TextWrapping="Wrap"
 							   Foreground="White" />
 				</StackPanel>
-			</CommandBar.Content>
-		</CommandBar>
-
-		<SplitView  Grid.Row="1"
-					IsPaneOpen="True"
-					DisplayMode="CompactInline"
-					OpenPaneLength="256"
-					PaneBackground="{ThemeResource DarkColor}">
-			<SplitView.Pane>
-				<ListView x:Name="SettingOptionsListView"
+                    <ListView Grid.Row="1"
+                              x:Name="SettingOptionsListView"
 						  Margin="0,10,0,0"
 						  ItemContainerStyle="{StaticResource SettingsMenuItem}">
 					<ListViewItem x:Uid="MenuAppSettings"
@@ -113,9 +96,28 @@
 						</interactivity:Interaction.Behaviors>
 					</ListViewItem>
 				</ListView>
+                    <CommandBar Grid.Row="2"
+                                Background="Transparent"
+                                HorizontalAlignment="Left"
+                                DefaultLabelPosition="Right">
+                        <AppBarButton x:Uid="SettingsSaveButton"
+                                       Icon="Save"
+                                       Foreground="White"
+                                       Command="{x:Bind Vm.SaveCommand}" />
+                        <AppBarButton  x:Uid="SettingsCancelButton"
+                                       Foreground="White"
+                                       Icon="Cancel">
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="Tapped">
+                                    <core:NavigateToPageAction TargetPage="OpenHAB.Windows.View.MainPage" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                        </AppBarButton>
+                    </CommandBar>
+                </Grid>
 			</SplitView.Pane>
 			<ScrollViewer VerticalScrollBarVisibility="Auto">
-				<Grid Margin="10">
+                <Grid Margin="20,20,50,50">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="*" />
 						<RowDefinition Height="auto" />

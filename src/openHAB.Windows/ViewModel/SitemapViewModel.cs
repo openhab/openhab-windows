@@ -79,6 +79,11 @@ namespace OpenHAB.Windows.ViewModel
             }
         }
 
+        /// <summary>
+        /// Loads widgets for sitemap.
+        /// </summary>
+        /// <param name="version">OH version.</param>
+        /// <returns>Task for async processing.</returns>
         public async Task LoadWidgets(OpenHABVersion version)
         {
             Widgets.Clear();

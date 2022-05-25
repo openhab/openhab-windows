@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using GalaSoft.MvvmLight.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using Windows.UI.Xaml;
@@ -49,6 +49,11 @@ namespace OpenHAB.Windows.Controls
         private void Button_OnClick(object sender, TappedRoutedEventArgs e)
         {
             ToggleButton button = sender as ToggleButton;
+            if(button == null)
+            {
+                return;
+            }
+
             if (string.CompareOrdinal(button?.Tag?.ToString(), Widget.Item.State) == 0)
             {
                 SetState();
@@ -58,7 +63,7 @@ namespace OpenHAB.Windows.Controls
             UncheckEverything();
             button.IsChecked = true;
 
-            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, button?.Tag.ToString()));
+            StrongReferenceMessenger.Default.Send(new TriggerCommandMessage(Widget.Item, button?.Tag.ToString()));
         }
 
         private void UncheckEverything()

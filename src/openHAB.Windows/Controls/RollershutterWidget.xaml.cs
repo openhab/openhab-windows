@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using Windows.UI.Xaml;
@@ -25,17 +25,17 @@ namespace OpenHAB.Windows.Controls
 
         private void ButtonUp_Click(object sender, RoutedEventArgs e)
         {
-            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, OpenHABCommands.UpCommand));
+            StrongReferenceMessenger.Default.Send(new TriggerCommandMessage(Widget.Item, OpenHABCommands.UpCommand));
         }
 
         private void ButtonStop_Click(object sender, RoutedEventArgs e)
         {
-            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, OpenHABCommands.StopCommand));
+            StrongReferenceMessenger.Default.Send(new TriggerCommandMessage(Widget.Item, OpenHABCommands.StopCommand));
         }
 
         private void ButtonDown_Click(object sender, RoutedEventArgs e)
         {
-            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, OpenHABCommands.DownCommand));
+            StrongReferenceMessenger.Default.Send(new TriggerCommandMessage(Widget.Item, OpenHABCommands.DownCommand));
         }
 
         internal override void SetState()

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -35,15 +31,16 @@ namespace OpenHAB.Core.Services
             {
                 Match iconName = Regex.Match(iconUrl, "icon/[0-9a-zA-Z]*");
                 Match iconState = Regex.Match(iconUrl, "state=[0-9a-zA-Z=]*");
+
                 if (!iconName.Success)
                 {
                     throw new OpenHABException("Can not resolve icon name from url");
                 }
+
                 if (!iconState.Success)
                 {
                     throw new OpenHABException("Can not resolve icon state from url");
                 }
-
 
                 if (!iconState.Success)
                 {

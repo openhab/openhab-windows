@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using GalaSoft.MvvmLight.Messaging;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using Windows.UI.Xaml;

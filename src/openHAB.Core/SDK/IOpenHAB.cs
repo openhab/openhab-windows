@@ -13,10 +13,17 @@ namespace OpenHAB.Core.SDK
     public interface IOpenHAB
     {
         /// <summary>
-        /// Is the server running OpenHAB 1 or OpenHAB 2?.
+        /// Gets information about the openHAB server.
         /// </summary>
-        /// <returns>Server main version of OpenHAB.</returns>
-        Task<OpenHABVersion> GetOpenHABVersion();
+        /// <returns>Server information about openHAB instance.</returns>
+        Task<HttpResponseResult<ServerInfo>> GetOpenHABServerInfo();
+
+        /// <summary>
+        /// Gets information about the openHAB server.
+        /// </summary>
+        /// <param name="connection">Connection information.</param>
+        /// <returns>Server information about openHAB instance.</returns>
+        Task<HttpResponseResult<ServerInfo>> GetOpenHABServerInfo(OpenHABConnection connection);
 
         /// <summary>
         /// Gets the openHAB item by name from Server.

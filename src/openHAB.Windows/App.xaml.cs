@@ -97,6 +97,8 @@ namespace OpenHAB.Windows
 
                 if (settings.StartAppMinimized.HasValue && settings.StartAppMinimized.Value)
                 {
+                    _logger.LogInformation($"Settings:StartAppMinimized value is set to '{settings.StartAppMinimized.Value}'");
+
                     IList<AppDiagnosticInfo> infos = await AppDiagnosticInfo.RequestInfoForAppAsync();
                     AppDiagnosticInfo appDiagnosticInfo = infos.FirstOrDefault();
 
@@ -104,6 +106,8 @@ namespace OpenHAB.Windows
                     {
                         IList<AppResourceGroupInfo> resourceInfos = appDiagnosticInfo.GetResourceGroups();
                         await resourceInfos[0].StartSuspendAsync();
+
+                        _logger.LogInformation("Start App in susp   ended mode.");
                     }
                 }
             }

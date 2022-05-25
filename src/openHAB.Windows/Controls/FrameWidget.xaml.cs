@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using Windows.UI.Xaml.Controls;
@@ -20,7 +20,7 @@ namespace OpenHAB.Windows.Controls
 
         private void OnItemClick(object sender, ItemClickEventArgs e)
         {
-            Messenger.Default.Send(new WidgetClickedMessage(e.ClickedItem as OpenHABWidget));
+            StrongReferenceMessenger.Default.Send(new WidgetClickedMessage(e.ClickedItem as OpenHABWidget));
         }
 
         internal override void SetState()

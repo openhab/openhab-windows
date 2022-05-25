@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using GalaSoft.MvvmLight.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Toolkit.Uwp.Helpers;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
@@ -76,7 +76,7 @@ namespace OpenHAB.Windows.Controls
             }
 
             Widget.Item.State = mapping.Command;
-            Messenger.Default.Send(new TriggerCommandMessage(Widget.Item, mapping.Command));
+            StrongReferenceMessenger.Default.Send(new TriggerCommandMessage(Widget.Item, mapping.Command));
         }
 
         /// <summary>

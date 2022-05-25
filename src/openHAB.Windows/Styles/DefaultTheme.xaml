@@ -23,15 +23,15 @@
 
     <media:AcrylicBrush x:Key="DarkAcrylicColor"
                         BackgroundSource="Backdrop"
-                        TintOpacity="1"
+                        TintOpacity="0.7"
                         FallbackColor="{StaticResource DarkColor}"
                         TintColor="{StaticResource DarkColor}" />
 
     <media:AcrylicBrush x:Key="OpenHABLightColor"
                         BackgroundSource="Backdrop"
                         TintOpacity="0.5"
-                        FallbackColor="Silver"
-                        TintColor="Silver"
+                        FallbackColor="{StaticResource OpenHABLightGrey}"
+                        TintColor="{StaticResource OpenHABLightGrey}"
                         AlwaysUseFallback="False" />
 
     <media:AcrylicBrush x:Key="ErrorNotificationBackground"

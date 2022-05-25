@@ -1,8 +1,9 @@
+using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Messaging;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Toolkit.Uwp.Helpers;
 using Newtonsoft.Json;
 using OpenHAB.Core.Messages;
@@ -47,19 +48,16 @@ namespace OpenHAB.Core.Model
             get => _type;
             set
             {
-                if (value != null)
+                if (value != null && value.Contains(":", System.StringComparison.OrdinalIgnoreCase) && _state != null)
                 {
-                    if (value.Contains(":", System.StringComparison.OrdinalIgnoreCase) && _state != null)
+                    int spaceIndex = _state.LastIndexOf(' ');
+                    if (spaceIndex > 0)
                     {
-                        int spaceIndex = _state.LastIndexOf(' ');
-                        if (spaceIndex > 0)
-                        {
-                            Unit = _state.Substring(spaceIndex, _state.Length - spaceIndex);
-                        }
+                        Unit = _state.Substring(spaceIndex, _state.Length - spaceIndex);
                     }
                 }
 
-                Set(ref _type, value);
+                SetProperty(ref _type, value);
             }
         }
 
@@ -79,16 +77,13 @@ namespace OpenHAB.Core.Model
             get => _state;
             set
             {
-                if ((_type != null) && (Unit == null))
+                if ((_type != null) && (Unit == null) && _type.Contains(":", System.StringComparison.OrdinalIgnoreCase) && value != null && value.Contains(" "))
                 {
-                    if (_type.Contains(":", System.StringComparison.OrdinalIgnoreCase) && value != null && value.Contains(" "))
-                    {
-                        int spaceIndex = value.LastIndexOf(' ');
-                        Unit = value.Substring(spaceIndex, value.Length - spaceIndex);
-                    }
+                    int spaceIndex = value.LastIndexOf(' ');
+                    Unit = value.Substring(spaceIndex, value.Length - spaceIndex);
                 }
 
-                Set(ref _state, value);
+                SetProperty(ref _state, value);
             }
         }
 
@@ -122,10 +117,10 @@ namespace OpenHAB.Core.Model
         /// </summary>
         public OpenHABItem()
         {
-            Messenger.Default.Register<UpdateItemMessage>(this, HandleUpdateItemMessage);
+            StrongReferenceMessenger.Default.Register<UpdateItemMessage>(this, HandleUpdateItemMessage);
         }
 
-        private void HandleUpdateItemMessage(UpdateItemMessage message)
+        private void HandleUpdateItemMessage(object recipient, UpdateItemMessage message)
         {
             if (message.ItemName != Name)
             {
@@ -183,7 +178,7 @@ namespace OpenHAB.Core.Model
             if (value != null)
             {
                 string newValue = value.ToString() + this.Unit;
-                Messenger.Default.Send(new TriggerCommandMessage(this, newValue));
+                StrongReferenceMessenger.Default.Send(new TriggerCommandMessage(this, newValue));
                 _state = newValue;
             }
         }

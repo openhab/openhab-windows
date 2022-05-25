@@ -1,5 +1,5 @@
 ﻿using System;
-using GalaSoft.MvvmLight.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
 using OpenHAB.Core;
 using OpenHAB.Core.Messages;
@@ -32,13 +32,12 @@ namespace OpenHAB.Windows.View
             InitializeComponent();
 
             _settingsViewModel = (SettingsViewModel)DIService.Instance.Services.GetService(typeof(SettingsViewModel));
+            _logger = (ILogger<SettingsViewModel>)DIService.Instance.Services.GetService(typeof(ILogger<SettingsViewModel>));
+            _appManager = (IAppManager)DIService.Instance.Services.GetService(typeof(IAppManager));
+
             DataContext = _settingsViewModel;
 
-            _logger = (ILogger<SettingsViewModel>)DIService.Instance.Services.GetService(typeof(ILogger<SettingsViewModel>));
-
             SettingOptionsListView.SelectedIndex = 0;
-
-            _appManager = (IAppManager)DIService.Instance.Services.GetService(typeof(IAppManager));
         }
 
         #region Page Navigation
@@ -46,17 +45,8 @@ namespace OpenHAB.Windows.View
         /// <inheritdoc/>
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            Messenger.Default.Register<SettingsUpdatedMessage>(this, msg => HandleSettingsUpdate(msg), true);
-            Messenger.Default.Register<SettingsValidationMessage>(this, msg => NotificationSettingsValidation(msg), true);
-
-            var autostartEnabled = await _appManager.IsStartupEnabled().ConfigureAwait(false);
-            var canAppAutostartEnabled = await _appManager.CanEnableAutostart().ConfigureAwait(false);
-
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-              {
-                  _settingsViewModel.Settings.IsAppAutostartEnabled = autostartEnabled;
-                  _settingsViewModel.Settings.CanAppAutostartEnabled = canAppAutostartEnabled;
-              });
+            StrongReferenceMessenger.Default.Register<SettingsUpdatedMessage>(this, (recipient, msg) => HandleSettingsUpdate(recipient, msg));
+            StrongReferenceMessenger.Default.Register<SettingsValidationMessage>(this, (recipient, msg) => NotificationSettingsValidation(recipient, msg));
 
             AppAutostartSwitch.Toggled += AppAutostartSwitch_Toggled;
         }
@@ -64,8 +54,8 @@ namespace OpenHAB.Windows.View
         /// <inheritdoc/>
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
-            Messenger.Default.Unregister<SettingsUpdatedMessage>(this, msg => HandleSettingsUpdate(msg));
-            Messenger.Default.Unregister<SettingsValidationMessage>(this, msg => NotificationSettingsValidation(msg));
+            StrongReferenceMessenger.Default.Unregister<SettingsUpdatedMessage>(this);
+            StrongReferenceMessenger.Default.Unregister<SettingsValidationMessage>(this);
 
             AppAutostartSwitch.Toggled -= AppAutostartSwitch_Toggled;
         }
@@ -97,7 +87,9 @@ namespace OpenHAB.Windows.View
             ConnectionSettings.Visibility = Visibility.Visible;
         }
 
-        private void HandleSettingsUpdate(SettingsUpdatedMessage msg)
+#pragma warning disable S1172 // Unused method parameters should be removed
+        private void HandleSettingsUpdate(object recipient, SettingsUpdatedMessage msg)
+#pragma warning restore S1172 // Unused method parameters should be removed
         {
             try
             {
@@ -115,7 +107,9 @@ namespace OpenHAB.Windows.View
             }
         }
 
-        private void NotificationSettingsValidation(SettingsValidationMessage msg)
+#pragma warning disable S1172 // Unused method parameters should be removed
+        private void NotificationSettingsValidation(object recipient, SettingsValidationMessage msg)
+#pragma warning restore S1172 // Unused method parameters should be removed
         {
             try
             {
@@ -155,12 +149,19 @@ namespace OpenHAB.Windows.View
 
         private async void AppAutostartSwitch_Toggled(object sender, RoutedEventArgs e)
         {
-            await _appManager.ToggleAutostart();
+            ToggleSwitch toggleSwitch = (ToggleSwitch)e.OriginalSource;
 
+            bool toggleIsOn = toggleSwitch.IsOn;
             var autostartEnabled = await _appManager.IsStartupEnabled().ConfigureAwait(false);
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
-                _settingsViewModel.Settings.IsAppAutostartEnabled = autostartEnabled;
+                if (autostartEnabled != toggleIsOn)
+                {
+                    await _appManager.ToggleAutostart();
+                }
+
+                _settingsViewModel.Settings.IsAppAutostartEnabled = toggleIsOn;
             });
         }
     }

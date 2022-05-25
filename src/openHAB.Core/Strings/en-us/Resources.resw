@@ -256,7 +256,7 @@ Please select demo mode or configure local/remote connection.</value>
     <value>Back</value>
   </data>
   <data name="Log.Text" xml:space="preserve">
-    <value>Log</value>
+    <value>Log:</value>
   </data>
   <data name="MenuAppSettings.Content" xml:space="preserve">
     <value>App Settings</value>
@@ -305,5 +305,14 @@ Please select demo mode or configure local/remote connection.</value>
   </data>
   <data name="NotificationSetting.Text" xml:space="preserve">
     <value>Notifications</value>
+  </data>
+  <data name="BuildNumber.Text" xml:space="preserve">
+    <value>Build:</value>
+  </data>
+  <data name="ServiceInstanceInfo.Text" xml:space="preserve">
+    <value>openHAB Server Information</value>
+  </data>
+  <data name="VersionNumber.Text" xml:space="preserve">
+    <value>Version:</value>
   </data>
 </root>

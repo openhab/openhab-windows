@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using GalaSoft.MvvmLight.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
 using Microsoft.Services.Store.Engagement;
 using OpenHAB.Core;
@@ -37,7 +37,7 @@ namespace OpenHAB.Windows.ViewModel
         private OpenHABWidget _selectedWidget;
         private ObservableCollection<SitemapViewModel> _sitemaps;
         private string _subtitle;
-        private OpenHABVersion _version;
+        private ServerInfo _serverInfo;
         private object _selectedMenuItem;
         private ActionCommand _reloadSitemapCommand;
 
@@ -58,9 +58,11 @@ namespace OpenHAB.Windows.ViewModel
             _feedbackLauncher = StoreServicesFeedbackLauncher.GetDefault();
             _cancellationTokenSource = new CancellationTokenSource();
 
-            Messenger.Default.Register<TriggerCommandMessage>(this, async msg => await TriggerCommand(msg).ConfigureAwait(false));
-            Messenger.Default.Register<WidgetClickedMessage>(this, msg => OnWidgetClickedAsync(msg.Widget));
+            StrongReferenceMessenger.Default.Register<TriggerCommandMessage>(this, async (recipient, msg) => await TriggerCommand(recipient, msg).ConfigureAwait(false));
+            StrongReferenceMessenger.Default.Register<WidgetClickedMessage>(this, (recipient, msg) => OnWidgetClickedAction(recipient, msg.Widget));
         }
+
+
 
         /// <summary>
         /// Gets or sets the widgets currently on screen.
@@ -199,22 +201,30 @@ namespace OpenHAB.Windows.ViewModel
             return !IsDataLoading;
         }
 
+#pragma warning disable S3168 // "async" methods should not return "void"
         private async void ExecuteFeedbackCommand(object obj)
+#pragma warning restore S3168 // "async" methods should not return "void"
         {
             await _feedbackLauncher.LaunchAsync();
         }
 
+#pragma warning disable S3168 // "async" methods should not return "void"
         private async void ExecuteRefreshCommandAsync(object obj)
+#pragma warning restore S3168 // "async" methods should not return "void"
         {
             await LoadSitemapsAndItemData().ConfigureAwait(false);
         }
 
+#pragma warning disable S3168 // "async" methods should not return "void"
         private async void ExecuteReloadSitemapCommand(object obj)
+#pragma warning restore S3168 // "async" methods should not return "void"
         {
             await ReloadSitemap().ConfigureAwait(false);
         }
 
-        private async Task TriggerCommand(TriggerCommandMessage message)
+#pragma warning disable S1172 // Unused method parameters should be removed
+        private async Task TriggerCommand(object recipient, TriggerCommandMessage message)
+#pragma warning restore S1172 // Unused method parameters should be removed
         {
             HttpResponseResult<bool> result = await _openHabsdk.SendCommand(message.Item, message.Command).ConfigureAwait(false);
             if (!result.Content)
@@ -222,8 +232,15 @@ namespace OpenHAB.Windows.ViewModel
                 string errorMessage = AppResources.Errors.GetString("CommandFailed");
                 errorMessage = string.Format(errorMessage, message.Command, message.Item?.Name);
 
-                Messenger.Default.Send<FireErrorMessage>(new FireErrorMessage(errorMessage));
+                StrongReferenceMessenger.Default.Send<FireErrorMessage>(new FireErrorMessage(errorMessage));
             }
+        }
+
+#pragma warning disable S1172 // Unused method parameters should be removed
+        private async void OnWidgetClickedAction(object recipient, OpenHABWidget widget)
+#pragma warning restore S1172 // Unused method parameters should be removed
+        {
+            await OnWidgetClickedAsync(widget);
         }
 
         #endregion
@@ -272,7 +289,9 @@ namespace OpenHAB.Windows.ViewModel
             });
         }
 
+#pragma warning disable S3168 // "async" methods should not return "void"
         private async void CancelSyncCallbackAsync()
+#pragma warning restore S3168 // "async" methods should not return "void"
         {
             CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
             await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
@@ -310,24 +329,26 @@ namespace OpenHAB.Windows.ViewModel
                 if (settings.LocalConnection == null && settings.RemoteConnection == null &&
                     (!settings.IsRunningInDemoMode.HasValue || !settings.IsRunningInDemoMode.Value))
                 {
-                    Messenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));
+                    StrongReferenceMessenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));
                 }
 
                 bool isSuccessful = await _openHabsdk.ResetConnection().ConfigureAwait(false);
                 if (!isSuccessful)
                 {
-                    Messenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));
+                    StrongReferenceMessenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));
                     return;
                 }
 
-                _version = await _openHabsdk.GetOpenHABVersion().ConfigureAwait(false);
-                if (_version == OpenHABVersion.None)
+                var result = await _openHabsdk.GetOpenHABServerInfo().ConfigureAwait(false);
+                _serverInfo = result?.Content;
+
+                if (_serverInfo == null || _serverInfo.Version == OpenHABVersion.None)
                 {
-                    Messenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));
+                    StrongReferenceMessenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));
                     return;
                 }
 
-                _settingsService.ServerVersion = _version;
+                _settingsService.ServerVersion = _serverInfo.Version;
 
                 if (cancellationToken.IsCancellationRequested)
                 {
@@ -370,7 +391,7 @@ namespace OpenHAB.Windows.ViewModel
             catch (OpenHABException ex)
             {
                 _logger.LogError(ex, "Load data failed.");
-                Messenger.Default.Send(new FireErrorMessage(ex.Message));
+                StrongReferenceMessenger.Default.Send(new FireErrorMessage(ex.Message));
             }
             catch (Exception ex)
             {
@@ -399,7 +420,7 @@ namespace OpenHAB.Windows.ViewModel
                 filters.Add(defaultSitemapFilter);
             }
 
-            ICollection<OpenHABSitemap> sitemaps = await _openHabsdk.LoadSiteMaps(_version, filters).ConfigureAwait(false);
+            ICollection<OpenHABSitemap> sitemaps = await _openHabsdk.LoadSiteMaps(_serverInfo.Version, filters).ConfigureAwait(false);
             List<SitemapViewModel> sitemapViewModels = new List<SitemapViewModel>();
             sitemaps.ToList().ForEach(x => sitemapViewModels.Add(new SitemapViewModel(x)));
 
@@ -458,7 +479,7 @@ namespace OpenHAB.Windows.ViewModel
             CurrentWidgets.Clear();
             IsDataLoading = true;
 
-            await SelectedSitemap.LoadWidgets(_version).ConfigureAwait(false);
+            await SelectedSitemap.LoadWidgets(_serverInfo.Version).ConfigureAwait(false);
 
             CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
             await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
