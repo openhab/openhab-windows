@@ -121,6 +121,6 @@
     <value>Kommando '{0}' für Item '{1}' konnte nicht an den openHAB Server gesendet werden.</value>
   </data>
   <data name="ConnectionTestFailed" xml:space="preserve">
-    <value>Überprüfung der Verbindungskonfiguration des openHAB Server nicht möglich.</value>
+    <value>Überprüfung der Verbindungskonfiguration des openHAB Servers nicht möglich.</value>
   </data>
 </root>
