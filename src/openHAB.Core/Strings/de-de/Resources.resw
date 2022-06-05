@@ -118,7 +118,7 @@
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
 	<data name="AppVersion.Text" xml:space="preserve">
-    <value>openHab App Version:</value>
+    <value>Version:</value>
   </data>
 	<data name="SettingsCancelButton.Label" xml:space="preserve">
     <value>Abbrechen</value>
@@ -130,7 +130,7 @@
     <value>Verbindungseinstellungen</value>
   </data>
 	<data name="DemoModeHeader.Text" xml:space="preserve">
-    <value>Demo Modus</value>
+    <value>Demomodus</value>
   </data>
 	<data name="MessageError" xml:space="preserve">
     <value>Oops, da ist etwas schief gelaufen.</value>
@@ -139,7 +139,7 @@
     <value>Feedback</value>
   </data>
 	<data name="IgnoreSSLCertErrors.Text" xml:space="preserve">
-    <value>Ignoriere SSL Zertifkatsfehler</value>
+    <value>Ignoriere SSL-Zertifkatsfehler</value>
   </data>
 	<data name="IgnoreSSLCertHostErrors.Text" xml:space="preserve">
     <value>Ignoriere SSL Hostname Fehler</value>
@@ -148,29 +148,29 @@
     <value>Lokale Einstellungen</value>
   </data>
 	<data name="LocalUrl.ToolTipService.ToolTip" xml:space="preserve">
-    <value>URL der lokalen openHab Instanz. Standard URL ist http://openhab:8080</value>
+    <value>URL der lokalen openHAB-Instanz. Standard-URL ist http://openhab:8080</value>
   </data>
 	<data name="LocalUrlHeader.Text" xml:space="preserve">
-    <value>openHAB URL</value>
+    <value>openHAB-URL</value>
   </data>
 	<data name="MessageNotConfigured" xml:space="preserve">
-    <value>Es scheint kein openHab Server URL konfiguriert zu sein. Gehen Sie in die App Einstellungen (Zahnrad-Icon) um die Verbindungseinstellungen zur Ihrem OpenHAB-Server zu konfigurieren.</value>
+    <value>Es scheint kein openHAB-Server-URL konfiguriert zu sein. Gehen Sie in die App-Einstellungen (Zahnrad-Icon) um die Verbindungseinstellungen zur Ihrem OpenHAB-Server zu konfigurieren.</value>
   </data>
 	<data name="MessagesNotReachable" xml:space="preserve">
-    <value>Im Moment ist der openHab Service nicht erreichbar.
-Gehen Sie in die App Einstellungen (Zahnrad-Icon) um die Verbindungseinstellungen zu prüfen.</value>
+    <value>Im Moment ist der openHAB-Service nicht erreichbar.
+Gehen Sie in die App-Einstellungen (Zahnrad-Icon) um die Verbindungseinstellungen zu prüfen.</value>
   </data>
 	<data name="PasswordHeader.Text" xml:space="preserve">
     <value>Passwort</value>
   </data>
 	<data name="RemoteSettings.Text" xml:space="preserve">
-    <value>Remote Einstellungen</value>
+    <value>Remote-Einstellungen</value>
   </data>
 	<data name="RemoteUrl.ToolTipService.ToolTip" xml:space="preserve">
-    <value>URL für den Zugriff auf den openHab Server von außerhalb des Heimnetzwerks.</value>
+    <value>URL für den Zugriff auf den openHab-Server von außerhalb des Heimnetzwerks.</value>
   </data>
 	<data name="RemoteUrlHeader.Text" xml:space="preserve">
-    <value>OpenHAB Remote URL</value>
+    <value>openHAB-Remote-URL</value>
   </data>
 	<data name="SettingsSaveButton.Label" xml:space="preserve">
     <value>Speichern</value>
@@ -185,10 +185,10 @@ Gehen Sie in die App Einstellungen (Zahnrad-Icon) um die Verbindungseinstellunge
     <value>Keine Sitemaps verfügbar</value>
   </data>
 	<data name="AppSettings.Text" xml:space="preserve">
-    <value>App Einstellungen</value>
+    <value>App-Einstellungen</value>
   </data>
 	<data name="HideDefaultSitemap.Text" xml:space="preserve">
-    <value>Standard Sitemap (_default) einblenden</value>
+    <value>Standard-Sitemap (_default) einblenden</value>
   </data>
 	<data name="CertificateSettings.Text" xml:space="preserve">
     <value>Zertifikatseinstellungen</value>
@@ -198,10 +198,10 @@ Gehen Sie in die App Einstellungen (Zahnrad-Icon) um die Verbindungseinstellunge
   </data>
 	<data name="MessageSettingsConnectionConfigInvalid" xml:space="preserve">
     <value>Verbindungseinstellungen sind nicht korrekt.
-Bitte wählen Sie den Demo Modus oder die Lokalen/Remote Verbindunsinformation zur ihrem openHab Server.</value>
+Bitte wählen Sie den Demomodus oder die Lokale-/Remote-Verbindungsinformation zur Ihrem openHAB-Server.</value>
   </data>
 	<data name="AppLanguage.Text" xml:space="preserve">
-    <value>App Sprache</value>
+    <value>Anwendungssprache</value>
   </data>
 	<data name="ConnectionDialog.PrimaryButtonText" xml:space="preserve">
     <value>Schließen</value>
@@ -225,19 +225,19 @@ Bitte wählen Sie den Demo Modus oder die Lokalen/Remote Verbindunsinformation z
     <value>Benutzerdefiniertes Verbindungsprofil</value>
   </data>
 	<data name="LocalDefaultConnection" xml:space="preserve">
-    <value>Standard Verbindungsprofil</value>
+    <value>Standard-Verbindungsprofil</value>
   </data>
 	<data name="RemoteCustomConnection" xml:space="preserve">
     <value>Benutzerdefiniertes Verbindungsprofil</value>
   </data>
 	<data name="RemoteDefaultConnection" xml:space="preserve">
-    <value>openHab Cloud</value>
+    <value>openHAB-Cloud</value>
   </data>
 	<data name="MenuLogsView.Content" xml:space="preserve">
-    <value>Log Anzeigen</value>
+    <value>Log anzeigen</value>
   </data>
 	<data name="LogsSend.Content" xml:space="preserve">
-    <value>Logs per mail versenden</value>
+    <value>Logs per Mail versenden</value>
   </data>
 	<data name="LogFileLocation.Text" xml:space="preserve">
     <value>Dateipfad Logdatei:</value>
@@ -255,13 +255,13 @@ Bitte wählen Sie den Demo Modus oder die Lokalen/Remote Verbindunsinformation z
     <value>Log:</value>
   </data>
 	<data name="MenuAppSettings.Content" xml:space="preserve">
-    <value>App Einstellungen</value>
+    <value>App-Einstellungen</value>
   </data>
 	<data name="MenuConnectionSettings.Content" xml:space="preserve">
     <value>Verbindungseinstellungen</value>
   </data>
 	<data name="ShowDefaultSitemap.Text" xml:space="preserve">
-    <value>Standard Sitemaps einblenden</value>
+    <value>Standard-Sitemaps einblenden</value>
   </data>
 	<data name="SVGIcons.Text" xml:space="preserve">
     <value>Verwenden von Icons mit hoher Auflösung für Sitemapkacheln</value>
