@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-	<!-- 
+  <!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,259 +59,259 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-		<xsd:element name="root" msdata:IsDataSet="true">
-			<xsd:complexType>
-				<xsd:choice maxOccurs="unbounded">
-					<xsd:element name="metadata">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" />
-							</xsd:sequence>
-							<xsd:attribute name="name" use="required" type="xsd:string" />
-							<xsd:attribute name="type" type="xsd:string" />
-							<xsd:attribute name="mimetype" type="xsd:string" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="assembly">
-						<xsd:complexType>
-							<xsd:attribute name="alias" type="xsd:string" />
-							<xsd:attribute name="name" type="xsd:string" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="data">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="resheader">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" />
-						</xsd:complexType>
-					</xsd:element>
-				</xsd:choice>
-			</xsd:complexType>
-		</xsd:element>
-	</xsd:schema>
-	<resheader name="resmimetype">
-		<value>text/microsoft-resx</value>
-	</resheader>
-	<resheader name="version">
-		<value>2.0</value>
-	</resheader>
-	<resheader name="reader">
-		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<resheader name="writer">
-		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<data name="AppVersion.Text" xml:space="preserve">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppVersion.Text" xml:space="preserve">
     <value>Version:</value>
   </data>
-	<data name="SettingsCancelButton.Label" xml:space="preserve">
+  <data name="SettingsCancelButton.Label" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
-	<data name="ConnectionCheck.Text" xml:space="preserve">
+  <data name="ConnectionCheck.Text" xml:space="preserve">
     <value>Verbindungscheck:</value>
   </data>
-	<data name="ConnectionSettings.Text" xml:space="preserve">
+  <data name="ConnectionSettings.Text" xml:space="preserve">
     <value>Verbindungseinstellungen</value>
   </data>
-	<data name="DemoModeHeader.Text" xml:space="preserve">
+  <data name="DemoModeHeader.Text" xml:space="preserve">
     <value>Demomodus</value>
   </data>
-	<data name="MessageError" xml:space="preserve">
+  <data name="MessageError" xml:space="preserve">
     <value>Oops, da ist etwas schief gelaufen.</value>
   </data>
-	<data name="FeedbackHeader.Content" xml:space="preserve">
+  <data name="FeedbackHeader.Content" xml:space="preserve">
     <value>Feedback</value>
   </data>
-	<data name="IgnoreSSLCertErrors.Text" xml:space="preserve">
+  <data name="IgnoreSSLCertErrors.Text" xml:space="preserve">
     <value>Ignoriere SSL-Zertifkatsfehler</value>
   </data>
-	<data name="IgnoreSSLCertHostErrors.Text" xml:space="preserve">
-    <value>Ignoriere SSL Hostname Fehler</value>
+  <data name="IgnoreSSLCertHostErrors.Text" xml:space="preserve">
+    <value>Ignoriere SSL-Hostname-Fehler</value>
   </data>
-	<data name="LocalSettings.Text" xml:space="preserve">
+  <data name="LocalSettings.Text" xml:space="preserve">
     <value>Lokale Einstellungen</value>
   </data>
-	<data name="LocalUrl.ToolTipService.ToolTip" xml:space="preserve">
+  <data name="LocalUrl.ToolTipService.ToolTip" xml:space="preserve">
     <value>URL der lokalen openHAB-Instanz. Standard-URL ist http://openhab:8080</value>
   </data>
-	<data name="LocalUrlHeader.Text" xml:space="preserve">
+  <data name="LocalUrlHeader.Text" xml:space="preserve">
     <value>openHAB-URL</value>
   </data>
-	<data name="MessageNotConfigured" xml:space="preserve">
+  <data name="MessageNotConfigured" xml:space="preserve">
     <value>Es scheint kein openHAB-Server-URL konfiguriert zu sein. Gehen Sie in die App-Einstellungen (Zahnrad-Icon) um die Verbindungseinstellungen zur Ihrem OpenHAB-Server zu konfigurieren.</value>
   </data>
-	<data name="MessagesNotReachable" xml:space="preserve">
+  <data name="MessagesNotReachable" xml:space="preserve">
     <value>Im Moment ist der openHAB-Service nicht erreichbar.
 Gehen Sie in die App-Einstellungen (Zahnrad-Icon) um die Verbindungseinstellungen zu prüfen.</value>
   </data>
-	<data name="PasswordHeader.Text" xml:space="preserve">
+  <data name="PasswordHeader.Text" xml:space="preserve">
     <value>Passwort</value>
   </data>
-	<data name="RemoteSettings.Text" xml:space="preserve">
+  <data name="RemoteSettings.Text" xml:space="preserve">
     <value>Remote-Einstellungen</value>
   </data>
-	<data name="RemoteUrl.ToolTipService.ToolTip" xml:space="preserve">
+  <data name="RemoteUrl.ToolTipService.ToolTip" xml:space="preserve">
     <value>URL für den Zugriff auf den openHab-Server von außerhalb des Heimnetzwerks.</value>
   </data>
-	<data name="RemoteUrlHeader.Text" xml:space="preserve">
+  <data name="RemoteUrlHeader.Text" xml:space="preserve">
     <value>openHAB-Remote-URL</value>
   </data>
-	<data name="SettingsSaveButton.Label" xml:space="preserve">
+  <data name="SettingsSaveButton.Label" xml:space="preserve">
     <value>Speichern</value>
   </data>
-	<data name="SettingsHeader.Text" xml:space="preserve">
+  <data name="SettingsHeader.Text" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
-	<data name="UsernameHeader.Text" xml:space="preserve">
+  <data name="UsernameHeader.Text" xml:space="preserve">
     <value>Benutzername</value>
   </data>
-	<data name="NoItemsOrOpenHabNotAvailable.Text" xml:space="preserve">
+  <data name="NoItemsOrOpenHabNotAvailable.Text" xml:space="preserve">
     <value>Keine Sitemaps verfügbar</value>
   </data>
-	<data name="AppSettings.Text" xml:space="preserve">
+  <data name="AppSettings.Text" xml:space="preserve">
     <value>App-Einstellungen</value>
   </data>
-	<data name="HideDefaultSitemap.Text" xml:space="preserve">
+  <data name="HideDefaultSitemap.Text" xml:space="preserve">
     <value>Standard-Sitemap (_default) einblenden</value>
   </data>
-	<data name="CertificateSettings.Text" xml:space="preserve">
+  <data name="CertificateSettings.Text" xml:space="preserve">
     <value>Zertifikatseinstellungen</value>
   </data>
-	<data name="Loading.Text" xml:space="preserve">
+  <data name="Loading.Text" xml:space="preserve">
     <value>Lade Daten...</value>
   </data>
-	<data name="MessageSettingsConnectionConfigInvalid" xml:space="preserve">
+  <data name="MessageSettingsConnectionConfigInvalid" xml:space="preserve">
     <value>Verbindungseinstellungen sind nicht korrekt.
 Bitte wählen Sie den Demomodus oder die Lokale-/Remote-Verbindungsinformation zur Ihrem openHAB-Server.</value>
   </data>
-	<data name="AppLanguage.Text" xml:space="preserve">
+  <data name="AppLanguage.Text" xml:space="preserve">
     <value>Anwendungssprache</value>
   </data>
-	<data name="ConnectionDialog.PrimaryButtonText" xml:space="preserve">
+  <data name="ConnectionDialog.PrimaryButtonText" xml:space="preserve">
     <value>Schließen</value>
   </data>
-	<data name="ConnectionDialog.Title" xml:space="preserve">
+  <data name="ConnectionDialog.Title" xml:space="preserve">
     <value>Verbindungseinstellungen</value>
   </data>
-	<data name="ConnectionProfile.Text" xml:space="preserve">
+  <data name="ConnectionProfile.Text" xml:space="preserve">
     <value>Verbindungsprofil</value>
   </data>
-	<data name="ConnectionNotConfigured" xml:space="preserve">
+  <data name="ConnectionNotConfigured" xml:space="preserve">
     <value>Nicht konfiguriert</value>
   </data>
-	<data name="EncryptedConnection" xml:space="preserve">
+  <data name="EncryptedConnection" xml:space="preserve">
     <value>Verbunden mit </value>
   </data>
-	<data name="UnencryptedConnection" xml:space="preserve">
+  <data name="UnencryptedConnection" xml:space="preserve">
     <value>Unsichere Verbindung mit</value>
   </data>
-	<data name="LocalCustomConnection" xml:space="preserve">
+  <data name="LocalCustomConnection" xml:space="preserve">
     <value>Benutzerdefiniertes Verbindungsprofil</value>
   </data>
-	<data name="LocalDefaultConnection" xml:space="preserve">
+  <data name="LocalDefaultConnection" xml:space="preserve">
     <value>Standard-Verbindungsprofil</value>
   </data>
-	<data name="RemoteCustomConnection" xml:space="preserve">
+  <data name="RemoteCustomConnection" xml:space="preserve">
     <value>Benutzerdefiniertes Verbindungsprofil</value>
   </data>
-	<data name="RemoteDefaultConnection" xml:space="preserve">
+  <data name="RemoteDefaultConnection" xml:space="preserve">
     <value>openHAB-Cloud</value>
   </data>
-	<data name="MenuLogsView.Content" xml:space="preserve">
+  <data name="MenuLogsView.Content" xml:space="preserve">
     <value>Log anzeigen</value>
   </data>
-	<data name="LogsSend.Content" xml:space="preserve">
+  <data name="LogsSend.Content" xml:space="preserve">
     <value>Logs per Mail versenden</value>
   </data>
-	<data name="LogFileLocation.Text" xml:space="preserve">
+  <data name="LogFileLocation.Text" xml:space="preserve">
     <value>Dateipfad Logdatei:</value>
   </data>
-	<data name="LogsHeader.Text" xml:space="preserve">
+  <data name="LogsHeader.Text" xml:space="preserve">
     <value>Logs</value>
   </data>
-	<data name="LogsFolderOpen.Label" xml:space="preserve">
+  <data name="LogsFolderOpen.Label" xml:space="preserve">
     <value>Öffne Logverzeichnis</value>
   </data>
-	<data name="Back.Label" xml:space="preserve">
+  <data name="Back.Label" xml:space="preserve">
     <value>Zurück</value>
   </data>
-	<data name="Log.Text" xml:space="preserve">
+  <data name="Log.Text" xml:space="preserve">
     <value>Log:</value>
   </data>
-	<data name="MenuAppSettings.Content" xml:space="preserve">
+  <data name="MenuAppSettings.Content" xml:space="preserve">
     <value>App-Einstellungen</value>
   </data>
-	<data name="MenuConnectionSettings.Content" xml:space="preserve">
+  <data name="MenuConnectionSettings.Content" xml:space="preserve">
     <value>Verbindungseinstellungen</value>
   </data>
-	<data name="ShowDefaultSitemap.Text" xml:space="preserve">
+  <data name="ShowDefaultSitemap.Text" xml:space="preserve">
     <value>Standard-Sitemaps einblenden</value>
   </data>
-	<data name="SVGIcons.Text" xml:space="preserve">
+  <data name="SVGIcons.Text" xml:space="preserve">
     <value>Verwenden von Icons mit hoher Auflösung für Sitemapkacheln</value>
   </data>
-	<data name="ClearIconCache.Text" xml:space="preserve">
+  <data name="ClearIconCache.Text" xml:space="preserve">
     <value>Lokalen Zwischenspeicher für Icons löschen</value>
   </data>
-	<data name="ClearIconCacheButton.Content" xml:space="preserve">
+  <data name="ClearIconCacheButton.Content" xml:space="preserve">
     <value>Löschen</value>
   </data>
-	<data name="AppAutostart.Text" xml:space="preserve">
+  <data name="AppAutostart.Text" xml:space="preserve">
     <value>Starte App beim Systemstart</value>
   </data>
-	<data name="SitemapSetting.Text" xml:space="preserve">
+  <data name="SitemapSetting.Text" xml:space="preserve">
     <value>Sitemap</value>
   </data>
-	<data name="StartAppMinimized.Text" xml:space="preserve">
+  <data name="StartAppMinimized.Text" xml:space="preserve">
     <value>Starte Ápp minimiert</value>
   </data>
-	<data name="NotificationTile" xml:space="preserve">
+  <data name="NotificationTile" xml:space="preserve">
     <value>Änderte sich von {0} zu {1}</value>
   </data>
-	<data name="NotificationTileSimple" xml:space="preserve">
+  <data name="NotificationTileSimple" xml:space="preserve">
     <value>Zustand ist {1}</value>
   </data>
-	<data name="NotificationToast" xml:space="preserve">
+  <data name="NotificationToast" xml:space="preserve">
     <value>{0} änderte sich von {1} zu {2}</value>
   </data>
-	<data name="NotificationToastSimple" xml:space="preserve">
+  <data name="NotificationToastSimple" xml:space="preserve">
     <value>{0}: Zustand ist {1}</value>
   </data>
-	<data name="InfoAppBarSettingsButton.Content" xml:space="preserve">
+  <data name="InfoAppBarSettingsButton.Content" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
-	<data name="EnableWindowsNotifications.Text" xml:space="preserve">
-    <value>Einschalten der Benachrichtigungen für openHAB Events.</value>
+  <data name="EnableWindowsNotifications.Text" xml:space="preserve">
+    <value>Einschalten der Benachrichtigungen für openHAB-Events.</value>
   </data>
-	<data name="Et" xml:space="preserve">
+  <data name="Et" xml:space="preserve">
     <value />
   </data>
-	<data name="NotificationSetting.Text" xml:space="preserve">
+  <data name="NotificationSetting.Text" xml:space="preserve">
     <value>Benachrichtigungen</value>
   </data>
-	<data name="BuildNumber.Text" xml:space="preserve">
+  <data name="BuildNumber.Text" xml:space="preserve">
     <value>Build:</value>
   </data>
-	<data name="ServiceInstanceInfo.Text" xml:space="preserve">
-    <value>openHAB Server Information</value>
+  <data name="ServiceInstanceInfo.Text" xml:space="preserve">
+    <value>openHAB-Server-Information</value>
   </data>
-	<data name="VersionNumber.Text" xml:space="preserve">
+  <data name="VersionNumber.Text" xml:space="preserve">
     <value>Version:</value>
   </data>
 </root>
