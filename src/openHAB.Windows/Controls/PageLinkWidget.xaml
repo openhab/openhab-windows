@@ -17,9 +17,8 @@
 	<Grid Style="{StaticResource Widget}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
-
         <local:ImageLabel Margin="8,0,0,0"
                           HorizontalAlignment="Left"
                           VerticalAlignment="Center"
@@ -27,6 +26,14 @@
                           LabelText="{x:Bind Widget.Label, Mode=OneWay}"
 						  LabelForeground="{x:Bind Widget.LabelColor,Converter={StaticResource StringToColorConverter}, Mode=OneWay}"/>
 
+        <TextBlock Grid.Column="1"
+                   Margin="0,0,10,10"
+                   TextWrapping="WrapWholeWords"
+                   VerticalAlignment="Bottom"
+                   HorizontalAlignment="Right"
+                   FontSize="18"
+                   Text="{x:Bind Widget.Value}" />
+        
         <TextBlock Grid.Column="1"
                    Margin="0,0,12,0"
                    HorizontalAlignment="Right"
