@@ -139,7 +139,7 @@
     <value>Feedback</value>
   </data>
   <data name="IgnoreSSLCertErrors.Text" xml:space="preserve">
-    <value>Ignoriere SSL-Zertifkatsfehler</value>
+    <value>Ignoriere SSL-Zertifikatsfehler</value>
   </data>
   <data name="IgnoreSSLCertHostErrors.Text" xml:space="preserve">
     <value>Ignoriere SSL-Hostname-Fehler</value>
@@ -154,7 +154,7 @@
     <value>openHAB-URL</value>
   </data>
   <data name="MessageNotConfigured" xml:space="preserve">
-    <value>Es scheint kein openHAB-Server-URL konfiguriert zu sein. Gehen Sie in die App-Einstellungen (Zahnrad-Icon) um die Verbindungseinstellungen zur Ihrem OpenHAB-Server zu konfigurieren.</value>
+    <value>Es scheint keine openHAB-Server-URL konfiguriert zu sein. Gehen Sie in die App-Einstellungen (Zahnrad-Icon) um die Verbindungseinstellungen zu Ihrem OpenHAB-Server zu konfigurieren.</value>
   </data>
   <data name="MessagesNotReachable" xml:space="preserve">
     <value>Im Moment ist der openHAB-Service nicht erreichbar.
@@ -167,7 +167,7 @@ Gehen Sie in die App-Einstellungen (Zahnrad-Icon) um die Verbindungseinstellunge
     <value>Remote-Einstellungen</value>
   </data>
   <data name="RemoteUrl.ToolTipService.ToolTip" xml:space="preserve">
-    <value>URL für den Zugriff auf den openHab-Server von außerhalb des Heimnetzwerks.</value>
+    <value>URL für den Zugriff auf den openHAB-Server von außerhalb des Heimnetzwerks.</value>
   </data>
   <data name="RemoteUrlHeader.Text" xml:space="preserve">
     <value>openHAB-Remote-URL</value>
@@ -198,7 +198,7 @@ Gehen Sie in die App-Einstellungen (Zahnrad-Icon) um die Verbindungseinstellunge
   </data>
   <data name="MessageSettingsConnectionConfigInvalid" xml:space="preserve">
     <value>Verbindungseinstellungen sind nicht korrekt.
-Bitte wählen Sie den Demomodus oder die Lokale-/Remote-Verbindungsinformation zur Ihrem openHAB-Server.</value>
+Bitte wählen Sie den Demomodus oder die Lokale-/Remote-Verbindungsinformation zu Ihrem openHAB-Server.</value>
   </data>
   <data name="AppLanguage.Text" xml:space="preserve">
     <value>Anwendungssprache</value>
@@ -279,7 +279,7 @@ Bitte wählen Sie den Demomodus oder die Lokale-/Remote-Verbindungsinformation z
     <value>Sitemap</value>
   </data>
   <data name="StartAppMinimized.Text" xml:space="preserve">
-    <value>Starte Ápp minimiert</value>
+    <value>Starte App minimiert</value>
   </data>
   <data name="NotificationTile" xml:space="preserve">
     <value>Änderte sich von {0} zu {1}</value>
@@ -298,9 +298,6 @@ Bitte wählen Sie den Demomodus oder die Lokale-/Remote-Verbindungsinformation z
   </data>
   <data name="EnableWindowsNotifications.Text" xml:space="preserve">
     <value>Einschalten der Benachrichtigungen für openHAB-Events.</value>
-  </data>
-  <data name="Et" xml:space="preserve">
-    <value />
   </data>
   <data name="NotificationSetting.Text" xml:space="preserve">
     <value>Benachrichtigungen</value>
