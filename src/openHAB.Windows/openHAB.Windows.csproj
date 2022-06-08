@@ -113,6 +113,7 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <PRIResource Include="..\Openhab.Core\Strings\de-de\Resources.resw">
       <Link>Strings\de-de\Resources.resw</Link>
+      <SubType>Designer</SubType>
     </PRIResource>
     <PRIResource Include="..\Openhab.Core\Strings\en-us\Resources.resw">
       <Link>Strings\en-us\Resources.resw</Link>
