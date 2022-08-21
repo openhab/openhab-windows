@@ -4,7 +4,8 @@ using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.Toolkit.Uwp.Helpers;
+using CommunityToolkit.WinUI;
+using Microsoft.UI.Dispatching;
 using Newtonsoft.Json;
 using OpenHAB.Core.Messages;
 
@@ -120,17 +121,14 @@ namespace OpenHAB.Core.Model
             StrongReferenceMessenger.Default.Register<UpdateItemMessage>(this, HandleUpdateItemMessage);
         }
 
-        private void HandleUpdateItemMessage(object recipient, UpdateItemMessage message)
+        private async void HandleUpdateItemMessage(object recipient, UpdateItemMessage message)
         {
             if (message.ItemName != Name)
             {
                 return;
             }
 
-            DispatcherHelper.ExecuteOnUIThreadAsync(() =>
-            {
-                State = message.Value;
-            });
+            State = message.Value;
         }
 
         /// <summary>

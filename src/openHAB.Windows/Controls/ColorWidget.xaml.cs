@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using CommunityToolkit.Mvvm.Messaging;
@@ -6,7 +6,8 @@ using Microsoft.Extensions.Logging;
 using OpenHAB.Core.Messages;
 using OpenHAB.Windows.Services;
 using Windows.UI;
-using Windows.UI.Xaml;
+using Microsoft.UI.Xaml;
+using Microsoft.UI;
 
 namespace OpenHAB.Windows.Controls
 {
@@ -26,7 +27,7 @@ namespace OpenHAB.Windows.Controls
             InitializeComponent();
             Loaded += OnLoaded;
 
-            _logger = (ILogger<ColorWidget>)DIService.Instance.Services.GetService(typeof(ILogger<ColorWidget>));
+            _logger = DIService.Instance.GetService<ILogger<ColorWidget>>();
         }
 
         /// <summary>
@@ -73,7 +74,7 @@ namespace OpenHAB.Windows.Controls
             if (v > 0)
             {
                 // Set Colorproperty
-                SelectedColor = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.FromHsv(h, s, 1);
+                SelectedColor = CommunityToolkit.WinUI.Helpers.ColorHelper.FromHsv(h, s, 1);
             }
 
             // Set Brightness to Slider
@@ -88,12 +89,12 @@ namespace OpenHAB.Windows.Controls
             SetState();
         }
 
-        private void ClrPicker_ColorChanged(global::Windows.UI.Xaml.Controls.ColorPicker sender, global::Windows.UI.Xaml.Controls.ColorChangedEventArgs args)
+        private void ClrPicker_ColorChanged(global::Microsoft.UI.Xaml.Controls.ColorPicker sender, global::Microsoft.UI.Xaml.Controls.ColorChangedEventArgs args)
         {
             ColorChanged();
         }
 
-        private void BrightnessSlider_ValueChanged(object sender, global::Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
+        private void BrightnessSlider_ValueChanged(object sender, global::Microsoft.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
         {
             ColorChanged();
         }
@@ -101,7 +102,7 @@ namespace OpenHAB.Windows.Controls
         /// <summary>Sends the Color to Openhab Messenger.</summary>
         private void ColorChanged()
         {
-            var hsvclr = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToHsv(ClrPicker.Color);
+            var hsvclr = CommunityToolkit.WinUI.Helpers.ColorHelper.ToHsv(ClrPicker.Color);
             StrongReferenceMessenger.Default.Send(new TriggerCommandMessage(Widget.Item, $"{hsvclr.H.ToString(CultureInfo.InvariantCulture)},{(hsvclr.S * 100).ToString(CultureInfo.InvariantCulture)}, {BrightnessSlider.Value.ToString(CultureInfo.InvariantCulture)}"));
         }
     }

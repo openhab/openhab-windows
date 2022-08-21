@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.SDK;

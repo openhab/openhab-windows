@@ -22,32 +22,37 @@
     <!-- Acryl colors -->
 
     <media:AcrylicBrush x:Key="DarkAcrylicColor"
-                        BackgroundSource="Backdrop"
                         TintOpacity="0.7"
                         FallbackColor="{StaticResource DarkColor}"
                         TintColor="{StaticResource DarkColor}" />
 
     <media:AcrylicBrush x:Key="OpenHABLightColor"
-                        BackgroundSource="Backdrop"
+                        
                         TintOpacity="0.5"
                         FallbackColor="{StaticResource OpenHABLightGrey}"
                         TintColor="{StaticResource OpenHABLightGrey}"
                         AlwaysUseFallback="False" />
 
     <media:AcrylicBrush x:Key="ErrorNotificationBackground"
-                        BackgroundSource="Backdrop"
                         TintOpacity="0.5"
                         FallbackColor="Red"
                         TintColor="Red"
                         AlwaysUseFallback="False" />
 
     <media:AcrylicBrush x:Key="NotificationBackground"
-                        BackgroundSource="Backdrop"
                         TintOpacity="0.5"
                         FallbackColor="Silver"
                         TintColor="Silver"
                         AlwaysUseFallback="False" />
 
+    <Style x:Key="OpenHABGroupHeader"
+           TargetType="TextBlock">
+        <Setter Property="Foreground"
+                Value="{ThemeResource SystemAccentColor}" />
+        <Setter Property="FontSize"
+                Value="24" />
+    </Style>
+    
     <Style x:Key="HeaderText"
            TargetType="TextBlock">
         <Setter Property="Foreground"

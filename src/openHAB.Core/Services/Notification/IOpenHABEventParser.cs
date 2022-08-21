@@ -1,4 +1,4 @@
-﻿using OpenHAB.Core.Model.Event;
+using OpenHAB.Core.Model.Event;
 
 namespace OpenHAB.Core.Services
 {

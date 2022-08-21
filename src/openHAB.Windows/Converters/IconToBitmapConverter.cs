@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Model;
 using OpenHAB.Windows.Services;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Media.Imaging;
+using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Media.Imaging;
 
 namespace OpenHAB.Windows.Converters
 {
@@ -15,7 +15,7 @@ namespace OpenHAB.Windows.Converters
         /// <inheritdoc/>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var settingsService = (ISettingsService)DIService.Instance.Services.GetService(typeof(ISettingsService));
+            var settingsService = (ISettingsService)DIService.Instance.GetService<ISettingsService>();
             OpenHABVersion openHABVersion = settingsService.ServerVersion;
 
             var serverUrl = Core.Common.OpenHABHttpClient.BaseUrl;

@@ -1,6 +1,6 @@
-﻿using OpenHAB.Windows.Services;
+using Microsoft.UI.Xaml.Controls;
+using OpenHAB.Windows.Services;
 using OpenHAB.Windows.ViewModel;
-using Windows.UI.Xaml.Controls;
 
 namespace OpenHAB.Windows.View
 {
@@ -12,7 +12,7 @@ namespace OpenHAB.Windows.View
         /// <summary>Initializes a new instance of the <see cref="LogViewerPage" /> class.</summary>
         public LogViewerPage()
         {
-            DataContext = (LogsViewModel)DIService.Instance.Services.GetService(typeof(LogsViewModel));
+            DataContext = DIService.Instance.GetService<LogsViewModel>();
 
             this.InitializeComponent();
         }

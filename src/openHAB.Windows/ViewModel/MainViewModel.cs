@@ -2,11 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.WinUI;
+using Mapsui.Widgets;
 using Microsoft.Extensions.Logging;
-using Microsoft.Services.Store.Engagement;
+using Microsoft.UI.Dispatching;
+//using Microsoft.Services.Store.Engagement;
 using OpenHAB.Core;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts.Services;
@@ -14,8 +18,6 @@ using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
 using OpenHAB.Core.SDK;
 using OpenHAB.Core.Services;
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
 
 namespace OpenHAB.Windows.ViewModel
 {
@@ -24,7 +26,7 @@ namespace OpenHAB.Windows.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase<object>
     {
-        private readonly StoreServicesFeedbackLauncher _feedbackLauncher;
+        //private readonly StoreServicesFeedbackLauncher _feedbackLauncher;
         private readonly IOpenHAB _openHabsdk;
         private readonly ISettingsService _settingsService;
         private CancellationTokenSource _cancellationTokenSource;
@@ -40,6 +42,7 @@ namespace OpenHAB.Windows.ViewModel
         private ServerInfo _serverInfo;
         private object _selectedMenuItem;
         private ActionCommand _reloadSitemapCommand;
+        private ObservableCollection<OpenHABWidget> _breadcrumbItems;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
@@ -55,14 +58,13 @@ namespace OpenHAB.Windows.ViewModel
 
             _openHabsdk = openHabsdk;
             _settingsService = settingsService;
-            _feedbackLauncher = StoreServicesFeedbackLauncher.GetDefault();
+            //_feedbackLauncher = StoreServicesFeedbackLauncher.GetDefault();
             _cancellationTokenSource = new CancellationTokenSource();
+            _breadcrumbItems = new ObservableCollection<OpenHABWidget>();
 
             StrongReferenceMessenger.Default.Register<TriggerCommandMessage>(this, async (recipient, msg) => await TriggerCommand(recipient, msg).ConfigureAwait(false));
             StrongReferenceMessenger.Default.Register<WidgetClickedMessage>(this, (recipient, msg) => OnWidgetClickedAction(recipient, msg.Widget));
         }
-
-
 
         /// <summary>
         /// Gets or sets the widgets currently on screen.
@@ -118,8 +120,8 @@ namespace OpenHAB.Windows.ViewModel
 
                     if (!_isDataLoading && (_selectedSitemap?.Widgets == null || _selectedSitemap?.Widgets.Count == 0))
                     {
-                        CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
-                        dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                        DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+                        dispatcherQueue.EnqueueAsync(() =>
                         {
                             LoadWidgets();
                             WidgetNavigationService.ClearWidgetNavigation();
@@ -158,6 +160,16 @@ namespace OpenHAB.Windows.ViewModel
         }
 
         /// <summary>
+        /// Gets the items for the breadcrumb.
+        /// </summary>
+        /// <value>The breadcrumb items.</value>
+        public ObservableCollection<OpenHABWidget> BreadcrumbItems
+        {
+            get => _breadcrumbItems;
+            set => Set(ref _breadcrumbItems, value);
+        }
+
+        /// <summary>
         /// Gets or sets the selected widget.
         /// </summary>
         public OpenHABWidget SelectedWidget
@@ -193,7 +205,7 @@ namespace OpenHAB.Windows.ViewModel
 
         private bool CanExecuteFeedbackCommand(object obj)
         {
-            return StoreServicesFeedbackLauncher.IsSupported();
+            return false;//return StoreServicesFeedbackLauncher.IsSupported();
         }
 
         private bool CanExecuteRefreshCommand(object arg)
@@ -205,7 +217,7 @@ namespace OpenHAB.Windows.ViewModel
         private async void ExecuteFeedbackCommand(object obj)
 #pragma warning restore S3168 // "async" methods should not return "void"
         {
-            await _feedbackLauncher.LaunchAsync();
+            return; //await _feedbackLauncher.LaunchAsync();
         }
 
 #pragma warning disable S3168 // "async" methods should not return "void"
@@ -258,8 +270,7 @@ namespace OpenHAB.Windows.ViewModel
 
         private async Task ReloadSitemap()
         {
-            CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
-            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            await App.DispatcherQueue.EnqueueAsync(async () =>
             {
                 CurrentWidgets?.Clear();
                 IsDataLoading = true;
@@ -293,8 +304,7 @@ namespace OpenHAB.Windows.ViewModel
         private async void CancelSyncCallbackAsync()
 #pragma warning restore S3168 // "async" methods should not return "void"
         {
-            CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
-            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            await App.DispatcherQueue.EnqueueAsync(() =>
             {
                 Sitemaps?.Clear();
                 CurrentWidgets?.Clear();
@@ -305,7 +315,6 @@ namespace OpenHAB.Windows.ViewModel
 
         private async Task LoadData(CancellationToken cancellationToken)
         {
-            CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
             cancellationToken.Register(CancelSyncCallbackAsync);
 
             try
@@ -317,7 +326,7 @@ namespace OpenHAB.Windows.ViewModel
 
                 _logger.LogInformation("Load available sitemap's and their items");
 
-                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                await App.DispatcherQueue.EnqueueAsync(() =>
                 {
                     IsDataLoading = true;
                     Sitemaps?.Clear();
@@ -357,7 +366,7 @@ namespace OpenHAB.Windows.ViewModel
 
                 List<SitemapViewModel> sitemapViewModels = await LoadSitemaps(settings).ConfigureAwait(false);
 
-                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                await App.DispatcherQueue.EnqueueAsync(async () =>
                 {
                     Sitemaps = new ObservableCollection<SitemapViewModel>(sitemapViewModels);
                     _openHabsdk.StartItemUpdates(cancellationToken);
@@ -399,7 +408,7 @@ namespace OpenHAB.Windows.ViewModel
             }
             finally
             {
-                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                await App.DispatcherQueue.EnqueueAsync(() =>
                 {
                     IsDataLoading = false;
                 });
@@ -456,16 +465,16 @@ namespace OpenHAB.Windows.ViewModel
         /// <summary>
         /// Navigate backwards between linked pages.
         /// </summary>
-        public void WidgetGoBack()
+        public void WidgetGoBack(OpenHABWidget widget)
         {
-            OpenHABWidget widget = WidgetNavigationService.GoBack();
-
             if (SelectedSitemap == null)
             {
                 return;
             }
 
             Subtitle = widget == null ? SelectedSitemap?.Label : widget.Label;
+
+            OnPropertyChanged(nameof(BreadcrumbItems));
             SetWidgetsOnScreen(widget != null ? widget.LinkedPage.Widgets : SelectedSitemap.Widgets);
         }
 
@@ -481,8 +490,7 @@ namespace OpenHAB.Windows.ViewModel
 
             await SelectedSitemap.LoadWidgets(_serverInfo.Version).ConfigureAwait(false);
 
-            CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
-            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            await App.DispatcherQueue.EnqueueAsync(() =>
             {
                 SetWidgetsOnScreen(SelectedSitemap.Widgets);
                 IsDataLoading = false;
@@ -491,8 +499,7 @@ namespace OpenHAB.Windows.ViewModel
 
         private async Task OnWidgetClickedAsync(OpenHABWidget widget)
         {
-            CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
-            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            await App.DispatcherQueue.EnqueueAsync(() =>
             {
                 SelectedWidget = widget;
                 if (SelectedWidget.LinkedPage == null || !SelectedWidget.LinkedPage.Widgets.Any())
@@ -503,14 +510,21 @@ namespace OpenHAB.Windows.ViewModel
                 Subtitle = SelectedWidget.Label;
 
                 WidgetNavigationService.Navigate(SelectedWidget);
+
+                BreadcrumbItems.Clear();
+                BreadcrumbItems.AddRange(WidgetNavigationService.Widgets);
+
                 SetWidgetsOnScreen(SelectedWidget?.LinkedPage?.Widgets);
             });
         }
 
-        private void SetWidgetsOnScreen(ICollection<OpenHABWidget> widgets)
+        private async void SetWidgetsOnScreen(ICollection<OpenHABWidget> widgets)
         {
-            CurrentWidgets.Clear();
-            CurrentWidgets.AddRange(widgets);
+            await App.DispatcherQueue.EnqueueAsync(() =>
+            {
+                CurrentWidgets.Clear();
+                CurrentWidgets.AddRange(widgets);
+            });
         }
 
         private OpenHABWidget FindWidget(string widgetId, ICollection<OpenHABWidget> widgets)

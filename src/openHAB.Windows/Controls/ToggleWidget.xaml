@@ -23,7 +23,6 @@
 		<ToggleSwitch  Grid.Column="1"
 					   Toggled="ToggleSwitch_Toggled"
 					   IsOn="{x:Bind State, Mode=TwoWay, Converter={StaticResource StateToBoolConverter}}"
-					   HorizontalAlignment="Right" HorizontalContentAlignment="Right"
 					   Foreground="{x:Bind Widget.ValueColor, Converter={StaticResource StringToColorConverter}, Mode=OneWay}" />
 
 	</Grid>

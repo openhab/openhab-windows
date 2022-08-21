@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using OpenHAB.Core.Model;
 
 namespace OpenHAB.Core.Messages

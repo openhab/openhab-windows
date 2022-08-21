@@ -1,9 +1,10 @@
-﻿using System;
+using System;
+using System.IO;
 using System.Threading.Tasks;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media.Imaging;
-using WinRTXamlToolkit.Imaging;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media.Imaging;
+using Windows.Storage.Streams;
 
 namespace OpenHAB.Windows.Controls
 {
@@ -40,12 +41,24 @@ namespace OpenHAB.Windows.Controls
 
         private async Task SetLocalData()
         {
-            var image = new BitmapImage();
             string data = Widget.Item.State.Substring(Widget.Item.State.IndexOf(',') + 1);
-            await image.LoadFromBase64StringAsync(data);
+            byte[] binaryData = Convert.FromBase64String(data);
 
-            ThumbImage.Source = image;
-            FullImage.Source = image;
+            var image = new BitmapImage();
+            using (InMemoryRandomAccessStream ms = new InMemoryRandomAccessStream())
+            {
+
+                using (DataWriter writer = new DataWriter(ms.GetOutputStreamAt(0)))
+                {
+                    writer.WriteBytes(binaryData);
+                    await writer.StoreAsync();
+                }
+
+                await image.SetSourceAsync(ms);
+
+                ThumbImage.Source = image;
+                FullImage.Source = image;
+            }
         }
 
         private void SetUrl()

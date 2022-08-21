@@ -1,17 +1,18 @@
-﻿using System;
+using System;
 using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.WinUI;
 using Microsoft.Extensions.Logging;
+using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Navigation;
 using OpenHAB.Core;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Services;
 using OpenHAB.Windows.Controls;
 using OpenHAB.Windows.Services;
 using OpenHAB.Windows.ViewModel;
-using Windows.UI.Core;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Navigation;
 
 namespace OpenHAB.Windows.View
 {
@@ -31,9 +32,9 @@ namespace OpenHAB.Windows.View
         {
             InitializeComponent();
 
-            _settingsViewModel = (SettingsViewModel)DIService.Instance.Services.GetService(typeof(SettingsViewModel));
-            _logger = (ILogger<SettingsViewModel>)DIService.Instance.Services.GetService(typeof(ILogger<SettingsViewModel>));
-            _appManager = (IAppManager)DIService.Instance.Services.GetService(typeof(IAppManager));
+            _settingsViewModel = DIService.Instance.GetService<SettingsViewModel>();
+            _logger = DIService.Instance.GetService<ILogger<SettingsViewModel>>();
+            _appManager = DIService.Instance.GetService<IAppManager>();
 
             DataContext = _settingsViewModel;
 
@@ -136,6 +137,10 @@ namespace OpenHAB.Windows.View
             ConnectionDialog connectionDialog = CreateConnectionDialog();
             connectionDialog.DataContext = Vm.Settings.LocalConnection;
 
+            /*TODO: Remove workaround when fix available
+            https://github.com/microsoft/microsoft-ui-xaml/issues/2504 */
+            connectionDialog.XamlRoot = this.Content.XamlRoot;
+
             await connectionDialog.ShowAsync();
         }
 
@@ -143,6 +148,10 @@ namespace OpenHAB.Windows.View
         {
             ConnectionDialog connectionDialog = CreateConnectionDialog();
             connectionDialog.DataContext = Vm.Settings.RemoteConnection;
+
+            /*TODO: Remove workaround when fix available
+            https://github.com/microsoft/microsoft-ui-xaml/issues/2504 */
+            connectionDialog.XamlRoot = this.Content.XamlRoot;
 
             await connectionDialog.ShowAsync();
         }
@@ -154,7 +163,8 @@ namespace OpenHAB.Windows.View
             bool toggleIsOn = toggleSwitch.IsOn;
             var autostartEnabled = await _appManager.IsStartupEnabled().ConfigureAwait(false);
 
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+            await dispatcherQueue.EnqueueAsync(async () =>
             {
                 if (autostartEnabled != toggleIsOn)
                 {

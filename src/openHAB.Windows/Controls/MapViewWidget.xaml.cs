@@ -1,12 +1,15 @@
-﻿using System;
+using System;
 using System.Globalization;
-using System.Linq;
+using Mapsui;
+using Mapsui.Extensions;
+using Mapsui.Projections;
+using Mapsui.Tiling;
+using Mapsui.UI.WinUI;
+using Mapsui.Widgets.ScaleBar;
+using Mapsui.Widgets.Zoom;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Input;
 using OpenHAB.Windows.Extensions;
-using Windows.Devices.Geolocation;
-using Windows.Foundation;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls.Maps;
-using Windows.UI.Xaml.Input;
 
 namespace OpenHAB.Windows.Controls
 {
@@ -21,12 +24,12 @@ namespace OpenHAB.Windows.Controls
         public MapViewWidget()
         {
             InitializeComponent();
-            PopupDialog.AdjustSize();
 
-#if RELEASE
-            MapView.MapServiceToken = "Don't forget to set the Bing Maps keys!";
-            MapViewFull.MapServiceToken = "Don't forget to set the Bing Maps keys!";
-#endif
+            MapView.Map.Layers.Add(OpenStreetMap.CreateTileLayer());
+            MapViewFull.Map.Layers.Add(OpenStreetMap.CreateTileLayer());
+            MapViewFull.Map.Widgets.Add(new ScaleBarWidget(MapViewFull.Map));
+            MapViewFull.Map.Widgets.Add(new ZoomInOutWidget());
+
             Loaded += OnLoaded;
         }
 
@@ -37,6 +40,9 @@ namespace OpenHAB.Windows.Controls
 
         private async void OnTapped(object sender, TappedRoutedEventArgs e)
         {
+            e.Handled = true;
+
+            PopupDialog.XamlRoot = this.XamlRoot;
             await PopupDialog.ShowAsync();
         }
 
@@ -50,15 +56,19 @@ namespace OpenHAB.Windows.Controls
                     double latitude = double.Parse(latLong[0], CultureInfo.InvariantCulture);
                     double longitude = double.Parse(latLong[1], CultureInfo.InvariantCulture);
 
-                    MapView.Center = MapViewFull.Center = new Geopoint(new BasicGeoposition() { Latitude = latitude, Longitude = longitude });
+                    var coordinate = SphericalMercator.FromLonLat(longitude, latitude).ToMPoint();
 
-                    MapIcon mapIcon = new MapIcon();
-                    mapIcon.Location = MapView.Center;
-                    mapIcon.NormalizedAnchorPoint = new Point(0.5, 0.5);
-                    mapIcon.ZIndex = 0;
+                    MapView.Map.Home = n => n.NavigateTo(coordinate, MapView.Map.Resolutions[19]);
+                    MapViewFull.Map.Home = n => n.NavigateTo(coordinate, MapView.Map.Resolutions[13]);
+                    
+                    //TODO: Implement mapicon
+                    //MapIcon mapIcon = new MapIcon();
+                    //mapIcon.Location = MapView.Center;
+                    //mapIcon.NormalizedAnchorPoint = new Point(0.5, 0.5);
+                    //mapIcon.ZIndex = 0;
 
-                    MapView.MapElements.Add(mapIcon);
-                    MapViewFull.MapElements.Add(mapIcon);
+                    //MapView.MapElements.Add(mapIcon);
+                    //MapViewFull.MapElements.Add(mapIcon);
                 }
             }
         }

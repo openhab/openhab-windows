@@ -57,5 +57,8 @@ namespace OpenHAB.Core.Services
             _currentWidget = null;
             WidgetBackStack.Clear();
         }
+
+
+        public static List<OpenHABWidget> Widgets => WidgetBackStack.Reverse().ToList();
     }
 }

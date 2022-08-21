@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,8 +7,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.WinUI.Connectivity;
 using Microsoft.Extensions.Logging;
-using Microsoft.Toolkit.Uwp.Connectivity;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OpenHAB.Core.Common;

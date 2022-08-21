@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using CommunityToolkit.WinUI.Helpers;
 using Microsoft.Extensions.Logging;
-using Microsoft.Toolkit.Uwp.Helpers;
 using OpenHAB.Core.Model;
 using Windows.Storage;
 

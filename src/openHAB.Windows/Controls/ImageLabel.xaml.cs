@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Text.RegularExpressions;
 using OpenHAB.Core.Services;
 using OpenHAB.Windows.Services;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
 
 namespace OpenHAB.Windows.Controls
 {
@@ -52,7 +52,7 @@ namespace OpenHAB.Windows.Controls
                 }
             }
 
-            IIconCaching iconCaching = (IIconCaching)DIService.Instance.Services.GetService(typeof(IIconCaching));
+            IIconCaching iconCaching = DIService.Instance.GetService<IIconCaching>();
             iconPath = await iconCaching.ResolveIconPath(iconPath, format.Success ? "svg" : "png");
 
             if (format.Success)

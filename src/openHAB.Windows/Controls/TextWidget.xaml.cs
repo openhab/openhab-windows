@@ -1,4 +1,4 @@
-﻿namespace OpenHAB.Windows.Controls
+namespace OpenHAB.Windows.Controls
 {
     /// <summary>
     /// Widget control that represents an OpenHAB text.

@@ -1,4 +1,4 @@
-﻿namespace OpenHAB.Core
+namespace OpenHAB.Core
 {
     /// <summary>Defines connection types for OpenHAB instance.</summary>
     public enum OpenHABConnectionType

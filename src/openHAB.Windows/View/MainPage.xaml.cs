@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
@@ -9,8 +9,11 @@ using OpenHAB.Core.Services;
 using OpenHAB.Windows.Services;
 using OpenHAB.Windows.ViewModel;
 using Windows.UI.Core;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
+using Microsoft.UI.Dispatching;
+using CommunityToolkit.WinUI;
+using Mapsui.Widgets;
 
 namespace OpenHAB.Windows.View
 {
@@ -31,22 +34,23 @@ namespace OpenHAB.Windows.View
         /// </summary>
         public MainPage()
         {
-            DataContext = (MainViewModel)DIService.Instance.Services.GetService(typeof(MainViewModel));
-            _logger = (ILogger<MainPage>)DIService.Instance.Services.GetService(typeof(ILogger<MainPage>));
+            DataContext = DIService.Instance.GetService<MainViewModel>();
+            _logger = DIService.Instance.GetService<ILogger<MainPage>>();
 
             InitializeComponent();
 
-            Vm.CurrentWidgets.CollectionChanged += async (sender, args) =>
-            {
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                 {
-                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = WidgetNavigationService.CanGoBack
-                     ? AppViewBackButtonVisibility.Visible
-                     : AppViewBackButtonVisibility.Collapsed;
-                 });
-            };
+            //Vm.CurrentWidgets.CollectionChanged += async (sender, args) =>
+            //{
+            //    DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+            //    await dispatcherQueue.EnqueueAsync(() =>
+            //     {
+            //         SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = WidgetNavigationService.CanGoBack
+            //         ? AppViewBackButtonVisibility.Visible
+            //         : AppViewBackButtonVisibility.Collapsed;
+            //     });
+            //};
 
-            SystemNavigationManager.GetForCurrentView().BackRequested += (sender, args) => Vm.WidgetGoBack();
+            //SystemNavigationManager.GetForCurrentView().BackRequested += (sender, args) => Vm.WidgetGoBack();
         }
 
         /// <inheritdoc/>
@@ -86,7 +90,8 @@ namespace OpenHAB.Windows.View
                     errorMessage = message.ErrorMessage;
                 }
 
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+                await dispatcherQueue.EnqueueAsync(() =>
                 {
                     ErrorNotification.Message = errorMessage;
                     ErrorNotification.IsOpen = true;
@@ -118,9 +123,11 @@ namespace OpenHAB.Windows.View
                         break;
                 }
 
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                  {
-                      InfoNotification.Message = message;
+
+                DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+                await dispatcherQueue.EnqueueAsync(() =>
+                {
+                    InfoNotification.Message = message;
                       InfoNotification.IsOpen = true;
                   });
             }
@@ -143,6 +150,12 @@ namespace OpenHAB.Windows.View
             {
                 Frame.Navigate(typeof(SettingsPage));
             }
+        }
+
+        private void BreadcrumbBar_ItemClicked(BreadcrumbBar sender, BreadcrumbBarItemClickedEventArgs args)
+        {
+            OpenHABWidget widget = args.Item as OpenHABWidget;
+            this.Vm.WidgetGoBack(widget);
         }
     }
 }

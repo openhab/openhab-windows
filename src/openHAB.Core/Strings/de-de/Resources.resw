@@ -147,9 +147,9 @@
   <data name="LocalSettings.Text" xml:space="preserve">
     <value>Lokale Einstellungen</value>
   </data>
-  <data name="LocalUrl.ToolTipService.ToolTip" xml:space="preserve">
+  <!--<data name="LocalUrl.ToolTipService.ToolTip" xml:space="preserve">
     <value>Url der lokalen OpenHab Instanz. Standard Url ist http://openhab:8080</value>
-  </data>
+  </data>-->
   <data name="LocalUrlHeader.Text" xml:space="preserve">
     <value>openHAB URL</value>
   </data>

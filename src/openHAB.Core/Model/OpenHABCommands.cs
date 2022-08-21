@@ -1,4 +1,4 @@
-﻿namespace OpenHAB.Core.Model
+namespace OpenHAB.Core.Model
 {
     /// <summary>
     /// A list of constants used for sending commands to OpenHAB.

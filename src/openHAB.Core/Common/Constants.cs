@@ -1,4 +1,4 @@
-﻿namespace OpenHAB.Core.Common
+namespace OpenHAB.Core.Common
 {
     /// <summary>
     /// A class that holds all the constants for the app.

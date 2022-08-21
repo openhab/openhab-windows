@@ -12,11 +12,11 @@
 	<Grid Style="{StaticResource Widget}"
 		  Tapped="OnTapped">
 
-		<WebView x:Name="WebView">
-			<WebView.RenderTransform>
+		<WebView2 x:Name="WebView">
+			<WebView2.RenderTransform>
 				<CompositeTransform ScaleY="0.5" ScaleX="0.5"/>
-			</WebView.RenderTransform>
-		</WebView>
+			</WebView2.RenderTransform>
+		</WebView2>
 
 		<Border Background="Transparent" CornerRadius="5" />
 
@@ -25,7 +25,7 @@
 					   Background="{StaticResource OpenHABLightColor}"
 					   IsPrimaryButtonEnabled="True"
 					   PrimaryButtonText="Close">
-			<WebView x:Name="WebViewFull" Width="550" Height="300" />
+			<WebView2 x:Name="WebViewFull" Width="550" Height="300" />
 		</ContentDialog>
 
 	</Grid>

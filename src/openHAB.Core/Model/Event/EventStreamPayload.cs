@@ -1,4 +1,4 @@
-﻿namespace OpenHAB.Core.Model.Event
+namespace OpenHAB.Core.Model.Event
 {
     /// <summary>
     /// The payload coming from the event service.

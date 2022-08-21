@@ -1,0 +1,10 @@
+﻿{
+  "profiles": {
+    "openHAB.Windows (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "openHAB.Windows (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

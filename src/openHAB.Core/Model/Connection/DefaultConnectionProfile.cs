@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts;
 

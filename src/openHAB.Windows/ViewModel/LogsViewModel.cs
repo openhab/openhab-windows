@@ -1,13 +1,16 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using CommunityToolkit.WinUI;
 using Microsoft.Extensions.Logging;
+using Microsoft.UI.Dispatching;
 using OpenHAB.Core.Common;
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Core;
+using DispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue;
 
 namespace OpenHAB.Windows.ViewModel
 {
@@ -22,8 +25,6 @@ namespace OpenHAB.Windows.ViewModel
         private ILogger<LogsViewModel> _logger;
         private string _logFilename = $"{DateTime.Now:yyyy-MM-dd}.log";
         private ICommand _openLogFileCommand;
-
-        private CoreDispatcher _dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
 
         /// <summary>Initializes a new instance of the <see cref="LogsViewModel" /> class.</summary>
         public LogsViewModel(ILogger<LogsViewModel> logger)
@@ -101,7 +102,8 @@ namespace OpenHAB.Windows.ViewModel
                 return;
             }
 
-            await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+            await dispatcherQueue.EnqueueAsync(async () =>
             {
                 LogContent = await FileIO.ReadTextAsync(_logFile);
             });
@@ -123,7 +125,8 @@ namespace OpenHAB.Windows.ViewModel
 
         private async void LogFile_Changed(object sender, FileSystemEventArgs e)
         {
-            await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+            await dispatcherQueue.EnqueueAsync(async () =>
             {
                 LogContent = await FileIO.ReadTextAsync(_logFile);
             });

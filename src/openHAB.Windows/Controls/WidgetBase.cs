@@ -1,11 +1,12 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using OpenHAB.Core.Model;
 using Windows.UI.Core;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
+using CommunityToolkit.WinUI;
 
 namespace OpenHAB.Windows.Controls
 {
@@ -53,7 +54,7 @@ namespace OpenHAB.Windows.Controls
                 return;
             }
 
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, SetState);
+            await App.DispatcherQueue.EnqueueAsync(SetState);
         }
 
         internal abstract void SetState();

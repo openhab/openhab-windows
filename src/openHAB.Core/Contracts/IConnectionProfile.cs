@@ -1,4 +1,4 @@
-﻿using OpenHAB.Core.Model.Connection;
+using OpenHAB.Core.Model.Connection;
 
 namespace OpenHAB.Core.Contracts
 {

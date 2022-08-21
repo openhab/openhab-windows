@@ -1,4 +1,4 @@
-﻿namespace OpenHAB.Core.Messages
+namespace OpenHAB.Core.Messages
 {
     /// <summary>Object for notification with information level.</summary>
     public class FireInfoMessage

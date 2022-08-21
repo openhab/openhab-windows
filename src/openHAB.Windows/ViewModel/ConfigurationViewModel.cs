@@ -1,8 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CommunityToolkit.WinUI;
 using Microsoft.Extensions.Logging;
+using Microsoft.UI.Dispatching;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
@@ -59,23 +61,17 @@ namespace OpenHAB.Windows.ViewModel
             _startAppMinimized = _settings.StartAppMinimized;
             _notificationsEnable = _settings.NotificationsEnable;
 
-            CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
             Task<bool> taskCanEnableAutostart = _appManager.CanEnableAutostart();
-            taskCanEnableAutostart.ContinueWith(result =>
+            taskCanEnableAutostart.ContinueWith(async result =>
             {
-                dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    CanAppAutostartEnabled = result.Result;
-                });
+                CanAppAutostartEnabled = result.Result;
             });
 
             Task<bool> taskStartupEnbabled = _appManager.IsStartupEnabled();
-            taskStartupEnbabled.ContinueWith(result =>
+            taskStartupEnbabled.ContinueWith(async result =>
             {
-                dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    IsAppAutostartEnabled = result.Result;
-                });
+
+                IsAppAutostartEnabled = result.Result;
             });
 
             _appLanguages = InitalizeAppLanguages();
@@ -113,8 +109,11 @@ namespace OpenHAB.Windows.ViewModel
 
             set
             {
-                _canAppAutostartEnabled = value;
-                OnPropertyChanged(nameof(CanAppAutostartEnabled));
+                App.DispatcherQueue.EnqueueAsync(() =>
+                {
+                    _canAppAutostartEnabled = value;
+                    OnPropertyChanged(nameof(CanAppAutostartEnabled));
+                });
             }
         }
 
@@ -129,8 +128,11 @@ namespace OpenHAB.Windows.ViewModel
 
             set
             {
-                _isAppAutostartEnabled = value;
-                OnPropertyChanged(nameof(IsAppAutostartEnabled));
+                App.DispatcherQueue.EnqueueAsync(() =>
+                {
+                    _isAppAutostartEnabled = value;
+                    OnPropertyChanged(nameof(IsAppAutostartEnabled));
+                });
             }
         }
 

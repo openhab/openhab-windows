@@ -1,7 +1,7 @@
-﻿using Windows.Foundation;
+using Windows.Foundation;
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls;
 
 namespace OpenHAB.Windows.Extensions
 {

@@ -1,4 +1,4 @@
-﻿namespace OpenHAB.Core.Model.Connection
+namespace OpenHAB.Core.Model.Connection
 {
     /// <summary>
     /// Defines the connection type to a local or remote openHAB instance.

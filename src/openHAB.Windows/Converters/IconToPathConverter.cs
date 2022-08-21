@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Text.RegularExpressions;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts.Services;
 using OpenHAB.Core.Model;
 using OpenHAB.Windows.Services;
-using Windows.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Data;
 
 namespace OpenHAB.Windows.Converters
 {
@@ -18,13 +18,13 @@ namespace OpenHAB.Windows.Converters
         /// <summary>Initializes a new instance of the <see cref="IconToPathConverter" /> class.</summary>
         public IconToPathConverter()
         {
-            _settings = (Settings)DIService.Instance.Services.GetService(typeof(Settings));
+            _settings = DIService.Instance.GetService<Settings>();
         }
 
         /// <inheritdoc/>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var settingsService = (ISettingsService)DIService.Instance.Services.GetService(typeof(ISettingsService));
+            var settingsService = (ISettingsService)DIService.Instance.GetService<ISettingsService>();
             OpenHABVersion openHABVersion = settingsService.ServerVersion;
 
             var serverUrl = OpenHABHttpClient.BaseUrl;

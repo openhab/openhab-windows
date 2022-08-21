@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using OpenHAB.Core.Contracts;
 using OpenHAB.Core.Model.Connection;
 

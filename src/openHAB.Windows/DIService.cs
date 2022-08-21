@@ -1,5 +1,6 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog.Config;
 using NLog.Extensions.Logging;
@@ -11,6 +12,7 @@ using OpenHAB.Core.Model;
 using OpenHAB.Core.SDK;
 using OpenHAB.Core.Services;
 using OpenHAB.Windows.ViewModel;
+using System;
 using Windows.Storage;
 
 namespace OpenHAB.Windows.Services
@@ -21,23 +23,26 @@ namespace OpenHAB.Windows.Services
     public class DIService : IDependencyInjectionService
     {
         private static DIService _instance;
-        private readonly ServiceCollection _services;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DIService"/> class.
         /// </summary>
         public DIService()
         {
-            _services = new ServiceCollection();
-            RegisterServices();
-            RegisterViewModels();
-
-            Services = _services.BuildServiceProvider();
+            _host = Host.CreateDefaultBuilder()
+                        .ConfigureServices((context, services) =>
+                        {
+                            RegisterServices(services);
+                            RegisterViewModels(services);
+                        })
+                        .Build();
         }
 
-        private void RegisterServices()
+        private readonly IHost _host;
+
+        private void RegisterServices(IServiceCollection services)
         {
-            _services.AddLogging(loggingBuilder =>
+            services.AddLogging(loggingBuilder =>
              {
                  // configure Logging with NLog
                  loggingBuilder.ClearProviders();
@@ -45,37 +50,37 @@ namespace OpenHAB.Windows.Services
                  loggingBuilder.AddNLog(GetLoggingConfiguration());
              });
 
-            _services.AddSingleton<IMessenger>(StrongReferenceMessenger.Default);
-            _services.AddSingleton<IOpenHAB, OpenHABClient>();
-            _services.AddSingleton<ISettingsService, SettingsService>();
-            _services.AddTransient<Settings>(x =>
+            services.AddSingleton<IMessenger>(StrongReferenceMessenger.Default);
+            services.AddSingleton<IOpenHAB, OpenHABClient>();
+            services.AddSingleton<ISettingsService, SettingsService>();
+            services.AddTransient<Settings>(x =>
             {
                 ISettingsService settingsService = x.GetService<ISettingsService>();
                 return settingsService.Load();
             });
 
             //_services.AddSingleton<INavigationService, NavigationService>();
-            _services.AddSingleton<OpenHABHttpClient>();
-            _services.AddSingleton<IIconCaching, IconCaching>();
-            _services.AddSingleton<IAppManager, AppManager>();
-            _services.AddSingleton<IItemManager, ItemManager>();
-            _services.AddSingleton<INotificationManager, NotificationManager>();
-            _services.AddSingleton<IOpenHABEventParser, OpenHABEventParser>();
+            services.AddSingleton<OpenHABHttpClient>();
+            services.AddSingleton<IIconCaching, IconCaching>();
+            services.AddSingleton<IAppManager, AppManager>();
+            services.AddSingleton<IItemManager, ItemManager>();
+            services.AddSingleton<INotificationManager, NotificationManager>();
+            services.AddSingleton<IOpenHABEventParser, OpenHABEventParser>();
         }
 
-        private void RegisterViewModels()
+        private void RegisterViewModels(IServiceCollection services)
         {
-            _services.AddTransient<MainViewModel>();
-            _services.AddTransient<SettingsViewModel>();
-            _services.AddTransient<ConfigurationViewModel>();
-            _services.AddTransient<LogsViewModel>();
+            services.AddTransient<MainViewModel>();
+            services.AddTransient<SettingsViewModel>();
+            services.AddTransient<ConfigurationViewModel>();
+            services.AddTransient<LogsViewModel>();
         }
 
         private LoggingConfiguration GetLoggingConfiguration()
         {
             JsonLayout layout = new JsonLayout()
             {
-               IncludeEventProperties = true,
+                IncludeEventProperties = true,
 
             };
 
@@ -121,14 +126,11 @@ namespace OpenHAB.Windows.Services
             }
         }
 
-        /// <summary>
-        /// Gets the services.
-        /// </summary>
-        /// <value>The services.</value>
-        public ServiceProvider Services
+        /// <inheritdoc/>
+        public T GetService<T>()
+            where T : class
         {
-            get;
-            private set;
+            return _host.Services.GetService(typeof(T)) as T;
         }
     }
 }

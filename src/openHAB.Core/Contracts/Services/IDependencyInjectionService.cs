@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace OpenHAB.Core.Contracts.Services
 {
@@ -8,12 +8,10 @@ namespace OpenHAB.Core.Contracts.Services
     public interface IDependencyInjectionService
     {
         /// <summary>
-        /// Gets the service instance.
+        /// Gets the a instance of a specif type from the dependency injection service.
         /// </summary>
-        /// <value>The instance.</value>
-        ServiceProvider Services
-        {
-            get;
-        }
+        /// <value>The services.</value>
+        /// <returns>Requested type.</returns>
+        T GetService<T>() where T : class;
     }
 }

@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using Windows.UI;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Markup;
-using Windows.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Markup;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI;
 
 namespace OpenHAB.Windows.Converters
 {

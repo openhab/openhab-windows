@@ -1,6 +1,8 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.WinUI;
+using Microsoft.UI.Dispatching;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
@@ -85,8 +87,8 @@ namespace OpenHAB.Windows.ViewModel
                     connectionState = ConnectionState.Failed;
                 }
 
-                CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
-                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+                await App.DispatcherQueue.EnqueueAsync(() =>
                 {
                     State = connectionState;
                     RuntimeVersion = runtimeVersion;

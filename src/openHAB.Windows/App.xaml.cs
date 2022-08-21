@@ -1,156 +1,123 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.Windows.AppLifecycle;
+using System;
+using openHAB.Windows;
+using OpenHAB.Windows.View;
 using Microsoft.Extensions.Logging;
 using OpenHAB.Core.Contracts.Services;
-using OpenHAB.Core.Model;
-using OpenHAB.Core.Services;
 using OpenHAB.Windows.Services;
-using OpenHAB.Windows.View;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
-using Windows.Foundation.Metadata;
-using Windows.System;
-using Windows.UI;
-using Windows.UI.Core;
-using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
+using OpenHAB.Core.Services;
+using Microsoft.UI.Dispatching;
+
+// To learn more about WinUI, the WinUI project structure,
+// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace OpenHAB.Windows
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    public sealed partial class App : Application
+    public partial class App : Application
     {
         private ILogger<App> _logger;
         private ISettingsService _settingsService;
 
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="App"/> class.
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
         public App()
         {
             InitializeComponent();
-
-            _logger = (ILogger<App>)DIService.Instance.Services.GetService(typeof(ILogger<App>));
-            _settingsService = (ISettingsService)DIService.Instance.Services.GetService(typeof(ISettingsService));
-
-            Suspending += OnSuspending;
             UnhandledException += App_UnhandledException;
 
-            INotificationManager notificationManager = (INotificationManager)DIService.Instance.Services.GetService(typeof(INotificationManager));
+            DispatcherQueue = DispatcherQueue.GetForCurrentThread();
+
+            _logger = (ILogger<App>)DIService.Instance.GetService<ILogger<App>>();
+            _settingsService = (ISettingsService)DIService.Instance.GetService<ISettingsService>();
+
+            INotificationManager notificationManager = (INotificationManager)DIService.Instance.GetService<INotificationManager>();
             notificationManager.ResetBadgeCount();
+        }
+
+        private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
+        {
+            // TODO: Log and handle exceptions as appropriate.
+            // For more details, see https://docs.microsoft.com/windows/winui/api/microsoft.ui.xaml.unhandledexceptioneventargs.
         }
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
-        /// <param name="e">Details about the launch request and process.</param>
-        protected override async void OnLaunched(LaunchActivatedEventArgs e)
+        /// <param name="args">Details about the launch request and process.</param>
+        protected override async void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs e)
         {
             _logger.LogInformation("=== Start Application ===");
-
             _settingsService.SetProgramLanguage(null);
 
-            SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
+            // TODO This code defaults the app to a single instance app. If you need multi instance app, remove this part.
+            // Read: https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/guides/applifecycle#single-instancing-in-applicationonlaunched
+            // If this is the first instance launched, then register it as the "main" instance.
+            // If this isn't the first instance launched, then "main" will already be registered,
+            // so retrieve it.
+            var mainInstance = Microsoft.Windows.AppLifecycle.AppInstance.FindOrRegisterForKey("main");
+            var activatedEventArgs = Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().GetActivatedEventArgs();
 
-            var rootFrame = Window.Current.Content as Frame;
+            // If the instance that's executing the OnLaunched handler right now
+            // isn't the "main" instance.
+            if (!mainInstance.IsCurrent)
+            {
+                // Redirect the activation (and args) to the "main" instance, and exit.
+                await mainInstance.RedirectActivationToAsync(activatedEventArgs);
+                System.Diagnostics.Process.GetCurrentProcess().Kill();
+                return;
+            }
 
-            // Do not repeat app initialization when the Window already has content,
-            // just ensure that the window is active
+            // TODO This code handles app activation types. Add any other activation kinds you want to handle.
+            // Read: https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/guides/applifecycle#file-type-association
+            if (activatedEventArgs.Kind == ExtendedActivationKind.File)
+            {
+                OnFileActivated(activatedEventArgs);
+            }
+
+            // Initialize MainWindow here
+            MainWindow = new Microsoft.UI.Xaml.Window();
+
+            Frame rootFrame = MainWindow.Content as Frame;
             if (rootFrame == null)
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
-
-                rootFrame.NavigationFailed += OnNavigationFailed;
-
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                    // TODO: Load state from previously suspended application
-                }
-
                 // Place the frame in the current Window
-                Window.Current.Content = rootFrame;
+                MainWindow.Content = rootFrame;
             }
-
-            if (e.PrelaunchActivated == false)
+            if (rootFrame.Content == null)
             {
-                if (rootFrame.Content == null)
-                {
-                    // When the navigation stack isn't restored navigate to the first page,
-                    // configuring the new page by passing required information as a navigation
-                    // parameter
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
-                }
-
-                // Ensure the current window is active
-                Window.Current.Activate();
-
-                Settings settings = _settingsService.Load();
-
-                if (settings.StartAppMinimized.HasValue && settings.StartAppMinimized.Value)
-                {
-                    _logger.LogInformation($"Settings:StartAppMinimized value is set to '{settings.StartAppMinimized.Value}'");
-
-                    IList<AppDiagnosticInfo> infos = await AppDiagnosticInfo.RequestInfoForAppAsync();
-                    AppDiagnosticInfo appDiagnosticInfo = infos.FirstOrDefault();
-
-                    if (appDiagnosticInfo != null)
-                    {
-                        IList<AppResourceGroupInfo> resourceInfos = appDiagnosticInfo.GetResourceGroups();
-                        await resourceInfos[0].StartSuspendAsync();
-
-                        _logger.LogInformation("Start App in susp   ended mode.");
-                    }
-                }
+                // When the navigation stack isn't restored navigate to the first page,
+                // configuring the new page by passing required information as a navigation
+                // parameter
+                // TODO Raname this MainPage type in case your app MainPage has a different name
+                rootFrame.Navigate(typeof(MainPage), e.Arguments);
             }
+
+            MainWindow.Activate();
+            WindowHandle = WinRT.Interop.WindowNative.GetWindowHandle(MainWindow);
         }
 
-        private void OnBackRequested(object sender, BackRequestedEventArgs e)
+        // TODO This is an example method for the case when app is activated through a file.
+        // Feel free to remove this if you do not need this.
+        public void OnFileActivated(AppActivationArguments activatedEventArgs)
         {
-            e.Handled = true;
+
         }
 
-        /// <summary>
-        /// Invoked when Navigation to a certain page fails.
-        /// </summary>
-        /// <param name="sender">The Frame which failed navigation.</param>
-        /// <param name="e">Details about the navigation failure.</param>
-        private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
-        {
-            throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
-        }
+        public static DispatcherQueue DispatcherQueue { get; private set; }
 
-        /// <summary>
-        /// Invoked when application execution is being suspended.  Application state is saved
-        /// without knowing whether the application will be terminated or resumed with the contents
-        /// of memory still intact.
-        /// </summary>
-        /// <param name="sender">The source of the suspend request.</param>
-        /// <param name="e">Details about the suspend request.</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
-        {
-            var deferral = e.SuspendingOperation.GetDeferral();
+        public static Window MainWindow { get; private set; }
 
-            // TODO: Save application state and stop any background activity
-            _logger.LogInformation("=== Close Application ===");
-
-            deferral.Complete();
-        }
-
-        /// <summary>Handles the UnhandledException event of the App control.</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="global::Windows.UI.Xaml.UnhandledExceptionEventArgs"/> instance containing the event data.</param>
-        private void App_UnhandledException(object sender, global::Windows.UI.Xaml.UnhandledExceptionEventArgs e)
-        {
-            _logger.LogCritical(e.Exception, "UnhandledException occurred");
-        }
+        public static IntPtr WindowHandle { get; private set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace OpenHAB.Core
+namespace OpenHAB.Core
 {
     /// <summary>
     /// Notification Message Type.

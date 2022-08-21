@@ -1,6 +1,6 @@
-﻿using OpenHAB.Windows.ViewModel;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Markup;
+using OpenHAB.Windows.ViewModel;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Markup;
 
 namespace OpenHAB.Windows.Controls
 {

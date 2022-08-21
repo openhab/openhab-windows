@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Contracts.Services;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media.Imaging;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media.Imaging;
 
 namespace OpenHAB.Windows.Controls
 {

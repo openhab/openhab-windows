@@ -1,9 +1,10 @@
-﻿using System.Linq;
+using System.Linq;
 using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.Toolkit.Uwp.Helpers;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Dispatching;
+using CommunityToolkit.WinUI;
 
 namespace OpenHAB.Windows.Controls
 {
@@ -26,7 +27,7 @@ namespace OpenHAB.Windows.Controls
         /// <summary>
         /// Get's called after SelectionWidget was loaded and updates the Widgets Selection Dropdown.
         /// </summary>
-        private void SelectionWidget_Loaded(object sender, global::Windows.UI.Xaml.RoutedEventArgs e)
+        private void SelectionWidget_Loaded(object sender, global::Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             selectionMappings = new System.Collections.Generic.List<SelectionMapping>();
             if (Widget?.Item.CommandDescription?.CommandOptions?.Count > 0)
@@ -54,7 +55,9 @@ namespace OpenHAB.Windows.Controls
         internal override void SetState()
         {
             SelectionMapping itemState = selectionMappings.FirstOrDefault(x => x.Command == Widget.Item.State);
-            DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+
+            DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+            dispatcherQueue.EnqueueAsync(() =>
             {
                 SelectionMapping currentSelection = SelectionComboBox.SelectedItem as SelectionMapping;
 

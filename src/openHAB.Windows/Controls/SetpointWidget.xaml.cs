@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Linq;
-using Microsoft.Toolkit.Uwp.Helpers;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using CommunityToolkit.WinUI;
+using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace OpenHAB.Windows.Controls
 {
@@ -53,9 +54,10 @@ namespace OpenHAB.Windows.Controls
             SetState();
         }
 
-        internal override void SetState()
+        internal override async void SetState()
         {
-            DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+            DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+            await dispatcherQueue.EnqueueAsync(() =>
             {
                 comboBox.SelectionChanged -= ComboBox_SelectionChanged;
                 UpdateComboBox();

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using OpenHAB.Core.Model.Event;

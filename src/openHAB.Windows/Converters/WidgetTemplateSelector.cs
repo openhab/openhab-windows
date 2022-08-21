@@ -1,8 +1,8 @@
-﻿using System.Linq;
+using System.Linq;
 using OpenHAB.Core.Common;
 using OpenHAB.Core.Model;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace OpenHAB.Windows.Converters
 {

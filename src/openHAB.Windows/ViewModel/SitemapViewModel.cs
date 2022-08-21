@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,7 +32,7 @@ namespace OpenHAB.Windows.ViewModel
              : base(model)
         {
             _widgets = new ObservableCollection<OpenHABWidget>();
-            _openHabsdk = (IOpenHAB)DIService.Instance.Services.GetService(typeof(IOpenHAB));
+            _openHabsdk = DIService.Instance.GetService<IOpenHAB>();
         }
 
         /// <summary>

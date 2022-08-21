@@ -1,4 +1,4 @@
-﻿using Windows.ApplicationModel.Resources;
+using Windows.ApplicationModel.Resources;
 
 namespace OpenHAB.Core
 {
