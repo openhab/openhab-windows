@@ -1,7 +1,12 @@
 using System;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.WinUI;
+using Mapsui.Widgets;
 using Microsoft.Extensions.Logging;
+using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 using OpenHAB.Core;
 using OpenHAB.Core.Messages;
 using OpenHAB.Core.Model;
@@ -9,11 +14,6 @@ using OpenHAB.Core.Services;
 using OpenHAB.Windows.Services;
 using OpenHAB.Windows.ViewModel;
 using Windows.UI.Core;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Navigation;
-using Microsoft.UI.Dispatching;
-using CommunityToolkit.WinUI;
-using Mapsui.Widgets;
 
 namespace OpenHAB.Windows.View
 {

@@ -1,11 +1,11 @@
 using System;
-using Windows.System;
-using Windows.UI.Core;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
+using Windows.System;
+using Windows.UI.Core;
 
 namespace OpenHAB.Windows.Controls
 {

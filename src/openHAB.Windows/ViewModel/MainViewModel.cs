@@ -2,12 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
-using Mapsui.Widgets;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 //using Microsoft.Services.Store.Engagement;
@@ -467,6 +465,12 @@ namespace OpenHAB.Windows.ViewModel
         /// </summary>
         public void WidgetGoBack(OpenHABWidget widget)
         {
+            OpenHABWidget lastWidget = null;
+            while (lastWidget == null || lastWidget.WidgetId != widget.WidgetId)
+            {
+                lastWidget = WidgetNavigationService.GoBack();
+            }
+
             if (SelectedSitemap == null)
             {
                 return;
@@ -474,8 +478,9 @@ namespace OpenHAB.Windows.ViewModel
 
             Subtitle = widget == null ? SelectedSitemap?.Label : widget.Label;
 
+            BreadcrumbItems.Clear();
+            BreadcrumbItems.AddRange(WidgetNavigationService.Widgets);
             OnPropertyChanged(nameof(BreadcrumbItems));
-            SetWidgetsOnScreen(widget != null ? widget.LinkedPage.Widgets : SelectedSitemap.Widgets);
         }
 
         private async Task LoadWidgets()
