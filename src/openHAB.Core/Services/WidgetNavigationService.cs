@@ -50,6 +50,23 @@ namespace OpenHAB.Core.Services
         }
 
         /// <summary>
+        /// Go back to the previous openHAB widget.
+        /// </summary>
+        /// <returns>The previous visted widget.</returns>
+        public static OpenHABWidget GoBackToRoot()
+        {
+            OpenHABWidget widget = GoBack();
+            while (widget != null && widget.Parent != null)
+            {
+                widget = GoBack();
+            }
+
+            _currentWidget = WidgetBackStack.Count == 0 ? null : WidgetBackStack.Peek();
+
+            return _currentWidget;
+        }
+
+        /// <summary>
         /// Clears and resets the widget navigation.
         /// </summary>
         public static void ClearWidgetNavigation()
@@ -58,7 +75,8 @@ namespace OpenHAB.Core.Services
             WidgetBackStack.Clear();
         }
 
-
+        /// <summary>Gets the navigated widgets.</summary>
+        /// <value>The widgets.</value>
         public static List<OpenHABWidget> Widgets => WidgetBackStack.Reverse().ToList();
     }
 }

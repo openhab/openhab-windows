@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29409.12
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libaries", "libaries", "{6D9E45E3-F3C1-4A9D-A62D-72DDBA11C31B}"
 	ProjectSection(SolutionItems) = preProject
@@ -13,9 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Openhab.Core", "src\openHAB.Core\Openhab.Core.csproj", "{2A8FD10E-4EE5-4E25-B47C-2296E071F482}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "openHAB.Core", "src\openHAB.Core\openHAB.Core.csproj", "{2A8FD10E-4EE5-4E25-B47C-2296E071F482}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "openHAB.Windows", "src\openHAB.Windows\openHAB.Windows.csproj", "{D65E41CE-1AE7-403A-B178-D69E8DAFB08B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "openHAB.Windows", "src\openHAB.Windows\openHAB.Windows.csproj", "{D65E41CE-1AE7-403A-B178-D69E8DAFB08B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

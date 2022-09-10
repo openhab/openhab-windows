@@ -111,7 +111,7 @@
 		</Reference>
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\openHAB.Core\Openhab.Core.csproj" />
+		<ProjectReference Include="..\openHAB.Core\openHAB.Core.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Mvvm">

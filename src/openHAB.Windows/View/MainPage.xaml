@@ -106,7 +106,13 @@
                 <StackPanel Grid.Row="0"
                             Orientation="Horizontal">
                     <TextBlock Style="{StaticResource SitemapHeader}"
-                               Text="{Binding Vm.SelectedSitemap.Label, ElementName=Page, Mode=OneWay}" />
+                               Text="{Binding Vm.SelectedSitemap.Label, ElementName=Page, Mode=OneWay}">
+                         <interactivity:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="Tapped">
+                            <core:InvokeCommandAction Command="{Binding Vm.NavigateToSitemapRoot, ElementName=Page, Mode=OneWay}" />
+                        </core:EventTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
+                    </TextBlock>
                     <Button Margin="10,0,0,0"
                             Command="{Binding Vm.ReloadSitemapCommand, ElementName=Page}">
                         <SymbolIcon Symbol="Refresh"
