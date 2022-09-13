@@ -122,7 +122,11 @@ function Set-AssemblyVersion
 	echo "BUILD_NUMBER=$($UpdatedVersion.ToString())" >> $GITHUB_ENV
 
 	if($SetVersion.IsPresent){
-		Set-FileContent -Files $files -Version $UpdatedVersion -VersionFormat $VersionFormat
+
+		if($Files -and $Files.Length -lt 0){
+			Set-FileContent -Files $files -Version $UpdatedVersion -VersionFormat $VersionFormat
+		}
+			
 		Set-AppManifest -Files $appFiles -Version $UpdatedVersion
 	}  
 }
