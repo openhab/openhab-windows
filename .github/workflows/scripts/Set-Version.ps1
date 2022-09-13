@@ -123,7 +123,7 @@ function Set-AssemblyVersion
 
 	if($SetVersion.IsPresent){
 
-		if($Files -and $Files.Length -lt 0){
+		if($files -and $files.Length -lt 0){
 			Set-FileContent -Files $files -Version $UpdatedVersion -VersionFormat $VersionFormat
 		}
 			
