@@ -121,14 +121,16 @@ function Set-AssemblyVersion
 	Write-Host "Update BUILD_BUILDNUMBER to $($UpdatedVersion.ToString())"
 	echo "BUILD_NUMBER=$($UpdatedVersion.ToString())" >> $GITHUB_ENV
 
-	if($SetVersion.IsPresent){
-
-		if($files -and $files.Length -lt 0){
-			Set-FileContent -Files $files -Version $UpdatedVersion -VersionFormat $VersionFormat
-		}
-			
-		Set-AppManifest -Files $appFiles -Version $UpdatedVersion
-	}  
+	if(-not $SetVersion.IsPresent){
+		Write-Host "Not able to parse version number."
+		return
+	}
+	
+	if($files -and $files.Length -lt 0){
+		Set-FileContent -Files $files -Version $UpdatedVersion -VersionFormat $VersionFormat
+	}
+		
+	Set-AppManifest -Files $appFiles -Version $UpdatedVersion
 }
 
 function Create-NewVersionNumber{
