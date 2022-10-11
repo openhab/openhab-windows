@@ -1,8 +1,8 @@
 using System;
-using OpenHAB.Core.Model;
+using openHAB.Core.Model;
 using Microsoft.UI.Xaml.Data;
 
-namespace OpenHAB.Windows.Converters
+namespace openHAB.Windows.Converters
 {
     /// <summary>
     /// Converts objects to sitemaps, for use in compiled bindings.

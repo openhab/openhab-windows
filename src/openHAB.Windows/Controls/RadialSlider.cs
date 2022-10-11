@@ -8,7 +8,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Shapes;
 using Microsoft.UI;
 
-namespace OpenHAB.Windows.Controls
+namespace openHAB.Windows.Controls
 {
     /// <summary>
     /// A Percentage Ring Control.

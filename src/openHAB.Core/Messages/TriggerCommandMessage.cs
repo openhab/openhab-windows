@@ -1,7 +1,7 @@
 using System;
-using OpenHAB.Core.Model;
+using openHAB.Core.Model;
 
-namespace OpenHAB.Core.Messages
+namespace openHAB.Core.Messages
 {
     /// <summary>
     /// Message that gets fired whenever a widget triggers a command.

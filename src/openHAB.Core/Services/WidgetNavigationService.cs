@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using OpenHAB.Core.Model;
+using openHAB.Core.Model;
 
-namespace OpenHAB.Core.Services
+namespace openHAB.Core.Services
 {
     /// <summary>
     /// Service that keeps track of navigation between linkedpages.

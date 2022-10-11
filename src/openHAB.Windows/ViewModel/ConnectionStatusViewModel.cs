@@ -3,25 +3,21 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Dispatching;
-using OpenHAB.Core.Common;
-using OpenHAB.Core.Messages;
-using OpenHAB.Core.Model;
-using OpenHAB.Core.Model.Connection;
-using OpenHAB.Core.SDK;
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
+using openHAB.Core.Common;
+using openHAB.Core.Connection;
+using openHAB.Core.Messages;
+using openHAB.Core.Model;
+using openHAB.Core.Services.Contracts;
 
-namespace OpenHAB.Windows.ViewModel
+namespace openHAB.Windows.ViewModel
 {
     /// <summary>
     /// ViewModel for OpenHAB connection status.
     /// </summary>
     public class ConnectionStatusViewModel : ViewModelBase<object>
     {
-        private readonly IOpenHAB _openHabsdk;
-
         private ConnectionState _connectionState;
-
+        private IConnectionService _connectionService;
         private string _runtimeVersion;
         private string _build;
 
@@ -29,11 +25,11 @@ namespace OpenHAB.Windows.ViewModel
         /// Initializes a new instance of the <see cref="ConnectionStatusViewModel"/> class.
         /// </summary>
         /// <param name="openHabsdk">OpenHABSDK class.</param>
-        public ConnectionStatusViewModel(IOpenHAB openHabsdk)
+        public ConnectionStatusViewModel(IConnectionService connectionService)
             : base(null)
         {
-            _openHabsdk = openHabsdk;
             _connectionState = ConnectionState.Unknown;
+            _connectionService = connectionService;
         }
 
         /// <summary>
@@ -67,7 +63,7 @@ namespace OpenHAB.Windows.ViewModel
         /// <param name="connection">The connection.</param>
         public void CheckConnectionSettings(string url, OpenHABConnection connection)
         {
-            Task<HttpResponseResult<ServerInfo>> result = _openHabsdk.GetOpenHABServerInfo(connection);
+            Task<HttpResponseResult<ServerInfo>> result = _connectionService.GetOpenHABServerInfo(connection);
             result.ContinueWith(async (task) =>
             {
                 ConnectionState connectionState = ConnectionState.Unknown;

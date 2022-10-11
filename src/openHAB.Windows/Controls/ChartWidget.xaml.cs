@@ -1,11 +1,10 @@
 using System;
-using OpenHAB.Core.Common;
-using OpenHAB.Core.Contracts.Services;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Imaging;
+using openHAB.Core.Common;
 
-namespace OpenHAB.Windows.Controls
+namespace openHAB.Windows.Controls
 {
     /// <summary>
     /// Widget control that represents an OpenHAB slider.

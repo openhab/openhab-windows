@@ -1,9 +1,9 @@
-using OpenHAB.Windows.ViewModel;
+using openHAB.Windows.ViewModel;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Markup;
 
-namespace OpenHAB.Windows.Converters
+namespace openHAB.Windows.Converters
 {
     /// <summary>Template selector to differeniate between sitemaps and general menu items.</summary>
     [ContentProperty(Name = "SiteMapMenuItemTemplate")]

@@ -4,14 +4,15 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
-using OpenHAB.Core;
-using OpenHAB.Core.Common;
-using OpenHAB.Core.Contracts;
-using OpenHAB.Core.Model;
-using OpenHAB.Core.Model.Connection;
-using OpenHAB.Core.SDK;
+using openHAB.Core;
+using openHAB.Core.Common;
+using openHAB.Core.Connection;
+using openHAB.Core.Connection.Contracts;
+using openHAB.Core.Contracts;
+using openHAB.Core.Model;
+using openHAB.Core.Services.Contracts;
 
-namespace OpenHAB.Windows.ViewModel
+namespace openHAB.Windows.ViewModel
 {
     /// <summary>
     /// ViewModel for OpenHAB connection dialog.
@@ -34,9 +35,9 @@ namespace OpenHAB.Windows.ViewModel
         /// Initializes a new instance of the <see cref="ConnectionDialogViewModel"/> class.
         /// </summary>
         /// <param name="connectionConfig">The connection configuration.</param>
-        /// <param name="openHabsdk">OpenHABSDK class.</param>
+        /// <param name="connectionService">ConnectionService to retrive connection information.</param>
         /// <param name="type">Defines if openHAB instance is local or remote.</param>
-        public ConnectionDialogViewModel(OpenHABConnection connectionConfig, IOpenHAB openHabsdk, OpenHABHttpClientType type)
+        public ConnectionDialogViewModel(OpenHABConnection connectionConfig, IConnectionService connectionService, OpenHABHttpClientType type)
             : base(connectionConfig)
         {
             _type = type;
@@ -51,7 +52,7 @@ namespace OpenHAB.Windows.ViewModel
                 _profile = list.FirstOrDefault(x => x.Id == Model.Profile.Id);
             }
 
-            _connectionStatus = new ConnectionStatusViewModel(openHabsdk);
+            _connectionStatus = new ConnectionStatusViewModel(connectionService);
 
             if (!string.IsNullOrEmpty(Model?.Url))
             {

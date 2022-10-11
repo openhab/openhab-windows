@@ -7,7 +7,7 @@ using Microsoft.UI.Xaml.Media.Animation;
 using Windows.System;
 using Windows.UI.Core;
 
-namespace OpenHAB.Windows.Controls
+namespace openHAB.Windows.Controls
 {
     /// <summary>
     /// A specialized ListView to represent the items in the navigation menu.

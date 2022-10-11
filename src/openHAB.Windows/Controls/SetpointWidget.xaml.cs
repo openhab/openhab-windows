@@ -6,7 +6,7 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
-namespace OpenHAB.Windows.Controls
+namespace openHAB.Windows.Controls
 {
     /// <summary>
     /// Widget control that represents an OpenHAB switch.

@@ -8,16 +8,16 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
+using openHAB.Core.Common;
+using openHAB.Core.Messages;
+using openHAB.Core.Services.Contracts;
 //using Microsoft.Services.Store.Engagement;
-using OpenHAB.Core;
-using OpenHAB.Core.Common;
-using OpenHAB.Core.Contracts.Services;
-using OpenHAB.Core.Messages;
-using OpenHAB.Core.Model;
-using OpenHAB.Core.SDK;
-using OpenHAB.Core.Services;
+using openHAB.Core;
+using openHAB.Core.Model;
+using openHAB.Core.SDK;
+using openHAB.Core.Services;
 
-namespace OpenHAB.Windows.ViewModel
+namespace openHAB.Windows.ViewModel
 {
     /// <summary>
     /// Collects and formats all the data for starting the application.

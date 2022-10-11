@@ -2,7 +2,7 @@ using System;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 
-namespace OpenHAB.Windows.Controls
+namespace openHAB.Windows.Controls
 {
     /// <summary>
     /// Widget control that represents an OpenHab WebView.

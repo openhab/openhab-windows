@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5" IgnorableNamespaces="uap mp">
-  <Identity Name="openHABFoundatione.V.openHAB" Publisher="CN=8A77D062-E996-4F32-9CC6-50568ABAFF8F" Version="2020.11.5.0" />
+  <Identity Name="openHABFoundatione.V.openHAB" Publisher="CN=8A77D062-E996-4F32-9CC6-50568ABAFF8F" Version="2022.9.12.0" />
   <Properties>
     <DisplayName>openHAB</DisplayName>
     <PublisherDisplayName>openHAB Foundation e.V.</PublisherDisplayName>

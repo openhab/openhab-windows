@@ -1,17 +1,18 @@
 using System;
-using OpenHAB.Core.Common;
-using OpenHAB.Core.Contracts;
+using openHAB.Core.Connection.Contracts;
+using openHAB.Core;
+using openHAB.Core.Common;
 
-namespace OpenHAB.Core.Model.Connection
+namespace openHAB.Core.Connection
 {
-    /// <summary>Connection profile for local default connection to OpenHab server.</summary>
-    /// <seealso cref="OpenHAB.Core.Contracts.IConnectionProfile" />
-    public class DefaultConnectionProfile : IConnectionProfile
+    /// <summary>Connection profile for for local custom connection to OpenHab server.</summary>
+    /// <seealso cref="IConnectionProfile" />
+    public class RemoteConnectionProfile : IConnectionProfile
     {
         /// <inheritdoc/>
         public bool AllowHostUrlConfiguration
         {
-            get => false;
+            get => true;
         }
 
         /// <inheritdoc/>
@@ -29,19 +30,19 @@ namespace OpenHAB.Core.Model.Connection
         /// <inheritdoc/>
         public int Id
         {
-            get => 1;
+            get => 3;
         }
 
         /// <inheritdoc/>
         public string Name
         {
-            get => AppResources.Values.GetString("LocalDefaultConnection");
+            get => AppResources.Values.GetString("RemoteCustomConnection");
         }
 
         /// <inheritdoc/>
         public OpenHABHttpClientType Type
         {
-            get => OpenHABHttpClientType.Local;
+            get => OpenHABHttpClientType.Remote;
         }
 
         /// <inheritdoc/>
@@ -49,10 +50,7 @@ namespace OpenHAB.Core.Model.Connection
         {
             return new OpenHABConnection()
             {
-                Url = "https://openhab:8443",
-                Type = OpenHABHttpClientType.Local,
-                WillIgnoreSSLCertificate = true,
-                WillIgnoreSSLHostname = true,
+                Type = OpenHABHttpClientType.Remote,
             };
         }
     }

@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using OpenHAB.Core.Model;
-using OpenHAB.Core.SDK;
+using openHAB.Core.Services.Contracts;
+using openHAB.Core.Model;
+using openHAB.Core.SDK;
 
-namespace OpenHAB.Core.Services
+namespace openHAB.Core.Services
 {
     /// <inheritdoc/>
     public class ItemManager : IItemManager

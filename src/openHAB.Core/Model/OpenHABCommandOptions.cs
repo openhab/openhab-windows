@@ -1,4 +1,4 @@
-namespace OpenHAB.Core.Model
+namespace openHAB.Core.Model
 {
     /// <summary>
     /// A CommandOptions for commandDescription.

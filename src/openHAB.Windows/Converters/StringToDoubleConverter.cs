@@ -1,7 +1,7 @@
 using System;
 using Microsoft.UI.Xaml.Data;
 
-namespace OpenHAB.Windows.Converters
+namespace openHAB.Windows.Converters
 {
     /// <summary>
     /// Converts a string to a double, returning 0 if the string is invalid.

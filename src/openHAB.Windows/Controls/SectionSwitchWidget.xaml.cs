@@ -5,10 +5,10 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
-using OpenHAB.Core.Messages;
-using OpenHAB.Core.Model;
+using openHAB.Core.Messages;
+using openHAB.Core.Model;
 
-namespace OpenHAB.Windows.Controls
+namespace openHAB.Windows.Controls
 {
     /// <summary>
     /// Widget control that represents an OpenHAB switch.

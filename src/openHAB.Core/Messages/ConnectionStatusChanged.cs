@@ -1,7 +1,7 @@
-using OpenHAB.Core.Common;
-using OpenHAB.Core.Model;
+using openHAB.Core.Common;
+using openHAB.Core.Model;
 
-namespace OpenHAB.Core.Messages
+namespace openHAB.Core.Messages
 {
     /// <summary>
     /// Event for connection state updates.

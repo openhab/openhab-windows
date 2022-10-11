@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Input;
 
-namespace OpenHAB.Core.Common
+namespace openHAB.Core.Common
 {
     /// <summary>
     ///   Action Command for MVVM.

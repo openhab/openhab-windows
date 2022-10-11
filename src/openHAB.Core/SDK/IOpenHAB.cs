@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using OpenHAB.Core.Common;
-using OpenHAB.Core.Model;
-using OpenHAB.Core.Model.Connection;
+using openHAB.Core.Common;
+using openHAB.Core.Model;
 
-namespace OpenHAB.Core.SDK
+namespace openHAB.Core.SDK
 {
     /// <summary>
     /// The main SDK interface to OpenHAB.
@@ -17,13 +16,6 @@ namespace OpenHAB.Core.SDK
         /// </summary>
         /// <returns>Server information about openHAB instance.</returns>
         Task<HttpResponseResult<ServerInfo>> GetOpenHABServerInfo();
-
-        /// <summary>
-        /// Gets information about the openHAB server.
-        /// </summary>
-        /// <param name="connection">Connection information.</param>
-        /// <returns>Server information about openHAB instance.</returns>
-        Task<HttpResponseResult<ServerInfo>> GetOpenHABServerInfo(OpenHABConnection connection);
 
         /// <summary>
         /// Gets the openHAB item by name from Server.
@@ -66,10 +58,5 @@ namespace OpenHAB.Core.SDK
         /// Starts listening to server events.
         /// </summary>
         void StartItemUpdates(System.Threading.CancellationToken token);
-
-        /// <summary>Checks the URL reachability.</summary>
-        /// <param name="connection">Defines settings for local or remote connections.</param>
-        /// <returns>>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        Task<HttpResponseResult<bool>> CheckUrlReachability(OpenHABConnection connection);
     }
 }

@@ -1,4 +1,4 @@
-namespace OpenHAB.Core.Model
+namespace openHAB.Core.Model
 {
     /// <summary>
     /// Enum to differentiate between OpenHAB 1, 2 and 3.

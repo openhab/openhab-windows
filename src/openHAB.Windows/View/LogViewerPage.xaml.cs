@@ -1,8 +1,8 @@
 using Microsoft.UI.Xaml.Controls;
-using OpenHAB.Windows.Services;
-using OpenHAB.Windows.ViewModel;
+using openHAB.Windows.Services;
+using openHAB.Windows.ViewModel;
 
-namespace OpenHAB.Windows.View
+namespace openHAB.Windows.View
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.

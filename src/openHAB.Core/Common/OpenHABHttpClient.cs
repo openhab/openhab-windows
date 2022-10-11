@@ -4,11 +4,11 @@ using System.Net.Http;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.Extensions.Logging;
-using OpenHAB.Core.Model;
-using OpenHAB.Core.Model.Connection;
-using OpenHAB.Core.Services;
+using openHAB.Core.Connection;
+using openHAB.Core.Model;
+using openHAB.Core.Services;
 
-namespace OpenHAB.Core.Common
+namespace openHAB.Core.Common
 {
     /// <summary>
     /// A sealed class that holds the instance of HttpClient for this lifetimescope.

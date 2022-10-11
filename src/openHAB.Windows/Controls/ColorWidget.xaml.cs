@@ -3,13 +3,13 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
-using OpenHAB.Core.Messages;
-using OpenHAB.Windows.Services;
+using openHAB.Core.Messages;
+using openHAB.Windows.Services;
 using Windows.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI;
 
-namespace OpenHAB.Windows.Controls
+namespace openHAB.Windows.Controls
 {
     /// <summary>
     /// Widget control that represents an OpenHAB text.

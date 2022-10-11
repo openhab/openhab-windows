@@ -1,13 +1,13 @@
 using System;
 using System.Text.RegularExpressions;
-using OpenHAB.Core.Services;
-using OpenHAB.Windows.Services;
+using openHAB.Windows.Services;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
+using openHAB.Core.Services.Contracts;
 
-namespace OpenHAB.Windows.Controls
+namespace openHAB.Windows.Controls
 {
     /// <summary>
     /// Control that represents an image with a label.

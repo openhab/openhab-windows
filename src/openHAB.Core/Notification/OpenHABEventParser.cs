@@ -1,9 +1,10 @@
 using System;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using OpenHAB.Core.Model.Event;
+using openHAB.Core.Notification.Contracts;
+using openHAB.Core.Model.Event;
 
-namespace OpenHAB.Core.Services
+namespace openHAB.Core.Notification
 {
     /// <inheritdoc/>
     public class OpenHABEventParser : IOpenHABEventParser

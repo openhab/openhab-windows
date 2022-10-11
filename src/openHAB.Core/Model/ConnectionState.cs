@@ -1,4 +1,4 @@
-namespace OpenHAB.Core.Model
+namespace openHAB.Core.Model
 {
     /// <summary>
     /// Reflects the State for an connection.

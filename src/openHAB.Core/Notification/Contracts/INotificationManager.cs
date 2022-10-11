@@ -1,6 +1,6 @@
-using OpenHAB.Core.Model;
+using openHAB.Core.Model;
 
-namespace OpenHAB.Core.Services
+namespace openHAB.Core.Notification.Contracts
 {
     /// <summary>Class handles toast and tile notifications.</summary>
     public interface INotificationManager

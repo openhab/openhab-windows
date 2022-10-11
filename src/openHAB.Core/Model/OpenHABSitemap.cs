@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace OpenHAB.Core.Model
+namespace openHAB.Core.Model
 {
     /// <summary>
     /// A class that represents an OpenHAB sitemap.

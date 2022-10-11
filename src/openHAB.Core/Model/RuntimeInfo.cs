@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace OpenHAB.Core.Model
+namespace openHAB.Core.Model
 {
     /// <summary>Used to serialize the service information from openHAB server.</summary>
     public partial class RuntimeInfo

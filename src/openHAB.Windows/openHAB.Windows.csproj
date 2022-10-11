@@ -23,6 +23,7 @@
 		<PublishProfile>win10-$(Platform).pubxml</PublishProfile>
 		<StartupObject></StartupObject>
 		<SupportedOSPlatformVersion>10.0.18362.0</SupportedOSPlatformVersion>
+		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
 		<OutputPath>bin\x86\Debug\</OutputPath>
@@ -90,7 +91,6 @@
 		<None Include="..\..\.sonarlint\openhab_openhab-windowscsharp.ruleset">
 			<Link>openhab_openhab-windowscsharp.ruleset</Link>
 		</None>
-		<None Include="OpenHAB.Windows_TemporaryKey.pfx" />
 		<None Include="App.xaml.old.cs" />
 	</ItemGroup>
 	<ItemGroup>
@@ -109,9 +109,6 @@
 			<SpecificVersion>False</SpecificVersion>
 			<HintPath>..\..\libaries\MJPEGDecoderWinRTLib.dll</HintPath>
 		</Reference>
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\openHAB.Core\openHAB.Core.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Mvvm">
@@ -143,14 +140,14 @@
 		<PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\OpenHAB.Core\OpenHAB.Core.csproj" />
-	</ItemGroup>
-	<ItemGroup>
 		<Compile Remove="Properties\Annotations.cs" />
 		<Compile Remove="App.xaml.old.cs" />
 	</ItemGroup>
 	<ItemGroup>
 	  <None Remove="Controls\MapViewWidget.xaml" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\openHAB.Core\openHAB.Core.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Controls\MapViewWidget.xaml">

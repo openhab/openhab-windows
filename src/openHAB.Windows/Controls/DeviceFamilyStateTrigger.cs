@@ -1,7 +1,7 @@
-using OpenHAB.Core.Common;
+using openHAB.Core.Common;
 using Microsoft.UI.Xaml;
 
-namespace OpenHAB.Windows.Controls
+namespace openHAB.Windows.Controls
 {
     /// <summary>
     /// Trigger to differentiate between device families.

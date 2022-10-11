@@ -1,4 +1,4 @@
-<Page x:Class="OpenHAB.Windows.View.LogViewerPage" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:core="using:Microsoft.Xaml.Interactions.Core" xmlns:interactivity="using:Microsoft.Xaml.Interactivity" mc:Ignorable="d">
+<Page x:Class="openHAB.Windows.View.LogViewerPage" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:core="using:Microsoft.Xaml.Interactions.Core" xmlns:interactivity="using:Microsoft.Xaml.Interactivity" mc:Ignorable="d">
   <Page.Background>
     <ImageBrush ImageSource="/Assets/background.jpg" Stretch="UniformToFill" />
   </Page.Background>

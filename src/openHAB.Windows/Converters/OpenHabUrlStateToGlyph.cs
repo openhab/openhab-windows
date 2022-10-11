@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenHAB.Core.Model;
+using openHAB.Core.Model;
 using Microsoft.UI.Xaml.Data;
 
-namespace OpenHAB.Windows.Converters
+namespace openHAB.Windows.Converters
 {
     /// <summary>
     /// Converts OpenHABUlrState value to corresponding ui glyph.

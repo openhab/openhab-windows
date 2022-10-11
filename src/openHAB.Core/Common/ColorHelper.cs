@@ -2,7 +2,7 @@ using System;
 using System.Numerics;
 using Windows.UI;
 
-namespace OpenHAB.Core.Common
+namespace openHAB.Core.Common
 {
     /// <summary>
     /// Helper methods for Color.

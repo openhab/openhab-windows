@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Windows.System.Profile;
 using Windows.UI.ViewManagement;
 
-namespace OpenHAB.Core.Common
+namespace openHAB.Core.Common
 {
     /// <summary>Helper class to get the target platform the app is running on.</summary>
     public class DeviceTypeHelper

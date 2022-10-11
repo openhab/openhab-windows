@@ -3,17 +3,17 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppLifecycle;
 using System;
 using openHAB.Windows;
-using OpenHAB.Windows.View;
+using openHAB.Windows.View;
 using Microsoft.Extensions.Logging;
-using OpenHAB.Core.Contracts.Services;
-using OpenHAB.Windows.Services;
-using OpenHAB.Core.Services;
+using openHAB.Windows.Services;
 using Microsoft.UI.Dispatching;
+using openHAB.Core.Services.Contracts;
+using openHAB.Core.Notification.Contracts;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace OpenHAB.Windows
+namespace openHAB.Windows
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.

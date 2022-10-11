@@ -13,10 +13,10 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Windows.Foundation;
 using Windows.UI;
-using ColorChangedEventArgs = OpenHAB.Core.Common.ColorChangedEventArgs;
-using ColorHelper = OpenHAB.Core.Common.ColorHelper;
+using ColorChangedEventArgs = openHAB.Core.Common.ColorChangedEventArgs;
+using ColorHelper = openHAB.Core.Common.ColorHelper;
 
-namespace OpenHAB.Windows.Controls
+namespace openHAB.Windows.Controls
 {
     /// <summary>
     /// Colorpicker control.

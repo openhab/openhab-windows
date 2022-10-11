@@ -1,6 +1,6 @@
-using OpenHAB.Core.Model.Event;
+using openHAB.Core.Model.Event;
 
-namespace OpenHAB.Core.Services
+namespace openHAB.Core.Notification.Contracts
 {
     /// <summary>openHAB event parser.</summary>
     public interface IOpenHABEventParser

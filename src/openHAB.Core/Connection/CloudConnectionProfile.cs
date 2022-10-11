@@ -1,9 +1,10 @@
-using OpenHAB.Core.Contracts;
+using openHAB.Core.Connection.Contracts;
+using openHAB.Core;
 
-namespace OpenHAB.Core.Model.Connection
+namespace openHAB.Core.Connection
 {
     /// <summary>Connection profile for for local custom connection to OpenHab server.</summary>
-    /// <seealso cref="OpenHAB.Core.Contracts.IConnectionProfile" />
+    /// <seealso cref="IConnectionProfile" />
     public class CloudConnectionProfile : IConnectionProfile
     {
         /// <inheritdoc/>

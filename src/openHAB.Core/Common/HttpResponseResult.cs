@@ -1,7 +1,7 @@
 using System;
 using System.Net;
 
-namespace OpenHAB.Core.Common
+namespace openHAB.Core.Common
 {
     /// <summary>HTTP response result.</summary>
     /// <typeparam name="T">Content Type.</typeparam>

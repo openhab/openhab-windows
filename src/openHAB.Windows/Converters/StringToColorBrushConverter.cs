@@ -5,7 +5,7 @@ using Microsoft.UI.Xaml.Markup;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI;
 
-namespace OpenHAB.Windows.Converters
+namespace openHAB.Windows.Converters
 {
     /// <summary>Convert color string e.g. 'green' to Color.Green. </summary>
     public class StringToColorBrushConverter : IValueConverter

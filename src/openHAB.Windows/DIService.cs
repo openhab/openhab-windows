@@ -6,16 +6,17 @@ using NLog.Config;
 using NLog.Extensions.Logging;
 using NLog.Layouts;
 using NLog.Targets;
-using OpenHAB.Core.Common;
-using OpenHAB.Core.Contracts.Services;
-using OpenHAB.Core.Model;
-using OpenHAB.Core.SDK;
-using OpenHAB.Core.Services;
-using OpenHAB.Windows.ViewModel;
-using System;
+using openHAB.Core.Common;
+using openHAB.Core.Model;
+using openHAB.Core.Notification;
+using openHAB.Core.Notification.Contracts;
+using openHAB.Core.SDK;
+using openHAB.Core.Services;
+using openHAB.Core.Services.Contracts;
+using openHAB.Windows.ViewModel;
 using Windows.Storage;
 
-namespace OpenHAB.Windows.Services
+namespace openHAB.Windows.Services
 {
     /// <summary>
     /// Dependency Injection Service.
@@ -61,6 +62,7 @@ namespace OpenHAB.Windows.Services
 
             //_services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<OpenHABHttpClient>();
+            services.AddSingleton<IConnectionService, ConnectionService>();
             services.AddSingleton<IIconCaching, IconCaching>();
             services.AddSingleton<IAppManager, AppManager>();
             services.AddSingleton<IItemManager, ItemManager>();

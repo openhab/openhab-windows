@@ -1,8 +1,8 @@
-﻿<Application x:Class="OpenHAB.Windows.App"
+﻿<Application x:Class="openHAB.Windows.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:controls="using:OpenHAB.Windows.Controls"
-             xmlns:converters="using:OpenHAB.Windows.Converters"
+             xmlns:controls="using:openHAB.Windows.Controls"
+             xmlns:converters="using:openHAB.Windows.Converters"
              RequestedTheme="Light">
     <Application.Resources>
         <ResourceDictionary>

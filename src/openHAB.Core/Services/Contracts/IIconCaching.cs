@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace OpenHAB.Core.Services
+namespace openHAB.Core.Services.Contracts
 {
     /// <summary>
     /// Caching mechanism for widget icons.

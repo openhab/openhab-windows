@@ -1,6 +1,6 @@
 using Windows.ApplicationModel.Resources;
 
-namespace OpenHAB.Core
+namespace openHAB.Core
 {
     /// <summary>
     ///   Resources.

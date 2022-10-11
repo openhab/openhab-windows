@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using OpenHAB.Core.Model;
-using OpenHAB.Core.SDK;
-using OpenHAB.Windows.Services;
+using openHAB.Core.Model;
+using openHAB.Core.SDK;
+using openHAB.Windows.Services;
 
-namespace OpenHAB.Windows.ViewModel
+namespace openHAB.Windows.ViewModel
 {
     /// <summary>
     /// A class that represents an OpenHAB sitemap.

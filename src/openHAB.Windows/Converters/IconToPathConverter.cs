@@ -1,12 +1,12 @@
 using System;
 using System.Text.RegularExpressions;
-using OpenHAB.Core.Common;
-using OpenHAB.Core.Contracts.Services;
-using OpenHAB.Core.Model;
-using OpenHAB.Windows.Services;
+using openHAB.Core.Common;
+using openHAB.Core.Model;
+using openHAB.Windows.Services;
 using Microsoft.UI.Xaml.Data;
+using openHAB.Core.Services.Contracts;
 
-namespace OpenHAB.Windows.Converters
+namespace openHAB.Windows.Converters
 {
     /// <summary>
     /// Converts an OpenHAB widget icon to a full path.

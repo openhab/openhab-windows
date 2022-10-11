@@ -6,13 +6,14 @@ using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
-using OpenHAB.Core;
-using OpenHAB.Core.Messages;
-using OpenHAB.Core.Model;
-using OpenHAB.Windows.Services;
-using OpenHAB.Windows.ViewModel;
+using openHAB.Core.Messages;
+using openHAB.Core;
+using openHAB.Core.Messages;
+using openHAB.Core.Model;
+using openHAB.Windows.Services;
+using openHAB.Windows.ViewModel;
 
-namespace OpenHAB.Windows.View
+namespace openHAB.Windows.View
 {
     /// <summary>
     /// Startup page of the application.
@@ -87,8 +88,7 @@ namespace OpenHAB.Windows.View
                     errorMessage = message.ErrorMessage;
                 }
 
-                DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-                await dispatcherQueue.EnqueueAsync(() =>
+                await App.DispatcherQueue.EnqueueAsync(() =>
                 {
                     ErrorNotification.Message = errorMessage;
                     ErrorNotification.IsOpen = true;
@@ -120,9 +120,7 @@ namespace OpenHAB.Windows.View
                         break;
                 }
 
-
-                DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-                await dispatcherQueue.EnqueueAsync(() =>
+                await App.DispatcherQueue.EnqueueAsync(() =>
                 {
                     InfoNotification.Message = message;
                       InfoNotification.IsOpen = true;

@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 // ReSharper disable once CheckNamespace
-namespace System.Collections.ObjectModel
+namespace openHAB.Core.Common
 {
     /// <summary>
     /// Collection of extensions for the ObservableCollection class.

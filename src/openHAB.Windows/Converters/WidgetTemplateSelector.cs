@@ -1,10 +1,10 @@
 using System.Linq;
-using OpenHAB.Core.Common;
-using OpenHAB.Core.Model;
+using openHAB.Core.Common;
+using openHAB.Core.Model;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
-namespace OpenHAB.Windows.Converters
+namespace openHAB.Windows.Converters
 {
     /// <summary>
     /// TemplateSelector that determines what widget needs to be shown in the UI.

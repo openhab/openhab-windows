@@ -1,6 +1,6 @@
 using System;
 
-namespace OpenHAB.Core.Model
+namespace openHAB.Core.Model
 {
     /// <summary>
     /// An Exception class used to throw unexpected errors.

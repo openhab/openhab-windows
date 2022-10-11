@@ -1,4 +1,4 @@
-namespace OpenHAB.Core.Model
+namespace openHAB.Core.Model
 {
     /// <summary>Information about openHAB server.</summary>
     public class ServerInfo

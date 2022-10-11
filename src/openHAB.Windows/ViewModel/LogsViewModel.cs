@@ -5,14 +5,14 @@ using System.Windows.Input;
 using CommunityToolkit.WinUI;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
-using OpenHAB.Core.Common;
+using openHAB.Core.Common;
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Core;
 using DispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue;
 
-namespace OpenHAB.Windows.ViewModel
+namespace openHAB.Windows.ViewModel
 {
     /// <summary>
     /// ViewModel for application logs.

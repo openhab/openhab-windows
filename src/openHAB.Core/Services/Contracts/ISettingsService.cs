@@ -1,6 +1,6 @@
-using OpenHAB.Core.Model;
+using openHAB.Core.Model;
 
-namespace OpenHAB.Core.Contracts.Services
+namespace openHAB.Core.Services.Contracts
 {
     /// <summary>
     /// Service to fetch / save user-defined settings.

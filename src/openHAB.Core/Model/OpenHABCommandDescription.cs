@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace OpenHAB.Core.Model
+namespace openHAB.Core.Model
 {
     /// <summary>
     /// A mapping for an OpenHAB Widget.

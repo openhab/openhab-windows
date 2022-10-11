@@ -1,7 +1,7 @@
 using System;
 using Windows.UI;
 
-namespace OpenHAB.Core.Common
+namespace openHAB.Core.Common
 {
     /// <summary>
     /// Event arguments for a color changed event.

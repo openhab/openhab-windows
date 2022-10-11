@@ -1,6 +1,6 @@
-using OpenHAB.Core.Model;
+using openHAB.Core.Model;
 
-namespace OpenHAB.Core.Messages
+namespace openHAB.Core.Messages
 {
     /// <summary>
     /// A message that fires whenever a widget is clicked on a sitemap.

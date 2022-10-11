@@ -1,12 +1,12 @@
 using System;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
-using OpenHAB.Core.Common;
-using OpenHAB.Core.Messages;
-using OpenHAB.Core.Services;
+using openHAB.Core.Services.Contracts;
+using openHAB.Core.Common;
+using openHAB.Core.Messages;
 using Windows.ApplicationModel;
 
-namespace OpenHAB.Windows.ViewModel
+namespace openHAB.Windows.ViewModel
 {
     /// <summary>
     /// Collects and formats all the data for user defined settings.

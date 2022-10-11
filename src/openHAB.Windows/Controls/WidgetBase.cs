@@ -1,14 +1,14 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using OpenHAB.Core.Model;
+using openHAB.Core.Model;
 using Windows.UI.Core;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using CommunityToolkit.WinUI;
 
-namespace OpenHAB.Windows.Controls
+namespace openHAB.Windows.Controls
 {
     /// <summary>
     /// A base class for all OpenHAB widget controls.

@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace OpenHAB.Core.Services
+namespace openHAB.Core.Services.Contracts
 {
     /// <summary>Manages app behaviour like autostart.</summary>
     public interface IAppManager

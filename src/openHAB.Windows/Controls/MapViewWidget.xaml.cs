@@ -9,9 +9,9 @@ using Mapsui.Widgets.ScaleBar;
 using Mapsui.Widgets.Zoom;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
-using OpenHAB.Windows.Extensions;
+using openHAB.Windows.Extensions;
 
-namespace OpenHAB.Windows.Controls
+namespace openHAB.Windows.Controls
 {
     /// <summary>
     /// Widget control that represents an OpenHAB Map.

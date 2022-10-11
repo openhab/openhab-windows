@@ -1,12 +1,12 @@
 using System.Linq;
 using CommunityToolkit.Mvvm.Messaging;
-using OpenHAB.Core.Messages;
-using OpenHAB.Core.Model;
+using openHAB.Core.Messages;
+using openHAB.Core.Model;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Dispatching;
 using CommunityToolkit.WinUI;
 
-namespace OpenHAB.Windows.Controls
+namespace openHAB.Windows.Controls
 {
     /// <summary>
     /// Widget control that represents an OpenHAB switch.

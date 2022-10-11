@@ -1,10 +1,11 @@
+using openHAB.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenHAB.Core.Model
+namespace openHAB.Core.Model
 {
     /// <summary>Specifies the current connection profile.</summary>
     public class OpenHABConnectionProfile

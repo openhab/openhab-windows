@@ -1,6 +1,6 @@
-using OpenHAB.Core.Model;
+using openHAB.Core.Model;
 
-namespace OpenHAB.Core.Services
+namespace openHAB.Core.Services.Contracts
 {
     /// <summary>Stores and Fetches data about openHabItems.</summary>
     public interface IItemManager

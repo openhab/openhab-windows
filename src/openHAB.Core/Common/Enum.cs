@@ -1,6 +1,6 @@
 using System;
 
-namespace OpenHAB.Core.Common
+namespace openHAB.Core.Common
 {
     /// <summary>
     /// Now you can use Generics to have cleaner code when enum parsing!.

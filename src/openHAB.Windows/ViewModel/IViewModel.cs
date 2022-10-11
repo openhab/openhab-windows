@@ -1,4 +1,4 @@
-namespace OpenHAB.Windows.ViewModel
+namespace openHAB.Windows.ViewModel
 {
     /// <summary>
     /// IViewModelModelProp.

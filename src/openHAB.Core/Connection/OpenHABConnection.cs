@@ -1,7 +1,7 @@
-using OpenHAB.Core.Common;
-using OpenHAB.Core.Contracts;
+using openHAB.Core.Connection.Contracts;
+using openHAB.Core.Common;
 
-namespace OpenHAB.Core.Model.Connection
+namespace openHAB.Core.Connection
 {
     /// <summary>
     /// Connection configuration for OpenHAB service or cloud instance.

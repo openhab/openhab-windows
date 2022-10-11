@@ -1,4 +1,4 @@
-namespace OpenHAB.Core.Messages
+namespace openHAB.Core.Messages
 {
     /// <summary>
     /// A message to trigger an item update coming from a server event.

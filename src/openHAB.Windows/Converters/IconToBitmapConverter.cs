@@ -1,11 +1,11 @@
 using System;
-using OpenHAB.Core.Contracts.Services;
-using OpenHAB.Core.Model;
-using OpenHAB.Windows.Services;
+using openHAB.Core.Model;
+using openHAB.Windows.Services;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media.Imaging;
+using openHAB.Core.Services.Contracts;
 
-namespace OpenHAB.Windows.Converters
+namespace openHAB.Windows.Converters
 {
     /// <summary>
     /// Converts an icon path to a bitmap object.

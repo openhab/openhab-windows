@@ -1,6 +1,4 @@
-using OpenHAB.Core.Model.Connection;
-
-namespace OpenHAB.Core.Contracts
+namespace openHAB.Core.Connection.Contracts
 {
     /// <summary>Interface for connection profiles.</summary>
     public interface IConnectionProfile

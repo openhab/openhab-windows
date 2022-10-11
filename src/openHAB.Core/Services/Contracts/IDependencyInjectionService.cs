@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace OpenHAB.Core.Contracts.Services
+namespace openHAB.Core.Services.Contracts
 {
     /// <summary>
     /// Interface for Dependency Injection service.

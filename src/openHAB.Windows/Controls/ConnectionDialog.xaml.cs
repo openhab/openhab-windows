@@ -1,8 +1,8 @@
-using OpenHAB.Windows.ViewModel;
+using openHAB.Windows.ViewModel;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Markup;
 
-namespace OpenHAB.Windows.Controls
+namespace openHAB.Windows.Controls
 {
     /// <summary>Dialog control for connection configruation.</summary>
     /// <seealso cref="ContentDialog" />

@@ -7,14 +7,14 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
-using OpenHAB.Core;
-using OpenHAB.Core.Messages;
-using OpenHAB.Core.Services;
-using OpenHAB.Windows.Controls;
-using OpenHAB.Windows.Services;
-using OpenHAB.Windows.ViewModel;
+using openHAB.Core.Services.Contracts;
+using openHAB.Core;
+using openHAB.Core.Messages;
+using openHAB.Windows.Controls;
+using openHAB.Windows.Services;
+using openHAB.Windows.ViewModel;
 
-namespace OpenHAB.Windows.View
+namespace openHAB.Windows.View
 {
     /// <summary>
     /// In this page users can set their connection to the OpenHAB server.
@@ -163,8 +163,7 @@ namespace OpenHAB.Windows.View
             bool toggleIsOn = toggleSwitch.IsOn;
             var autostartEnabled = await _appManager.IsStartupEnabled().ConfigureAwait(false);
 
-            DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-            await dispatcherQueue.EnqueueAsync(async () =>
+            await App.DispatcherQueue.EnqueueAsync(async () =>
             {
                 if (autostartEnabled != toggleIsOn)
                 {

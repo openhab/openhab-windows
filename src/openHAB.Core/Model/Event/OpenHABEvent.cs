@@ -1,4 +1,4 @@
-namespace OpenHAB.Core.Model.Event
+namespace openHAB.Core.Model.Event
 {
     /// <summary>OpenHAB event.</summary>
     public class OpenHABEvent

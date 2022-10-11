@@ -4,24 +4,39 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CommunityToolkit.WinUI.Helpers;
 using Microsoft.Extensions.Logging;
-using OpenHAB.Core.Model;
+using openHAB.Core.Common;
+using openHAB.Core.Model;
+using openHAB.Core.Services.Contracts;
 using Windows.Storage;
+using openHAB.Core.Connection;
 
-namespace OpenHAB.Core.Services
+namespace openHAB.Core.Services
 {
     /// <inheritdoc/>
     public class IconCaching : IIconCaching
     {
         private string _iconCacheDirectory = "icons";
         private StorageFolder _cacheFolder;
+        private OpenHABHttpClient _openHABHttpClient;
+        private IConnectionService _connectionService;
+        private ISettingsService _settingsService;
+        private Settings _settings;
         private ILogger<IconCaching> _logger;
 
         /// <summary>Initializes a new instance of the <see cref="IconCaching" /> class.</summary>
+        /// <param name="openHABHttpClient">HTTP Client factory.</param>
+        /// <param name="connectionService">ConnectionService to retrive the connection details.</param>
+        /// <param name="settingsService">Setting Service to load settings.</param>
         /// <param name="logger">The logger.</param>
-        public IconCaching(ILogger<IconCaching> logger)
+        public IconCaching(OpenHABHttpClient openHABHttpClient, IConnectionService connectionService,
+            ISettingsService settingsService, ILogger<IconCaching> logger)
         {
             _logger = logger;
             _cacheFolder = ApplicationData.Current.LocalCacheFolder;
+            _openHABHttpClient = openHABHttpClient;
+            _connectionService = connectionService;
+            _settingsService = settingsService;
+            _settings = settingsService.Load();
         }
 
         /// <inheritdoc/>
@@ -69,7 +84,8 @@ namespace OpenHAB.Core.Services
 
         private async Task DownloadAndSaveIconToCache(string iconUrl, string iconFileName, StorageFolder storageFolder)
         {
-            using (HttpClient httpClient = new HttpClient())
+            OpenHABConnection connection = await _connectionService.DetectAndRetriveConnection(_settings).ConfigureAwait(false);
+            using (HttpClient httpClient = _openHABHttpClient.DisposableClient(connection, _settings))
             {
                 HttpResponseMessage httpResponse = await httpClient.GetAsync(new Uri(iconUrl)).ConfigureAwait(false);
 

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using OpenHAB.Core.Contracts;
-using OpenHAB.Core.Model.Connection;
+using openHAB.Core.Connection;
+using openHAB.Core.Connection.Contracts;
 
-namespace OpenHAB.Core.Model
+namespace openHAB.Core.Model
 {
     /// <summary>
     /// Class that holds all the OpenHAB Windows app settings.

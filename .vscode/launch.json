@@ -1,0 +1,38 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "PowerShell Launch Current File",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${file}",
+            "cwd": "${file}",
+            "args": [
+                "-SourceDirectory", "${workspaceFolder}/src",
+                "-Major", "2022",
+                "-Minor","9", 
+                "-Build","12",
+                "-Revision", "0",
+                "-SetVersion"
+            ]
+        },
+        {
+            "name": "Build: Launch Version Script",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "./Set-Version.ps1",
+            "cwd": "${workspaceFolder}/.github/workflows/scripts/",
+            "args": [
+                "-SourceDirectory", "${workspaceFolder}/src",
+                "-Major", "2022",
+                "-Minor","9", 
+                "-Build","12",
+                "-Revision", "0",
+                "-SetVersion"
+            ]
+        }
+    ]
+}

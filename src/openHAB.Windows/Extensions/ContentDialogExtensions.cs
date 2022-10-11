@@ -3,7 +3,7 @@ using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
 using Microsoft.UI.Xaml.Controls;
 
-namespace OpenHAB.Windows.Extensions
+namespace openHAB.Windows.Extensions
 {
     /// <summary>Extensions for ContentDialog control.</summary>
     public static class ContentDialogExtensions

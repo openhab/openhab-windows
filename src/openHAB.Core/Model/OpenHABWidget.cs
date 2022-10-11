@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 using Newtonsoft.Json;
 
-namespace OpenHAB.Core.Model
+namespace openHAB.Core.Model
 {
     /// <summary>
     /// A class that represents an OpenHAB widget.

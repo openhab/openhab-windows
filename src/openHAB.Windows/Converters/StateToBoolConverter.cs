@@ -1,8 +1,8 @@
 using System;
-using OpenHAB.Core.Model;
+using openHAB.Core.Model;
 using Microsoft.UI.Xaml.Data;
 
-namespace OpenHAB.Windows.Converters
+namespace openHAB.Windows.Converters
 {
     /// <summary>
     /// Converts a boolean string value to a .NET bool.

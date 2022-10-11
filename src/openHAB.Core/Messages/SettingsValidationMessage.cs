@@ -1,4 +1,4 @@
-namespace OpenHAB.Core.Messages
+namespace openHAB.Core.Messages
 {
     /// <summary>
     /// A message object that triggers a refresh of data after changing the settings.

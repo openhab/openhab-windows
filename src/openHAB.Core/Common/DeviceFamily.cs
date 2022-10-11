@@ -1,4 +1,4 @@
-namespace OpenHAB.Core.Common
+namespace openHAB.Core.Common
 {
     /// <summary>Specifies Device Platform.</summary>
     public enum DeviceFamily

@@ -1,6 +1,6 @@
-using OpenHAB.Core.Common;
+using openHAB.Core.Common;
 
-namespace OpenHAB.Core.Messages
+namespace openHAB.Core.Messages
 {
     /// <summary>
     /// Triggers a visual error message.

@@ -1,14 +1,16 @@
 using System.Globalization;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI.Notifications;
-using OpenHAB.Core.Common;
-using OpenHAB.Core.Contracts.Services;
-using OpenHAB.Core.Messages;
-using OpenHAB.Core.Model;
+using openHAB.Core.Notification.Contracts;
+using openHAB.Core.Services.Contracts;
+using openHAB.Core;
+using openHAB.Core.Common;
+using openHAB.Core.Messages;
+using openHAB.Core.Model;
 using Windows.UI.Notifications;
 using XmlDocument = Windows.Data.Xml.Dom.XmlDocument;
 
-namespace OpenHAB.Core.Services
+namespace openHAB.Core.Notification
 {
     /// <inheritdoc/>
     public class NotificationManager : INotificationManager

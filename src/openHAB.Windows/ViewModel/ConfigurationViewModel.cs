@@ -4,17 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.WinUI;
 using Microsoft.Extensions.Logging;
-using Microsoft.UI.Dispatching;
-using OpenHAB.Core.Contracts.Services;
-using OpenHAB.Core.Messages;
-using OpenHAB.Core.Model;
-using OpenHAB.Core.Model.Connection;
-using OpenHAB.Core.SDK;
-using OpenHAB.Core.Services;
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
+using openHAB.Core.Connection;
+using openHAB.Core.Model;
+using openHAB.Core.Services.Contracts;
 
-namespace OpenHAB.Windows.ViewModel
+namespace openHAB.Windows.ViewModel
 {
     /// <summary>
     /// Class that holds all the OpenHAB Windows application settings.
@@ -41,7 +35,7 @@ namespace OpenHAB.Windows.ViewModel
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationViewModel"/> class.
         /// </summary>
-        public ConfigurationViewModel(ISettingsService settingsService, IAppManager appManager, IOpenHAB openHabsdk, ILogger<ConfigurationViewModel> logger, Settings settings)
+        public ConfigurationViewModel(ISettingsService settingsService, IAppManager appManager, IConnectionService connectionService, ILogger<ConfigurationViewModel> logger, Settings settings)
             : base(new object())
         {
             _settingsService = settingsService;
@@ -49,10 +43,10 @@ namespace OpenHAB.Windows.ViewModel
             _settings = settings;
             _appManager = appManager;
 
-            _localConnection = new ConnectionDialogViewModel(_settings.LocalConnection, openHabsdk, OpenHABHttpClientType.Local);
+            _localConnection = new ConnectionDialogViewModel(_settings.LocalConnection, connectionService, OpenHABHttpClientType.Local);
             _localConnection.PropertyChanged += ConnectionPropertyChanged;
 
-            _remoteConnection = new ConnectionDialogViewModel(_settings.RemoteConnection, openHabsdk, OpenHABHttpClientType.Remote);
+            _remoteConnection = new ConnectionDialogViewModel(_settings.RemoteConnection, connectionService, OpenHABHttpClientType.Remote);
             _remoteConnection.PropertyChanged += ConnectionPropertyChanged;
 
             _isRunningInDemoMode = _settings.IsRunningInDemoMode;

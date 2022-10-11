@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace OpenHAB.Core.Model
+namespace openHAB.Core.Model
 {
     /// <summary>Use to serialize api information from openHAB server.</summary>
     public partial class Link

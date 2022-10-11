@@ -7,9 +7,9 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Dispatching;
 using Newtonsoft.Json;
-using OpenHAB.Core.Messages;
+using openHAB.Core.Messages;
 
-namespace OpenHAB.Core.Model
+namespace openHAB.Core.Model
 {
     /// <summary>
     /// A class that represents an OpenHAB item.

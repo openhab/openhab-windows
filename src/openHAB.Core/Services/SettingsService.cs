@@ -1,13 +1,13 @@
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using OpenHAB.Core.Common;
-using OpenHAB.Core.Contracts.Services;
-using OpenHAB.Core.Model;
+using openHAB.Core.Common;
+using openHAB.Core.Model;
+using openHAB.Core.Services.Contracts;
 using Windows.Globalization;
 using Windows.Storage;
 using Windows.System.UserProfile;
 
-namespace OpenHAB.Core.Services
+namespace openHAB.Core.Services
 {
     /// <summary>
     /// Service that handles all settings operations.
