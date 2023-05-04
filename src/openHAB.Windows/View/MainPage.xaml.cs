@@ -1,17 +1,15 @@
-using System;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
 using Microsoft.Extensions.Logging;
-using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
-using openHAB.Core.Messages;
 using openHAB.Core;
 using openHAB.Core.Messages;
 using openHAB.Core.Model;
 using openHAB.Windows.Services;
 using openHAB.Windows.ViewModel;
+using System;
+using System.Threading.Tasks;
 
 namespace openHAB.Windows.View
 {
@@ -54,7 +52,7 @@ namespace openHAB.Windows.View
         /// <inheritdoc/>
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            StrongReferenceMessenger.Default.Register<FireErrorMessage>(this, async (recipient,  msg) => await ShowErrorMessage(recipient, msg));
+            StrongReferenceMessenger.Default.Register<FireErrorMessage>(this, async (recipient, msg) => await ShowErrorMessage(recipient, msg));
             StrongReferenceMessenger.Default.Register<FireInfoMessage>(this, async (recipient, msg) => await ShowInfoMessage(recipient, msg));
 
             await Vm.LoadSitemapsAndItemData().ConfigureAwait(false);
@@ -123,8 +121,8 @@ namespace openHAB.Windows.View
                 await App.DispatcherQueue.EnqueueAsync(() =>
                 {
                     InfoNotification.Message = message;
-                      InfoNotification.IsOpen = true;
-                  });
+                    InfoNotification.IsOpen = true;
+                });
             }
             catch (Exception ex)
             {

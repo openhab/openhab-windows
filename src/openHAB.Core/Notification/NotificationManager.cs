@@ -1,12 +1,11 @@
-using System.Globalization;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI.Notifications;
-using openHAB.Core.Notification.Contracts;
-using openHAB.Core.Services.Contracts;
-using openHAB.Core;
 using openHAB.Core.Common;
 using openHAB.Core.Messages;
 using openHAB.Core.Model;
+using openHAB.Core.Notification.Contracts;
+using openHAB.Core.Services.Contracts;
+using System.Globalization;
 using Windows.UI.Notifications;
 using XmlDocument = Windows.Data.Xml.Dom.XmlDocument;
 

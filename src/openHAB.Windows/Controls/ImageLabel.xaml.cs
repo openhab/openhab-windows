@@ -1,11 +1,11 @@
-using System;
-using System.Text.RegularExpressions;
-using openHAB.Windows.Services;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using openHAB.Core.Services.Contracts;
+using openHAB.Windows.Services;
+using System;
+using System.Text.RegularExpressions;
 
 namespace openHAB.Windows.Controls
 {

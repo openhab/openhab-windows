@@ -1,17 +1,16 @@
-﻿using System;
-using System.Net.Http;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI.Connectivity;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using openHAB.Core.Connection;
-using openHAB.Core.Services.Contracts;
-using openHAB.Core;
 using openHAB.Core.Common;
+using openHAB.Core.Connection;
 using openHAB.Core.Messages;
 using openHAB.Core.Model;
+using openHAB.Core.Services.Contracts;
+using System;
+using System.Net.Http;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace openHAB.Core.Services
 {

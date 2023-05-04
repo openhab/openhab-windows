@@ -1,7 +1,7 @@
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.UI.Xaml;
 using openHAB.Core.Messages;
 using openHAB.Core.Model;
-using Microsoft.UI.Xaml;
 
 namespace openHAB.Windows.Controls
 {

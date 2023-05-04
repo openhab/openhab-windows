@@ -1,21 +1,21 @@
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.WinUI;
+using Microsoft.Extensions.Logging;
+using Microsoft.UI.Dispatching;
+//using Microsoft.Services.Store.Engagement;
+using openHAB.Core;
+using openHAB.Core.Common;
+using openHAB.Core.Messages;
+using openHAB.Core.Model;
+using openHAB.Core.SDK;
+using openHAB.Core.Services;
+using openHAB.Core.Services.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.WinUI;
-using Microsoft.Extensions.Logging;
-using Microsoft.UI.Dispatching;
-using openHAB.Core.Common;
-using openHAB.Core.Messages;
-using openHAB.Core.Services.Contracts;
-//using Microsoft.Services.Store.Engagement;
-using openHAB.Core;
-using openHAB.Core.Model;
-using openHAB.Core.SDK;
-using openHAB.Core.Services;
 
 namespace openHAB.Windows.ViewModel
 {

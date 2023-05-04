@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using openHAB.Core.Common;
 using openHAB.Core.Connection;
-using openHAB.Core.Common;
 using openHAB.Core.Model;
+using System.Threading.Tasks;
 
 namespace openHAB.Core.Services.Contracts
 {

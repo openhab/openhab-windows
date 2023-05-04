@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using CommunityToolkit.WinUI;
 using Microsoft.Extensions.Logging;
 using openHAB.Core.Connection;
 using openHAB.Core.Model;
 using openHAB.Core.Services.Contracts;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace openHAB.Windows.ViewModel
 {

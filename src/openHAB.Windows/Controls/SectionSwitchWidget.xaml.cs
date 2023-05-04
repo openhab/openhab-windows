@@ -1,4 +1,3 @@
-using System.Linq;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI.UI;
 using Microsoft.UI.Xaml;
@@ -7,6 +6,7 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using openHAB.Core.Messages;
 using openHAB.Core.Model;
+using System.Linq;
 
 namespace openHAB.Windows.Controls
 {
@@ -50,7 +50,7 @@ namespace openHAB.Windows.Controls
         private void Button_OnClick(object sender, TappedRoutedEventArgs e)
         {
             ToggleButton button = sender as ToggleButton;
-            if(button == null)
+            if (button == null)
             {
                 return;
             }

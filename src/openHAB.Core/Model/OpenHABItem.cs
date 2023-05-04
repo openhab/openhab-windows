@@ -1,11 +1,8 @@
-using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.WinUI;
-using Microsoft.UI.Dispatching;
 using Newtonsoft.Json;
 using openHAB.Core.Messages;
 

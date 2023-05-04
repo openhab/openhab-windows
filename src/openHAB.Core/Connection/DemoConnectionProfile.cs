@@ -1,6 +1,5 @@
-using openHAB.Core.Connection.Contracts;
-using openHAB.Core;
 using openHAB.Core.Common;
+using openHAB.Core.Connection.Contracts;
 
 namespace openHAB.Core.Connection
 {

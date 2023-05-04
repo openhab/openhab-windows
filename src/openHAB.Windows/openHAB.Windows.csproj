@@ -91,7 +91,6 @@
 		<None Include="..\..\.sonarlint\openhab_openhab-windowscsharp.ruleset">
 			<Link>openhab_openhab-windowscsharp.ruleset</Link>
 		</None>
-		<None Include="App.xaml.old.cs" />
 	</ItemGroup>
 	<ItemGroup>
 		<AppxManifest Include="Package.appxmanifest">
@@ -141,7 +140,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Remove="Properties\Annotations.cs" />
-		<Compile Remove="App.xaml.old.cs" />
 	</ItemGroup>
 	<ItemGroup>
 	  <None Remove="Controls\MapViewWidget.xaml" />

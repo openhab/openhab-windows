@@ -1,17 +1,13 @@
+using Microsoft.Extensions.Logging;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppLifecycle;
-using System;
-using openHAB.Windows;
-using openHAB.Windows.View;
-using Microsoft.Extensions.Logging;
-using openHAB.Windows.Services;
-using Microsoft.UI.Dispatching;
-using openHAB.Core.Services.Contracts;
 using openHAB.Core.Notification.Contracts;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+using openHAB.Core.Services.Contracts;
+using openHAB.Windows.Services;
+using openHAB.Windows.View;
+using System;
 
 namespace openHAB.Windows
 {
@@ -23,10 +19,8 @@ namespace openHAB.Windows
         private ILogger<App> _logger;
         private ISettingsService _settingsService;
 
-
         /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
+        /// Initializes a new instance of the <see cref="App" /> class.
         /// </summary>
         public App()
         {
@@ -35,10 +29,10 @@ namespace openHAB.Windows
 
             DispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
-            _logger = (ILogger<App>)DIService.Instance.GetService<ILogger<App>>();
-            _settingsService = (ISettingsService)DIService.Instance.GetService<ISettingsService>();
+            _logger = DIService.Instance.GetService<ILogger<App>>();
+            _settingsService = DIService.Instance.GetService<ISettingsService>();
 
-            INotificationManager notificationManager = (INotificationManager)DIService.Instance.GetService<INotificationManager>();
+            INotificationManager notificationManager = DIService.Instance.GetService<INotificationManager>();
             notificationManager.ResetBadgeCount();
         }
 
@@ -52,7 +46,7 @@ namespace openHAB.Windows
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
-        /// <param name="args">Details about the launch request and process.</param>
+        /// <param name="e">Details about the launch request and process.</param>
         protected override async void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs e)
         {
             _logger.LogInformation("=== Start Application ===");
@@ -91,15 +85,17 @@ namespace openHAB.Windows
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
+
                 // Place the frame in the current Window
                 MainWindow.Content = rootFrame;
             }
+
             if (rootFrame.Content == null)
             {
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                // TODO Raname this MainPage type in case your app MainPage has a different name
+                // TODO Rename this MainPage type in case your app MainPage has a different name
                 rootFrame.Navigate(typeof(MainPage), e.Arguments);
             }
 
@@ -111,7 +107,6 @@ namespace openHAB.Windows
         // Feel free to remove this if you do not need this.
         public void OnFileActivated(AppActivationArguments activatedEventArgs)
         {
-
         }
 
         public static DispatcherQueue DispatcherQueue { get; private set; }

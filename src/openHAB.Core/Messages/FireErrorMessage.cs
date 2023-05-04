@@ -1,5 +1,3 @@
-using openHAB.Core.Common;
-
 namespace openHAB.Core.Messages
 {
     /// <summary>

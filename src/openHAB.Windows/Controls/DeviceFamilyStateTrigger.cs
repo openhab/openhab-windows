@@ -1,5 +1,5 @@
-using openHAB.Core.Common;
 using Microsoft.UI.Xaml;
+using openHAB.Core.Common;
 
 namespace openHAB.Windows.Controls
 {

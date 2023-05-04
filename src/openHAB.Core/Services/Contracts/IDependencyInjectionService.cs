@@ -1,5 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
-
 namespace openHAB.Core.Services.Contracts
 {
     /// <summary>

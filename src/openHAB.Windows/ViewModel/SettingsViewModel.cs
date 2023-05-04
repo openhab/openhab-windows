@@ -1,9 +1,9 @@
-using System;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
-using openHAB.Core.Services.Contracts;
 using openHAB.Core.Common;
 using openHAB.Core.Messages;
+using openHAB.Core.Services.Contracts;
+using System;
 using Windows.ApplicationModel;
 
 namespace openHAB.Windows.ViewModel

@@ -53,6 +53,13 @@ namespace openHAB.Core.Services
                 return new Settings();
             }
 
+            // Fix to ensure the settings can still loaded after project restructing
+            // TODO: Remove this part in future
+            if (json.Contains("OpenHAB.Core.Model.Connection"))
+            {
+                json = json.Replace("OpenHAB.Core.Model.Connection", "openHAB.Core.Connection");
+            }
+
             return JsonConvert.DeserializeObject<Settings>(json, _serializerSettings);
         }
 

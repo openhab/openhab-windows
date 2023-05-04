@@ -1,15 +1,12 @@
+using CommunityToolkit.WinUI;
+using Microsoft.Extensions.Logging;
+using openHAB.Core.Common;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using CommunityToolkit.WinUI;
-using Microsoft.Extensions.Logging;
-using Microsoft.UI.Dispatching;
-using openHAB.Core.Common;
-using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.System;
-using Windows.UI.Core;
 using DispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue;
 
 namespace openHAB.Windows.ViewModel

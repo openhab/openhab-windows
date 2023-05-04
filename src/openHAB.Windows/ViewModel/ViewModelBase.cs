@@ -1,7 +1,7 @@
+using openHAB.Core.Common;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using openHAB.Core.Common;
 
 namespace openHAB.Windows.ViewModel
 {

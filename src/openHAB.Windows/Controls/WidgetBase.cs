@@ -1,12 +1,9 @@
-using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using openHAB.Core.Model;
-using Windows.UI.Core;
+using CommunityToolkit.WinUI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
-using CommunityToolkit.WinUI;
+using openHAB.Core.Model;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace openHAB.Windows.Controls
 {

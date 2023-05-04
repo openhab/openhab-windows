@@ -1,9 +1,8 @@
-using System;
-using System.IO;
-using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Imaging;
+using System;
+using System.Threading.Tasks;
 using Windows.Storage.Streams;
 
 namespace openHAB.Windows.Controls
@@ -75,11 +74,11 @@ namespace openHAB.Windows.Controls
 
             ThumbImage.Source = new BitmapImage(
                     new Uri(url, UriKind.Absolute))
-                { CreateOptions = BitmapCreateOptions.IgnoreImageCache };
+            { CreateOptions = BitmapCreateOptions.IgnoreImageCache };
 
             FullImage.Source = new BitmapImage(
                     new Uri(url, UriKind.Absolute))
-                { CreateOptions = BitmapCreateOptions.IgnoreImageCache };
+            { CreateOptions = BitmapCreateOptions.IgnoreImageCache };
         }
 
         private async void ImageWidget_OnTapped(object sender, TappedRoutedEventArgs e)

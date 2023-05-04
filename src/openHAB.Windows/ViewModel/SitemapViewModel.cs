@@ -1,10 +1,10 @@
+using openHAB.Core.Model;
+using openHAB.Core.SDK;
+using openHAB.Windows.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using openHAB.Core.Model;
-using openHAB.Core.SDK;
-using openHAB.Windows.Services;
 
 namespace openHAB.Windows.ViewModel
 {

@@ -1,9 +1,6 @@
-using System;
-using System.Globalization;
-using openHAB.Core.Messages;
-using openHAB.Core.Model;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
+using System;
 
 namespace openHAB.Windows.Controls
 {

@@ -1,5 +1,5 @@
-using System;
 using openHAB.Core.Model;
+using System;
 
 namespace openHAB.Core.Messages
 {

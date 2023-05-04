@@ -1,6 +1,6 @@
-using System;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
+using System;
 
 namespace openHAB.Windows.Controls
 {

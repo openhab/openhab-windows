@@ -1,9 +1,9 @@
-using System;
-using openHAB.Core.Model;
-using openHAB.Windows.Services;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media.Imaging;
+using openHAB.Core.Model;
 using openHAB.Core.Services.Contracts;
+using openHAB.Windows.Services;
+using System;
 
 namespace openHAB.Windows.Converters
 {

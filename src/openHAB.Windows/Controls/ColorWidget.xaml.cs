@@ -1,13 +1,13 @@
+using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Extensions.Logging;
+using Microsoft.UI;
+using Microsoft.UI.Xaml;
+using openHAB.Core.Messages;
+using openHAB.Windows.Services;
 using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.Extensions.Logging;
-using openHAB.Core.Messages;
-using openHAB.Windows.Services;
 using Windows.UI;
-using Microsoft.UI.Xaml;
-using Microsoft.UI;
 
 namespace openHAB.Windows.Controls
 {

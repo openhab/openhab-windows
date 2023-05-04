@@ -1,15 +1,12 @@
-using System;
-using System.Globalization;
-using Mapsui;
 using Mapsui.Extensions;
 using Mapsui.Projections;
 using Mapsui.Tiling;
-using Mapsui.UI.WinUI;
 using Mapsui.Widgets.ScaleBar;
 using Mapsui.Widgets.Zoom;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
-using openHAB.Windows.Extensions;
+using System;
+using System.Globalization;
 
 namespace openHAB.Windows.Controls
 {
@@ -60,7 +57,7 @@ namespace openHAB.Windows.Controls
 
                     MapView.Map.Home = n => n.NavigateTo(coordinate, MapView.Map.Resolutions[19]);
                     MapViewFull.Map.Home = n => n.NavigateTo(coordinate, MapView.Map.Resolutions[13]);
-                    
+
                     //TODO: Implement mapicon
                     //MapIcon mapIcon = new MapIcon();
                     //mapIcon.Location = MapView.Center;

@@ -1,4 +1,3 @@
-using openHAB.Core.Common;
 using openHAB.Core.Model;
 
 namespace openHAB.Core.Messages

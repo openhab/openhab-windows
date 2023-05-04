@@ -1,10 +1,10 @@
-using System.Linq;
 using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.WinUI;
+using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml.Controls;
 using openHAB.Core.Messages;
 using openHAB.Core.Model;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Dispatching;
-using CommunityToolkit.WinUI;
+using System.Linq;
 
 namespace openHAB.Windows.Controls
 {

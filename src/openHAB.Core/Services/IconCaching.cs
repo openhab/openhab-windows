@@ -1,14 +1,14 @@
+using CommunityToolkit.WinUI.Helpers;
+using Microsoft.Extensions.Logging;
+using openHAB.Core.Common;
+using openHAB.Core.Connection;
+using openHAB.Core.Model;
+using openHAB.Core.Services.Contracts;
 using System;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using CommunityToolkit.WinUI.Helpers;
-using Microsoft.Extensions.Logging;
-using openHAB.Core.Common;
-using openHAB.Core.Model;
-using openHAB.Core.Services.Contracts;
 using Windows.Storage;
-using openHAB.Core.Connection;
 
 namespace openHAB.Core.Services
 {

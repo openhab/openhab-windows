@@ -1,10 +1,10 @@
-using System;
-using System.Text.RegularExpressions;
+using Microsoft.UI.Xaml.Data;
 using openHAB.Core.Common;
 using openHAB.Core.Model;
-using openHAB.Windows.Services;
-using Microsoft.UI.Xaml.Data;
 using openHAB.Core.Services.Contracts;
+using openHAB.Windows.Services;
+using System;
+using System.Text.RegularExpressions;
 
 namespace openHAB.Windows.Converters
 {

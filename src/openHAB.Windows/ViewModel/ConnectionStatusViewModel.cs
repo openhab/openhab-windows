@@ -1,5 +1,3 @@
-using System;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Dispatching;
@@ -8,6 +6,8 @@ using openHAB.Core.Connection;
 using openHAB.Core.Messages;
 using openHAB.Core.Model;
 using openHAB.Core.Services.Contracts;
+using System;
+using System.Threading.Tasks;
 
 namespace openHAB.Windows.ViewModel
 {

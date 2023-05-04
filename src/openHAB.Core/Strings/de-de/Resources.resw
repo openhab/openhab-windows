@@ -147,9 +147,6 @@
   <data name="LocalSettings.Text" xml:space="preserve">
     <value>Lokale Einstellungen</value>
   </data>
-  <!--<data name="LocalUrl.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Url der lokalen OpenHab Instanz. Standard Url ist http://openhab:8080</value>
-  </data>-->
   <data name="LocalUrlHeader.Text" xml:space="preserve">
     <value>openHAB URL</value>
   </data>
@@ -313,5 +310,8 @@ Bitte wählen Sie den Demo Modus oder die Lokalen/Remote Verbindunsinformation z
   </data>
   <data name="VersionNumber.Text" xml:space="preserve">
     <value>Version:</value>
+  </data>
+  <data name="AppDisplayName" xml:space="preserve">
+    <value>openHAB</value>
   </data>
 </root>

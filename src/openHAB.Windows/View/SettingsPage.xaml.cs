@@ -1,18 +1,17 @@
-using System;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
 using Microsoft.Extensions.Logging;
-using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
-using openHAB.Core.Services.Contracts;
 using openHAB.Core;
 using openHAB.Core.Messages;
+using openHAB.Core.Services.Contracts;
 using openHAB.Windows.Controls;
 using openHAB.Windows.Services;
 using openHAB.Windows.ViewModel;
+using System;
 
 namespace openHAB.Windows.View
 {

@@ -1,5 +1,4 @@
 using openHAB.Core.Connection.Contracts;
-using openHAB.Core.Common;
 
 namespace openHAB.Core.Connection
 {

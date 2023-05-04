@@ -1,5 +1,3 @@
-using openHAB.Core.Messages;
-
 namespace openHAB.Core.Messages
 {
     /// <summary>Object for notification with information level.</summary>

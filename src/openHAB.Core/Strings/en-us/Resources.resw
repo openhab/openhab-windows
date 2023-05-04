@@ -147,9 +147,6 @@
   <data name="LocalSettings.Text" xml:space="preserve">
     <value>Local Settings</value>
   </data>
-  <!--<data name="LocalUrl.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Local url to the OpenHab instance. Default url is http://openhab:8080</value>
-  </data>-->
   <data name="LocalUrlHeader.Text" xml:space="preserve">
     <value>openHAB URL</value>
   </data>
@@ -314,5 +311,8 @@ Please select demo mode or configure local/remote connection.</value>
   </data>
   <data name="VersionNumber.Text" xml:space="preserve">
     <value>Version:</value>
+  </data>
+  <data name="AppDisplayName" xml:space="preserve">
+    <value>openHAB</value>
   </data>
 </root>

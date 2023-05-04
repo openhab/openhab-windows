@@ -1,11 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.System.Profile;
-using Windows.UI.ViewManagement;
-
 namespace openHAB.Core.Common
 {
     /// <summary>Helper class to get the target platform the app is running on.</summary>
