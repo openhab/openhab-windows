@@ -33,13 +33,13 @@ namespace OpenHAB.Windows.Converters
             var state = widget.Item?.State ?? "ON";
             string iconFormat = _settings.UseSVGIcons ? "svg" : "png";
 
-            var regMatch = Regex.Match(state, @"\d+");
+            var regMatch = Regex.Match(state, @"\d+", RegexOptions.None, TimeSpan.FromMilliseconds(100));
             if (regMatch.Success)
             {
                 state = regMatch.Value;
             }
 
-            return openHABVersion == OpenHABVersion.Two || openHABVersion == OpenHABVersion.Three ?
+            return openHABVersion == OpenHABVersion.Two || openHABVersion == OpenHABVersion.Three || openHABVersion == OpenHABVersion.Four ?
                 $"{serverUrl}icon/{widget.Icon}?state={state}&format={iconFormat}" :
                 $"{serverUrl}images/{widget.Icon}.png";
         }

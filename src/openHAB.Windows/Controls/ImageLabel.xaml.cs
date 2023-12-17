@@ -41,13 +41,13 @@ namespace OpenHAB.Windows.Controls
             // fix IconPathState by removing empty space and special characters
             string iconPath = control.IconPath;
 
-            Match format = Regex.Match(iconPath, @"format=svg");
-            Match state = Regex.Match(iconPath, @"state=(.+?)&");
+            Match format = Regex.Match(iconPath, @"format=svg", RegexOptions.None, TimeSpan.FromMilliseconds(100));
+            Match state = Regex.Match(iconPath, @"state=(.+?)&", RegexOptions.None, TimeSpan.FromMilliseconds(100));
             if (state != null)
             {
                 if (!string.IsNullOrEmpty(state.Value))
                 {
-                    string newstate = Regex.Replace(state.Groups[1].Value, "[^0-9a-zA-Z.&]", string.Empty);
+                    string newstate = Regex.Replace(state.Groups[1].Value, "[^0-9a-zA-Z.&]", string.Empty, RegexOptions.None, TimeSpan.FromMilliseconds(100));
                     iconPath = control.IconPath.Replace(state.Groups[1].Value, newstate, StringComparison.InvariantCulture);
                 }
             }

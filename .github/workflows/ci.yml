@@ -27,44 +27,41 @@ jobs:
     - name: setup-msbuild
       uses: microsoft/setup-msbuild@v1
 
-    - name: Set up JDK 11
-      uses: actions/setup-java@v1
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
       with:
-        java-version: 1.11
+        java-version: 17
+        distribution: 'zulu'
 
     - name: Cache SonarCloud packages
-      uses: actions/cache@v1
+      uses: actions/cache@v3
       with:
         path: ~\sonar\cache
-        key: ${{runner.os}}-sonar
-        restore-keys: ${{runner.os}}-sonar
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
 
     - name: Cache SonarCloud scanner
       id: cache-sonar-scanner
-      uses: actions/cache@v1
+      uses: actions/cache@v3
       with:
         path: .\.sonar\scanner
-        key: ${{runner.os}}-sonar-scanner-msbuild
-        restore-keys: ${{runner.os}}-sonar-scanner-msbuild
+        key: ${{ runner.os }}-sonar-scanner
+        restore-keys: ${{ runner.os }}-sonar-scanner
 
     - name: Install SonarCloud scanner
       if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
-      shell: pwsh
+      shell: powershell
       run: |
-        $directory = New-Item -Path .\.sonar\scanner -ItemType Directory
-        # dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
-
-        $file = Join-Path $directory.FullName "sonar-scanner.zip"
-        Invoke-WebRequest -Uri "https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/5.2.1.31210/sonar-scanner-msbuild-5.2.1.31210-net46.zip" -OutFile $file
-        Expand-Archive -LiteralPath $file -DestinationPath "$($directory.FullName)"
+        New-Item -Path .\.sonar\scanner -ItemType Directory
+        dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
 
     - name: Begin SonarQube analyze
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        SONAR_TOKEN: ${{secrets.SONAR_TOKE }}
+        SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
       shell: pwsh
       run: |
-          .\.sonar\scanner\SonarScanner.MSBuild.exe begin /k:"openhab_openhab-windows" /o:"openhab" /d:sonar.login="${{secrets.SONAR_TOKEN}}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.projectBaseDir="${{github.workspace}}/repo/src/" /d:sonar.verbose="true"
+        .\.sonar\scanner\dotnet-sonarscanner begin /k:"openhab_openhab-windows" /o:"openhab" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
 
     - name: Build App
       id: create_app_package
@@ -82,4 +79,4 @@ jobs:
         SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
       shell: pwsh
       run: |
-          .\.sonar\scanner\SonarScanner.MSBuild.exe end /d:sonar.login="${{secrets.SONAR_TOKEN}}"
+        .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"

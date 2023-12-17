@@ -113,7 +113,7 @@ namespace OpenHAB.Core.SDK
                     return new HttpResponseResult<ServerInfo>(serverInfo, result.StatusCode);
                 }
 
-                string runtimeversion = Regex.Replace(apiInfo?.RuntimeInfo.Version, "[^.0-9]", string.Empty);
+                string runtimeversion = Regex.Replace(apiInfo?.RuntimeInfo.Version, "[^.0-9]", string.Empty, RegexOptions.None, TimeSpan.FromMilliseconds(100));
                 if (!Version.TryParse(runtimeversion, out Version serverVersion))
                 {
                     string message = "Not able to parse runtime verion from openHAB server";
@@ -171,7 +171,7 @@ namespace OpenHAB.Core.SDK
                 string resultString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 ICollection<OpenHABWidget> items = null;
-                if (version == OpenHABVersion.Two || version == OpenHABVersion.Three)
+                if (version == OpenHABVersion.Two || version == OpenHABVersion.Three || version == OpenHABVersion.Four)
                 {
                     var jsonObject = JObject.Parse(resultString);
                     items = JsonConvert.DeserializeObject<List<OpenHABWidget>>(jsonObject["homepage"]["widgets"].ToString());

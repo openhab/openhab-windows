@@ -41,7 +41,7 @@ namespace OpenHAB.Windows.Services
              {
                  // configure Logging with NLog
                  loggingBuilder.ClearProviders();
-                 loggingBuilder.SetMinimumLevel(LogLevel.Trace);
+                 loggingBuilder.SetMinimumLevel(LogLevel.Information);
                  loggingBuilder.AddNLog(GetLoggingConfiguration());
              });
 
@@ -73,21 +73,21 @@ namespace OpenHAB.Windows.Services
 
         private LoggingConfiguration GetLoggingConfiguration()
         {
-            CsvLayout layout = new CsvLayout()
+            JsonLayout layout = new JsonLayout()
             {
-                Delimiter = CsvColumnDelimiterMode.Semicolon,
+                IncludeEventProperties = true,
             };
 
-            layout.Columns.Add(new CsvColumn("time", @"${date:format=HH\:mm\:ss}"));
-            layout.Columns.Add(new CsvColumn("level", "${level:upperCase=true}"));
-            layout.Columns.Add(new CsvColumn("callsite", "${callsite:includeSourcePath=false}"));
-            layout.Columns.Add(new CsvColumn("message", "${message}"));
-            layout.Columns.Add(new CsvColumn("exception", "${exception:format=ToString}"));
-            layout.Columns.Add(new CsvColumn("stacktrace", "${onexception:inner=${stacktrace:topFrames=10}}"));
+            layout.Attributes.Add(new JsonAttribute("time", @"${date:format=HH\:mm\:ss}"));
+            layout.Attributes.Add(new JsonAttribute("level", "${level:upperCase=true}"));
+            layout.Attributes.Add(new JsonAttribute("callsite", "${callsite:includeSourcePath=false}"));
+            layout.Attributes.Add(new JsonAttribute("message", "${message}"));
+            layout.Attributes.Add(new JsonAttribute("exception", "${exception:format=ToString}"));
+            layout.Attributes.Add(new JsonAttribute("stacktrace", "${onexception:inner=${stacktrace:topFrames=10}}"));
 
             FileTarget fileTarget = new FileTarget("file")
             {
-                FileName = "${var:LogPath}/logs/${shortdate}.log",
+                FileName = "${var:LogPath}/logs/${shortdate}.json",
                 Layout = layout,
                 MaxArchiveFiles = 3,
                 ArchiveEvery = FileArchivePeriod.Day,
