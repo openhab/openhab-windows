@@ -130,6 +130,7 @@ namespace OpenHAB.Windows.ViewModel
                         SetWidgetsOnScreen(SelectedSitemap.Widgets);
                     }
 
+                    SelectedWidget = null;
                     SelectedMenuItem = value;
                 }
             }
@@ -466,6 +467,7 @@ namespace OpenHAB.Windows.ViewModel
             }
 
             Subtitle = widget == null ? SelectedSitemap?.Label : widget.Label;
+            SelectedWidget = widget;
             SetWidgetsOnScreen(widget != null ? widget.LinkedPage.Widgets : SelectedSitemap.Widgets);
         }
 
