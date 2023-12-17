@@ -76,7 +76,6 @@ namespace OpenHAB.Windows.Services
             JsonLayout layout = new JsonLayout()
             {
                 IncludeEventProperties = true,
-                IndentJson = true
             };
 
             layout.Attributes.Add(new JsonAttribute("time", @"${date:format=HH\:mm\:ss}"));
