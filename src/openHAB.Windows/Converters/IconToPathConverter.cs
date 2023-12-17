@@ -39,7 +39,7 @@ namespace OpenHAB.Windows.Converters
                 state = regMatch.Value;
             }
 
-            return openHABVersion == OpenHABVersion.Two || openHABVersion == OpenHABVersion.Three ?
+            return openHABVersion == OpenHABVersion.Two || openHABVersion == OpenHABVersion.Three || openHABVersion == OpenHABVersion.Four ?
                 $"{serverUrl}icon/{widget.Icon}?state={state}&format={iconFormat}" :
                 $"{serverUrl}images/{widget.Icon}.png";
         }

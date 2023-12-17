@@ -171,7 +171,7 @@ namespace OpenHAB.Core.SDK
                 string resultString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 ICollection<OpenHABWidget> items = null;
-                if (version == OpenHABVersion.Two || version == OpenHABVersion.Three)
+                if (version == OpenHABVersion.Two || version == OpenHABVersion.Three || version == OpenHABVersion.Four)
                 {
                     var jsonObject = JObject.Parse(resultString);
                     items = JsonConvert.DeserializeObject<List<OpenHABWidget>>(jsonObject["homepage"]["widgets"].ToString());
