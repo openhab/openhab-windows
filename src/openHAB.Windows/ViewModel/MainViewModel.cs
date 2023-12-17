@@ -280,7 +280,10 @@ namespace openHAB.Windows.ViewModel
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task LoadSitemapsAndItemData()
         {
-            await LoadData(_cancellationTokenSource.Token).ConfigureAwait(false);
+            using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
+            {
+                   await LoadData(cancellationTokenSource.Token).ConfigureAwait(false);
+            }
         }
 
         private async void CancelSyncCallbackAsync()

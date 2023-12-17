@@ -54,7 +54,7 @@ namespace openHAB.Windows.Controls
             string rgbString = Widget.Item?.State;
             string[] rgbSegements = Widget.Item?.State.Split(',');
 
-            Regex rgbRegEx = new Regex(@"^(([1-9][\.\d]*)(,)){2}([1-9][\.\d]*)");
+            Regex rgbRegEx = new Regex(@"^(([1-9][\.\d]*)(,)){2}([1-9][\.\d]*)", RegexOptions.None, TimeSpan.FromMilliseconds(100));
 
             if (rgbString == null || rgbString.Length == 0 || !rgbRegEx.IsMatch(rgbString) || rgbSegements == null)
             {

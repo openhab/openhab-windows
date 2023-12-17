@@ -182,7 +182,7 @@ namespace openHAB.Core.Model
         /// <returns>State as double value.</returns>
         public double GetStateAsDoubleValue()
         {
-            string newstate = Regex.Replace(_state, "[^0-9,.]", string.Empty);
+            string newstate = Regex.Replace(_state, "[^0-9,.]", string.Empty, RegexOptions.None, TimeSpan.FromMilliseconds(100));
             double value = 0;
             double.TryParse(newstate, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out value);
 

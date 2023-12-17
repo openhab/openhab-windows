@@ -103,7 +103,7 @@ namespace openHAB.Windows.Controls
             string newValue = (string)e.AddedItems.FirstOrDefault();
             if (Widget.Item.Unit != null)
             {
-                newValue = newValue.Replace(Widget.Item.Unit, string.Empty, StringComparison.InvariantCultureIgnoreCase);
+                newValue = newValue?.Replace(Widget.Item.Unit, string.Empty, StringComparison.InvariantCultureIgnoreCase);
             }
 
             if (newValue != null)

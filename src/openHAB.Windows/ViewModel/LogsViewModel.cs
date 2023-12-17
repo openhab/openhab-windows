@@ -20,7 +20,7 @@ namespace openHAB.Windows.ViewModel
         private string _logFileContent;
         private FileSystemWatcher _logFileWatcher;
         private ILogger<LogsViewModel> _logger;
-        private string _logFilename = $"{DateTime.Now:yyyy-MM-dd}.log";
+        private string _logFilename = $"{DateTime.Now:yyyy-MM-dd}.json";
         private ICommand _openLogFileCommand;
 
         /// <summary>Initializes a new instance of the <see cref="LogsViewModel" /> class.</summary>
