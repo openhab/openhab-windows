@@ -25,7 +25,7 @@ namespace openHAB.Core.Notification
             {
                 var data = JsonConvert.DeserializeObject<EventStreamData>(message.Remove(0, 6));
 
-                if (data.Type == "ThingUpdatedEvent" || data.Type == "ThingStatusInfoChangedEvent")
+                if (data.Type == "ThingUpdatedEvent" || data.Type == "ThingStatusInfoChangedEvent" || data.Type == "ALIVE")
                 {
                     _logger.LogWarning($"Event type is not supported '{data.Type}'.");
                     return null;

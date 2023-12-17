@@ -21,6 +21,11 @@ namespace openHAB.Core.Model
         Three = 3,
 
         /// <summary>
+        /// OpenHAB V4
+        /// </summary>
+        Four = 4,
+
+        /// <summary>
         /// Used when no connection is available
         /// </summary>
         None,
