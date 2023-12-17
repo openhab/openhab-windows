@@ -29,8 +29,8 @@ namespace OpenHAB.Core.Services
         {
             try
             {
-                Match iconName = Regex.Match(iconUrl, "icon/[0-9a-zA-Z]*");
-                Match iconState = Regex.Match(iconUrl, "state=[0-9a-zA-Z=]*");
+                Match iconName = Regex.Match(iconUrl, "icon/[0-9a-zA-Z]*", RegexOptions.None, TimeSpan.FromMilliseconds(100));
+                Match iconState = Regex.Match(iconUrl, "state=[0-9a-zA-Z=]*", RegexOptions.None, TimeSpan.FromMilliseconds(100));
 
                 if (!iconName.Success)
                 {
