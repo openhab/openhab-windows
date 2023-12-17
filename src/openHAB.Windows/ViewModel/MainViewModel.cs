@@ -27,7 +27,6 @@ namespace OpenHAB.Windows.ViewModel
         private readonly StoreServicesFeedbackLauncher _feedbackLauncher;
         private readonly IOpenHAB _openHabsdk;
         private readonly ISettingsService _settingsService;
-        private CancellationTokenSource _cancellationTokenSource;
         private ObservableCollection<OpenHABWidget> _currentWidgets;
         private ActionCommand _feedbackCommand;
         private bool _isDataLoading;
@@ -56,7 +55,6 @@ namespace OpenHAB.Windows.ViewModel
             _openHabsdk = openHabsdk;
             _settingsService = settingsService;
             _feedbackLauncher = StoreServicesFeedbackLauncher.GetDefault();
-            _cancellationTokenSource = new CancellationTokenSource();
 
             StrongReferenceMessenger.Default.Register<TriggerCommandMessage>(this, async (recipient, msg) => await TriggerCommand(recipient, msg).ConfigureAwait(false));
             StrongReferenceMessenger.Default.Register<WidgetClickedMessage>(this, (recipient, msg) => OnWidgetClickedAction(recipient, msg.Widget));
@@ -254,7 +252,10 @@ namespace OpenHAB.Windows.ViewModel
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task LoadSitemapsAndItemData()
         {
-            await LoadData(_cancellationTokenSource.Token).ConfigureAwait(false);
+            using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
+            {
+                   await LoadData(cancellationTokenSource.Token).ConfigureAwait(false);
+            }
         }
 
         private async Task ReloadSitemap()
