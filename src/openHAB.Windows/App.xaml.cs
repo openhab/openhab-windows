@@ -33,7 +33,6 @@ namespace openHAB.Windows
             _settingsService = DIService.Instance.GetService<ISettingsService>();
 
             INotificationManager notificationManager = DIService.Instance.GetService<INotificationManager>();
-            notificationManager.ResetBadgeCount();
         }
 
         private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
@@ -57,8 +56,8 @@ namespace openHAB.Windows
             // If this is the first instance launched, then register it as the "main" instance.
             // If this isn't the first instance launched, then "main" will already be registered,
             // so retrieve it.
-            var mainInstance = Microsoft.Windows.AppLifecycle.AppInstance.FindOrRegisterForKey("main");
-            var activatedEventArgs = Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().GetActivatedEventArgs();
+            AppInstance mainInstance = Microsoft.Windows.AppLifecycle.AppInstance.FindOrRegisterForKey("main");
+            AppActivationArguments activatedEventArgs = Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().GetActivatedEventArgs();
 
             // If the instance that's executing the OnLaunched handler right now
             // isn't the "main" instance.
@@ -78,7 +77,7 @@ namespace openHAB.Windows
             }
 
             // Initialize MainWindow here
-            MainWindow = new Microsoft.UI.Xaml.Window();
+            MainWindow = new MainWindow();
 
             Frame rootFrame = MainWindow.Content as Frame;
             if (rootFrame == null)
@@ -92,15 +91,10 @@ namespace openHAB.Windows
 
             if (rootFrame.Content == null)
             {
-                // When the navigation stack isn't restored navigate to the first page,
-                // configuring the new page by passing required information as a navigation
-                // parameter
-                // TODO Rename this MainPage type in case your app MainPage has a different name
                 rootFrame.Navigate(typeof(MainPage), e.Arguments);
             }
 
             MainWindow.Activate();
-            WindowHandle = WinRT.Interop.WindowNative.GetWindowHandle(MainWindow);
         }
 
         // TODO This is an example method for the case when app is activated through a file.
@@ -112,7 +106,5 @@ namespace openHAB.Windows
         public static DispatcherQueue DispatcherQueue { get; private set; }
 
         public static Window MainWindow { get; private set; }
-
-        public static IntPtr WindowHandle { get; private set; }
     }
 }

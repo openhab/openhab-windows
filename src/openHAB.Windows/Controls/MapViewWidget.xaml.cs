@@ -1,3 +1,4 @@
+using Mapsui;
 using Mapsui.Extensions;
 using Mapsui.Projections;
 using Mapsui.Tiling;
@@ -55,8 +56,10 @@ namespace openHAB.Windows.Controls
 
                     var coordinate = SphericalMercator.FromLonLat(longitude, latitude).ToMPoint();
 
-                    MapView.Map.Home = n => n.NavigateTo(coordinate, MapView.Map.Resolutions[19]);
-                    MapViewFull.Map.Home = n => n.NavigateTo(coordinate, MapView.Map.Resolutions[13]);
+                    Viewport viewport = new Viewport(longitude, latitude, 0, 0, Width, Height);
+
+                    MapView.Map.Home = n => n.CenterOnAndZoomTo(coordinate, n.Viewport.Resolution);
+                    MapViewFull.Map.Home = n => n.CenterOnAndZoomTo(coordinate, n.Viewport.Resolution);
 
                     //TODO: Implement mapicon
                     //MapIcon mapIcon = new MapIcon();

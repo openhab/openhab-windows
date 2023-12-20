@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using openHAB.Core.Connection;
 using openHAB.Core.Connection.Contracts;
-using System.Collections.Generic;
 
 namespace openHAB.Core.Model
 {
@@ -41,11 +41,13 @@ namespace openHAB.Core.Model
             {
                 if (_connectionProfiles == null)
                 {
-                    _connectionProfiles = new List<IConnectionProfile>();
-                    _connectionProfiles.Add(new LocalConnectionProfile());
-                    _connectionProfiles.Add(new DefaultConnectionProfile());
-                    _connectionProfiles.Add(new RemoteConnectionProfile());
-                    _connectionProfiles.Add(new CloudConnectionProfile());
+                    _connectionProfiles = new List<IConnectionProfile>
+                    {
+                        new LocalConnectionProfile(),
+                        new DefaultConnectionProfile(),
+                        new RemoteConnectionProfile(),
+                        new CloudConnectionProfile()
+                    };
                 }
 
                 return _connectionProfiles;
@@ -113,5 +115,13 @@ namespace openHAB.Core.Model
             get;
             set;
         }
+
+        /// <summary>
+        /// Gets or sets the last sitemap name in settings.
+        /// </summary>
+        /// <value>
+        /// The last sitemap.
+        /// </value>
+        public string LastSitemap { get; set; }
     }
 }

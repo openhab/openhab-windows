@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net6.0-windows10.0.22621.0</TargetFramework>
+		<TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
 		<Platform Condition=" '$(Platform)' == '' ">x86</Platform>
 		<OutputType>WinExe</OutputType>
 		<TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
@@ -10,7 +10,7 @@
 		<AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
 		<AppxBundle>Always</AppxBundle>
 		<AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
-		<RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
+		<RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
 		<GenerateAppInstallerFile>False</GenerateAppInstallerFile>
 		<AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
 		<GenerateTestArtifacts>True</GenerateTestArtifacts>
@@ -18,19 +18,18 @@
 		<UseWinUI>true</UseWinUI>
 		<EnableMsixTooling>true</EnableMsixTooling>
 		<WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
-		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<Platforms>x86;x64;arm64</Platforms>
-		<PublishProfile>win10-$(Platform).pubxml</PublishProfile>
+		<PublishProfile>win-$(Platform).pubxml</PublishProfile>
 		<StartupObject></StartupObject>
 		<SupportedOSPlatformVersion>10.0.18362.0</SupportedOSPlatformVersion>
 		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
 		<OutputPath>bin\x86\Debug\</OutputPath>
 		<DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UWP;CODE_ANALYSIS</DefineConstants>
 		<NoWarn>;2008</NoWarn>
 		<UseVSHostingProcess>false</UseVSHostingProcess>
-		<CodeAnalysisRuleSet>..\..\.sonarlint\openhab_openhab-windowscsharp.ruleset</CodeAnalysisRuleSet>
 		<DocumentationFile>bin\x86\Debug\OpenHAB.Windows.XML</DocumentationFile>
 		<UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
 		<EnableGatekeeperAnalysis>false</EnableGatekeeperAnalysis>
@@ -41,14 +40,12 @@
 		<NoWarn>;2008</NoWarn>
 		<UseVSHostingProcess>false</UseVSHostingProcess>
 		<UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
-		<CodeAnalysisRuleSet>..\..\.sonarlint\openhab_openhab-windowscsharp.ruleset</CodeAnalysisRuleSet>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
 		<OutputPath>bin\ARM\Debug\</OutputPath>
 		<DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
 		<NoWarn>;2008</NoWarn>
 		<UseVSHostingProcess>false</UseVSHostingProcess>
-		<CodeAnalysisRuleSet>..\..\.sonarlint\openhab_openhab-windowscsharp.ruleset</CodeAnalysisRuleSet>
 		<UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
@@ -57,14 +54,12 @@
 		<NoWarn>;2008</NoWarn>
 		<UseVSHostingProcess>false</UseVSHostingProcess>
 		<UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
-		<CodeAnalysisRuleSet>..\..\.sonarlint\openhab_openhab-windowscsharp.ruleset</CodeAnalysisRuleSet>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
 		<OutputPath>bin\x64\Debug\</OutputPath>
 		<DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
 		<NoWarn>;2008</NoWarn>
 		<UseVSHostingProcess>false</UseVSHostingProcess>
-		<CodeAnalysisRuleSet>..\..\.sonarlint\openhab_openhab-windowscsharp.ruleset</CodeAnalysisRuleSet>
 		<UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
@@ -73,35 +68,25 @@
 		<NoWarn>;2008</NoWarn>
 		<UseVSHostingProcess>false</UseVSHostingProcess>
 		<UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
-		<CodeAnalysisRuleSet>..\..\.sonarlint\openhab_openhab-windowscsharp.ruleset</CodeAnalysisRuleSet>
 	</PropertyGroup>
 	<ItemGroup>
-		<PRIResource Include="..\Openhab.Core\Strings\de-de\Resources.resw">
-			<Link>Strings\de-de\Resources.resw</Link>
+		<PRIResource Include="..\Openhab.Core\Strings\de-DE\Resources.resw">
+			<Link>Strings\de-DE\Resources.resw</Link>
 		</PRIResource>
-		<PRIResource Include="..\Openhab.Core\Strings\en-us\Resources.resw">
-			<Link>Strings\en-us\Resources.resw</Link>
+		<PRIResource Include="..\Openhab.Core\Strings\en-US\Resources.resw">
+			<Link>Strings\en-US\Resources.resw</Link>
 		</PRIResource>
-		<PRIResource Include="..\Openhab.Core\Strings\de-de\Errors.resw">
-			<Link>Strings\de-de\Errors.resw</Link>
+		<PRIResource Include="..\Openhab.Core\Strings\de-DE\Errors.resw">
+			<Link>Strings\de-DE\Errors.resw</Link>
 		</PRIResource>
-		<PRIResource Include="..\Openhab.Core\Strings\en-us\Errors.resw">
-			<Link>Strings\en-us\Errors.resw</Link>
+		<PRIResource Include="..\Openhab.Core\Strings\en-US\Errors.resw">
+			<Link>Strings\en-US\Errors.resw</Link>
 		</PRIResource>
-		<None Include="..\..\.sonarlint\openhab_openhab-windowscsharp.ruleset">
-			<Link>openhab_openhab-windowscsharp.ruleset</Link>
-		</None>
 	</ItemGroup>
 	<ItemGroup>
 		<AppxManifest Include="Package.appxmanifest">
 			<SubType>Designer</SubType>
 		</AppxManifest>
-	</ItemGroup>
-	<ItemGroup>
-		<AdditionalFiles Include="..\..\.sonarlint\openhab_openhab-windows\CSharp\SonarLint.xml">
-			<Link>SonarLint.xml</Link>
-		</AdditionalFiles>
-		<Content Include="MainWindow.xaml" />
 	</ItemGroup>
 	<ItemGroup>
 		<Reference Include="MJPEGDecoderWinRTLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -111,25 +96,25 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Mvvm">
-			<Version>8.0.0</Version>
+			<Version>8.2.2</Version>
 		</PackageReference>
-		<PackageReference Include="Mapsui" Version="4.0.0-beta.4" />
-		<PackageReference Include="Mapsui.WinUI" Version="4.0.0-beta.4" />
+		<PackageReference Include="Mapsui" Version="4.1.2" />
+		<PackageReference Include="Mapsui.WinUI" Version="4.1.2" />
 		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers">
-			<Version>6.0.0</Version>
+			<Version>8.0.0</Version>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection">
-			<Version>6.0.0</Version>
+			<Version>8.0.0</Version>
 		</PackageReference>
-		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
 		<PackageReference Include="Microsoft.WindowsAppSDK">
-			<Version>1.1.4</Version>
+			<Version>1.4.231115000</Version>
 		</PackageReference>
-		<PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.8" />
+		<PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
 		<PackageReference Include="NLog.Extensions.Logging">
-			<Version>5.0.2</Version>
+			<Version>5.3.7</Version>
 		</PackageReference>
 		<PackageReference Include="StyleCop.Analyzers">
 			<Version>1.1.118</Version>

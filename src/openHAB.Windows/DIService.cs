@@ -14,6 +14,7 @@ using openHAB.Core.SDK;
 using openHAB.Core.Services;
 using openHAB.Core.Services.Contracts;
 using openHAB.Windows.ViewModel;
+using System;
 using Windows.Storage;
 
 namespace openHAB.Windows.Services
@@ -61,6 +62,7 @@ namespace openHAB.Windows.Services
             });
 
             //_services.AddSingleton<INavigationService, NavigationService>();
+            services.AddSingleton<AppPaths>();
             services.AddSingleton<OpenHABHttpClient>();
             services.AddSingleton<IConnectionService, ConnectionService>();
             services.AddSingleton<IIconCaching, IconCaching>();
@@ -104,8 +106,8 @@ namespace openHAB.Windows.Services
             configuration.AddTarget(fileTarget);
             configuration.AddRuleForAllLevels(fileTarget);
 
-            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-            configuration.Variables["LogPath"] = storageFolder.Path;
+            string logsFolderPath = new AppPaths().LogsDirectory;
+            configuration.Variables["LogPath"] = logsFolderPath;
 
             return configuration;
         }

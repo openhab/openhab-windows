@@ -40,18 +40,18 @@
                     Value="Black" />
         </Style>
         <!-- Navigation View Styling -->
-        <!--<SolidColorBrush x:Key="NavigationViewDefaultPaneBackground"
-						 Color="{StaticResource DarkColor}" />
-		<SolidColorBrush x:Key="NavigationViewExpandedPaneBackground"
-						 Color="{StaticResource DarkColor}" />-->
-        <media:AcrylicBrush x:Key="NavigationViewDefaultPaneBackground"
+        <SolidColorBrush x:Key="NavigationViewDefaultPaneBackground"
+                         Color="{StaticResource DarkColor}" />
+        <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground"
+                         Color="{StaticResource DarkColor}" />
+        <!--<media:AcrylicBrush x:Key="NavigationViewDefaultPaneBackground"
                             TintOpacity="0.7"
                             FallbackColor="{StaticResource DarkColor}"
                             TintColor="{StaticResource DarkColor}" />
         <media:AcrylicBrush x:Key="NavigationViewExpandedPaneBackground"
                             TintOpacity="0.7"
                             FallbackColor="{StaticResource DarkColor}"
-                            TintColor="{StaticResource DarkColor}" />
+                            TintColor="{StaticResource DarkColor}" />-->
         <SolidColorBrush x:Key="NavigationViewItemForeground"
                          Color="White" />
         <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver"
@@ -72,7 +72,6 @@
                          Color="White" />
         <SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground"
                          Color="#FFFF5722" />
-
         <!-- Converters -->
         <converters:ObjectToSitemapConverter x:Key="ObjectToSitemapConverter" />
         <converters:ZeroToVisibilityConverter x:Key="ZeroToVisibility" />
@@ -81,8 +80,7 @@
             <converters:MenuItemTemplateSelector.DefaultItemTemlate>
                 <DataTemplate x:DataType="muxc:NavigationViewItem">
                     <muxc:NavigationViewItem Content="{x:Bind Content}"
-                                             Icon="{x:Bind Icon}">
-                    </muxc:NavigationViewItem>
+                                             Icon="{x:Bind Icon}"></muxc:NavigationViewItem>
                 </DataTemplate>
             </converters:MenuItemTemplateSelector.DefaultItemTemlate>
             <converters:MenuItemTemplateSelector.SiteMapMenuItemTemplate>
@@ -97,6 +95,7 @@
                 </DataTemplate>
             </converters:MenuItemTemplateSelector.SiteMapMenuItemTemplate>
         </converters:MenuItemTemplateSelector>
+        <!-- Data Template -->
         <DataTemplate x:Key="NavMenuHeaderTemplate">
             <Grid>
                 <Grid.RowDefinitions>
@@ -111,8 +110,7 @@
                         <core:EventTriggerBehavior EventName="Tapped">
                             <core:InvokeCommandAction Command="{Binding Vm.NavigateToSitemapRoot, ElementName=Page, Mode=OneWay}" />
                         </core:EventTriggerBehavior>
-                    </interactivity:Interaction.Behaviors>
-                    </TextBlock>
+                    </interactivity:Interaction.Behaviors></TextBlock>
                     <Button Margin="10,0,0,0"
                             Command="{Binding Vm.ReloadSitemapCommand, ElementName=Page}">
                         <SymbolIcon Symbol="Refresh"
@@ -161,21 +159,6 @@
                     </BreadcrumbBar.ItemTemplate>
                 </BreadcrumbBar>
             </StackPanel>
-
-            <!--<StackPanel Orientation="Horizontal">
-				<TextBlock x:Name="textBlock"
-						   Margin="5,0,10,10"
-						   VerticalAlignment="Center"
-						   Style="{StaticResource HeaderText}"
-						   FontSize="36"
-						   Foreground="Black"
-						   Text="{Binding }" />
-				<Button Command="{Binding Vm.ReloadSitemapCommand, ElementName=Page}">
-					<SymbolIcon Symbol="Refresh"
-								Foreground="Black"
-								VerticalAlignment="Center" />
-				</Button>
-			</StackPanel>-->
         </DataTemplate>
         <DataTemplate x:Key="WaitListTemplate">
             <StackPanel Orientation="Horizontal"
@@ -189,21 +172,15 @@
             </StackPanel>
         </DataTemplate>
     </Page.Resources>
-    <!--<StackPanel x:Name="UAGeneratedPanel"
-				media:Orientation="Vertical">-->
-    <!--TODO UA307 Default back button in the title bar does not exist in WinUI3 apps.
-						We have created a custom back button for you. Feel free to rename and edit its position/behavior.
-						Read: https://aka.ms/UWP.NetUpgrade/UA3015-->
-    <!--<AppBarButton x:Name="UAGeneratedBackButton"
-					  media:Foreground="Black"
-					  media:Margin="0,0,12,0">
-			<SymbolIcon media:Symbol="Back" />
-		</AppBarButton>-->
+    <Page.Background>
+        <ImageBrush ImageSource="ms-appx:///Assets/background.jpg"
+                    Stretch="UniformToFill" />
+    </Page.Background>
     <Grid>
-        <!--<Grid.Background>
-			<SolidColorBrush Opacity="0.2"
-							 Color="Black" />
-		</Grid.Background>-->
+        <Grid.Background>
+            <SolidColorBrush Opacity="0.2"
+                             Color="Black" />
+        </Grid.Background>
         <muxc:NavigationView x:Name="SitemapNavigation"
                              MenuItemsSource="{x:Bind Vm.Sitemaps, Mode=OneWay}"
                              MenuItemTemplateSelector="{StaticResource Selector}"
@@ -268,13 +245,10 @@
                     </interactivity:Interaction.Behaviors>
                 </muxc:NavigationViewItem>
             </muxc:NavigationView.FooterMenuItems>
-            <muxc:NavigationView.Background>
-                <ImageBrush ImageSource="/Assets/background.jpg"
-                            Stretch="UniformToFill" />
-            </muxc:NavigationView.Background>
             <Grid x:Name="MainContentGrid"
                   Margin="35,0,0,0"
-                  VerticalAlignment="Stretch">
+                  VerticalAlignment="Stretch"
+                  Background="Transparent">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="auto" />
@@ -372,5 +346,4 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
     </Grid>
-    <!--</StackPanel>-->
 </Page>

@@ -1,7 +1,7 @@
-using Microsoft.Extensions.Logging;
-using openHAB.Core.Services.Contracts;
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using openHAB.Core.Services.Contracts;
 using Windows.ApplicationModel;
 
 namespace openHAB.Core.Services

@@ -1,10 +1,10 @@
+using System.Globalization;
+using System.IO;
+using System.Text;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using openHAB.Core.Common;
 using openHAB.Core.Model;
 using openHAB.Core.Services.Contracts;
-using Windows.Globalization;
-using Windows.Storage;
 using Windows.System.UserProfile;
 
 namespace openHAB.Core.Services
@@ -14,19 +14,19 @@ namespace openHAB.Core.Services
     /// </summary>
     public class SettingsService : ISettingsService
     {
+        private AppPaths _applicationContext;
         private ILogger<SettingsService> _logger;
         private JsonSerializerSettings _serializerSettings = new JsonSerializerSettings()
         {
             TypeNameHandling = TypeNameHandling.Auto,
         };
 
-        private ApplicationDataContainer _settingsContainer;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingsService"/> class.
         /// </summary>
-        public SettingsService(ILogger<SettingsService> logger)
+        public SettingsService(AppPaths applicationContext, ILogger<SettingsService> logger)
         {
+            _applicationContext = applicationContext;
             _logger = logger;
         }
 
@@ -39,41 +39,28 @@ namespace openHAB.Core.Services
         /// <inheritdoc />
         public Settings Load()
         {
-            EnsureSettingsContainer();
-
-            if (!_settingsContainer.Values.ContainsKey(Constants.Local.SettingsKey))
+            if (!File.Exists(_applicationContext.SettingsFilePath))
             {
                 return new Settings();
             }
 
-            string json = _settingsContainer.Values[Constants.Local.SettingsKey].ToString();
+            _logger.LogInformation("Load settings from disk");
 
-            if (json == null)
+            string fileContent = File.ReadAllText(_applicationContext.SettingsFilePath, Encoding.UTF8);
+
+            if (string.IsNullOrEmpty(fileContent))
             {
                 return new Settings();
             }
 
             // Fix to ensure the settings can still loaded after project restructing
             // TODO: Remove this part in future
-            if (json.Contains("OpenHAB.Core.Model.Connection"))
+            if (fileContent.Contains("OpenHAB.Core.Model.Connection"))
             {
-                json = json.Replace("OpenHAB.Core.Model.Connection", "openHAB.Core.Connection");
+                fileContent = fileContent.Replace("OpenHAB.Core.Model.Connection", "openHAB.Core.Connection");
             }
 
-            return JsonConvert.DeserializeObject<Settings>(json, _serializerSettings);
-        }
-
-        /// <inheritdoc />
-        public string LoadLastSitemap()
-        {
-            _logger.LogInformation("Load last selected sitemape from settings");
-
-            if (!_settingsContainer.Values.TryGetValue(Constants.Local.SitemapKey, out object sitemapKey))
-            {
-                return null;
-            }
-
-            return sitemapKey.ToString();
+            return JsonConvert.DeserializeObject<Settings>(fileContent, _serializerSettings);
         }
 
         /// <inheritdoc />
@@ -83,8 +70,8 @@ namespace openHAB.Core.Services
             {
                 _logger.LogInformation("Save settings to disk");
 
-                EnsureSettingsContainer();
-                _settingsContainer.Values[Constants.Local.SettingsKey] = JsonConvert.SerializeObject(settings, _serializerSettings);
+                string settingsContent = JsonConvert.SerializeObject(settings, _serializerSettings);
+                File.WriteAllText(_applicationContext.SettingsFilePath, settingsContent, Encoding.UTF8);
 
                 return true;
             }
@@ -93,14 +80,6 @@ namespace openHAB.Core.Services
                 _logger.LogError(ex, "Failed to save settings.");
                 return false;
             }
-        }
-
-        /// <inheritdoc />
-        public void SaveCurrentSitemap(string name)
-        {
-            _logger.LogInformation("Update selected sitemape in settings");
-
-            _settingsContainer.Values[Constants.Local.SitemapKey] = name;
         }
 
         /// <inheritdoc />
@@ -114,19 +93,12 @@ namespace openHAB.Core.Services
 
             if (!string.IsNullOrEmpty(langcode))
             {
-                ApplicationLanguages.PrimaryLanguageOverride = langcode;
+                CultureInfo.CurrentCulture = new CultureInfo(langcode);
             }
             else
             {
-                ApplicationLanguages.PrimaryLanguageOverride = GlobalizationPreferences.Languages[0];
-            }
-        }
-
-        private void EnsureSettingsContainer()
-        {
-            if (_settingsContainer == null)
-            {
-                _settingsContainer = ApplicationData.Current.RoamingSettings;
+                string userLanguage = GlobalizationPreferences.Languages[0];
+                CultureInfo.CurrentCulture = new CultureInfo(userLanguage);
             }
         }
     }

@@ -28,7 +28,6 @@ namespace openHAB.Windows.ViewModel
         private readonly IOpenHAB _openHabsdk;
         private readonly ISettingsService _settingsService;
         private ObservableCollection<OpenHABWidget> _breadcrumbItems;
-        private CancellationTokenSource _cancellationTokenSource;
         private ObservableCollection<OpenHABWidget> _currentWidgets;
         private ActionCommand _feedbackCommand;
         private bool _isDataLoading;
@@ -58,7 +57,6 @@ namespace openHAB.Windows.ViewModel
             _openHabsdk = openHabsdk;
             _settingsService = settingsService;
             //_feedbackLauncher = StoreServicesFeedbackLauncher.GetDefault();
-            _cancellationTokenSource = new CancellationTokenSource();
             _breadcrumbItems = new ObservableCollection<OpenHABWidget>();
 
             StrongReferenceMessenger.Default.Register<TriggerCommandMessage>(this, async (recipient, msg) => await TriggerCommand(recipient, msg).ConfigureAwait(false));
@@ -147,7 +145,10 @@ namespace openHAB.Windows.ViewModel
                 {
                     if (_selectedSitemap != null)
                     {
-                        _settingsService.SaveCurrentSitemap(_selectedSitemap.Name);
+                        Settings settings = _settingsService.Load();
+                        settings.LastSitemap = _selectedSitemap.Name;
+                        _settingsService.Save(settings);
+
                         Subtitle = _selectedSitemap.Label;
                     }
 
@@ -423,7 +424,8 @@ namespace openHAB.Windows.ViewModel
 
         private void OpenLastOrDefaultSitemap()
         {
-            string sitemapName = _settingsService.LoadLastSitemap();
+            Settings settings = _settingsService.Load();
+            string sitemapName = settings.LastSitemap;
 
             if (string.IsNullOrWhiteSpace(sitemapName))
             {
@@ -499,9 +501,6 @@ namespace openHAB.Windows.ViewModel
             Subtitle = widget == null ? SelectedSitemap?.Label : widget.Label;
             SelectedWidget = widget;
             SetWidgetsOnScreen(widget != null ? widget.LinkedPage.Widgets : SelectedSitemap.Widgets);
-        }
-
-            SetWidgetsOnScreen(widget?.LinkedPage?.Widgets);
 
             BreadcrumbItems.Clear();
             BreadcrumbItems.AddRange(WidgetNavigationService.Widgets);
@@ -582,6 +581,7 @@ namespace openHAB.Windows.ViewModel
                 CurrentWidgets.AddRange(widgets);
             });
         }
+
         #endregion
     }
 }

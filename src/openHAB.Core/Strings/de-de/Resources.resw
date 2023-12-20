@@ -225,7 +225,7 @@ Bitte wählen Sie den Demomodus oder die Lokale-/Remote-Verbindungsinformation z
     <value>Benutzerdefiniertes Verbindungsprofil</value>
   </data>
   <data name="LocalDefaultConnection" xml:space="preserve">
-    <value>Standard-Verbindungsprofil</value>
+    <value>Lokales-Verbindungsprofil</value>
   </data>
   <data name="RemoteCustomConnection" xml:space="preserve">
     <value>Benutzerdefiniertes Verbindungsprofil</value>

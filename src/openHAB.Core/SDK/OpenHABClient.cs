@@ -1,3 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -9,12 +15,6 @@ using openHAB.Core.Model;
 using openHAB.Core.Model.Event;
 using openHAB.Core.Notification.Contracts;
 using openHAB.Core.Services.Contracts;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace openHAB.Core.SDK
 {

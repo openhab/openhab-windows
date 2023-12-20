@@ -1,26 +1,24 @@
-using CommunityToolkit.WinUI.Helpers;
+using System;
+using System.IO;
+using System.Net.Http;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using openHAB.Core.Common;
 using openHAB.Core.Connection;
 using openHAB.Core.Model;
 using openHAB.Core.Services.Contracts;
-using System;
-using System.Net.Http;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Windows.Storage;
 
 namespace openHAB.Core.Services
 {
     /// <inheritdoc/>
     public class IconCaching : IIconCaching
     {
-        private string _iconCacheDirectory = "icons";
-        private StorageFolder _cacheFolder;
+        private readonly string _iconCacheDirectory = "icons";
         private OpenHABHttpClient _openHABHttpClient;
         private IConnectionService _connectionService;
-        private ISettingsService _settingsService;
         private Settings _settings;
+        private AppPaths _applicationContext;
         private ILogger<IconCaching> _logger;
 
         /// <summary>Initializes a new instance of the <see cref="IconCaching" /> class.</summary>
@@ -28,15 +26,19 @@ namespace openHAB.Core.Services
         /// <param name="connectionService">ConnectionService to retrive the connection details.</param>
         /// <param name="settingsService">Setting Service to load settings.</param>
         /// <param name="logger">The logger.</param>
-        public IconCaching(OpenHABHttpClient openHABHttpClient, IConnectionService connectionService,
-            ISettingsService settingsService, ILogger<IconCaching> logger)
+        public IconCaching(
+            AppPaths applicationContext,
+            OpenHABHttpClient openHABHttpClient,
+            IConnectionService connectionService,
+            ISettingsService settingsService,
+            ILogger<IconCaching> logger)
         {
             _logger = logger;
-            _cacheFolder = ApplicationData.Current.LocalCacheFolder;
             _openHABHttpClient = openHABHttpClient;
             _connectionService = connectionService;
-            _settingsService = settingsService;
             _settings = settingsService.Load();
+
+            _applicationContext = applicationContext;
         }
 
         /// <inheritdoc/>
@@ -62,17 +64,17 @@ namespace openHAB.Core.Services
                     throw new OpenHABException("Can not resolve icon state from url");
                 }
 
-                StorageFolder storageFolder = await EnsureIconCacheFolder();
+                DirectoryInfo iconDirectory = EnsureIconCacheFolder();
 
                 string iconFileName = $"{iconName.Value.Replace("icon/", string.Empty)}{iconState.Value.Replace("state=", string.Empty)}.{iconFormat}";
-                string iconFilePath = $"{storageFolder.Path}\\{iconFileName}";
+                string iconFilePath = Path.Combine(iconDirectory.FullName, iconFileName).Replace("NULL", string.Empty);
 
-                if (await storageFolder.FileExistsAsync(iconFileName))
+                if (File.Exists(iconFilePath))
                 {
                     return iconFilePath;
                 }
 
-                await DownloadAndSaveIconToCache(iconUrl, iconFileName, storageFolder);
+                await DownloadAndSaveIconToCache(iconUrl, iconFilePath);
                 return iconFilePath;
             }
             catch (Exception ex)
@@ -82,7 +84,7 @@ namespace openHAB.Core.Services
             }
         }
 
-        private async Task DownloadAndSaveIconToCache(string iconUrl, string iconFileName, StorageFolder storageFolder)
+        private async Task DownloadAndSaveIconToCache(string iconUrl, string iconFilePath)
         {
             OpenHABConnection connection = await _connectionService.DetectAndRetriveConnection(_settings).ConfigureAwait(false);
             using (HttpClient httpClient = _openHABHttpClient.DisposableClient(connection, _settings))
@@ -91,32 +93,39 @@ namespace openHAB.Core.Services
 
                 if (!httpResponse.IsSuccessStatusCode)
                 {
+                    _logger.LogError($"Failed to download icon from '{iconUrl}' with status code '{httpResponse.StatusCode}'");
                     return;
                 }
 
                 byte[] iconContent = await httpResponse.Content.ReadAsByteArrayAsync();
-                StorageFile file = await storageFolder.CreateFileAsync(iconFileName, CreationCollisionOption.ReplaceExisting);
-                await FileIO.WriteBytesAsync(file, iconContent);
+
+                using (FileStream file = File.Create(iconFilePath))
+                {
+                    await file.WriteAsync(iconContent, 0, iconContent.Length);
+                }
             }
         }
 
         /// <inheritdoc/>
-        public async void ClearIconCache()
+        public void ClearIconCache()
         {
-            StorageFolder storageFolder = await EnsureIconCacheFolder();
-            await storageFolder.DeleteAsync();
+            DirectoryInfo iconDirectory = EnsureIconCacheFolder();
+            if (iconDirectory.Exists)
+            {
+                iconDirectory.Delete(true);
+            }
         }
 
-        private async Task<StorageFolder> EnsureIconCacheFolder()
+        private DirectoryInfo EnsureIconCacheFolder()
         {
-            StorageFolder storageFolder = await _cacheFolder.TryGetItemAsync(_iconCacheDirectory) as StorageFolder;
-
-            if (storageFolder == null)
+            if (!Directory.Exists(_applicationContext.IconCacheDirectory))
             {
-                storageFolder = await _cacheFolder.CreateFolderAsync(_iconCacheDirectory);
+                DirectoryInfo directory = Directory.CreateDirectory(_applicationContext.IconCacheDirectory);
+                _logger.LogInformation($"Created icon cache directory '{directory.FullName}'");
+                return directory;
             }
 
-            return storageFolder;
+            return new DirectoryInfo(_applicationContext.IconCacheDirectory);
         }
     }
 }

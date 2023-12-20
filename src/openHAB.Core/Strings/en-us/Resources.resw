@@ -147,6 +147,9 @@
   <data name="LocalSettings.Text" xml:space="preserve">
     <value>Local Settings</value>
   </data>
+  <data name="LocalUrl.ToolTipService.ToolTip" xml:space="preserve">
+    <value>URL of the local openHAB instance. Default URL is http://openhab:8080</value>
+  </data>
   <data name="LocalUrlHeader.Text" xml:space="preserve">
     <value>openHAB URL</value>
   </data>
@@ -209,6 +212,9 @@ Please select demo mode or configure local/remote connection.</value>
   </data>
   <data name="ConnectionProfile.Text" xml:space="preserve">
     <value>Connection Profile</value>
+  </data>
+  <data name="ConnectionNotConfigured" xml:space="preserve">
+    <value>Not configured</value>
   </data>
   <data name="EncryptedConnection" xml:space="preserve">
     <value>Connected to</value>

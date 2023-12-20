@@ -26,18 +26,6 @@ namespace openHAB.Core.Services.Contracts
         Settings Load();
 
         /// <summary>
-        /// Save the name of the last opened sitemap.
-        /// </summary>
-        /// <param name="name">Name of the sitemap.</param>
-        void SaveCurrentSitemap(string name);
-
-        /// <summary>
-        /// Loads the name of the last opened sitemap.
-        /// </summary>
-        /// <returns>The name of the sitemap.</returns>
-        string LoadLastSitemap();
-
-        /// <summary>
         ///   Sets the program language.
         /// </summary>
         /// <param name="langcode">Language code e.g. en-us.</param>

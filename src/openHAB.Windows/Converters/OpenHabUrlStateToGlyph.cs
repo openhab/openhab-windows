@@ -1,8 +1,8 @@
-using Microsoft.UI.Xaml.Data;
-using openHAB.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.UI.Xaml.Data;
+using openHAB.Core.Model;
 
 namespace openHAB.Windows.Converters
 {
@@ -27,7 +27,7 @@ namespace openHAB.Windows.Converters
         /// <returns>Returns a glyph for an url state.</returns>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            ConnectionState state = ((ConnectionStatusViewModel)value).State;
+            ConnectionState state = (ConnectionState)value;
             _stateToGlyphMapping.TryGetValue(state, out string glyph);
 
             return glyph;
