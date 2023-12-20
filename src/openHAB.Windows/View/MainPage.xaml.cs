@@ -64,8 +64,8 @@ namespace openHAB.Windows.View
             StrongReferenceMessenger.Default.Unregister<FireErrorMessage>(this);
             StrongReferenceMessenger.Default.Unregister<FireInfoMessage>(this);
 
-            //ErrorNotification.IsOpen = false;
-            //InfoNotification.IsOpen = false;
+            ErrorNotification.IsOpen = false;
+            InfoNotification.IsOpen = false;
         }
 
 #pragma warning disable S1172 // Unused method parameters should be removed
@@ -78,8 +78,8 @@ namespace openHAB.Windows.View
                 if (message == null || string.IsNullOrEmpty(message.ErrorMessage))
                 {
                     errorMessage = AppResources.Values.GetString("MessageError");
-                    //ErrorNotification.Message = errorMessage;
-                    //ErrorNotification.IsOpen = true;
+                    ErrorNotification.Message = errorMessage;
+                    ErrorNotification.IsOpen = true;
                 }
                 else
                 {
@@ -88,8 +88,8 @@ namespace openHAB.Windows.View
 
                 await App.DispatcherQueue.EnqueueAsync(() =>
                 {
-                    //ErrorNotification.Message = errorMessage;
-                    //ErrorNotification.IsOpen = true;
+                    ErrorNotification.Message = errorMessage;
+                    ErrorNotification.IsOpen = true;
                 });
             }
             catch (Exception ex)
@@ -120,8 +120,8 @@ namespace openHAB.Windows.View
 
                 await App.DispatcherQueue.EnqueueAsync(() =>
                 {
-                    //InfoNotification.Message = message;
-                    //InfoNotification.IsOpen = true;
+                    InfoNotification.Message = message;
+                    InfoNotification.IsOpen = true;
                 });
             }
             catch (Exception ex)

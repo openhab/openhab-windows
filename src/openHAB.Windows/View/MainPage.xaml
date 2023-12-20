@@ -13,7 +13,7 @@
       xmlns:media="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:model="using:openHAB.Core.Model"
       mc:Ignorable="d"
-      Name="Page">
+      Name="Page">65417
     <Page.Resources>
         <Style TargetType="GridViewItem">
             <Setter Property="HorizontalContentAlignment"
@@ -40,18 +40,18 @@
                     Value="Black" />
         </Style>
         <!-- Navigation View Styling -->
-        <SolidColorBrush x:Key="NavigationViewDefaultPaneBackground"
+        <!--<SolidColorBrush x:Key="NavigationViewDefaultPaneBackground"
                          Color="{StaticResource DarkColor}" />
         <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground"
-                         Color="{StaticResource DarkColor}" />
-        <!--<media:AcrylicBrush x:Key="NavigationViewDefaultPaneBackground"
+                         Color="{StaticResource DarkColor}" />-->
+        <media:AcrylicBrush x:Key="NavigationViewDefaultPaneBackground"
                             TintOpacity="0.7"
                             FallbackColor="{StaticResource DarkColor}"
                             TintColor="{StaticResource DarkColor}" />
         <media:AcrylicBrush x:Key="NavigationViewExpandedPaneBackground"
                             TintOpacity="0.7"
                             FallbackColor="{StaticResource DarkColor}"
-                            TintColor="{StaticResource DarkColor}" />-->
+                            TintColor="{StaticResource DarkColor}" />
         <SolidColorBrush x:Key="NavigationViewItemForeground"
                          Color="White" />
         <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver"
@@ -230,20 +230,7 @@
                 </StackPanel>
             </muxc:NavigationView.PaneCustomContent>
             <muxc:NavigationView.FooterMenuItems>
-                <muxc:NavigationViewItem x:Uid="FeedbackHeader">
-                    <muxc:NavigationViewItem.Icon>
-                        <FontIcon VerticalAlignment="Center"
-                                  AutomationProperties.Name="Favorite"
-                                  FontFamily="Segoe MDL2 Assets"
-                                  FontSize="18"
-                                  Glyph="" />
-                    </muxc:NavigationViewItem.Icon>
-                    <interactivity:Interaction.Behaviors>
-                        <core:EventTriggerBehavior EventName="Tapped">
-                            <core:InvokeCommandAction Command="{x:Bind Vm.FeedbackCommand}" />
-                        </core:EventTriggerBehavior>
-                    </interactivity:Interaction.Behaviors>
-                </muxc:NavigationViewItem>
+                
             </muxc:NavigationView.FooterMenuItems>
             <Grid x:Name="MainContentGrid"
                   Margin="35,0,0,0"
