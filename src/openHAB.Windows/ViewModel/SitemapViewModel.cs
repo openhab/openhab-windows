@@ -94,6 +94,7 @@ namespace openHAB.Windows.ViewModel
                 return Model.Name;
             }
         }
+
         /// <summary>
         /// Gets or sets the selected widget.
         /// </summary>
@@ -101,15 +102,6 @@ namespace openHAB.Windows.ViewModel
         {
             get => _selectedWidget;
             set => Set(ref _selectedWidget, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the subtitle of the page.
-        /// </summary>
-        public string Subtitle
-        {
-            get => _subtitle;
-            set => Set(ref _subtitle, value);
         }
 
         /// <summary>
@@ -281,7 +273,6 @@ namespace openHAB.Windows.ViewModel
                 lastWidget = WidgetNavigationService.GoBack();
             }
 
-            Subtitle = widget.Label;
             SelectedWidget = widget;
 
             SetWidgetsOnScreen(widget.LinkedPage.Widgets);
@@ -324,8 +315,6 @@ namespace openHAB.Windows.ViewModel
                 {
                     return;
                 }
-
-                Subtitle = SelectedWidget.Label;
 
                 WidgetNavigationService.Navigate(SelectedWidget);
                 StrongReferenceMessenger.Default.Send<WigetNavigation>(new WigetNavigation(lastWidget, widget));

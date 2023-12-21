@@ -117,8 +117,6 @@ namespace openHAB.Windows.ViewModel
                         Settings settings = _settingsService.Load();
                         settings.LastSitemap = _selectedSitemap.Name;
                         _settingsService.Save(settings);
-
-                        _selectedSitemap.Subtitle = _selectedSitemap.Label;
                     }
 
                     if (!_isDataLoading && (_selectedSitemap?.Widgets == null || _selectedSitemap?.Widgets.Count == 0))
@@ -190,7 +188,6 @@ namespace openHAB.Windows.ViewModel
             {
                 Sitemaps?.Clear();
                 SelectedSitemap.CurrentWidgets?.Clear();
-                SelectedSitemap.Subtitle = null;
                 IsDataLoading = false;
             });
         }
@@ -317,8 +314,6 @@ namespace openHAB.Windows.ViewModel
                 _logger.LogInformation($"Unable to find sitemap '{sitemapName}' -> Pick first entry from list");
                 SelectedSitemap = Sitemaps.FirstOrDefault();
             }
-
-            SelectedSitemap.Subtitle = SelectedSitemap.Label;
         }
 
         #endregion
