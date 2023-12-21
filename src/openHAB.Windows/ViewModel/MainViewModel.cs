@@ -47,6 +47,12 @@ namespace openHAB.Windows.ViewModel
             _openHabsdk = openHabsdk;
             _settingsService = settingsService;
             _breadcrumbItems = new ObservableCollection<OpenHABWidget>();
+
+            StrongReferenceMessenger.Default.Register<DataOperation>(this, (obj, operation)
+                => DataOperationState(obj, operation));
+
+            StrongReferenceMessenger.Default.Register<WigetNavigation>(this, (obj, operation)
+                => WidgetNavigatedEvent(obj, operation));
         }
 
         /// <summary>
@@ -126,10 +132,9 @@ namespace openHAB.Windows.ViewModel
                     }
                     else
                     {
-                        _selectedSitemap.SetWidgetsOnScreen(SelectedSitemap.Widgets);
+                        _selectedSitemap?.SetWidgetsOnScreen(SelectedSitemap.Widgets);
                     }
 
-                    SelectedWidget = null;
                     SelectedMenuItem = value;
                 }
             }
@@ -207,7 +212,6 @@ namespace openHAB.Windows.ViewModel
                 {
                     IsDataLoading = true;
                     Sitemaps?.Clear();
-                    SelectedSitemap = null;
                 });
 
                 Settings settings = _settingsService.Load();
@@ -315,6 +319,31 @@ namespace openHAB.Windows.ViewModel
             }
 
             SelectedSitemap.Subtitle = SelectedSitemap.Label;
+        }
+
+        #endregion
+
+        #region Events
+
+        private void DataOperationState(object obj, DataOperation operation)
+        {
+            switch (operation.State)
+            {
+                case OperationState.Started:
+                    IsDataLoading = true;
+                    break;
+
+                case OperationState.Completed:
+                    IsDataLoading = false;
+                    break;
+            }
+        }
+
+        private void WidgetNavigatedEvent(object obj, WigetNavigation operation)
+        {
+            BreadcrumbItems.Clear();
+            BreadcrumbItems.AddRange(WidgetNavigationService.Widgets);
+            OnPropertyChanged(nameof(BreadcrumbItems));
         }
 
         #endregion

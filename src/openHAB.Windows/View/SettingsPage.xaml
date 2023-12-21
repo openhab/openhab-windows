@@ -88,7 +88,7 @@
                         <ListViewItem x:Uid="MenuLogsView">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Tapped">
-                                    <core:NavigateToPageAction TargetPage="OpenHAB.Windows.View.LogViewerPage" />
+                                    <core:NavigateToPageAction TargetPage="openHAB.Windows.View.LogViewerPage" />
                                 </core:EventTriggerBehavior>
                             </interactivity:Interaction.Behaviors>
                         </ListViewItem>
@@ -106,7 +106,7 @@
                                       Icon="Cancel">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Tapped">
-                                    <core:NavigateToPageAction TargetPage="OpenHAB.Windows.View.MainPage" />
+                                    <core:NavigateToPageAction TargetPage="openHAB.Windows.View.MainPage" />
                                 </core:EventTriggerBehavior>
                             </interactivity:Interaction.Behaviors>
                         </AppBarButton>

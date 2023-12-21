@@ -69,6 +69,7 @@ namespace openHAB.Windows.View
         }
 
 #pragma warning disable S1172 // Unused method parameters should be removed
+
         private async Task ShowErrorMessage(object recipient, FireErrorMessage message)
 #pragma warning restore S1172 // Unused method parameters should be removed
         {
@@ -99,6 +100,7 @@ namespace openHAB.Windows.View
         }
 
 #pragma warning disable S1172 // Unused method parameters should be removed
+
         private async Task ShowInfoMessage(object recipient, FireInfoMessage msg)
 #pragma warning restore S1172 // Unused method parameters should be removed
         {
@@ -110,9 +112,11 @@ namespace openHAB.Windows.View
                     case MessageType.NotConfigured:
                         message = AppResources.Values.GetString("MessageNotConfigured");
                         break;
+
                     case MessageType.NotReachable:
                         message = AppResources.Values.GetString("MessagesNotReachable");
                         break;
+
                     default:
                         message = "Message not defined";
                         break;
@@ -148,7 +152,7 @@ namespace openHAB.Windows.View
         private void BreadcrumbBar_ItemClicked(BreadcrumbBar sender, BreadcrumbBarItemClickedEventArgs args)
         {
             OpenHABWidget widget = args.Item as OpenHABWidget;
-            this.Vm.WidgetGoBack(widget);
+            this.Vm.SelectedSitemap.WidgetGoBack(widget);
         }
     }
 }
