@@ -14,8 +14,6 @@ using openHAB.Core.SDK;
 using openHAB.Core.Services;
 using openHAB.Core.Services.Contracts;
 using openHAB.Windows.ViewModel;
-using System;
-using Windows.Storage;
 
 namespace openHAB.Windows.Services
 {

@@ -1,3 +1,9 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Numerics;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Microsoft.UI;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
@@ -5,12 +11,6 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
-using System;
-using System.IO;
-using System.Linq;
-using System.Numerics;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
 using ColorChangedEventArgs = openHAB.Core.Common.ColorChangedEventArgs;
@@ -102,30 +102,30 @@ namespace openHAB.Windows.Controls
 
         private static void OnColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var map = d as ColorMap;
-            map?.ColorChanged?.Invoke(map, new ColorChangedEventArgs((Color)e.NewValue));
+            ColorMap colorMap = d as ColorMap;
+            colorMap?.ColorChanged?.Invoke(colorMap, new ColorChangedEventArgs((Color)e.NewValue));
 
-            if (map == null || map._settingColor)
+            if (colorMap == null || colorMap._settingColor)
             {
                 return;
             }
 
-            var col = (Color)e.NewValue;
-            var hsl = ColorHelper.ToHSL(col);
+            Color col = (Color)e.NewValue;
+            Vector4 hsl = ColorHelper.ToHSL(col);
 
-            map._lightnessMid.Color = ColorHelper.FromHSL(new Vector4(hsl.X, 1, 0.5f, 1));
+            colorMap._lightnessMid.Color = ColorHelper.FromHSL(new Vector4(hsl.X, 1, 0.5f, 1));
 
             double angle = Math.PI * 2 * hsl.X;
             Vector2 normalized = new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));
             Vector2 halfSize = new Vector2(
-                (float)map.ellipse.ActualWidth / 2,
-                (float)map.ellipse.ActualHeight / 2);
+                (float)colorMap.ellipse.ActualWidth / 2,
+                (float)colorMap.ellipse.ActualHeight / 2);
 
             Vector2 pos = ((hsl.Y / 2) * normalized * halfSize * new Vector2(1, -1)) + halfSize;
 
-            map._colorX = pos.X;
-            map._colorY = pos.Y;
-            map.UpdateThumb();
+            colorMap._colorX = pos.X;
+            colorMap._colorY = pos.Y;
+            colorMap.UpdateThumb();
         }
 
         private void Image3_PointerPressed(object sender, PointerRoutedEventArgs e)
@@ -202,7 +202,9 @@ namespace openHAB.Windows.Controls
             }
 
             _radialpos = Math.Sqrt(Math.Pow(x - 0.5, 2) + Math.Pow(y - 0.5, 2));
-            _radialpos = _radialpos * 2.2; // 2times because we are working with 0.5 as max. .2 to give a bit more value and make it easier to catch max value;
+
+            // 2times because we are working with 0.5 as max. .2 to give a bit more value and make it easier to catch max value;
+            _radialpos = _radialpos * 2.2;
             if (_radialpos > 1)
             {
                 _radialpos = 1;
@@ -218,9 +220,9 @@ namespace openHAB.Windows.Controls
                 return false;
             }
 
-            var x = _colorX / ellipse.ActualWidth;
-            var y = 1 - (_colorY / ellipse.ActualHeight);
-            var selectedColor = CalcWheelColor((float)x, 1 - (float)y, 100);
+            double x = _colorX / ellipse.ActualWidth;
+            double y = 1 - (_colorY / ellipse.ActualHeight);
+            Color selectedColor = CalcWheelColor((float)x, 1 - (float)y, 100);
 
             if (selectedColor.A <= 0)
             {

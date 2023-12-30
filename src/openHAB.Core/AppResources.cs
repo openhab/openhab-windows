@@ -5,7 +5,7 @@ namespace openHAB.Core
     /// <summary>
     ///   Resources.
     /// </summary>
-    public class AppResources
+    public static class AppResources
     {
         private static ResourceLoader _resourceLoader;
         private static ResourceLoader _errorResourceLoader;

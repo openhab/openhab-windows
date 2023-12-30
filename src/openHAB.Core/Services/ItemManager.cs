@@ -1,7 +1,7 @@
+using System.Collections.Generic;
 using openHAB.Core.Model;
 using openHAB.Core.SDK;
 using openHAB.Core.Services.Contracts;
-using System.Collections.Generic;
 
 namespace openHAB.Core.Services
 {

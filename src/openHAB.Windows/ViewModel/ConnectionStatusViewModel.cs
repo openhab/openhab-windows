@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Dispatching;
@@ -6,8 +8,6 @@ using openHAB.Core.Connection;
 using openHAB.Core.Messages;
 using openHAB.Core.Model;
 using openHAB.Core.Services.Contracts;
-using System;
-using System.Threading.Tasks;
 
 namespace openHAB.Windows.ViewModel
 {
@@ -24,7 +24,7 @@ namespace openHAB.Windows.ViewModel
         /// <summary>
         /// Initializes a new instance of the <see cref="ConnectionStatusViewModel"/> class.
         /// </summary>
-        /// <param name="openHabsdk">OpenHABSDK class.</param>
+        /// <param name="connectionService">The connection service.</param>
         public ConnectionStatusViewModel(IConnectionService connectionService)
             : base(null)
         {

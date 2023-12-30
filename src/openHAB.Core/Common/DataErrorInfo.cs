@@ -100,7 +100,7 @@ namespace openHAB.Core.Common
         {
             if (string.IsNullOrEmpty(propertyName) || !_errors.ContainsKey(propertyName))
             {
-                return null;
+                return new Dictionary<string, List<string>>();
             }
 
             return _errors[propertyName];

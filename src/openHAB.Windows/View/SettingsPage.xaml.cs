@@ -1,3 +1,4 @@
+using System;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
 using Microsoft.Extensions.Logging;
@@ -11,7 +12,6 @@ using openHAB.Core.Services.Contracts;
 using openHAB.Windows.Controls;
 using openHAB.Windows.Services;
 using openHAB.Windows.ViewModel;
-using System;
 
 namespace openHAB.Windows.View
 {

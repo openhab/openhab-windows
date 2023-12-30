@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
 using Microsoft.Extensions.Logging;
@@ -8,8 +10,6 @@ using openHAB.Core.Messages;
 using openHAB.Core.Model;
 using openHAB.Windows.Services;
 using openHAB.Windows.ViewModel;
-using System;
-using System.Threading.Tasks;
 
 namespace openHAB.Windows.View
 {
@@ -21,7 +21,7 @@ namespace openHAB.Windows.View
         private ILogger<MainPage> _logger;
 
         /// <summary>
-        /// Gets the datacontext, for use in compiled bindings.
+        /// Gets the data context, for use in compiled bindings.
         /// </summary>
         public MainViewModel Vm => DataContext as MainViewModel;
 
@@ -34,19 +34,6 @@ namespace openHAB.Windows.View
             _logger = DIService.Instance.GetService<ILogger<MainPage>>();
 
             InitializeComponent();
-
-            //Vm.CurrentWidgets.CollectionChanged += async (sender, args) =>
-            //{
-            //    DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-            //    await dispatcherQueue.EnqueueAsync(() =>
-            //     {
-            //         SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = WidgetNavigationService.CanGoBack
-            //         ? AppViewBackButtonVisibility.Visible
-            //         : AppViewBackButtonVisibility.Collapsed;
-            //     });
-            //};
-
-            //SystemNavigationManager.GetForCurrentView().BackRequested += (sender, args) => Vm.WidgetGoBack();
         }
 
         /// <inheritdoc/>

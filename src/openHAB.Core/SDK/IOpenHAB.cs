@@ -1,8 +1,8 @@
-using openHAB.Core.Common;
-using openHAB.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using openHAB.Core.Common;
+using openHAB.Core.Model;
 
 namespace openHAB.Core.SDK
 {

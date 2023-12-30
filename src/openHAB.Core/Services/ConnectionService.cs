@@ -1,4 +1,8 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿using System;
+using System.Net.Http;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI.Connectivity;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -7,18 +11,15 @@ using openHAB.Core.Connection;
 using openHAB.Core.Messages;
 using openHAB.Core.Model;
 using openHAB.Core.Services.Contracts;
-using System;
-using System.Net.Http;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace openHAB.Core.Services
 {
+    /// <inheritdoc/>
     public class ConnectionService : IConnectionService
     {
-        private ILogger<ConnectionService> _logger;
-        private ISettingsService _settingsService;
-        private OpenHABHttpClient _openHABHttpClient;
+        private readonly ILogger<ConnectionService> _logger;
+        private readonly ISettingsService _settingsService;
+        private readonly OpenHABHttpClient _openHABHttpClient;
 
         public ConnectionService(ISettingsService settingsService, OpenHABHttpClient openHABHttpClient, ILogger<ConnectionService> logger)
         {
@@ -138,7 +139,7 @@ namespace openHAB.Core.Services
             try
             {
                 var settings = _settingsService.Load();
-                var httpClient = _openHABHttpClient.DisposableClient(connection, settings);
+                var httpClient = _openHABHttpClient.DisposableClient(connection);
                 httpClient.BaseAddress = new Uri(connection.Url);
 
                 ServerInfo serverInfo = new ServerInfo();

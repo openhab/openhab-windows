@@ -1,5 +1,5 @@
-using Microsoft.UI.Xaml.Data;
 using System;
+using Microsoft.UI.Xaml.Data;
 
 namespace openHAB.Windows.Converters
 {

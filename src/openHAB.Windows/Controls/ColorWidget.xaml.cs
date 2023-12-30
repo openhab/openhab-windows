@@ -1,12 +1,12 @@
+using System;
+using System.Globalization;
+using System.Text.RegularExpressions;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using openHAB.Core.Messages;
 using openHAB.Windows.Services;
-using System;
-using System.Globalization;
-using System.Text.RegularExpressions;
 using Windows.UI;
 
 namespace openHAB.Windows.Controls

@@ -1,11 +1,11 @@
+using System;
+using System.Text.RegularExpressions;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using openHAB.Core.Services.Contracts;
 using openHAB.Windows.Services;
-using System;
-using System.Text.RegularExpressions;
 
 namespace openHAB.Windows.Controls
 {
@@ -38,18 +38,15 @@ namespace openHAB.Windows.Controls
                 return;
             }
 
-            // fix IconPathState by removing empty space and special characters
+            // Fix IconPathState by removing empty space and special characters
             string iconPath = control.IconPath;
 
             Match format = Regex.Match(iconPath, @"format=svg", RegexOptions.None, TimeSpan.FromMilliseconds(100));
             Match state = Regex.Match(iconPath, @"state=(.+?)&", RegexOptions.None, TimeSpan.FromMilliseconds(100));
-            if (state != null)
+            if (state != null && !string.IsNullOrEmpty(state.Value))
             {
-                if (!string.IsNullOrEmpty(state.Value))
-                {
-                    string newstate = Regex.Replace(state.Groups[1].Value, "[^0-9a-zA-Z.&]", string.Empty, RegexOptions.None, TimeSpan.FromMilliseconds(100));
-                    iconPath = control.IconPath.Replace(state.Groups[1].Value, newstate, StringComparison.InvariantCulture);
-                }
+                string newstate = Regex.Replace(state.Groups[1].Value, "[^0-9a-zA-Z.&]", string.Empty, RegexOptions.None, TimeSpan.FromMilliseconds(100));
+                iconPath = control.IconPath.Replace(state.Groups[1].Value, newstate, StringComparison.InvariantCulture);
             }
 
             IIconCaching iconCaching = DIService.Instance.GetService<IIconCaching>();

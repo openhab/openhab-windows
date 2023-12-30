@@ -16,15 +16,14 @@ using openHAB.Windows.Services;
 namespace openHAB.Windows.ViewModel
 {
     /// <summary>
-    /// A class that represents an OpenHAB sitemap.
+    /// ViewModel class for the Sitemap view.
     /// </summary>
     public class SitemapViewModel : ViewModelBase<OpenHABSitemap>
     {
+        private readonly IOpenHAB _openHabsdk;
+        private readonly ServerInfo _serverInfo;
         private ObservableCollection<OpenHABWidget> _currentWidgets;
-        private IOpenHAB _openHabsdk;
         private OpenHABWidget _selectedWidget;
-        private string _subtitle;
-        private ServerInfo _serverInfo;
         private ObservableCollection<OpenHABWidget> _widgets;
 
         #region Constructors
@@ -41,6 +40,7 @@ namespace openHAB.Windows.ViewModel
         /// Initializes a new instance of the <see cref="SitemapViewModel"/> class.
         /// </summary>
         /// <param name="model">Model class for view model.</param>
+        /// <param name="serverInfo">openHAB Instance information.</param>
         public SitemapViewModel(OpenHABSitemap model, ServerInfo serverInfo)
              : base(model)
         {
@@ -51,13 +51,13 @@ namespace openHAB.Windows.ViewModel
             _currentWidgets = new ObservableCollection<OpenHABWidget>();
 
             StrongReferenceMessenger.Default.Register<WidgetClickedMessage>(this, (recipient, msg)
-                => OnWidgetClickedAction(recipient, msg.Widget));
+                => OnWidgetClickedAction( msg.Widget));
 
             StrongReferenceMessenger.Default.Register<TriggerCommandMessage>(this, async (recipient, msg)
-                => await TriggerItemCommand(recipient, msg).ConfigureAwait(false));
+                => await TriggerItemCommand(msg).ConfigureAwait(false));
 
             StrongReferenceMessenger.Default.Register<DataOperation>(this, (obj, operation)
-                => DataOperationState(obj, operation));
+                => DataOperationState(operation));
         }
 
         #endregion
@@ -172,12 +172,12 @@ namespace openHAB.Windows.ViewModel
 
         #region Events
 
-        private async void OnWidgetClickedAction(object recipient, OpenHABWidget widget)
+        private async void OnWidgetClickedAction(OpenHABWidget widget)
         {
             await OnWidgetClickedAsync(widget);
         }
 
-        private async Task TriggerItemCommand(object recipient, TriggerCommandMessage message)
+        private async Task TriggerItemCommand(TriggerCommandMessage message)
         {
             HttpResponseResult<bool> result = await _openHabsdk.SendCommand(message.Item, message.Command).ConfigureAwait(false);
             if (!result.Content)
@@ -189,7 +189,7 @@ namespace openHAB.Windows.ViewModel
             }
         }
 
-        private void DataOperationState(object obj, DataOperation operation)
+        private void DataOperationState(DataOperation operation)
         {
             switch (operation.State)
             {

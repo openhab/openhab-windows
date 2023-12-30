@@ -1,8 +1,8 @@
+using System;
+using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Imaging;
-using System;
-using System.Threading.Tasks;
 using Windows.Storage.Streams;
 
 namespace openHAB.Windows.Controls
@@ -46,7 +46,6 @@ namespace openHAB.Windows.Controls
             var image = new BitmapImage();
             using (InMemoryRandomAccessStream ms = new InMemoryRandomAccessStream())
             {
-
                 using (DataWriter writer = new DataWriter(ms.GetOutputStreamAt(0)))
                 {
                     writer.WriteBytes(binaryData);

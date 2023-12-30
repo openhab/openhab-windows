@@ -193,7 +193,7 @@
                              IsSettingsVisible="True"
                              OpenPaneLength="200"
                              CompactPaneLength="45"
-                             PaneDisplayMode="Left"
+                             PaneDisplayMode="Top"
                              IsPaneOpen="False"
                              SelectionChanged="SitemapNavigation_SelectionChanged">
             <muxc:NavigationView.PaneCustomContent>

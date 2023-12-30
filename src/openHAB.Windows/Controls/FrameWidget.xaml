@@ -37,7 +37,7 @@
             <Image x:Name="Icon"
                    Height="40"
                    VerticalAlignment="Center"
-                   Source="{x:Bind Widget.Icon, Mode=OneWay, Converter={StaticResource IconToBitmapConverter}}"
+                   Source="{x:Bind Widget, Mode=OneWay, Converter={StaticResource IconToBitmapConverter}}"
                    Stretch="UniformToFill" />
             <TextBlock x:Name="Label"
                        Margin="8"

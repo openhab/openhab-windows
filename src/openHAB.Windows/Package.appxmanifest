@@ -5,7 +5,9 @@
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
-  IgnorableNamespaces="uap rescap">
+  xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
+  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+  IgnorableNamespaces="uap rescap com desktop">
 	<Identity Name="openHABFoundatione.V.openHAB" Publisher="CN=8A77D062-E996-4F32-9CC6-50568ABAFF8F" Version="2022.9.12.0" />
 	
 	<Properties>
@@ -49,6 +51,20 @@
 				<uap5:Extension Category="windows.startupTask">
 					<uap5:StartupTask TaskId="openHABStartupId" Enabled="false" DisplayName="openHAB" />
 				</uap5:Extension>
+
+				<desktop:Extension Category="windows.toastNotificationActivation">
+					<desktop:ToastNotificationActivation ToastActivatorCLSID="5EDF1378-0453-439A-9D48-71C645088153" />
+				</desktop:Extension>
+
+				<!--Register COM CLSID LocalServer32 registry key-->
+				<com:Extension Category="windows.comServer">
+					<com:ComServer>
+						<com:ExeServer Executable="openHAB.Windows.exe" Arguments="-ToastActivated" DisplayName="Toast activator">
+							<com:Class Id="5EDF1378-0453-439A-9D48-71C645088153" DisplayName="Toast activator"/>
+						</com:ExeServer>
+					</com:ComServer>
+				</com:Extension>
+
 			</Extensions>
 		</Application>
 	</Applications>

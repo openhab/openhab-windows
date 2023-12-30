@@ -1,13 +1,13 @@
-using openHAB.Core.Model;
 using System.Collections.Generic;
 using System.Linq;
+using openHAB.Core.Model;
 
 namespace openHAB.Core.Services
 {
     /// <summary>
     /// Service that keeps track of navigation between linkedpages.
     /// </summary>
-    public class WidgetNavigationService
+    public static class WidgetNavigationService
     {
         private static readonly Stack<OpenHABWidget> WidgetBackStack = new Stack<OpenHABWidget>();
         private static OpenHABWidget _currentWidget;

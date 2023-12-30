@@ -1,3 +1,4 @@
+using System.Linq;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI.UI;
 using Microsoft.UI.Xaml;
@@ -6,7 +7,6 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using openHAB.Core.Messages;
 using openHAB.Core.Model;
-using System.Linq;
 
 namespace openHAB.Windows.Controls
 {
@@ -40,7 +40,6 @@ namespace openHAB.Windows.Controls
             var currentItem = SectionsList?.Items?.SingleOrDefault(x => ((OpenHABWidgetMapping)x).Command == Widget.Item.State);
             ContentPresenter presenter = SectionsList?.ContainerFromItem(currentItem) as Microsoft.UI.Xaml.Controls.ContentPresenter;
 
-            //if (presenter.GetChildren().FirstOrDefault() is ToggleButton toggleButton)
             if (presenter != null && presenter.FindChild(typeof(ToggleButton)) is ToggleButton toggleButton)
             {
                 toggleButton.IsChecked = true;
@@ -72,7 +71,6 @@ namespace openHAB.Windows.Controls
             foreach (var item in SectionsList.Items)
             {
                 ContentPresenter presenter = SectionsList?.ContainerFromItem(item) as ContentPresenter;
-                //if (presenter.GetChildren().FirstOrDefault() is ToggleButton toggleButton)
                 if (presenter.FindChild(typeof(ToggleButton)) is ToggleButton toggleButton)
                 {
                     toggleButton.IsChecked = false;

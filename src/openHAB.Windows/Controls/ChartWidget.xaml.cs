@@ -1,8 +1,8 @@
+using System;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Imaging;
 using openHAB.Core.Common;
-using System;
 
 namespace openHAB.Windows.Controls
 {

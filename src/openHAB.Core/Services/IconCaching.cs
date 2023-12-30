@@ -14,20 +14,22 @@ namespace openHAB.Core.Services
     /// <inheritdoc/>
     public class IconCaching : IIconCaching
     {
-        private readonly string _iconCacheDirectory = "icons";
-        private OpenHABHttpClient _openHABHttpClient;
-        private IConnectionService _connectionService;
-        private Settings _settings;
-        private AppPaths _applicationContext;
-        private ILogger<IconCaching> _logger;
+        private readonly OpenHABHttpClient _openHABHttpClient;
+        private readonly IConnectionService _connectionService;
+        private readonly Settings _settings;
+        private readonly AppPaths _applicationContext;
+        private readonly ILogger<IconCaching> _logger;
 
-        /// <summary>Initializes a new instance of the <see cref="IconCaching" /> class.</summary>
-        /// <param name="openHABHttpClient">HTTP Client factory.</param>
-        /// <param name="connectionService">ConnectionService to retrive the connection details.</param>
-        /// <param name="settingsService">Setting Service to load settings.</param>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IconCaching" /> class.
+        /// </summary>
+        /// <param name="appPaths">Application default paths.</param>
+        /// <param name="openHABHttpClient">The HTTP client factory.</param>
+        /// <param name="connectionService">The connection service to retrieve the connection details.</param>
+        /// <param name="settingsService">The settings service to load settings.</param>
         /// <param name="logger">The logger.</param>
         public IconCaching(
-            AppPaths applicationContext,
+            AppPaths appPaths,
             OpenHABHttpClient openHABHttpClient,
             IConnectionService connectionService,
             ISettingsService settingsService,
@@ -38,7 +40,7 @@ namespace openHAB.Core.Services
             _connectionService = connectionService;
             _settings = settingsService.Load();
 
-            _applicationContext = applicationContext;
+            _applicationContext = appPaths;
         }
 
         /// <inheritdoc/>
@@ -87,18 +89,23 @@ namespace openHAB.Core.Services
         private async Task DownloadAndSaveIconToCache(string iconUrl, string iconFilePath)
         {
             OpenHABConnection connection = await _connectionService.DetectAndRetriveConnection(_settings).ConfigureAwait(false);
-            using (HttpClient httpClient = _openHABHttpClient.DisposableClient(connection, _settings))
+            if (connection == null)
             {
-                HttpResponseMessage httpResponse = await httpClient.GetAsync(new Uri(iconUrl)).ConfigureAwait(false);
+                _logger.LogError("Failed to retrieve connection details to download icon");
+                return;
+            }
 
+            using (HttpClient httpClient = _openHABHttpClient.DisposableClient(connection))
+            {
+                Uri uri = new Uri(iconUrl);
+                HttpResponseMessage httpResponse = await httpClient.GetAsync(uri).ConfigureAwait(false);
                 if (!httpResponse.IsSuccessStatusCode)
                 {
-                    _logger.LogError($"Failed to download icon from '{iconUrl}' with status code '{httpResponse.StatusCode}'");
+                    _logger.LogWarning($"Failed to download icon from '{iconUrl}' with status code '{httpResponse.StatusCode}'");
                     return;
                 }
 
                 byte[] iconContent = await httpResponse.Content.ReadAsByteArrayAsync();
-
                 using (FileStream file = File.Create(iconFilePath))
                 {
                     await file.WriteAsync(iconContent, 0, iconContent.Length);

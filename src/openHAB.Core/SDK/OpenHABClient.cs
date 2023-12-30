@@ -26,10 +26,10 @@ namespace openHAB.Core.SDK
         private readonly IMessenger _messenger;
         private readonly ILogger<OpenHABClient> _logger;
         private readonly ISettingsService _settingsService;
+        private readonly OpenHABHttpClient _openHABHttpClient;
+        private readonly IOpenHABEventParser _eventParser;
+        private readonly IConnectionService _connectionService;
         private OpenHABConnection _connection;
-        private OpenHABHttpClient _openHABHttpClient;
-        private IOpenHABEventParser _eventParser;
-        private IConnectionService _connectionService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenHABClient"/> class.
@@ -37,6 +37,7 @@ namespace openHAB.Core.SDK
         /// <param name="settingsService">The service to fetch the settings.</param>
         /// <param name="messenger">The messenger instance.</param>
         /// <param name="eventParser">openHAB event parser.</param>
+        /// <param name="connectionService"></param>
         /// <param name="logger">Logger class.</param>
         /// <param name="openHABHttpClient">OpenHab Http client factory.</param>
         public OpenHABClient(
@@ -68,8 +69,8 @@ namespace openHAB.Core.SDK
             {
                 _logger.LogInformation($"Load sitemaps items for sitemap '{sitemap.Name}'");
 
-                var settings = _settingsService.Load();
-                var result = await _openHABHttpClient.Client(_connection, settings).GetAsync(sitemap.Link).ConfigureAwait(false);
+                Settings settings = _settingsService.Load();
+                HttpResponseMessage result = await _openHABHttpClient.Client(_connection).GetAsync(sitemap.Link).ConfigureAwait(false);
                 if (!result.IsSuccessStatusCode)
                 {
                     _logger.LogError($"Http request for loading sitemaps items failed, ErrorCode:'{result.StatusCode}'");
@@ -81,7 +82,7 @@ namespace openHAB.Core.SDK
                 ICollection<OpenHABWidget> items = null;
                 if (version == OpenHABVersion.Two || version == OpenHABVersion.Three || version == OpenHABVersion.Four)
                 {
-                    var jsonObject = JObject.Parse(resultString);
+                    JObject jsonObject = JObject.Parse(resultString);
                     items = JsonConvert.DeserializeObject<List<OpenHABWidget>>(jsonObject["homepage"]["widgets"].ToString());
                 }
                 else
@@ -114,10 +115,10 @@ namespace openHAB.Core.SDK
             {
                 _logger.LogInformation($"Load item by name '{itemName}' from openHAB server");
 
-                var settings = _settingsService.Load();
+                Settings settings = _settingsService.Load();
                 Uri resourceUrl = new Uri($"{Constants.API.Items}/{itemName}", UriKind.Relative);
 
-                var result = await _openHABHttpClient.Client(_connection, settings).GetAsync(resourceUrl).ConfigureAwait(false);
+                HttpResponseMessage result = await _openHABHttpClient.Client(_connection).GetAsync(resourceUrl).ConfigureAwait(false);
                 if (!result.IsSuccessStatusCode)
                 {
                     _logger.LogError($"Http request to fetch item '{itemName}' failed, ErrorCode:'{result.StatusCode}'");
@@ -150,8 +151,8 @@ namespace openHAB.Core.SDK
             {
                 _logger.LogInformation($"Load sitemaps for OpenHab server version '{version.ToString()}'");
 
-                var settings = _settingsService.Load();
-                var result = await _openHABHttpClient.Client(_connection, settings).GetAsync(Constants.API.Sitemaps).ConfigureAwait(false);
+                Settings settings = _settingsService.Load();
+                HttpResponseMessage result = await _openHABHttpClient.Client(_connection).GetAsync(Constants.API.Sitemaps).ConfigureAwait(false);
                 if (!result.IsSuccessStatusCode)
                 {
                     _logger.LogError($"Http request for loading sitemaps failed, ErrorCode:'{result.StatusCode}'");
@@ -160,8 +161,12 @@ namespace openHAB.Core.SDK
 
                 string resultString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                var sitemaps = new List<OpenHABSitemap>();
-                sitemaps = JsonConvert.DeserializeObject<List<OpenHABSitemap>>(resultString);
+                List<OpenHABSitemap> sitemaps = JsonConvert.DeserializeObject<List<OpenHABSitemap>>(resultString);
+                if (sitemaps == null)
+                {
+                    _logger.LogError($"Failed to load sitemaps from server");
+                    return new List<OpenHABSitemap>();
+                }
 
                 _logger.LogInformation($"Loaded '{sitemaps.Count}' sitemaps from server");
                 return sitemaps.Where(sitemap =>
@@ -187,7 +192,7 @@ namespace openHAB.Core.SDK
         /// <inheritdoc />
         public async Task<bool> ResetConnection()
         {
-            var settings = _settingsService.Load();
+            Settings settings = _settingsService.Load();
             OpenHABConnection connection = await _connectionService.DetectAndRetriveConnection(settings);
 
             if (connection == null)
@@ -214,9 +219,9 @@ namespace openHAB.Core.SDK
 
                 _logger.LogInformation($"Send Command '{command}' for item '{item.Name} of type '{item.Type}'");
 
-                var settings = _settingsService.Load();
-                var client = _openHABHttpClient.Client(_connection, settings);
-                var content = new StringContent(command);
+                Settings settings = _settingsService.Load();
+                HttpClient client = _openHABHttpClient.Client(_connection);
+                StringContent content = new StringContent(command);
 
                 var result = await client.PostAsync(item.Link, content);
                 if (!result.IsSuccessStatusCode)
@@ -243,17 +248,17 @@ namespace openHAB.Core.SDK
         {
             await Task.Run((Func<Task>)(async () =>
             {
-                var settings = _settingsService.Load();
-                var client = _openHABHttpClient.Client(_connection, settings);
-                var requestUri = Constants.API.Events;
+                Settings settings = _settingsService.Load();
+                HttpClient client = _openHABHttpClient.Client(_connection);
+                string requestUri = Constants.API.Events;
 
                 _logger.LogInformation($"Retrive item updates from '{client.BaseAddress.ToString()}'");
 
                 try
                 {
-                    var stream = await client.GetStreamAsync((string)requestUri).ConfigureAwait(false);
+                    Stream stream = await client.GetStreamAsync((string)requestUri).ConfigureAwait(false);
 
-                    using (var reader = new StreamReader((Stream)stream))
+                    using (StreamReader reader = new StreamReader((Stream)stream))
                     {
                         while (!reader.EndOfStream)
                         {
@@ -262,7 +267,7 @@ namespace openHAB.Core.SDK
                                 return;
                             }
 
-                            var updateEvent = reader.ReadLine();
+                            string updateEvent = reader.ReadLine();
                             if (updateEvent?.StartsWith("data:", StringComparison.InvariantCultureIgnoreCase) == true)
                             {
                                 OpenHABEvent ohEvent = _eventParser.Parse(updateEvent);

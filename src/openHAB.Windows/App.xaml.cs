@@ -1,4 +1,7 @@
+using System;
+using System.Diagnostics;
 using Microsoft.Extensions.Logging;
+using Microsoft.Toolkit.Uwp.Notifications;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -7,7 +10,6 @@ using openHAB.Core.Notification.Contracts;
 using openHAB.Core.Services.Contracts;
 using openHAB.Windows.Services;
 using openHAB.Windows.View;
-using System;
 
 namespace openHAB.Windows
 {
@@ -35,11 +37,9 @@ namespace openHAB.Windows
             INotificationManager notificationManager = DIService.Instance.GetService<INotificationManager>();
         }
 
-        private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
-        {
-            // TODO: Log and handle exceptions as appropriate.
-            // For more details, see https://docs.microsoft.com/windows/winui/api/microsoft.ui.xaml.unhandledexceptioneventargs.
-        }
+        public static DispatcherQueue DispatcherQueue { get; private set; }
+
+        public static Window MainWindow { get; private set; }
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
@@ -59,6 +59,11 @@ namespace openHAB.Windows
             AppInstance mainInstance = Microsoft.Windows.AppLifecycle.AppInstance.FindOrRegisterForKey("main");
             AppActivationArguments activatedEventArgs = Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().GetActivatedEventArgs();
 
+            DispatcherQueue = global::Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
+
+            // Register for toast activation. Requires Microsoft.Toolkit.Uwp.Notifications NuGet package version 7.0 or greater
+            ToastNotificationManagerCompat.OnActivated += ToastNotificationManagerCompat_OnActivated;
+
             // If the instance that's executing the OnLaunched handler right now
             // isn't the "main" instance.
             if (!mainInstance.IsCurrent)
@@ -69,11 +74,9 @@ namespace openHAB.Windows
                 return;
             }
 
-            // TODO This code handles app activation types. Add any other activation kinds you want to handle.
-            // Read: https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/guides/applifecycle#file-type-association
-            if (activatedEventArgs.Kind == ExtendedActivationKind.File)
+            if (activatedEventArgs.Kind == ExtendedActivationKind.ToastNotification)
             {
-                OnFileActivated(activatedEventArgs);
+
             }
 
             // Initialize MainWindow here
@@ -97,14 +100,47 @@ namespace openHAB.Windows
             MainWindow.Activate();
         }
 
-        // TODO This is an example method for the case when app is activated through a file.
-        // Feel free to remove this if you do not need this.
-        public void OnFileActivated(AppActivationArguments activatedEventArgs)
+        private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
         {
+            _logger.LogCritical(e.Exception, "Unhandled Exception");
         }
 
-        public static DispatcherQueue DispatcherQueue { get; private set; }
+        private void ToastNotificationManagerCompat_OnActivated(ToastNotificationActivatedEventArgsCompat e)
+        {
+            // Use the dispatcher from the window if present, otherwise the app dispatcher
+            var dispatcherQueue = MainWindow?.DispatcherQueue ?? App.DispatcherQueue;
 
-        public static Window MainWindow { get; private set; }
+            dispatcherQueue.TryEnqueue(delegate
+            {
+                var args = ToastArguments.Parse(e.Argument);
+
+                switch (args["action"])
+                {
+                    //// Send a background message
+                    //case "show":
+                    //    string message = e.UserInput["textBox"].ToString();
+                    //    // TODO: Send it
+
+                    //    // If the UI app isn't open
+                    //    if (MainWindow == null)
+                    //    {
+                    //        // Close since we're done
+                    //        Process.GetCurrentProcess().Kill();
+                    //    }
+
+                    //    break;
+
+                    // View a message
+                    case "show":
+
+                        string itemName = args["item"];
+                        // Launch/bring window to foreground
+                        //LaunchAndBringToForegroundIfNeeded();
+
+                        // TODO: Open the message
+                        break;
+                }
+            });
+        }
     }
 }

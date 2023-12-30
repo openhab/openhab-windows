@@ -23,16 +23,6 @@ namespace openHAB.Core.Model
             NotificationsEnable = false;
         }
 
-        /// <summary>
-        /// Gets or sets the application language.
-        /// </summary>
-        /// <value>The application language.</value>
-        public string AppLanguage
-        {
-            get;
-            set;
-        }
-
         /// <summary>Gets the list of available connection profiles.</summary>
         /// <value>The connection profiles.</value>
         public static List<IConnectionProfile> ConnectionProfiles
@@ -55,6 +45,16 @@ namespace openHAB.Core.Model
         }
 
         /// <summary>
+        /// Gets or sets the application language.
+        /// </summary>
+        /// <value>The application language.</value>
+        public string AppLanguage
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the application is currently running in demo mode.
         /// </summary>
         public bool? IsRunningInDemoMode
@@ -62,6 +62,14 @@ namespace openHAB.Core.Model
             get;
             set;
         }
+
+        /// <summary>
+        /// Gets or sets the last sitemap name in settings.
+        /// </summary>
+        /// <value>
+        /// The last sitemap.
+        /// </value>
+        public string LastSitemap { get; set; }
 
         /// <summary>
         /// Gets or sets the configuration to the OpenHAB remote instance.
@@ -72,7 +80,9 @@ namespace openHAB.Core.Model
             set;
         }
 
-        /// <summary>Gets or sets the setting to enable notifications.</summary>
+        /// <summary>
+        /// Gets or sets the setting to enable notifications.
+        /// </summary>
         /// <value>The enable notifications.</value>
         public bool? NotificationsEnable
         {
@@ -115,13 +125,5 @@ namespace openHAB.Core.Model
             get;
             set;
         }
-
-        /// <summary>
-        /// Gets or sets the last sitemap name in settings.
-        /// </summary>
-        /// <value>
-        /// The last sitemap.
-        /// </value>
-        public string LastSitemap { get; set; }
     }
 }

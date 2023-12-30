@@ -1,3 +1,5 @@
+using System;
+using System.Globalization;
 using Mapsui;
 using Mapsui.Extensions;
 using Mapsui.Projections;
@@ -6,8 +8,6 @@ using Mapsui.Widgets.ScaleBar;
 using Mapsui.Widgets.Zoom;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
-using System;
-using System.Globalization;
 
 namespace openHAB.Windows.Controls
 {

@@ -14,9 +14,10 @@ namespace openHAB.Core.Services
     /// </summary>
     public class SettingsService : ISettingsService
     {
-        private AppPaths _applicationContext;
-        private ILogger<SettingsService> _logger;
-        private JsonSerializerSettings _serializerSettings = new JsonSerializerSettings()
+        private readonly AppPaths _applicationContext;
+        private readonly ILogger<SettingsService> _logger;
+        private Settings _settings;
+        private readonly JsonSerializerSettings _serializerSettings = new JsonSerializerSettings()
         {
             TypeNameHandling = TypeNameHandling.Auto,
         };
@@ -39,6 +40,11 @@ namespace openHAB.Core.Services
         /// <inheritdoc />
         public Settings Load()
         {
+            if (_settings != null)
+            {
+                return _settings;
+            }
+
             if (!File.Exists(_applicationContext.SettingsFilePath))
             {
                 return new Settings();
@@ -53,14 +59,15 @@ namespace openHAB.Core.Services
                 return new Settings();
             }
 
-            // Fix to ensure the settings can still loaded after project restructing
+            // Fix to ensure the settings can still loaded after project restructuring
             // TODO: Remove this part in future
             if (fileContent.Contains("OpenHAB.Core.Model.Connection"))
             {
                 fileContent = fileContent.Replace("OpenHAB.Core.Model.Connection", "openHAB.Core.Connection");
             }
 
-            return JsonConvert.DeserializeObject<Settings>(fileContent, _serializerSettings);
+            _settings = JsonConvert.DeserializeObject<Settings>(fileContent, _serializerSettings);
+            return _settings;
         }
 
         /// <inheritdoc />
@@ -69,6 +76,7 @@ namespace openHAB.Core.Services
             try
             {
                 _logger.LogInformation("Save settings to disk");
+                _settings = settings;
 
                 string settingsContent = JsonConvert.SerializeObject(settings, _serializerSettings);
                 File.WriteAllText(_applicationContext.SettingsFilePath, settingsContent, Encoding.UTF8);

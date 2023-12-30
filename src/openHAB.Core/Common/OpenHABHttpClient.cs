@@ -38,10 +38,8 @@ namespace openHAB.Core.Common
         /// Fetch the HttpClient instance.
         /// </summary>
         /// <returns>The HttpClient instance.</returns>
-        public HttpClient Client(OpenHABConnection connection, Settings settings)
+        public HttpClient Client(OpenHABConnection connection)
         {
-            _settings = settings;
-
             return _client ?? (_client = InitClient(connection));
         }
 
@@ -49,9 +47,8 @@ namespace openHAB.Core.Common
         /// Create an HttpClient instance for one-time use.
         /// </summary>
         /// <returns>The HttpClient instance.</returns>
-        public HttpClient DisposableClient(OpenHABConnection connection, Settings settings)
+        public HttpClient DisposableClient(OpenHABConnection connection)
         {
-            _settings = settings;
             return InitClient(connection, true);
         }
 
@@ -65,29 +62,27 @@ namespace openHAB.Core.Common
 
         private HttpClient InitClient(OpenHABConnection connection, bool disposable = false)
         {
-            _logger.LogInformation($"Initialize http client for connection type '{connection.Type.ToString()}'");
+            _logger.LogInformation($"Initialize http client for connection type '{connection?.Type.ToString()}'");
 
             if (string.IsNullOrWhiteSpace(BaseUrl) && !disposable)
             {
                 return null;
             }
 
-            var handler = new HttpClientHandler();
-
+            HttpClientHandler handler = new HttpClientHandler();
             if (connection.WillIgnoreSSLCertificate.HasValue && connection.WillIgnoreSSLHostname.HasValue)
             {
                 _connection = connection;
                 handler.ServerCertificateCustomValidationCallback = CheckValidationResult;
             }
 
-            var credentials = GetCredentials(connection);
-
+            NetworkCredential credentials = GetCredentials(connection);
             if (credentials != null)
             {
                 handler.Credentials = credentials;
             }
 
-            var client = new HttpClient(handler);
+            HttpClient client = new HttpClient(handler);
             if (!disposable)
             {
                 client.BaseAddress = new Uri(BaseUrl);

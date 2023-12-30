@@ -1,10 +1,10 @@
+using System;
+using System.Text.RegularExpressions;
 using Microsoft.UI.Xaml.Data;
 using openHAB.Core.Common;
 using openHAB.Core.Model;
 using openHAB.Core.Services.Contracts;
 using openHAB.Windows.Services;
-using System;
-using System.Text.RegularExpressions;
 
 namespace openHAB.Windows.Converters
 {
@@ -13,7 +13,7 @@ namespace openHAB.Windows.Converters
     /// </summary>
     public class IconToPathConverter : IValueConverter
     {
-        private Settings _settings;
+        private readonly Settings _settings;
 
         /// <summary>Initializes a new instance of the <see cref="IconToPathConverter" /> class.</summary>
         public IconToPathConverter()

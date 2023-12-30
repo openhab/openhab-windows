@@ -36,14 +36,12 @@ namespace openHAB.Core.Services
         public async Task ToggleAutostart()
         {
             StartupTask startupTask = await StartupTask.GetAsync(_startupId);
-            StartupTaskState newState = StartupTaskState.Disabled;
-
             switch (startupTask.State)
             {
                 case StartupTaskState.DisabledByPolicy:
                 case StartupTaskState.DisabledByUser:
                 case StartupTaskState.Disabled:
-                    newState = await startupTask.RequestEnableAsync();
+                    StartupTaskState newState = await startupTask.RequestEnableAsync();
                     _logger.LogInformation($"App autostart: {newState.ToString()}");
                     break;
                 case StartupTaskState.EnabledByPolicy:

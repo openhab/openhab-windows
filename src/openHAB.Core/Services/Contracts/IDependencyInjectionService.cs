@@ -8,8 +8,9 @@ namespace openHAB.Core.Services.Contracts
         /// <summary>
         /// Gets the a instance of a specif type from the dependency injection service.
         /// </summary>
-        /// <value>The services.</value>
-        /// <returns>Requested type.</returns>
-        T GetService<T>() where T : class;
+        /// <typeparam name="T">The type of the service to retrieve.</typeparam>
+        /// <returns>The requested service instance.</returns>
+        T GetService<T>()
+            where T : class;
     }
 }

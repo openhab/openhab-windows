@@ -1,9 +1,14 @@
+using System;
+using System.DirectoryServices.ActiveDirectory;
+using System.Threading.Tasks;
+using Mapsui.Widgets;
+using Microsoft.SqlServer.Server;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media.Imaging;
 using openHAB.Core.Model;
 using openHAB.Core.Services.Contracts;
 using openHAB.Windows.Services;
-using System;
 
 namespace openHAB.Windows.Converters
 {
@@ -15,13 +20,31 @@ namespace openHAB.Windows.Converters
         /// <inheritdoc/>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var settingsService = (ISettingsService)DIService.Instance.GetService<ISettingsService>();
+            ISettingsService settingsService = (ISettingsService)DIService.Instance.GetService<ISettingsService>();
             OpenHABVersion openHABVersion = settingsService.ServerVersion;
+            Settings settings = settingsService.Load();
+
+            OpenHABWidget widget = value as OpenHABWidget;
+            string state = widget.Item?.State ?? "ON";
 
             var serverUrl = Core.Common.OpenHABHttpClient.BaseUrl;
-            string url = openHABVersion == OpenHABVersion.Two || openHABVersion == OpenHABVersion.Three ? $"{serverUrl}icon/{value}?state=UNDEF&format=png" : $"{serverUrl}images/{value}.png";
+            string iconFormat = settings.UseSVGIcons ? "svg" : "png";
+            string url = openHABVersion == OpenHABVersion.Two || openHABVersion == OpenHABVersion.Three || openHABVersion == OpenHABVersion.Four ?
+                $"{serverUrl}icon/{widget.Icon}?state={state}&format={iconFormat}" :
+                $"{serverUrl}images/{widget.Icon}.png";
 
-            return new BitmapImage(new Uri(url));
+            IIconCaching iconCaching = DIService.Instance.GetService<IIconCaching>();
+            var iconPathTask = iconCaching.ResolveIconPath(url, iconFormat).ConfigureAwait(false);
+            string iconPath = iconPathTask.GetAwaiter().GetResult();
+
+            if (settings.UseSVGIcons)
+            {
+                return new SvgImageSource(new Uri(iconPath));
+            }
+            else
+            {
+                return new BitmapImage(new Uri(iconPath));
+            }
         }
 
         /// <inheritdoc/>
