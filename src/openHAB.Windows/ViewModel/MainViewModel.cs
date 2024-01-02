@@ -189,12 +189,12 @@ namespace openHAB.Windows.ViewModel
 
         private async void CancelSyncCallbackAsync()
         {
-            //await App.DispatcherQueue.EnqueueAsync(() =>
-            //{
+            await App.DispatcherQueue.EnqueueAsync(() =>
+            {
                 Sitemaps?.Clear();
                 SelectedSitemap.CurrentWidgets?.Clear();
-                IsDataLoading = false;
-            //});
+                StrongReferenceMessenger.Default.Send<DataOperation>(new DataOperation(OperationState.Completed));
+            });
         }
 
         private async Task LoadData(CancellationToken loadCancellationToken)
@@ -210,7 +210,7 @@ namespace openHAB.Windows.ViewModel
 
                 _logger.LogInformation("Load available sitemaps and their items");
 
-                IsDataLoading = true;
+                StrongReferenceMessenger.Default.Send<DataOperation>(new DataOperation(OperationState.Started));
                 Sitemaps?.Clear();
 
                 if (loadCancellationToken.IsCancellationRequested)
@@ -251,7 +251,7 @@ namespace openHAB.Windows.ViewModel
             }
             finally
             {
-                IsDataLoading = false;
+                StrongReferenceMessenger.Default.Send<DataOperation>(new DataOperation(OperationState.Completed));
                 RefreshCommand.InvokeCanExecuteChanged(null);
             }
         }
