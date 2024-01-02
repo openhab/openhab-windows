@@ -4,22 +4,21 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
-using openHAB.Core;
+using openHAB.Common;
+using openHAB.Core.Client.Connection.Contracts;
+using openHAB.Core.Client.Connection.Models;
 using openHAB.Core.Common;
-using openHAB.Core.Connection;
-using openHAB.Core.Connection.Contracts;
 using openHAB.Core.Contracts;
 using openHAB.Core.Model;
-using openHAB.Core.Services.Contracts;
 
 namespace openHAB.Windows.ViewModel
 {
     /// <summary>
     /// ViewModel for OpenHAB connection dialog.
     /// </summary>
-    public class ConnectionDialogViewModel : ViewModelBase<OpenHABConnection>
+    public class ConnectionDialogViewModel : ViewModelBase<Connection>
     {
-        private readonly OpenHABHttpClientType _type;
+        private readonly HttpClientType _type;
         private string _password;
         private ConnectionProfileViewModel _profile;
         private ObservableCollection<ConnectionProfileViewModel> _profiles;
@@ -37,7 +36,7 @@ namespace openHAB.Windows.ViewModel
         /// <param name="connectionConfig">The connection configuration.</param>
         /// <param name="connectionService">ConnectionService to retrive connection information.</param>
         /// <param name="type">Defines if openHAB instance is local or remote.</param>
-        public ConnectionDialogViewModel(OpenHABConnection connectionConfig, IConnectionService connectionService, OpenHABHttpClientType type)
+        public ConnectionDialogViewModel(Connection connectionConfig, IConnectionService connectionService, HttpClientType type)
             : base(connectionConfig)
         {
             _type = type;

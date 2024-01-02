@@ -1,0 +1,2495 @@
+{
+  "name": "uicomponents_home",
+  "label": "Haus",
+  "link": "https://home.myopenhab.org:443/rest/sitemaps/uicomponents_home",
+  "homepage": {
+    "id": "uicomponents_home",
+    "title": "Haus",
+    "link": "https://home.myopenhab.org:443/rest/sitemaps/uicomponents_home/uicomponents_home",
+    "leaf": false,
+    "timeout": false,
+    "widgets": [
+      {
+        "widgetId": "00",
+        "type": "Frame",
+        "visibility": true,
+        "label": "Keller",
+        "icon": "cellar",
+        "unit": "",
+        "mappings": [],
+        "widgets": [
+          {
+            "widgetId": "0000",
+            "type": "Group",
+            "visibility": true,
+            "label": "Heizraum",
+            "icon": "heating",
+            "unit": "",
+            "mappings": [],
+            "item": {
+              "members": [],
+              "link": "https://home.myopenhab.org:443/rest/items/BA_BoilerRoom",
+              "state": "NULL",
+              "type": "Group",
+              "name": "BA_BoilerRoom",
+              "label": "Heizraum",
+              "category": "heating",
+              "tags": [
+                "BoilerRoom"
+              ],
+              "groupNames": [
+                "Basement"
+              ]
+            },
+            "widgets": []
+          },
+          {
+            "widgetId": "0001",
+            "type": "Group",
+            "visibility": true,
+            "label": "Lagerraum",
+            "icon": "suitcase",
+            "unit": "",
+            "mappings": [],
+            "item": {
+              "members": [],
+              "link": "https://home.myopenhab.org:443/rest/items/BA_StorageRoom",
+              "state": "NULL",
+              "type": "Group",
+              "name": "BA_StorageRoom",
+              "label": "Lagerraum",
+              "category": "pantry",
+              "tags": [
+                "Room"
+              ],
+              "groupNames": [
+                "Basement"
+              ]
+            },
+            "widgets": []
+          },
+          {
+            "widgetId": "0002",
+            "type": "Group",
+            "visibility": true,
+            "label": "W�scheraum",
+            "icon": "washingmachine",
+            "unit": "",
+            "mappings": [],
+            "item": {
+              "members": [],
+              "link": "https://home.myopenhab.org:443/rest/items/BA_LaundryRoom",
+              "state": "NULL",
+              "type": "Group",
+              "name": "BA_LaundryRoom",
+              "label": "Waschk�che",
+              "category": "washingmachine",
+              "tags": [
+                "LaundryRoom"
+              ],
+              "groupNames": [
+                "Basement"
+              ]
+            },
+            "widgets": []
+          }
+        ]
+      },
+      {
+        "widgetId": "01",
+        "type": "Frame",
+        "visibility": true,
+        "label": "Erdgeschoss",
+        "icon": "groundfloor",
+        "unit": "",
+        "mappings": [],
+        "widgets": [
+          {
+            "widgetId": "0100",
+            "type": "Group",
+            "visibility": true,
+            "label": "G�stebad",
+            "icon": "bath",
+            "unit": "",
+            "mappings": [],
+            "item": {
+              "members": [],
+              "groupType": "Number:Temperature",
+              "function": {
+                "name": "AVG"
+              },
+              "link": "https://home.myopenhab.org:443/rest/items/GF_Bathroom",
+              "state": "21 �C",
+              "type": "Group",
+              "name": "GF_Bathroom",
+              "label": "Badezimmer",
+              "category": "bath",
+              "tags": [
+                "Bathroom"
+              ],
+              "groupNames": [
+                "GF"
+              ]
+            },
+            "linkedPage": {
+              "id": "0100",
+              "title": "G�stebad",
+              "icon": "bath",
+              "link": "https://home.myopenhab.org:443/rest/sitemaps/uicomponents_home/0100",
+              "leaf": true,
+              "timeout": false,
+              "widgets": [
+                {
+                  "widgetId": "010000",
+                  "type": "Setpoint",
+                  "visibility": true,
+                  "label": "Heizk�rper [21]",
+                  "icon": "radiator",
+                  "pattern": "%.0f",
+                  "unit": "",
+                  "mappings": [],
+                  "minValue": 4,
+                  "maxValue": 28,
+                  "step": 0.5,
+                  "item": {
+                    "members": [],
+                    "groupType": "Number:Temperature",
+                    "function": {
+                      "name": "AVG"
+                    },
+                    "link": "https://home.myopenhab.org:443/rest/items/GF_Bathroom_Heating",
+                    "state": "21 �C",
+                    "stateDescription": {
+                      "pattern": "%.0f",
+                      "readOnly": false,
+                      "options": []
+                    },
+                    "type": "Group",
+                    "name": "GF_Bathroom_Heating",
+                    "label": "Heizung Bad EG",
+                    "category": "heating",
+                    "tags": [
+                      "Equipment"
+                    ],
+                    "groupNames": [
+                      "GF_Bathroom"
+                    ]
+                  },
+                  "widgets": []
+                },
+                {
+                  "widgetId": "010001",
+                  "type": "Switch",
+                  "visibility": true,
+                  "label": "Fenster [ON]",
+                  "icon": "window",
+                  "pattern": "%s",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "link": "https://home.myopenhab.org:443/rest/items/GF_Bathroom_Window_Sensor",
+                    "state": "ON",
+                    "stateDescription": {
+                      "pattern": "%s",
+                      "readOnly": true,
+                      "options": []
+                    },
+                    "type": "Switch",
+                    "name": "GF_Bathroom_Window_Sensor",
+                    "label": "Bad EG Fenster Kontakt",
+                    "category": "contact",
+                    "tags": [
+                      "Opening",
+                      "Point"
+                    ],
+                    "groupNames": [
+                      "GF_Bathroom_Window"
+                    ]
+                  },
+                  "widgets": []
+                }
+              ]
+            },
+            "widgets": []
+          },
+          {
+            "widgetId": "0101",
+            "type": "Group",
+            "visibility": true,
+            "label": "Flur EG",
+            "icon": "corridor",
+            "unit": "",
+            "mappings": [],
+            "item": {
+              "members": [],
+              "groupType": "Number:Temperature",
+              "function": {
+                "name": "AVG"
+              },
+              "link": "https://home.myopenhab.org:443/rest/items/GF_Hallway",
+              "state": "22.395 �C",
+              "type": "Group",
+              "name": "GF_Hallway",
+              "label": "Flur EG",
+              "category": "corridor",
+              "tags": [
+                "Corridor"
+              ],
+              "groupNames": [
+                "GF"
+              ]
+            },
+            "linkedPage": {
+              "id": "0101",
+              "title": "Flur EG",
+              "icon": "corridor",
+              "link": "https://home.myopenhab.org:443/rest/sitemaps/uicomponents_home/0101",
+              "leaf": true,
+              "timeout": false,
+              "widgets": [
+                {
+                  "widgetId": "010100",
+                  "type": "Switch",
+                  "visibility": true,
+                  "label": "Flur EG Lampen",
+                  "icon": "lightbulb",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "link": "https://home.myopenhab.org:443/rest/items/GF_Corridor_LightsSwitch",
+                    "state": "OFF",
+                    "type": "Switch",
+                    "name": "GF_Corridor_LightsSwitch",
+                    "label": "Flur EG Lampen",
+                    "category": "Light",
+                    "tags": [
+                      "Switch",
+                      "Light"
+                    ],
+                    "groupNames": [
+                      "GF_Hallway"
+                    ]
+                  },
+                  "widgets": []
+                },
+                {
+                  "widgetId": "010101",
+                  "type": "Setpoint",
+                  "visibility": true,
+                  "label": "Flur EG Thermostat  [23.0 �C]",
+                  "icon": "radiator",
+                  "pattern": "%.1f %unit%",
+                  "unit": "�C",
+                  "mappings": [],
+                  "item": {
+                    "link": "https://home.myopenhab.org:443/rest/items/GF_Hallway_Heating_Setpoint",
+                    "state": "23 �C",
+                    "stateDescription": {
+                      "pattern": "%.1f %unit%",
+                      "readOnly": false,
+                      "options": []
+                    },
+                    "unitSymbol": "�C",
+                    "type": "Number:Temperature",
+                    "name": "GF_Hallway_Heating_Setpoint",
+                    "label": "Flur EG Thermostat ",
+                    "category": "radiator",
+                    "tags": [
+                      "Temperature",
+                      "Setpoint"
+                    ],
+                    "groupNames": [
+                      "gHeating",
+                      "GF_Hallway_Heating"
+                    ]
+                  },
+                  "widgets": []
+                },
+                {
+                  "widgetId": "010102",
+                  "type": "Switch",
+                  "visibility": true,
+                  "label": "Fenster [OFF]",
+                  "icon": "window",
+                  "pattern": "%s",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "link": "https://home.myopenhab.org:443/rest/items/GF_Hallway_Window_Sensor",
+                    "state": "OFF",
+                    "stateDescription": {
+                      "pattern": "%s",
+                      "readOnly": true,
+                      "options": []
+                    },
+                    "type": "Switch",
+                    "name": "GF_Hallway_Window_Sensor",
+                    "label": "Flur EG Fenster Kontakt",
+                    "category": "window",
+                    "tags": [
+                      "Opening",
+                      "Point"
+                    ],
+                    "groupNames": [
+                      "GF_Hallway_Window"
+                    ]
+                  },
+                  "widgets": []
+                },
+                {
+                  "widgetId": "010103",
+                  "type": "Switch",
+                  "visibility": true,
+                  "label": "Haust�re [OFF]",
+                  "icon": "frontdoor",
+                  "pattern": "%s",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "link": "https://home.myopenhab.org:443/rest/items/GF_Hallway_FrontDoor_Sensor",
+                    "state": "OFF",
+                    "stateDescription": {
+                      "pattern": "%s",
+                      "readOnly": true,
+                      "options": []
+                    },
+                    "type": "Switch",
+                    "name": "GF_Hallway_FrontDoor_Sensor",
+                    "label": "Flur EG Eingangst�re Kontakt",
+                    "category": "contact",
+                    "tags": [
+                      "Opening",
+                      "Point"
+                    ],
+                    "groupNames": [
+                      "GF_Hallway_FrontDoor"
+                    ]
+                  },
+                  "widgets": []
+                }
+              ]
+            },
+            "widgets": []
+          },
+          {
+            "widgetId": "0102",
+            "type": "Group",
+            "visibility": true,
+            "label": "Wohnzimmer",
+            "icon": "sofa",
+            "unit": "",
+            "mappings": [],
+            "item": {
+              "members": [],
+              "groupType": "Number:Temperature",
+              "function": {
+                "name": "AVG"
+              },
+              "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom",
+              "state": "21 �C",
+              "type": "Group",
+              "name": "GF_LivingRoom",
+              "label": "Wohnzimmer",
+              "category": "sofa",
+              "tags": [
+                "LivingRoom"
+              ],
+              "groupNames": [
+                "GF"
+              ]
+            },
+            "linkedPage": {
+              "id": "0102",
+              "title": "Wohnzimmer",
+              "icon": "sofa",
+              "link": "https://home.myopenhab.org:443/rest/sitemaps/uicomponents_home/0102",
+              "leaf": false,
+              "timeout": false,
+              "widgets": [
+                {
+                  "widgetId": "010200",
+                  "type": "Setpoint",
+                  "visibility": true,
+                  "label": "Heizk�rper Wohnzimmer [21]",
+                  "icon": "radiator",
+                  "pattern": "%.0f",
+                  "mappings": [],
+                  "minValue": 4,
+                  "maxValue": 28,
+                  "step": 0.5,
+                  "item": {
+                    "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_Heating_Setpoint",
+                    "state": "21 �C",
+                    "stateDescription": {
+                      "pattern": "%.0f",
+                      "readOnly": false,
+                      "options": []
+                    },
+                    "unitSymbol": "�C",
+                    "type": "Number:Temperature",
+                    "name": "GF_LivingRoom_Heating_Setpoint",
+                    "label": "Wohnzimmer Thermostat",
+                    "category": "Heating",
+                    "tags": [
+                      "Temperature",
+                      "Setpoint"
+                    ],
+                    "groupNames": [
+                      "GF_LivingRoom_Heating"
+                    ]
+                  },
+                  "widgets": []
+                },
+                {
+                  "widgetId": "010201",
+                  "type": "Group",
+                  "visibility": true,
+                  "label": "Samsung TV",
+                  "icon": "screen",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "members": [],
+                    "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_TV",
+                    "state": "NULL",
+                    "type": "Group",
+                    "name": "GF_LivingRoom_TV",
+                    "label": "Samsung TV",
+                    "category": "screen",
+                    "tags": [
+                      "Television"
+                    ],
+                    "groupNames": [
+                      "GF_LivingRoom"
+                    ]
+                  },
+                  "linkedPage": {
+                    "id": "010201",
+                    "title": "Samsung TV",
+                    "icon": "screen",
+                    "link": "https://home.myopenhab.org:443/rest/sitemaps/uicomponents_home/010201",
+                    "leaf": true,
+                    "timeout": false,
+                    "widgets": [
+                      {
+                        "widgetId": "TVUE46ES7090_ChannelName",
+                        "type": "Text",
+                        "visibility": true,
+                        "label": "TV Channel Name [SAT.1]",
+                        "icon": "network",
+                        "pattern": "%s",
+                        "unit": "",
+                        "mappings": [],
+                        "item": {
+                          "link": "https://home.myopenhab.org:443/rest/items/TVUE46ES7090_ChannelName",
+                          "state": "SAT.1",
+                          "stateDescription": {
+                            "pattern": "%s",
+                            "readOnly": true,
+                            "options": []
+                          },
+                          "type": "String",
+                          "name": "TVUE46ES7090_ChannelName",
+                          "label": "TV Channel Name",
+                          "category": "network",
+                          "tags": [
+                            "OpenState",
+                            "Current"
+                          ],
+                          "groupNames": [
+                            "GF_LivingRoom_TV"
+                          ]
+                        },
+                        "widgets": []
+                      },
+                      {
+                        "widgetId": "TVUE46ES7090_Mute",
+                        "type": "Switch",
+                        "visibility": true,
+                        "label": "TV Mute",
+                        "icon": "soundvolume",
+                        "unit": "",
+                        "mappings": [],
+                        "item": {
+                          "link": "https://home.myopenhab.org:443/rest/items/TVUE46ES7090_Mute",
+                          "state": "OFF",
+                          "type": "Switch",
+                          "name": "TVUE46ES7090_Mute",
+                          "label": "TV Mute",
+                          "category": "soundvolume",
+                          "tags": [
+                            "OpenLevel",
+                            "SoundVolume"
+                          ],
+                          "groupNames": [
+                            "GF_LivingRoom_TV"
+                          ]
+                        },
+                        "widgets": []
+                      },
+                      {
+                        "widgetId": "TVUE46ES7090_Power",
+                        "type": "Switch",
+                        "visibility": true,
+                        "label": "TV Power",
+                        "icon": "switch",
+                        "unit": "",
+                        "mappings": [],
+                        "item": {
+                          "link": "https://home.myopenhab.org:443/rest/items/TVUE46ES7090_Power",
+                          "state": "OFF",
+                          "type": "Switch",
+                          "name": "TVUE46ES7090_Power",
+                          "label": "TV Power",
+                          "category": "switch",
+                          "tags": [
+                            "Control",
+                            "Current"
+                          ],
+                          "groupNames": [
+                            "GF_LivingRoom_TV"
+                          ]
+                        },
+                        "widgets": []
+                      },
+                      {
+                        "widgetId": "TVUE46ES7090_ProgramTitle",
+                        "type": "Text",
+                        "visibility": true,
+                        "label": "TV Program Title [Sister Act 2 - In g�ttlicher Mission]",
+                        "icon": "video",
+                        "pattern": "%s",
+                        "unit": "",
+                        "mappings": [],
+                        "item": {
+                          "link": "https://home.myopenhab.org:443/rest/items/TVUE46ES7090_ProgramTitle",
+                          "state": "Sister Act 2 - In g�ttlicher Mission",
+                          "stateDescription": {
+                            "pattern": "%s",
+                            "readOnly": true,
+                            "options": []
+                          },
+                          "type": "String",
+                          "name": "TVUE46ES7090_ProgramTitle",
+                          "label": "TV Program Title",
+                          "category": "video",
+                          "tags": [
+                            "OpenLevel",
+                            "Current"
+                          ],
+                          "groupNames": [
+                            "GF_LivingRoom_TV"
+                          ]
+                        },
+                        "widgets": []
+                      }
+                    ]
+                  },
+                  "widgets": []
+                },
+                {
+                  "widgetId": "010202",
+                  "type": "Switch",
+                  "visibility": true,
+                  "label": "Lampen",
+                  "icon": "wallswitch",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_LightSwitch",
+                    "state": "NULL",
+                    "type": "Switch",
+                    "name": "GF_LivingRoom_LightSwitch",
+                    "label": "Licht Wohnzimmer",
+                    "category": "wallswitch",
+                    "tags": [
+                      "Switch",
+                      "Light"
+                    ],
+                    "groupNames": [
+                      "GF_LivingRoom"
+                    ]
+                  },
+                  "widgets": []
+                },
+                {
+                  "widgetId": "010203",
+                  "type": "Group",
+                  "visibility": true,
+                  "label": "TV Licht",
+                  "icon": "lightbulb",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "members": [],
+                    "link": "https://home.myopenhab.org:443/rest/items/TV_Lights",
+                    "state": "NULL",
+                    "type": "Group",
+                    "name": "TV_Lights",
+                    "label": "TV Licht",
+                    "category": "lightbulb",
+                    "tags": [
+                      "ColorTemperature",
+                      "Control"
+                    ],
+                    "groupNames": [
+                      "GF_LivingRoom"
+                    ]
+                  },
+                  "linkedPage": {
+                    "id": "010203",
+                    "title": "TV Licht",
+                    "icon": "lightbulb",
+                    "link": "https://home.myopenhab.org:443/rest/sitemaps/uicomponents_home/010203",
+                    "leaf": true,
+                    "timeout": false,
+                    "widgets": [
+                      {
+                        "widgetId": "GF_LivingRoom_LightBar1",
+                        "type": "Colorpicker",
+                        "visibility": true,
+                        "label": "Lampe Links",
+                        "icon": "colorlight",
+                        "unit": "",
+                        "mappings": [],
+                        "item": {
+                          "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_LightBar1",
+                          "state": "NULL",
+                          "type": "Color",
+                          "name": "GF_LivingRoom_LightBar1",
+                          "label": "Lampe Links",
+                          "category": "colorlight",
+                          "tags": [
+                            "Control",
+                            "ColorTemperature"
+                          ],
+                          "groupNames": [
+                            "TV_Lights"
+                          ]
+                        },
+                        "widgets": []
+                      },
+                      {
+                        "widgetId": "GF_LivingRoom_LightBar2",
+                        "type": "Colorpicker",
+                        "visibility": true,
+                        "label": "Lampe Rechts",
+                        "icon": "colorlight",
+                        "unit": "",
+                        "mappings": [],
+                        "item": {
+                          "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_LightBar2",
+                          "state": "NULL",
+                          "type": "Color",
+                          "name": "GF_LivingRoom_LightBar2",
+                          "label": "Lampe Rechts",
+                          "category": "colorlight",
+                          "tags": [
+                            "Control",
+                            "ColorTemperature"
+                          ],
+                          "groupNames": [
+                            "TV_Lights"
+                          ]
+                        },
+                        "widgets": []
+                      }
+                    ]
+                  },
+                  "widgets": []
+                },
+                {
+                  "widgetId": "010204",
+                  "type": "Switch",
+                  "visibility": true,
+                  "label": "Fenster [OFF]",
+                  "icon": "window",
+                  "pattern": "%s",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_Window_Sensor",
+                    "state": "OFF",
+                    "stateDescription": {
+                      "pattern": "%s",
+                      "readOnly": true,
+                      "options": []
+                    },
+                    "type": "Switch",
+                    "name": "GF_LivingRoom_Window_Sensor",
+                    "label": "Wohnzimmer Fenster Kontakt",
+                    "category": "contact",
+                    "tags": [
+                      "Opening",
+                      "Point"
+                    ],
+                    "groupNames": [
+                      "GF_LivingRoom_Window"
+                    ]
+                  },
+                  "widgets": []
+                },
+                {
+                  "widgetId": "010205",
+                  "type": "Group",
+                  "visibility": true,
+                  "label": "Wohzimmer SonosOne Box",
+                  "icon": "mediacontrol",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "members": [],
+                    "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_SonosOne",
+                    "state": "NULL",
+                    "type": "Group",
+                    "name": "GF_LivingRoom_SonosOne",
+                    "label": "Wohzimmer SonosOne Box",
+                    "category": "mediacontrol",
+                    "tags": [
+                      "Equipment"
+                    ],
+                    "groupNames": [
+                      "GF_LivingRoom"
+                    ]
+                  },
+                  "linkedPage": {
+                    "id": "010205",
+                    "title": "Wohzimmer SonosOne Box",
+                    "icon": "mediacontrol",
+                    "link": "https://home.myopenhab.org:443/rest/sitemaps/uicomponents_home/010205",
+                    "leaf": true,
+                    "timeout": false,
+                    "widgets": [
+                      {
+                        "widgetId": "GF_LivingRoom_SonosOne_CurrentAlbum",
+                        "type": "Text",
+                        "visibility": true,
+                        "label": "Current Album",
+                        "icon": "",
+                        "unit": "",
+                        "mappings": [],
+                        "item": {
+                          "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_SonosOne_CurrentAlbum",
+                          "state": "NULL",
+                          "type": "String",
+                          "name": "GF_LivingRoom_SonosOne_CurrentAlbum",
+                          "label": "Current Album",
+                          "category": "",
+                          "tags": [
+                            "Point"
+                          ],
+                          "groupNames": [
+                            "GF_LivingRoom_SonosOne"
+                          ]
+                        },
+                        "widgets": []
+                      },
+                      {
+                        "widgetId": "GF_LivingRoom_SonosOne_CurrentAlbumCoverArt",
+                        "type": "Image",
+                        "visibility": true,
+                        "label": "Current Album Cover Art",
+                        "icon": "",
+                        "unit": "",
+                        "mappings": [],
+                        "url": "https://home.myopenhab.org:443/proxy?sitemap=uicomponents_home&widgetId=GF_LivingRoom_SonosOne_CurrentAlbumCoverArt",
+                        "item": {
+                          "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_SonosOne_CurrentAlbumCoverArt",
+                          "state": "NULL",
+                          "type": "Image",
+                          "name": "GF_LivingRoom_SonosOne_CurrentAlbumCoverArt",
+                          "label": "Current Album Cover Art",
+                          "category": "",
+                          "tags": [
+                            "Point"
+                          ],
+                          "groupNames": [
+                            "GF_LivingRoom_SonosOne"
+                          ]
+                        },
+                        "widgets": []
+                      },
+                      {
+                        "widgetId": "GF_LivingRoom_SonosOne_MediaArtist",
+                        "type": "Text",
+                        "visibility": true,
+                        "label": "Media Artist",
+                        "icon": "",
+                        "unit": "",
+                        "mappings": [],
+                        "item": {
+                          "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_SonosOne_MediaArtist",
+                          "state": "NULL",
+                          "type": "String",
+                          "name": "GF_LivingRoom_SonosOne_MediaArtist",
+                          "label": "Media Artist",
+                          "category": "",
+                          "tags": [
+                            "Status"
+                          ],
+                          "groupNames": [
+                            "GF_LivingRoom_SonosOne"
+                          ]
+                        },
+                        "widgets": []
+                      },
+                      {
+                        "widgetId": "GF_LivingRoom_SonosOne_MediaControl",
+                        "type": "Switch",
+                        "visibility": true,
+                        "label": "Media Control",
+                        "icon": "mediacontrol",
+                        "unit": "",
+                        "mappings": [
+                          {
+                            "command": "PREVIOUS",
+                            "label": "<<"
+                          },
+                          {
+                            "command": "PAUSE",
+                            "label": "||"
+                          },
+                          {
+                            "command": "PLAY",
+                            "label": ">"
+                          },
+                          {
+                            "command": "NEXT",
+                            "label": ">>"
+                          }
+                        ],
+                        "item": {
+                          "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_SonosOne_MediaControl",
+                          "state": "NULL",
+                          "type": "Player",
+                          "name": "GF_LivingRoom_SonosOne_MediaControl",
+                          "label": "Media Control",
+                          "category": "MediaControl",
+                          "tags": [
+                            "Control"
+                          ],
+                          "groupNames": [
+                            "GF_LivingRoom_SonosOne"
+                          ]
+                        },
+                        "widgets": []
+                      },
+                      {
+                        "widgetId": "GF_LivingRoom_SonosOne_MediaTitle",
+                        "type": "Text",
+                        "visibility": true,
+                        "label": "Media Title",
+                        "icon": "",
+                        "unit": "",
+                        "mappings": [],
+                        "item": {
+                          "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_SonosOne_MediaTitle",
+                          "state": "NULL",
+                          "type": "String",
+                          "name": "GF_LivingRoom_SonosOne_MediaTitle",
+                          "label": "Media Title",
+                          "category": "",
+                          "tags": [
+                            "Status"
+                          ],
+                          "groupNames": [
+                            "GF_LivingRoom_SonosOne"
+                          ]
+                        },
+                        "widgets": []
+                      },
+                      {
+                        "widgetId": "GF_LivingRoom_SonosOne_Mute",
+                        "type": "Switch",
+                        "visibility": true,
+                        "label": "Mute",
+                        "icon": "soundvolume",
+                        "unit": "",
+                        "mappings": [],
+                        "item": {
+                          "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_SonosOne_Mute",
+                          "state": "NULL",
+                          "type": "Switch",
+                          "name": "GF_LivingRoom_SonosOne_Mute",
+                          "label": "Mute",
+                          "category": "SoundVolume",
+                          "tags": [
+                            "Switch",
+                            "SoundVolume"
+                          ],
+                          "groupNames": [
+                            "GF_LivingRoom_SonosOne"
+                          ]
+                        },
+                        "widgets": []
+                      },
+                      {
+                        "widgetId": "GF_LivingRoom_SonosOne_Volume",
+                        "type": "Slider",
+                        "visibility": true,
+                        "label": "Volume",
+                        "icon": "soundvolume",
+                        "unit": "",
+                        "mappings": [],
+                        "switchSupport": true,
+                        "sendFrequency": 0,
+                        "item": {
+                          "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_SonosOne_Volume",
+                          "state": "NULL",
+                          "type": "Dimmer",
+                          "name": "GF_LivingRoom_SonosOne_Volume",
+                          "label": "Volume",
+                          "category": "SoundVolume",
+                          "tags": [
+                            "Control",
+                            "SoundVolume"
+                          ],
+                          "groupNames": [
+                            "GF_LivingRoom_SonosOne"
+                          ]
+                        },
+                        "widgets": []
+                      }
+                    ]
+                  },
+                  "widgets": []
+                }
+              ]
+            },
+            "widgets": []
+          },
+          {
+            "widgetId": "0103",
+            "type": "Group",
+            "visibility": true,
+            "label": "K�che",
+            "icon": "kitchen",
+            "unit": "",
+            "mappings": [],
+            "item": {
+              "members": [],
+              "link": "https://home.myopenhab.org:443/rest/items/GF_Kitchen",
+              "state": "NULL",
+              "type": "Group",
+              "name": "GF_Kitchen",
+              "label": "K�che",
+              "category": "kitchen",
+              "tags": [
+                "Kitchen"
+              ],
+              "groupNames": [
+                "GF"
+              ]
+            },
+            "linkedPage": {
+              "id": "0103",
+              "title": "K�che",
+              "icon": "kitchen",
+              "link": "https://home.myopenhab.org:443/rest/sitemaps/uicomponents_home/0103",
+              "leaf": true,
+              "timeout": false,
+              "widgets": [
+                {
+                  "widgetId": "010300",
+                  "type": "Switch",
+                  "visibility": true,
+                  "label": "K�che Lampen",
+                  "icon": "switch",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "link": "https://home.myopenhab.org:443/rest/items/GF_Kitchen_LightsSwitch",
+                    "state": "NULL",
+                    "type": "Switch",
+                    "name": "GF_Kitchen_LightsSwitch",
+                    "label": "K�che Lampen",
+                    "category": "wallswitch",
+                    "tags": [
+                      "Switch",
+                      "Light"
+                    ],
+                    "groupNames": [
+                      "GF_Kitchen"
+                    ]
+                  },
+                  "widgets": []
+                },
+                {
+                  "widgetId": "010301",
+                  "type": "Colorpicker",
+                  "visibility": true,
+                  "label": "Tischlampe Farbe",
+                  "icon": "colorpicker",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "link": "https://home.myopenhab.org:443/rest/items/GF_Kitchen_LightsSwitch",
+                    "state": "NULL",
+                    "type": "Switch",
+                    "name": "GF_Kitchen_LightsSwitch",
+                    "label": "K�che Lampen",
+                    "category": "wallswitch",
+                    "tags": [
+                      "Switch",
+                      "Light"
+                    ],
+                    "groupNames": [
+                      "GF_Kitchen"
+                    ]
+                  },
+                  "widgets": []
+                },
+                {
+                  "widgetId": "010302",
+                  "type": "Switch",
+                  "visibility": true,
+                  "label": "Fenster [OFF]",
+                  "icon": "window",
+                  "pattern": "%s",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "link": "https://home.myopenhab.org:443/rest/items/GF_Kitchen_Window_Sensor",
+                    "state": "OFF",
+                    "stateDescription": {
+                      "pattern": "%s",
+                      "readOnly": true,
+                      "options": []
+                    },
+                    "type": "Switch",
+                    "name": "GF_Kitchen_Window_Sensor",
+                    "label": "K�che Fenster Kontakt",
+                    "category": "contact",
+                    "tags": [
+                      "Opening",
+                      "Point"
+                    ],
+                    "groupNames": [
+                      "GF_Kitchen_Window"
+                    ]
+                  },
+                  "widgets": []
+                }
+              ]
+            },
+            "widgets": []
+          }
+        ]
+      },
+      {
+        "widgetId": "02",
+        "type": "Frame",
+        "visibility": true,
+        "label": "Erster Stock",
+        "icon": "firstfloor",
+        "unit": "",
+        "mappings": [],
+        "widgets": [
+          {
+            "widgetId": "0200",
+            "type": "Group",
+            "visibility": true,
+            "label": "Badezimmer",
+            "icon": "bath",
+            "unit": "",
+            "mappings": [],
+            "item": {
+              "members": [],
+              "groupType": "Number:Temperature",
+              "function": {
+                "name": "AVG"
+              },
+              "link": "https://home.myopenhab.org:443/rest/items/FF_Bathroom",
+              "state": "22.95 �C",
+              "type": "Group",
+              "name": "FF_Bathroom",
+              "label": "Badezimmer",
+              "category": "bath",
+              "tags": [
+                "Bathroom"
+              ],
+              "groupNames": [
+                "FF"
+              ]
+            },
+            "linkedPage": {
+              "id": "0200",
+              "title": "Badezimmer",
+              "icon": "bath",
+              "link": "https://home.myopenhab.org:443/rest/sitemaps/uicomponents_home/0200",
+              "leaf": false,
+              "timeout": false,
+              "widgets": [
+                {
+                  "widgetId": "020000",
+                  "type": "Group",
+                  "visibility": true,
+                  "label": "Heizk�rper Bad 1. OG [23.0 �C]",
+                  "icon": "heating",
+                  "pattern": "%.1f %unit%",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "members": [],
+                    "groupType": "Number:Temperature",
+                    "function": {
+                      "name": "AVG"
+                    },
+                    "link": "https://home.myopenhab.org:443/rest/items/FF_Bathroom_Heating",
+                    "state": "22.95 �C",
+                    "stateDescription": {
+                      "pattern": "%.1f %unit%",
+                      "readOnly": false,
+                      "options": []
+                    },
+                    "type": "Group",
+                    "name": "FF_Bathroom_Heating",
+                    "label": "Heizk�rper Bad 1. OG",
+                    "category": "heating",
+                    "tags": [
+                      "HVAC"
+                    ],
+                    "groupNames": [
+                      "FF_Bathroom"
+                    ]
+                  },
+                  "linkedPage": {
+                    "id": "020000",
+                    "title": "Heizk�rper Bad 1. OG [23.0 �C]",
+                    "icon": "heating",
+                    "link": "https://home.myopenhab.org:443/rest/sitemaps/uicomponents_home/020000",
+                    "leaf": true,
+                    "timeout": false,
+                    "widgets": [
+                      {
+                        "widgetId": "02000000",
+                        "type": "Setpoint",
+                        "visibility": true,
+                        "label": "Thermostat [23.0 �C]",
+                        "icon": "radiator",
+                        "pattern": "%.1f %unit%",
+                        "unit": "",
+                        "mappings": [],
+                        "minValue": 4,
+                        "maxValue": 28,
+                        "step": 0.5,
+                        "item": {
+                          "members": [],
+                          "groupType": "Number:Temperature",
+                          "function": {
+                            "name": "AVG"
+                          },
+                          "link": "https://home.myopenhab.org:443/rest/items/FF_Bathroom_Heating",
+                          "state": "22.95 �C",
+                          "stateDescription": {
+                            "pattern": "%.1f %unit%",
+                            "readOnly": false,
+                            "options": []
+                          },
+                          "type": "Group",
+                          "name": "FF_Bathroom_Heating",
+                          "label": "Heizk�rper Bad 1. OG",
+                          "category": "heating",
+                          "tags": [
+                            "HVAC"
+                          ],
+                          "groupNames": [
+                            "FF_Bathroom"
+                          ]
+                        },
+                        "widgets": []
+                      },
+                      {
+                        "widgetId": "02000001",
+                        "type": "Text",
+                        "visibility": true,
+                        "label": "Raumtemperatur [22.9 �C]",
+                        "icon": "hvac",
+                        "pattern": "%.1f %unit%",
+                        "unit": "�C",
+                        "mappings": [],
+                        "item": {
+                          "link": "https://home.myopenhab.org:443/rest/items/FF_Bathroom_Heating_Temperature",
+                          "state": "22.9 �C",
+                          "stateDescription": {
+                            "pattern": "%.1f %unit%",
+                            "readOnly": true,
+                            "options": []
+                          },
+                          "unitSymbol": "�C",
+                          "type": "Number:Temperature",
+                          "name": "FF_Bathroom_Heating_Temperature",
+                          "label": "Bad 1. OG Temperature",
+                          "category": "HVAC",
+                          "tags": [
+                            "Temperature",
+                            "Point"
+                          ],
+                          "groupNames": [
+                            "FF_Bathroom_Heating"
+                          ]
+                        },
+                        "widgets": []
+                      }
+                    ]
+                  },
+                  "widgets": []
+                },
+                {
+                  "widgetId": "020001",
+                  "type": "Switch",
+                  "visibility": true,
+                  "label": "Fenster [OFF]",
+                  "icon": "window",
+                  "pattern": "%s",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "link": "https://home.myopenhab.org:443/rest/items/FF_Bathroom_Window_Sensor",
+                    "state": "OFF",
+                    "stateDescription": {
+                      "pattern": "%s",
+                      "readOnly": true,
+                      "options": []
+                    },
+                    "type": "Switch",
+                    "name": "FF_Bathroom_Window_Sensor",
+                    "label": "Fenster Bad Kontakt",
+                    "category": "contact",
+                    "tags": [
+                      "Opening",
+                      "Point"
+                    ],
+                    "groupNames": [
+                      "FF_Bathroom_Window"
+                    ]
+                  },
+                  "widgets": []
+                }
+              ]
+            },
+            "widgets": []
+          },
+          {
+            "widgetId": "0201",
+            "type": "Group",
+            "visibility": true,
+            "label": "Schlafzimmer",
+            "icon": "parents_1_1",
+            "unit": "",
+            "mappings": [],
+            "item": {
+              "members": [],
+              "groupType": "Number:Temperature",
+              "function": {
+                "name": "AVG"
+              },
+              "link": "https://home.myopenhab.org:443/rest/items/FF_Bedroom",
+              "state": "21 �C",
+              "type": "Group",
+              "name": "FF_Bedroom",
+              "label": "Schlafzimmer",
+              "category": "bedroom",
+              "tags": [
+                "Bedroom"
+              ],
+              "groupNames": [
+                "FF"
+              ]
+            },
+            "linkedPage": {
+              "id": "0201",
+              "title": "Schlafzimmer",
+              "icon": "parents_1_1",
+              "link": "https://home.myopenhab.org:443/rest/sitemaps/uicomponents_home/0201",
+              "leaf": true,
+              "timeout": false,
+              "widgets": [
+                {
+                  "widgetId": "020100",
+                  "type": "Setpoint",
+                  "visibility": true,
+                  "label": "Heizk�rper hinteres Zimmer [21]",
+                  "icon": "radiator",
+                  "pattern": "%.0f",
+                  "unit": "",
+                  "mappings": [],
+                  "minValue": 4,
+                  "maxValue": 28,
+                  "step": 0.5,
+                  "item": {
+                    "members": [],
+                    "groupType": "Number:Temperature",
+                    "function": {
+                      "name": "AVG"
+                    },
+                    "link": "https://home.myopenhab.org:443/rest/items/F2_Bedroom_Heating",
+                    "state": "21 �C",
+                    "stateDescription": {
+                      "pattern": "%.0f",
+                      "readOnly": false,
+                      "options": []
+                    },
+                    "type": "Group",
+                    "name": "F2_Bedroom_Heating",
+                    "label": "Heizk�rper hinteres Zimmer",
+                    "category": "radiator",
+                    "tags": [
+                      "HVAC"
+                    ],
+                    "groupNames": [
+                      "gHeating",
+                      "F2_Bedroom"
+                    ]
+                  },
+                  "widgets": []
+                },
+                {
+                  "widgetId": "020101",
+                  "type": "Switch",
+                  "visibility": true,
+                  "label": "Fenster [OFF]",
+                  "icon": "window",
+                  "pattern": "%s",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "link": "https://home.myopenhab.org:443/rest/items/FF_Bedroom_Window_Sensor",
+                    "state": "OFF",
+                    "stateDescription": {
+                      "pattern": "%s",
+                      "readOnly": true,
+                      "options": []
+                    },
+                    "type": "Switch",
+                    "name": "FF_Bedroom_Window_Sensor",
+                    "label": "Schlafzimmer Fenster Kontakt",
+                    "category": "window",
+                    "tags": [
+                      "Opening",
+                      "Point"
+                    ],
+                    "groupNames": [
+                      "FF_Bedroom_Window"
+                    ]
+                  },
+                  "widgets": []
+                }
+              ]
+            },
+            "widgets": []
+          },
+          {
+            "widgetId": "0202",
+            "type": "Group",
+            "visibility": true,
+            "label": "Flur 1.OG",
+            "icon": "corridor",
+            "unit": "",
+            "mappings": [],
+            "item": {
+              "members": [],
+              "groupType": "Number:Temperature",
+              "function": {
+                "name": "AVG"
+              },
+              "link": "https://home.myopenhab.org:443/rest/items/FF_Hallway",
+              "state": "23 �C",
+              "type": "Group",
+              "name": "FF_Hallway",
+              "label": "Flur 1.OG",
+              "category": "corridor",
+              "tags": [
+                "Corridor"
+              ],
+              "groupNames": [
+                "FF"
+              ]
+            },
+            "linkedPage": {
+              "id": "0202",
+              "title": "Flur 1.OG",
+              "icon": "corridor",
+              "link": "https://home.myopenhab.org:443/rest/sitemaps/uicomponents_home/0202",
+              "leaf": true,
+              "timeout": false,
+              "widgets": [
+                {
+                  "widgetId": "020200",
+                  "type": "Setpoint",
+                  "visibility": true,
+                  "label": "Flug 1.OG Heizk�rper [23]",
+                  "icon": "radiator",
+                  "pattern": "%.0f",
+                  "unit": "",
+                  "mappings": [],
+                  "minValue": 4,
+                  "maxValue": 28,
+                  "step": 0.5,
+                  "item": {
+                    "members": [],
+                    "groupType": "Number:Temperature",
+                    "function": {
+                      "name": "MIN"
+                    },
+                    "link": "https://home.myopenhab.org:443/rest/items/FF_Hallway_Heating",
+                    "state": "23 �C",
+                    "stateDescription": {
+                      "pattern": "%.0f",
+                      "readOnly": false,
+                      "options": []
+                    },
+                    "type": "Group",
+                    "name": "FF_Hallway_Heating",
+                    "label": "Flug 1.OG Heizk�rper",
+                    "category": "heating",
+                    "tags": [
+                      "HVAC"
+                    ],
+                    "groupNames": [
+                      "FF_Hallway"
+                    ]
+                  },
+                  "widgets": []
+                },
+                {
+                  "widgetId": "020201",
+                  "type": "Group",
+                  "visibility": true,
+                  "label": "Lampe",
+                  "icon": "lightbulb",
+                  "unit": "",
+                  "mappings": [],
+                  "widgets": []
+                },
+                {
+                  "widgetId": "020202",
+                  "type": "Switch",
+                  "visibility": true,
+                  "label": "Fenster",
+                  "icon": "window",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "link": "https://home.myopenhab.org:443/rest/items/FF_Hallway_LightsSwitch",
+                    "state": "NULL",
+                    "type": "Switch",
+                    "name": "FF_Hallway_LightsSwitch",
+                    "label": "Lampen Flur 1.OG",
+                    "category": "Switch",
+                    "tags": [
+                      "Switch",
+                      "Light"
+                    ],
+                    "groupNames": [
+                      "FF_Hallway"
+                    ]
+                  },
+                  "widgets": []
+                }
+              ]
+            },
+            "widgets": []
+          },
+          {
+            "widgetId": "0203",
+            "type": "Group",
+            "visibility": true,
+            "label": "B�ro",
+            "icon": "office",
+            "unit": "",
+            "mappings": [],
+            "item": {
+              "members": [],
+              "groupType": "Number:Temperature",
+              "function": {
+                "name": "AVG"
+              },
+              "link": "https://home.myopenhab.org:443/rest/items/FF_Office",
+              "state": "21 �C",
+              "type": "Group",
+              "name": "FF_Office",
+              "label": "B�ro",
+              "category": "office",
+              "tags": [
+                "Office"
+              ],
+              "groupNames": [
+                "FF"
+              ]
+            },
+            "linkedPage": {
+              "id": "0203",
+              "title": "B�ro",
+              "icon": "office",
+              "link": "https://home.myopenhab.org:443/rest/sitemaps/uicomponents_home/0203",
+              "leaf": true,
+              "timeout": false,
+              "widgets": [
+                {
+                  "widgetId": "020300",
+                  "type": "Setpoint",
+                  "visibility": true,
+                  "label": "B�ro Heizk�rper [21]",
+                  "icon": "radiator",
+                  "pattern": "%.0f",
+                  "unit": "",
+                  "mappings": [],
+                  "minValue": 4,
+                  "maxValue": 28,
+                  "step": 0.5,
+                  "item": {
+                    "members": [],
+                    "link": "https://home.myopenhab.org:443/rest/items/FF_Office_Heating",
+                    "state": "21 �C",
+                    "stateDescription": {
+                      "pattern": "%.0f",
+                      "readOnly": false,
+                      "options": []
+                    },
+                    "type": "Group",
+                    "name": "FF_Office_Heating",
+                    "label": "B�ro Heizk�rper",
+                    "category": "heating",
+                    "tags": [
+                      "HVAC"
+                    ],
+                    "groupNames": [
+                      "FF_Office"
+                    ]
+                  },
+                  "widgets": []
+                },
+                {
+                  "widgetId": "020301",
+                  "type": "Text",
+                  "visibility": true,
+                  "label": "Fenster [OFF]",
+                  "icon": "window",
+                  "pattern": "%s",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "link": "https://home.myopenhab.org:443/rest/items/FF_Office_Window_Sensor",
+                    "state": "OFF",
+                    "stateDescription": {
+                      "pattern": "%s",
+                      "readOnly": true,
+                      "options": []
+                    },
+                    "type": "Switch",
+                    "name": "FF_Office_Window_Sensor",
+                    "label": "B�ro Fenster Kontakt",
+                    "category": "contact",
+                    "tags": [
+                      "Opening",
+                      "Point"
+                    ],
+                    "groupNames": [
+                      "FF_Office_Window"
+                    ]
+                  },
+                  "widgets": []
+                },
+                {
+                  "widgetId": "020302",
+                  "type": "Colorpicker",
+                  "visibility": true,
+                  "label": "Schranklicht",
+                  "icon": "light",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "link": "https://home.myopenhab.org:443/rest/items/FF_Office_LightCupboard",
+                    "state": "NULL",
+                    "type": "Color",
+                    "name": "FF_Office_LightCupboard",
+                    "label": "Schranklicht",
+                    "category": "ColorLight",
+                    "tags": [
+                      "Point"
+                    ],
+                    "groupNames": [
+                      "FF_Office"
+                    ]
+                  },
+                  "widgets": []
+                },
+                {
+                  "widgetId": "020303",
+                  "type": "Switch",
+                  "visibility": true,
+                  "label": "Lampen",
+                  "icon": "lightbulb",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "link": "https://home.myopenhab.org:443/rest/items/FF_Office_LightsSwitch",
+                    "state": "NULL",
+                    "type": "Switch",
+                    "name": "FF_Office_LightsSwitch",
+                    "label": "Lampen",
+                    "category": "lightbulb",
+                    "tags": [
+                      "Switch",
+                      "Power"
+                    ],
+                    "groupNames": [
+                      "FF_Office"
+                    ]
+                  },
+                  "widgets": []
+                },
+                {
+                  "widgetId": "020304",
+                  "type": "Switch",
+                  "visibility": true,
+                  "label": "Fenster [OFF]",
+                  "icon": "window",
+                  "pattern": "%s",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "link": "https://home.myopenhab.org:443/rest/items/FF_Office_Window_Sensor",
+                    "state": "OFF",
+                    "stateDescription": {
+                      "pattern": "%s",
+                      "readOnly": true,
+                      "options": []
+                    },
+                    "type": "Switch",
+                    "name": "FF_Office_Window_Sensor",
+                    "label": "B�ro Fenster Kontakt",
+                    "category": "contact",
+                    "tags": [
+                      "Opening",
+                      "Point"
+                    ],
+                    "groupNames": [
+                      "FF_Office_Window"
+                    ]
+                  },
+                  "widgets": []
+                }
+              ]
+            },
+            "widgets": []
+          }
+        ]
+      },
+      {
+        "widgetId": "03",
+        "type": "Frame",
+        "visibility": true,
+        "label": "Zweiter Stock",
+        "icon": "attic",
+        "unit": "",
+        "mappings": [],
+        "widgets": [
+          {
+            "widgetId": "0300",
+            "type": "Group",
+            "visibility": true,
+            "label": "Hinteres Zimmer",
+            "icon": "cinemascreen",
+            "unit": "",
+            "mappings": [],
+            "item": {
+              "members": [],
+              "groupType": "Number:Temperature",
+              "function": {
+                "name": "AVG"
+              },
+              "link": "https://home.myopenhab.org:443/rest/items/F2_Bedroom",
+              "state": "19.99 �C",
+              "type": "Group",
+              "name": "F2_Bedroom",
+              "label": "Hinteres Zimmer",
+              "category": "cinemascreen",
+              "tags": [
+                "Bedroom"
+              ],
+              "groupNames": [
+                "F2"
+              ]
+            },
+            "linkedPage": {
+              "id": "0300",
+              "title": "Hinteres Zimmer",
+              "icon": "cinemascreen",
+              "link": "https://home.myopenhab.org:443/rest/sitemaps/uicomponents_home/0300",
+              "leaf": false,
+              "timeout": false,
+              "widgets": [
+                {
+                  "widgetId": "030000",
+                  "type": "Group",
+                  "visibility": true,
+                  "label": "Heizk�rper [21]",
+                  "icon": "radiator",
+                  "pattern": "%.0f",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "members": [],
+                    "groupType": "Number:Temperature",
+                    "function": {
+                      "name": "AVG"
+                    },
+                    "link": "https://home.myopenhab.org:443/rest/items/F2_Bedroom_Heating",
+                    "state": "21 �C",
+                    "stateDescription": {
+                      "pattern": "%.0f",
+                      "readOnly": false,
+                      "options": []
+                    },
+                    "type": "Group",
+                    "name": "F2_Bedroom_Heating",
+                    "label": "Heizk�rper hinteres Zimmer",
+                    "category": "radiator",
+                    "tags": [
+                      "HVAC"
+                    ],
+                    "groupNames": [
+                      "gHeating",
+                      "F2_Bedroom"
+                    ]
+                  },
+                  "linkedPage": {
+                    "id": "030000",
+                    "title": "Heizk�rper [21]",
+                    "icon": "radiator",
+                    "link": "https://home.myopenhab.org:443/rest/sitemaps/uicomponents_home/030000",
+                    "leaf": true,
+                    "timeout": false,
+                    "widgets": [
+                      {
+                        "widgetId": "03000000",
+                        "type": "Setpoint",
+                        "visibility": true,
+                        "label": "Hinteres Zimmer Thermostat [20.0 �C]",
+                        "icon": "radiator",
+                        "pattern": "%.1f %unit%",
+                        "unit": "�C",
+                        "mappings": [],
+                        "minValue": 5,
+                        "maxValue": 35,
+                        "step": 0.5,
+                        "item": {
+                          "link": "https://home.myopenhab.org:443/rest/items/F2_Bedroom_Heating_Setpoint",
+                          "state": "20 �C",
+                          "stateDescription": {
+                            "pattern": "%.1f %unit%",
+                            "readOnly": false,
+                            "options": []
+                          },
+                          "unitSymbol": "�C",
+                          "type": "Number:Temperature",
+                          "name": "F2_Bedroom_Heating_Setpoint",
+                          "label": "Hinteres Zimmer Thermostat",
+                          "category": "HVAC",
+                          "tags": [
+                            "Temperature",
+                            "Setpoint"
+                          ],
+                          "groupNames": [
+                            "F2_Bedroom_Heating"
+                          ]
+                        },
+                        "widgets": []
+                      },
+                      {
+                        "widgetId": "03000001",
+                        "type": "Text",
+                        "visibility": true,
+                        "label": "Hinteres Zimmer Temperatur [20.0 �C]",
+                        "icon": "temperature",
+                        "pattern": "%.1f %unit%",
+                        "unit": "�C",
+                        "mappings": [],
+                        "item": {
+                          "link": "https://home.myopenhab.org:443/rest/items/F2_Bedroom_Heating_Temperature",
+                          "state": "19.98 �C",
+                          "stateDescription": {
+                            "pattern": "%.1f %unit%",
+                            "readOnly": true,
+                            "options": []
+                          },
+                          "unitSymbol": "�C",
+                          "type": "Number:Temperature",
+                          "name": "F2_Bedroom_Heating_Temperature",
+                          "label": "Hinteres Zimmer Temperatur",
+                          "category": "HVAC",
+                          "tags": [
+                            "Temperature",
+                            "Point"
+                          ],
+                          "groupNames": [
+                            "F2_Bedroom_Heating"
+                          ]
+                        },
+                        "widgets": []
+                      }
+                    ]
+                  },
+                  "widgets": []
+                }
+              ]
+            },
+            "widgets": []
+          },
+          {
+            "widgetId": "0301",
+            "type": "Group",
+            "visibility": true,
+            "label": "G�stezimmer",
+            "icon": "bedroom",
+            "unit": "",
+            "mappings": [],
+            "item": {
+              "members": [],
+              "link": "https://home.myopenhab.org:443/rest/items/F2_GuestRoom",
+              "state": "NULL",
+              "type": "Group",
+              "name": "F2_GuestRoom",
+              "label": "G�stezimmer",
+              "category": "bedroom",
+              "tags": [
+                "GuestRoom"
+              ],
+              "groupNames": [
+                "F2"
+              ]
+            },
+            "linkedPage": {
+              "id": "0301",
+              "title": "G�stezimmer",
+              "icon": "bedroom",
+              "link": "https://home.myopenhab.org:443/rest/sitemaps/uicomponents_home/0301",
+              "leaf": false,
+              "timeout": false,
+              "widgets": [
+                {
+                  "widgetId": "030100",
+                  "type": "Group",
+                  "visibility": true,
+                  "label": "Heizk�rper",
+                  "icon": "radiator",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "members": [],
+                    "groupType": "Number:Temperature",
+                    "function": {
+                      "name": "AVG"
+                    },
+                    "link": "https://home.myopenhab.org:443/rest/items/F2_Guestroom_Heating",
+                    "state": "20.1 �C",
+                    "type": "Group",
+                    "name": "F2_Guestroom_Heating",
+                    "label": "Heizk�rper G�stezimmer",
+                    "category": "radiator",
+                    "tags": [
+                      "HVAC"
+                    ],
+                    "groupNames": [
+                      "F2_GuestRoom",
+                      "gHeating"
+                    ]
+                  },
+                  "linkedPage": {
+                    "id": "030100",
+                    "title": "Heizk�rper",
+                    "icon": "radiator",
+                    "link": "https://home.myopenhab.org:443/rest/sitemaps/uicomponents_home/030100",
+                    "leaf": true,
+                    "timeout": false,
+                    "widgets": [
+                      {
+                        "widgetId": "03010000",
+                        "type": "Setpoint",
+                        "visibility": true,
+                        "label": "G�stezimmer Thermostat [20.0 �C]",
+                        "icon": "radiator",
+                        "pattern": "%.1f %unit%",
+                        "unit": "�C",
+                        "mappings": [],
+                        "minValue": 5,
+                        "maxValue": 35,
+                        "step": 0.5,
+                        "item": {
+                          "link": "https://home.myopenhab.org:443/rest/items/F2_Guestroom_Heating_Setpoint",
+                          "state": "20 �C",
+                          "stateDescription": {
+                            "pattern": "%.1f %unit%",
+                            "readOnly": false,
+                            "options": []
+                          },
+                          "unitSymbol": "�C",
+                          "type": "Number:Temperature",
+                          "name": "F2_Guestroom_Heating_Setpoint",
+                          "label": "G�stezimmer Thermostat",
+                          "category": "radiator",
+                          "tags": [
+                            "Temperature",
+                            "Setpoint"
+                          ],
+                          "groupNames": [
+                            "F2_Guestroom_Heating"
+                          ]
+                        },
+                        "widgets": []
+                      },
+                      {
+                        "widgetId": "03010001",
+                        "type": "Text",
+                        "visibility": true,
+                        "label": "G�stezimmer Temperatur [20.2 �C]",
+                        "icon": "temperature",
+                        "pattern": "%.1f %unit%",
+                        "unit": "�C",
+                        "mappings": [],
+                        "item": {
+                          "link": "https://home.myopenhab.org:443/rest/items/F2_Guestroom_Heating_Temperature",
+                          "state": "20.2 �C",
+                          "stateDescription": {
+                            "pattern": "%.1f %unit%",
+                            "readOnly": true,
+                            "options": []
+                          },
+                          "unitSymbol": "�C",
+                          "type": "Number:Temperature",
+                          "name": "F2_Guestroom_Heating_Temperature",
+                          "label": "G�stezimmer Temperatur",
+                          "category": "temperature",
+                          "tags": [
+                            "Point"
+                          ],
+                          "groupNames": [
+                            "F2_Guestroom_Heating"
+                          ]
+                        },
+                        "widgets": []
+                      }
+                    ]
+                  },
+                  "widgets": []
+                }
+              ]
+            },
+            "widgets": []
+          },
+          {
+            "widgetId": "0302",
+            "type": "Group",
+            "visibility": true,
+            "label": "Flur 2.OG",
+            "icon": "corridor",
+            "unit": "",
+            "mappings": [],
+            "item": {
+              "members": [],
+              "link": "https://home.myopenhab.org:443/rest/items/F2_Hallway",
+              "state": "NULL",
+              "type": "Group",
+              "name": "F2_Hallway",
+              "label": "Flur 2.OG",
+              "category": "corridor",
+              "tags": [
+                "Corridor"
+              ],
+              "groupNames": [
+                "F2"
+              ]
+            },
+            "linkedPage": {
+              "id": "0302",
+              "title": "Flur 2.OG",
+              "icon": "corridor",
+              "link": "https://home.myopenhab.org:443/rest/sitemaps/uicomponents_home/0302",
+              "leaf": true,
+              "timeout": false,
+              "widgets": [
+                {
+                  "widgetId": "F2_Hallway_LightSwitch",
+                  "type": "Switch",
+                  "visibility": true,
+                  "label": "Flur 2.OG Lampen",
+                  "icon": "switch",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "link": "https://home.myopenhab.org:443/rest/items/F2_Hallway_LightSwitch",
+                    "state": "NULL",
+                    "type": "Switch",
+                    "name": "F2_Hallway_LightSwitch",
+                    "label": "Flur 2.OG Lampen",
+                    "category": "Switch",
+                    "tags": [
+                      "Switch",
+                      "Power"
+                    ],
+                    "groupNames": [
+                      "F2_Hallway"
+                    ]
+                  },
+                  "widgets": []
+                }
+              ]
+            },
+            "widgets": []
+          },
+          {
+            "widgetId": "0303",
+            "type": "Group",
+            "visibility": true,
+            "label": "Kinderzimmer",
+            "icon": "boy_1",
+            "unit": "",
+            "mappings": [],
+            "item": {
+              "members": [],
+              "groupType": "Number:Temperature",
+              "function": {
+                "name": "AVG"
+              },
+              "link": "https://home.myopenhab.org:443/rest/items/F2_KidsRoom",
+              "state": "21.03 �C",
+              "type": "Group",
+              "name": "F2_KidsRoom",
+              "label": "Kinderzimmer",
+              "category": "boy_1",
+              "tags": [
+                "Bedroom"
+              ],
+              "groupNames": [
+                "F2"
+              ]
+            },
+            "linkedPage": {
+              "id": "0303",
+              "title": "Kinderzimmer",
+              "icon": "boy_1",
+              "link": "https://home.myopenhab.org:443/rest/sitemaps/uicomponents_home/0303",
+              "leaf": false,
+              "timeout": false,
+              "widgets": [
+                {
+                  "widgetId": "030300",
+                  "type": "Group",
+                  "visibility": true,
+                  "label": "Heizk�rper",
+                  "icon": "radiator",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "members": [],
+                    "groupType": "Number:Temperature",
+                    "function": {
+                      "name": "AVG"
+                    },
+                    "link": "https://home.myopenhab.org:443/rest/items/F2_Kidsroom_Heating",
+                    "state": "21.03 �C",
+                    "type": "Group",
+                    "name": "F2_Kidsroom_Heating",
+                    "label": "Heizk�rper Kinderzimmer",
+                    "category": "radiator",
+                    "tags": [
+                      "HVAC"
+                    ],
+                    "groupNames": [
+                      "F2_KidsRoom",
+                      "gHeating"
+                    ]
+                  },
+                  "linkedPage": {
+                    "id": "030300",
+                    "title": "Heizk�rper",
+                    "icon": "radiator",
+                    "link": "https://home.myopenhab.org:443/rest/sitemaps/uicomponents_home/030300",
+                    "leaf": true,
+                    "timeout": false,
+                    "widgets": [
+                      {
+                        "widgetId": "03030000",
+                        "type": "Setpoint",
+                        "visibility": true,
+                        "label": "Kinderzimmer Thermostat [21.0 �C]",
+                        "icon": "radiator",
+                        "pattern": "%.1f %unit%",
+                        "unit": "�C",
+                        "mappings": [],
+                        "minValue": 5,
+                        "maxValue": 35,
+                        "step": 0.5,
+                        "item": {
+                          "link": "https://home.myopenhab.org:443/rest/items/F2_Kidsroom_Heating_Setpoint",
+                          "state": "21 �C",
+                          "stateDescription": {
+                            "pattern": "%.1f %unit%",
+                            "readOnly": false,
+                            "options": []
+                          },
+                          "unitSymbol": "�C",
+                          "type": "Number:Temperature",
+                          "name": "F2_Kidsroom_Heating_Setpoint",
+                          "label": "Kinderzimmer Thermostat",
+                          "category": "radiator",
+                          "tags": [
+                            "Temperature",
+                            "Setpoint"
+                          ],
+                          "groupNames": [
+                            "F2_Kidsroom_Heating"
+                          ]
+                        },
+                        "widgets": []
+                      },
+                      {
+                        "widgetId": "03030001",
+                        "type": "Text",
+                        "visibility": true,
+                        "label": "Kinderzimmer Temperatur [21.1 �C]",
+                        "icon": "temperature",
+                        "pattern": "%.1f %unit%",
+                        "unit": "�C",
+                        "mappings": [],
+                        "item": {
+                          "link": "https://home.myopenhab.org:443/rest/items/F2_Kidsroom_Heating_Temperatur",
+                          "state": "21.06 �C",
+                          "stateDescription": {
+                            "pattern": "%.1f %unit%",
+                            "readOnly": true,
+                            "options": []
+                          },
+                          "unitSymbol": "�C",
+                          "type": "Number:Temperature",
+                          "name": "F2_Kidsroom_Heating_Temperatur",
+                          "label": "Kinderzimmer Temperatur",
+                          "category": "temperature",
+                          "tags": [
+                            "Point"
+                          ],
+                          "groupNames": [
+                            "F2_Kidsroom_Heating"
+                          ]
+                        },
+                        "widgets": []
+                      },
+                      {
+                        "widgetId": "03030002",
+                        "type": "Switch",
+                        "visibility": true,
+                        "label": "Fenster [OFF]",
+                        "icon": "window",
+                        "pattern": "%s",
+                        "unit": "",
+                        "mappings": [],
+                        "item": {
+                          "link": "https://home.myopenhab.org:443/rest/items/F2_Kidsroom_Window_Sensor",
+                          "state": "OFF",
+                          "stateDescription": {
+                            "pattern": "%s",
+                            "readOnly": true,
+                            "options": []
+                          },
+                          "type": "Switch",
+                          "name": "F2_Kidsroom_Window_Sensor",
+                          "label": "Kinderzimmer Fenster Kontakt",
+                          "category": "contact",
+                          "tags": [
+                            "Opening",
+                            "Point"
+                          ],
+                          "groupNames": [
+                            "F2_Kidsroom_Window"
+                          ]
+                        },
+                        "widgets": []
+                      }
+                    ]
+                  },
+                  "widgets": []
+                }
+              ]
+            },
+            "widgets": []
+          }
+        ]
+      },
+      {
+        "widgetId": "04",
+        "type": "Frame",
+        "visibility": true,
+        "label": "Drau�en",
+        "icon": "garden",
+        "unit": "",
+        "mappings": [],
+        "widgets": [
+          {
+            "widgetId": "0400",
+            "type": "Group",
+            "visibility": true,
+            "label": "Terrase",
+            "icon": "terrace",
+            "unit": "",
+            "mappings": [],
+            "item": {
+              "members": [],
+              "link": "https://home.myopenhab.org:443/rest/items/Terrace",
+              "state": "NULL",
+              "type": "Group",
+              "name": "Terrace",
+              "label": "Terrasse",
+              "category": "terrace",
+              "tags": [
+                "Terrace"
+              ],
+              "groupNames": [
+                "Home"
+              ]
+            },
+            "widgets": []
+          },
+          {
+            "widgetId": "0401",
+            "type": "Group",
+            "visibility": true,
+            "label": "Garten",
+            "icon": "garden",
+            "unit": "",
+            "mappings": [],
+            "item": {
+              "members": [],
+              "link": "https://home.myopenhab.org:443/rest/items/Garden",
+              "state": "NULL",
+              "type": "Group",
+              "name": "Garden",
+              "label": "Garten",
+              "category": "Garden",
+              "tags": [
+                "Garden"
+              ],
+              "groupNames": [
+                "Outside"
+              ]
+            },
+            "widgets": []
+          },
+          {
+            "widgetId": "0402",
+            "type": "Group",
+            "visibility": true,
+            "label": "Garage Haus",
+            "icon": "garagedoor",
+            "unit": "",
+            "mappings": [],
+            "item": {
+              "members": [],
+              "link": "https://home.myopenhab.org:443/rest/items/HSE_Garage",
+              "state": "NULL",
+              "type": "Group",
+              "name": "HSE_Garage",
+              "label": "Garage Haus",
+              "category": "garage",
+              "tags": [
+                "Garage"
+              ],
+              "groupNames": [
+                "Home"
+              ]
+            },
+            "widgets": []
+          },
+          {
+            "widgetId": "0403",
+            "type": "Group",
+            "visibility": true,
+            "label": "Garage Scheune",
+            "icon": "garagedoor",
+            "unit": "",
+            "mappings": [],
+            "item": {
+              "members": [],
+              "link": "https://home.myopenhab.org:443/rest/items/Barn_Garage",
+              "state": "NULL",
+              "type": "Group",
+              "name": "Barn_Garage",
+              "label": "Garage Scheune",
+              "category": "garage_detached",
+              "tags": [
+                "Garage"
+              ],
+              "groupNames": [
+                "Barn"
+              ]
+            },
+            "widgets": []
+          }
+        ]
+      },
+      {
+        "widgetId": "05",
+        "type": "Frame",
+        "visibility": true,
+        "label": "Global State",
+        "icon": "status",
+        "unit": "",
+        "mappings": [],
+        "widgets": [
+          {
+            "widgetId": "0500",
+            "type": "Group",
+            "visibility": true,
+            "label": "Devices",
+            "icon": "camera",
+            "unit": "",
+            "mappings": [],
+            "item": {
+              "link": "https://home.myopenhab.org:443/rest/items/global_homeState",
+              "state": "normal",
+              "type": "String",
+              "name": "global_homeState",
+              "label": "Home State",
+              "category": "status",
+              "tags": [
+                "Status",
+                "Current"
+              ],
+              "groupNames": [
+                "Globals"
+              ]
+            },
+            "linkedPage": {
+              "id": "0500",
+              "title": "Devices",
+              "icon": "camera",
+              "link": "https://home.myopenhab.org:443/rest/sitemaps/uicomponents_home/0500",
+              "leaf": true,
+              "timeout": false,
+              "widgets": [
+                {
+                  "widgetId": "050000",
+                  "type": "Text",
+                  "visibility": true,
+                  "label": "Christoph Mobile Phone",
+                  "icon": "microphone",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "link": "https://home.myopenhab.org:443/rest/items/HoffeMobileUniFiWirelessClient_Online",
+                    "state": "OFF",
+                    "stateDescription": {
+                      "readOnly": true,
+                      "options": []
+                    },
+                    "type": "Switch",
+                    "name": "HoffeMobileUniFiWirelessClient_Online",
+                    "label": "Hoffe-Mobile State",
+                    "category": "",
+                    "tags": [
+                      "Status",
+                      "Current"
+                    ],
+                    "groupNames": [
+                      "global_mobiles"
+                    ]
+                  },
+                  "widgets": []
+                },
+                {
+                  "widgetId": "050001",
+                  "type": "Text",
+                  "visibility": true,
+                  "label": "Katharina Mobile Phone",
+                  "icon": "microphone",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "link": "https://home.myopenhab.org:443/rest/items/iPhonevatharinaUniFiWirelessClient_Online",
+                    "state": "ON",
+                    "stateDescription": {
+                      "readOnly": true,
+                      "options": []
+                    },
+                    "type": "Switch",
+                    "name": "iPhonevatharinaUniFiWirelessClient_Online",
+                    "label": "iPhonevatharina State",
+                    "category": "",
+                    "tags": [
+                      "Status",
+                      "Current"
+                    ],
+                    "groupNames": [
+                      "global_mobiles"
+                    ]
+                  },
+                  "widgets": []
+                }
+              ]
+            },
+            "widgets": []
+          },
+          {
+            "widgetId": "0501",
+            "type": "Group",
+            "visibility": true,
+            "label": "Home",
+            "icon": "status",
+            "unit": "",
+            "mappings": [],
+            "item": {
+              "members": [],
+              "link": "https://home.myopenhab.org:443/rest/items/Home",
+              "state": "NULL",
+              "type": "Group",
+              "name": "Home",
+              "label": "Hofmann's Zuhause",
+              "category": "house",
+              "tags": [
+                "Building"
+              ],
+              "groupNames": []
+            },
+            "linkedPage": {
+              "id": "0501",
+              "title": "Home",
+              "icon": "status",
+              "link": "https://home.myopenhab.org:443/rest/sitemaps/uicomponents_home/0501",
+              "leaf": true,
+              "timeout": false,
+              "widgets": [
+                {
+                  "widgetId": "050100",
+                  "type": "Text",
+                  "visibility": true,
+                  "label": "Home State",
+                  "icon": "house",
+                  "unit": "",
+                  "mappings": [],
+                  "item": {
+                    "link": "https://home.myopenhab.org:443/rest/items/global_homeState",
+                    "state": "normal",
+                    "type": "String",
+                    "name": "global_homeState",
+                    "label": "Home State",
+                    "category": "status",
+                    "tags": [
+                      "Status",
+                      "Current"
+                    ],
+                    "groupNames": [
+                      "Globals"
+                    ]
+                  },
+                  "widgets": []
+                }
+              ]
+            },
+            "widgets": []
+          }
+        ]
+      }
+    ]
+  }
+}

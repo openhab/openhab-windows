@@ -5,11 +5,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
+using openHAB.Common;
 using openHAB.Core;
+using openHAB.Core.Client.Common;
+using openHAB.Core.Client.Messages;
+using openHAB.Core.Client.Models;
 using openHAB.Core.Common;
 using openHAB.Core.Messages;
 using openHAB.Core.Model;
-using openHAB.Core.SDK;
 using openHAB.Core.Services;
 using openHAB.Windows.Services;
 
@@ -20,8 +23,9 @@ namespace openHAB.Windows.ViewModel
     /// </summary>
     public class SitemapViewModel : ViewModelBase<OpenHABSitemap>
     {
-        private readonly IOpenHAB _openHabsdk;
         private readonly ServerInfo _serverInfo;
+        private readonly SitemapService _sitemapService;
+
         private ObservableCollection<OpenHABWidget> _currentWidgets;
         private OpenHABWidget _selectedWidget;
         private ObservableCollection<OpenHABWidget> _widgets;
@@ -41,17 +45,15 @@ namespace openHAB.Windows.ViewModel
         /// </summary>
         /// <param name="model">Model class for view model.</param>
         /// <param name="serverInfo">openHAB Instance information.</param>
-        public SitemapViewModel(OpenHABSitemap model, ServerInfo serverInfo)
+        public SitemapViewModel(OpenHABSitemap model)
              : base(model)
         {
-            _serverInfo = serverInfo;
             _widgets = new ObservableCollection<OpenHABWidget>(model.Widgets ?? new List<OpenHABWidget>());
-            _openHabsdk = DIService.Instance.GetService<IOpenHAB>();
-
+            _sitemapService = DIService.Instance.GetService<SitemapService>();
             _currentWidgets = new ObservableCollection<OpenHABWidget>();
 
             StrongReferenceMessenger.Default.Register<WidgetClickedMessage>(this, (recipient, msg)
-                => OnWidgetClickedAction( msg.Widget));
+                => OnWidgetClickedAction(msg.Widget));
 
             StrongReferenceMessenger.Default.Register<TriggerCommandMessage>(this, async (recipient, msg)
                 => await TriggerItemCommand(msg).ConfigureAwait(false));
@@ -179,13 +181,13 @@ namespace openHAB.Windows.ViewModel
 
         private async Task TriggerItemCommand(TriggerCommandMessage message)
         {
-            HttpResponseResult<bool> result = await _openHabsdk.SendCommand(message.Item, message.Command).ConfigureAwait(false);
+            HttpResponseResult<bool> result = await _sitemapService.SendItemCommand(message.Item, message.Command).ConfigureAwait(false);
             if (!result.Content)
             {
                 string errorMessage = AppResources.Errors.GetString("CommandFailed");
                 errorMessage = string.Format(errorMessage, message.Command, message.Item?.Name);
 
-                StrongReferenceMessenger.Default.Send<FireErrorMessage>(new FireErrorMessage(errorMessage));
+                StrongReferenceMessenger.Default.Send<ConnectionErrorMessage>(new ConnectionErrorMessage(errorMessage));
             }
         }
 
@@ -206,29 +208,17 @@ namespace openHAB.Windows.ViewModel
 
         /// <summary>
         /// Loads widgets for sitemap.
-        /// </summary>
-        /// <param name="version">OH version.</param>
+        /// </summary>W
         /// <returns>Task for async processing.</returns>
-        public async Task LoadWidgets(OpenHABVersion version)
-        {
-            Widgets.Clear();
-
-            ICollection<OpenHABWidget> widgetModels = await _openHabsdk.LoadItemsFromSitemap(Model, version).ConfigureAwait(false);
-            widgetModels.ToList().ForEach(x => Widgets.Add(x));
-        }
-
         public async Task LoadWidgets()
         {
+            Widgets.Clear();
             CurrentWidgets.Clear();
-            StrongReferenceMessenger.Default.Send<DataOperation>(new DataOperation(OperationState.Started));
 
-            await this.LoadWidgets(_serverInfo.Version).ConfigureAwait(false);
+            ICollection<OpenHABWidget> widgetModels = await _sitemapService.LoadItemsFromSitemapAsync(Model).ConfigureAwait(false);
+            widgetModels.ToList().ForEach(x => Widgets.Add(x));
 
-            await App.DispatcherQueue.EnqueueAsync(() =>
-            {
-                SetWidgetsOnScreen(this.Widgets);
-                StrongReferenceMessenger.Default.Send<DataOperation>(new DataOperation(OperationState.Completed));
-            });
+            SetWidgetsOnScreen(this.Widgets);
         }
 
         public async Task ReloadSitemap()

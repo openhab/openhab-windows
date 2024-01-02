@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using openHAB.Core.Client.Contracts;
+using openHAB.Core.Client.Models;
 using openHAB.Core.Model;
-using openHAB.Core.SDK;
 using openHAB.Core.Services.Contracts;
 
 namespace openHAB.Core.Services
@@ -8,11 +9,11 @@ namespace openHAB.Core.Services
     /// <inheritdoc/>
     public class ItemManager : IItemManager
     {
-        private Dictionary<string, OpenHABItem> _nameToStateDictionary;
-        private IOpenHAB _openHABClient;
+        private readonly Dictionary<string, OpenHABItem> _nameToStateDictionary;
+        private IOpenHABClient _openHABClient;
 
         /// <summary>Initializes a new instance of the <see cref="ItemManager" /> class.</summary>
-        public ItemManager(IOpenHAB openHABClient)
+        public ItemManager(IOpenHABClient openHABClient)
         {
             _nameToStateDictionary = new Dictionary<string, OpenHABItem>();
             _openHABClient = openHABClient;

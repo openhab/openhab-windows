@@ -1,6 +1,8 @@
 using System;
 using System.Text.RegularExpressions;
 using Microsoft.UI.Xaml.Data;
+using openHAB.Core.Client.Connection.Contracts;
+using openHAB.Core.Client.Models;
 using openHAB.Core.Common;
 using openHAB.Core.Model;
 using openHAB.Core.Services.Contracts;
@@ -27,10 +29,11 @@ namespace openHAB.Windows.Converters
             var settingsService = (ISettingsService)DIService.Instance.GetService<ISettingsService>();
             OpenHABVersion openHABVersion = settingsService.ServerVersion;
 
-            var serverUrl = OpenHABHttpClient.BaseUrl;
+            IConnectionService connectionService = DIService.Instance.GetService<IConnectionService>();
+            string serverUrl = connectionService.CurrentConnection.Url;
 
-            var widget = value as OpenHABWidget;
-            var state = widget.Item?.State ?? "ON";
+            OpenHABWidget widget = value as OpenHABWidget;
+            string state = widget.Item?.State ?? "ON";
             string iconFormat = _settings.UseSVGIcons ? "svg" : "png";
 
             var regMatch = Regex.Match(state, @"\d+", RegexOptions.None, TimeSpan.FromMilliseconds(100));

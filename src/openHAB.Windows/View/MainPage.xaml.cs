@@ -5,7 +5,10 @@ using CommunityToolkit.WinUI;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using openHAB.Common;
 using openHAB.Core;
+using openHAB.Core.Client.Messages;
+using openHAB.Core.Client.Models;
 using openHAB.Core.Messages;
 using openHAB.Core.Model;
 using openHAB.Windows.Services;
@@ -39,7 +42,7 @@ namespace openHAB.Windows.View
         /// <inheritdoc/>
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            StrongReferenceMessenger.Default.Register<FireErrorMessage>(this, async (recipient, msg) => await ShowErrorMessage(recipient, msg));
+            StrongReferenceMessenger.Default.Register<ConnectionErrorMessage>(this, async (recipient, msg) => await ShowErrorMessage(recipient, msg));
             StrongReferenceMessenger.Default.Register<FireInfoMessage>(this, async (recipient, msg) => await ShowInfoMessage(recipient, msg));
 
             await Vm.LoadSitemapsAndItemData().ConfigureAwait(false);
@@ -48,7 +51,7 @@ namespace openHAB.Windows.View
         /// <inheritdoc/>
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            StrongReferenceMessenger.Default.Unregister<FireErrorMessage>(this);
+            StrongReferenceMessenger.Default.Unregister<ConnectionErrorMessage>(this);
             StrongReferenceMessenger.Default.Unregister<FireInfoMessage>(this);
 
             ErrorNotification.IsOpen = false;
@@ -57,7 +60,7 @@ namespace openHAB.Windows.View
 
 #pragma warning disable S1172 // Unused method parameters should be removed
 
-        private async Task ShowErrorMessage(object recipient, FireErrorMessage message)
+        private async Task ShowErrorMessage(object recipient, ConnectionErrorMessage message)
 #pragma warning restore S1172 // Unused method parameters should be removed
         {
             try
@@ -86,10 +89,7 @@ namespace openHAB.Windows.View
             }
         }
 
-#pragma warning disable S1172 // Unused method parameters should be removed
-
         private async Task ShowInfoMessage(object recipient, FireInfoMessage msg)
-#pragma warning restore S1172 // Unused method parameters should be removed
         {
             try
             {

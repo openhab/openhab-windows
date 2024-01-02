@@ -1,0 +1,3276 @@
+[
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/F2_GuestRoom",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Indoor_Room_GuestRoom",
+        "config": {
+          "isPartOf": "F2"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "F2_GuestRoom",
+    "label": "Gästezimmer",
+    "category": "bedroom",
+    "tags": [
+      "GuestRoom"
+    ],
+    "groupNames": [
+      "F2"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/GF_Hallway_Heating_Setpoint",
+    "state": "23 °C",
+    "stateDescription": {
+      "pattern": "%.1f %unit%",
+      "readOnly": false,
+      "options": []
+    },
+    "unitSymbol": "°C",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Setpoint",
+        "config": {
+          "relatesTo": "Property_Temperature",
+          "isPointOf": "GF_Hallway_Heating"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Number:Temperature",
+    "name": "GF_Hallway_Heating_Setpoint",
+    "label": "Flur EG Thermostat ",
+    "category": "radiator",
+    "tags": [
+      "Temperature",
+      "Setpoint"
+    ],
+    "groupNames": [
+      "gHeating",
+      "GF_Hallway_Heating"
+    ]
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/Wetter",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Equipment_WebService_WeatherService",
+        "config": {
+          "isPartOf": "Globals",
+          "hasPoint": "LocalWeatherAndForecast_Current_AtmosphericHumidity"
+        }
+      },
+      "autoupdate": {
+        "value": "true"
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "Wetter",
+    "label": "Weather",
+    "category": "sun_clouds",
+    "tags": [
+      "WeatherService"
+    ],
+    "groupNames": [
+      "Globals"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Number:Temperature",
+    "function": {
+      "name": "AVG"
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/FF_Bathroom",
+    "state": "23.11 °C",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Indoor_Room_Bathroom",
+        "config": {
+          "isPartOf": "FF"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "FF_Bathroom",
+    "label": "Badezimmer",
+    "category": "bath",
+    "tags": [
+      "Bathroom"
+    ],
+    "groupNames": [
+      "FF"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Number:Temperature",
+    "function": {
+      "name": "AVG"
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/F2_Kidsroom_Heating",
+    "state": "21.02 °C",
+    "metadata": {
+      "semantics": {
+        "value": "Equipment_HVAC",
+        "config": {
+          "hasPoint": "F2_Kidsroom_Heating_Setpoint",
+          "hasLocation": "F2_KidsRoom",
+          "isPartOf": "gHeating"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "F2_Kidsroom_Heating",
+    "label": "Heizkörper Kinderzimmer",
+    "category": "radiator",
+    "tags": [
+      "HVAC"
+    ],
+    "groupNames": [
+      "F2_KidsRoom",
+      "gHeating"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/GF_Bathroom_Window_Sensor",
+    "state": "ON",
+    "stateDescription": {
+      "pattern": "%s",
+      "readOnly": true,
+      "options": []
+    },
+    "metadata": {
+      "semantics": {
+        "value": "Point",
+        "config": {
+          "relatesTo": "Property_Opening",
+          "isPointOf": "GF_Bathroom_Window"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "GF_Bathroom_Window_Sensor",
+    "label": "Bad EG Fenster Kontakt",
+    "category": "contact",
+    "tags": [
+      "Opening",
+      "Point"
+    ],
+    "groupNames": [
+      "GF_Bathroom_Window"
+    ]
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/HSE_Garage",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Indoor_Building_Garage",
+        "config": {
+          "isPartOf": "Home"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "HSE_Garage",
+    "label": "Garage Haus",
+    "category": "garage",
+    "tags": [
+      "Garage"
+    ],
+    "groupNames": [
+      "Home"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/GF_Hallway_FrontDoor_RemoteControl_Buttons",
+    "state": "NULL",
+    "stateDescription": {
+      "pattern": "%.0f",
+      "readOnly": false,
+      "options": []
+    },
+    "metadata": {
+      "semantics": {
+        "value": "Point",
+        "config": {
+          "relatesTo": "Property_Current",
+          "isPointOf": "GF_Hallway_FrontDoor_RemoteControl"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Number",
+    "name": "GF_Hallway_FrontDoor_RemoteControl_Buttons",
+    "label": "Fernbedienung Haus ",
+    "category": "mediacontrol",
+    "tags": [
+      "Point",
+      "Current"
+    ],
+    "groupNames": [
+      "GF_Hallway_FrontDoor_RemoteControl"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Number:Temperature",
+    "function": {
+      "name": "AVG"
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/F2_Guestroom_Heating",
+    "state": "19.87 °C",
+    "metadata": {
+      "semantics": {
+        "value": "Equipment_HVAC",
+        "config": {
+          "hasPoint": "F2_Guestroom_Heating_Temperature",
+          "hasLocation": "F2_GuestRoom",
+          "isPartOf": "gHeating"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "F2_Guestroom_Heating",
+    "label": "Heizkörper Gästezimmer",
+    "category": "radiator",
+    "tags": [
+      "HVAC"
+    ],
+    "groupNames": [
+      "F2_GuestRoom",
+      "gHeating"
+    ]
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/BA_BoilerRoom",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Indoor_Room_BoilerRoom",
+        "config": {
+          "isPartOf": "Basement"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "BA_BoilerRoom",
+    "label": "Heizraum",
+    "category": "heating",
+    "tags": [
+      "BoilerRoom"
+    ],
+    "groupNames": [
+      "Basement"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Number:Temperature",
+    "function": {
+      "name": "MIN"
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/FF_Hallway_Heating",
+    "state": "23 °C",
+    "stateDescription": {
+      "pattern": "%.0f",
+      "readOnly": false,
+      "options": []
+    },
+    "metadata": {
+      "semantics": {
+        "value": "Equipment_HVAC",
+        "config": {
+          "hasPoint": "FF_Hallway_Heating_Setpoint",
+          "hasLocation": "FF_Hallway"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "FF_Hallway_Heating",
+    "label": "Flug 1.OG Heizkörper",
+    "category": "heating",
+    "tags": [
+      "HVAC"
+    ],
+    "groupNames": [
+      "FF_Hallway"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Number:Temperature",
+    "function": {
+      "name": "AVG"
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/FF_Office",
+    "state": "21 °C",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Indoor_Room_Office",
+        "config": {
+          "isPartOf": "FF"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "FF_Office",
+    "label": "Büro",
+    "category": "office",
+    "tags": [
+      "Office"
+    ],
+    "groupNames": [
+      "FF"
+    ]
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/Terrace",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Outdoor_Terrace",
+        "config": {
+          "isPartOf": "Home"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "Terrace",
+    "label": "Terrasse",
+    "category": "terrace",
+    "tags": [
+      "Terrace"
+    ],
+    "groupNames": [
+      "Home"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_SonosOne_CurrentAlbumCoverArt",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Point",
+        "config": {
+          "isPointOf": "GF_LivingRoom_SonosOne"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Image",
+    "name": "GF_LivingRoom_SonosOne_CurrentAlbumCoverArt",
+    "label": "Current Album Cover Art",
+    "category": "",
+    "tags": [
+      "Point"
+    ],
+    "groupNames": [
+      "GF_LivingRoom_SonosOne"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/FF_Bedroom_LightsSwitch",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Control_Switch",
+        "config": {
+          "relatesTo": "Property_Power",
+          "hasLocation": "FF_Bedroom"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "FF_Bedroom_LightsSwitch",
+    "label": "Lampen",
+    "category": "Switch",
+    "tags": [
+      "Switch",
+      "Power"
+    ],
+    "groupNames": [
+      "FF_Bedroom"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/LocalWeatherAndForecast_Current_BarometricPressure",
+    "state": "1007 hPa",
+    "stateDescription": {
+      "pattern": "%.3f %unit%",
+      "readOnly": true,
+      "options": []
+    },
+    "unitSymbol": "hPa",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Status_OpenLevel",
+        "config": {
+          "relatesTo": "Property_Pressure",
+          "isPointOf": "Wetter"
+        }
+      },
+      "autoupdate": {
+        "value": "true"
+      }
+    },
+    "editable": true,
+    "type": "Number:Pressure",
+    "name": "LocalWeatherAndForecast_Current_BarometricPressure",
+    "label": "Barometric Pressure",
+    "category": "Pressure",
+    "tags": [
+      "OpenLevel",
+      "Pressure"
+    ],
+    "groupNames": [
+      "Wetter"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/FF_Bedroom_Window_Sensor",
+    "state": "OFF",
+    "stateDescription": {
+      "pattern": "%s",
+      "readOnly": true,
+      "options": []
+    },
+    "metadata": {
+      "semantics": {
+        "value": "Point",
+        "config": {
+          "relatesTo": "Property_Opening",
+          "isPointOf": "FF_Bedroom_Window"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "FF_Bedroom_Window_Sensor",
+    "label": "Schlafzimmer Fenster Kontakt",
+    "category": "window",
+    "tags": [
+      "Opening",
+      "Point"
+    ],
+    "groupNames": [
+      "FF_Bedroom_Window"
+    ]
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/FF_Bathroom_Window",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Equipment_Window",
+        "config": {
+          "hasPoint": "FF_Bathroom_Window_Sensor",
+          "hasLocation": "FF_Bathroom"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "FF_Bathroom_Window",
+    "label": "Bad Fenster",
+    "category": "window",
+    "tags": [
+      "Window"
+    ],
+    "groupNames": [
+      "FF_Bathroom"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Switch",
+    "function": {
+      "name": "OR",
+      "params": [
+        "ON",
+        "OFF"
+      ]
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/GF_Kitchen_Window",
+    "state": "OFF",
+    "metadata": {
+      "semantics": {
+        "value": "Equipment_Window",
+        "config": {
+          "hasPoint": "GF_Kitchen_Window_Sensor",
+          "hasLocation": "GF_Kitchen"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "GF_Kitchen_Window",
+    "label": "Fenster Küche ",
+    "category": "window",
+    "tags": [
+      "Window"
+    ],
+    "groupNames": [
+      "GF_Kitchen"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Number:Temperature",
+    "function": {
+      "name": "AVG"
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/F2_Bedroom",
+    "state": "20.03 °C",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Indoor_Room_Bedroom",
+        "config": {
+          "isPartOf": "F2"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "F2_Bedroom",
+    "label": "Hinteres Zimmer",
+    "category": "cinemascreen",
+    "tags": [
+      "Bedroom"
+    ],
+    "groupNames": [
+      "F2"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/FF_Office_LightsSwitch",
+    "state": "NULL",
+    "metadata": {
+      "synonyms": {
+        "value": "Licht Büro"
+      },
+      "alexa": {
+        "value": "Light"
+      },
+      "semantics": {
+        "value": "Point_Control_Switch",
+        "config": {
+          "relatesTo": "Property_Power",
+          "hasLocation": "FF_Office"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "FF_Office_LightsSwitch",
+    "label": "Lampen",
+    "category": "lightbulb",
+    "tags": [
+      "Switch",
+      "Power"
+    ],
+    "groupNames": [
+      "FF_Office"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/GF_Corridor_LightsSwitch",
+    "state": "OFF",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Control_Switch",
+        "config": {
+          "relatesTo": "Property_Light",
+          "hasLocation": "GF_Hallway"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "GF_Corridor_LightsSwitch",
+    "label": "Flur EG Lampen",
+    "category": "Light",
+    "tags": [
+      "Switch",
+      "Light"
+    ],
+    "groupNames": [
+      "GF_Hallway"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/FF_Office_Heating_Setpoint",
+    "state": "21 °C",
+    "stateDescription": {
+      "pattern": "%.0f",
+      "readOnly": false,
+      "options": []
+    },
+    "unitSymbol": "°C",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Setpoint",
+        "config": {
+          "relatesTo": "Property_Temperature",
+          "isPointOf": "FF_Office_Heating"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Number:Temperature",
+    "name": "FF_Office_Heating_Setpoint",
+    "label": "Büro Heizung Thermostat",
+    "category": "Heating",
+    "tags": [
+      "Temperature",
+      "Setpoint"
+    ],
+    "groupNames": [
+      "FF_Office_Heating"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_SonosOne_MediaTitle",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Status",
+        "config": {
+          "isPointOf": "GF_LivingRoom_SonosOne"
+        }
+      }
+    },
+    "editable": true,
+    "type": "String",
+    "name": "GF_LivingRoom_SonosOne_MediaTitle",
+    "label": "Media Title",
+    "category": "",
+    "tags": [
+      "Status"
+    ],
+    "groupNames": [
+      "GF_LivingRoom_SonosOne"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Number:Temperature",
+    "function": {
+      "name": "AVG"
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/F2_Bedroom_Heating",
+    "state": "21 °C",
+    "stateDescription": {
+      "pattern": "%.0f",
+      "readOnly": false,
+      "options": []
+    },
+    "metadata": {
+      "semantics": {
+        "value": "Equipment_HVAC",
+        "config": {
+          "hasPoint": "F2_Bedroom_Heating_Temperature",
+          "hasLocation": "F2_Bedroom",
+          "isPartOf": "gHeating"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "F2_Bedroom_Heating",
+    "label": "Heizkörper hinteres Zimmer",
+    "category": "radiator",
+    "tags": [
+      "HVAC"
+    ],
+    "groupNames": [
+      "gHeating",
+      "F2_Bedroom"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Number:Temperature",
+    "function": {
+      "name": "AVG"
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_Heating",
+    "state": "21 °C",
+    "stateDescription": {
+      "pattern": "%.0f",
+      "readOnly": false,
+      "options": []
+    },
+    "metadata": {
+      "semantics": {
+        "value": "Equipment_HVAC",
+        "config": {
+          "hasPoint": "GF_LivingRoom_Heating_Setpoint",
+          "hasLocation": "GF_LivingRoom"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "GF_LivingRoom_Heating",
+    "label": "Heizkörper Wohzimmer",
+    "category": "heating",
+    "tags": [
+      "HVAC"
+    ],
+    "groupNames": [
+      "GF_LivingRoom"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/GF_Kitchen_Window_Sensor",
+    "state": "OFF",
+    "stateDescription": {
+      "pattern": "%s",
+      "readOnly": true,
+      "options": []
+    },
+    "metadata": {
+      "semantics": {
+        "value": "Point",
+        "config": {
+          "relatesTo": "Property_Opening",
+          "isPointOf": "GF_Kitchen_Window"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "GF_Kitchen_Window_Sensor",
+    "label": "Küche Fenster Kontakt",
+    "category": "contact",
+    "tags": [
+      "Opening",
+      "Point"
+    ],
+    "groupNames": [
+      "GF_Kitchen_Window"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/FF_Bathroom_Heating_Setpoint",
+    "state": "23 °C",
+    "stateDescription": {
+      "pattern": "%.1f %unit%",
+      "readOnly": false,
+      "options": []
+    },
+    "unitSymbol": "°C",
+    "metadata": {
+      "alexa": {
+        "value": "Thermostat.TargetTemperature"
+      },
+      "semantics": {
+        "value": "Point_Setpoint",
+        "config": {
+          "relatesTo": "Property_Temperature",
+          "isPointOf": "FF_Bathroom_Heating"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Number:Temperature",
+    "name": "FF_Bathroom_Heating_Setpoint",
+    "label": "Bad 1. OG Thermostat",
+    "category": "HVAC",
+    "tags": [
+      "Temperature",
+      "Setpoint"
+    ],
+    "groupNames": [
+      "FF_Bathroom_Heating"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/GF_Hallway_Window_Sensor",
+    "state": "OFF",
+    "stateDescription": {
+      "pattern": "%s",
+      "readOnly": true,
+      "options": []
+    },
+    "metadata": {
+      "semantics": {
+        "value": "Point",
+        "config": {
+          "relatesTo": "Property_Opening",
+          "isPointOf": "GF_Hallway_Window"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "GF_Hallway_Window_Sensor",
+    "label": "Flur EG Fenster Kontakt",
+    "category": "window",
+    "tags": [
+      "Opening",
+      "Point"
+    ],
+    "groupNames": [
+      "GF_Hallway_Window"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/F2_Guestroom_Heating_Temperature",
+    "state": "19.74 °C",
+    "stateDescription": {
+      "pattern": "%.1f %unit%",
+      "readOnly": true,
+      "options": []
+    },
+    "unitSymbol": "°C",
+    "metadata": {
+      "semantics": {
+        "value": "Point",
+        "config": {
+          "isPointOf": "F2_Guestroom_Heating"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Number:Temperature",
+    "name": "F2_Guestroom_Heating_Temperature",
+    "label": "Gästezimmer Temperatur",
+    "category": "temperature",
+    "tags": [
+      "Point"
+    ],
+    "groupNames": [
+      "F2_Guestroom_Heating"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/F2_Guestroom_Heating_Setpoint",
+    "state": "20 °C",
+    "stateDescription": {
+      "pattern": "%.1f %unit%",
+      "readOnly": false,
+      "options": []
+    },
+    "unitSymbol": "°C",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Setpoint",
+        "config": {
+          "relatesTo": "Property_Temperature",
+          "isPointOf": "F2_Guestroom_Heating"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Number:Temperature",
+    "name": "F2_Guestroom_Heating_Setpoint",
+    "label": "Gästezimmer Thermostat",
+    "category": "radiator",
+    "tags": [
+      "Temperature",
+      "Setpoint"
+    ],
+    "groupNames": [
+      "F2_Guestroom_Heating"
+    ]
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/Home",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Indoor_Building"
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "Home",
+    "label": "Hofmann's Zuhause",
+    "category": "house",
+    "tags": [
+      "Building"
+    ],
+    "groupNames": []
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/LocalWeatherAndForecast_Current_OutdoorTemperature",
+    "state": "6.76 °C",
+    "stateDescription": {
+      "pattern": "%.1f %unit%",
+      "readOnly": true,
+      "options": []
+    },
+    "unitSymbol": "°C",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Status_OpenLevel",
+        "config": {
+          "relatesTo": "Property_Temperature",
+          "isPointOf": "Wetter"
+        }
+      },
+      "autoupdate": {
+        "value": "true"
+      }
+    },
+    "editable": true,
+    "type": "Number:Temperature",
+    "name": "LocalWeatherAndForecast_Current_OutdoorTemperature",
+    "label": "Outdoor Temperature",
+    "category": "Temperature",
+    "tags": [
+      "OpenLevel",
+      "Temperature"
+    ],
+    "groupNames": [
+      "Wetter"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_Heating_Setpoint",
+    "state": "21 °C",
+    "stateDescription": {
+      "pattern": "%.0f",
+      "readOnly": false,
+      "options": []
+    },
+    "unitSymbol": "°C",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Setpoint",
+        "config": {
+          "relatesTo": "Property_Temperature",
+          "isPointOf": "GF_LivingRoom_Heating"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Number:Temperature",
+    "name": "GF_LivingRoom_Heating_Setpoint",
+    "label": "Wohnzimmer Thermostat",
+    "category": "Heating",
+    "tags": [
+      "Temperature",
+      "Setpoint"
+    ],
+    "groupNames": [
+      "GF_LivingRoom_Heating"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/global_homeState",
+    "state": "normal",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Status",
+        "config": {
+          "relatesTo": "Property_Current",
+          "isPointOf": "Globals"
+        }
+      }
+    },
+    "editable": true,
+    "type": "String",
+    "name": "global_homeState",
+    "label": "Home State",
+    "category": "status",
+    "tags": [
+      "Status",
+      "Current"
+    ],
+    "groupNames": [
+      "Globals"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/F2_Kidsroom_Window_Sensor",
+    "state": "OFF",
+    "stateDescription": {
+      "pattern": "%s",
+      "readOnly": true,
+      "options": []
+    },
+    "metadata": {
+      "semantics": {
+        "value": "Point",
+        "config": {
+          "relatesTo": "Property_Opening",
+          "isPointOf": "F2_Kidsroom_Window"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "F2_Kidsroom_Window_Sensor",
+    "label": "Kinderzimmer Fenster Kontakt",
+    "category": "contact",
+    "tags": [
+      "Opening",
+      "Point"
+    ],
+    "groupNames": [
+      "F2_Kidsroom_Window"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Number:Temperature",
+    "function": {
+      "name": "AVG"
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/FF_Hallway",
+    "state": "23 °C",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Indoor_Corridor",
+        "config": {
+          "isPartOf": "FF"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "FF_Hallway",
+    "label": "Flur 1.OG",
+    "category": "corridor",
+    "tags": [
+      "Corridor"
+    ],
+    "groupNames": [
+      "FF"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_Window_Sensor",
+    "state": "OFF",
+    "stateDescription": {
+      "pattern": "%s",
+      "readOnly": true,
+      "options": []
+    },
+    "metadata": {
+      "semantics": {
+        "value": "Point",
+        "config": {
+          "relatesTo": "Property_Opening",
+          "isPointOf": "GF_LivingRoom_Window"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "GF_LivingRoom_Window_Sensor",
+    "label": "Wohnzimmer Fenster Kontakt",
+    "category": "contact",
+    "tags": [
+      "Opening",
+      "Point"
+    ],
+    "groupNames": [
+      "GF_LivingRoom_Window"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Switch",
+    "function": {
+      "name": "OR",
+      "params": [
+        "ON",
+        "OFF"
+      ]
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/FF_Bedroom_Window",
+    "state": "OFF",
+    "metadata": {
+      "semantics": {
+        "value": "Equipment_Window",
+        "config": {
+          "hasPoint": "FF_Bedroom_Window_Sensor",
+          "hasLocation": "FF_Bedroom"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "FF_Bedroom_Window",
+    "label": "Schlafzimmer Fenster",
+    "category": "window",
+    "tags": [
+      "Window"
+    ],
+    "groupNames": [
+      "FF_Bedroom"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/FF_Office_Window_Sensor",
+    "state": "OFF",
+    "stateDescription": {
+      "pattern": "%s",
+      "readOnly": true,
+      "options": []
+    },
+    "metadata": {
+      "semantics": {
+        "value": "Point",
+        "config": {
+          "relatesTo": "Property_Opening",
+          "isPointOf": "FF_Office_Window"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "FF_Office_Window_Sensor",
+    "label": "Büro Fenster Kontakt",
+    "category": "contact",
+    "tags": [
+      "Opening",
+      "Point"
+    ],
+    "groupNames": [
+      "FF_Office_Window"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/GF_Hallway_Heating_Temperature",
+    "state": "22.09 °C",
+    "stateDescription": {
+      "pattern": "%.1f %unit%",
+      "readOnly": true,
+      "options": []
+    },
+    "unitSymbol": "°C",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Status_OpenLevel",
+        "config": {
+          "relatesTo": "Property_Temperature",
+          "isPointOf": "GF_Hallway_Heating"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Number:Temperature",
+    "name": "GF_Hallway_Heating_Temperature",
+    "label": "Flur EG Temperature",
+    "category": "HVAC",
+    "tags": [
+      "OpenLevel",
+      "Temperature"
+    ],
+    "groupNames": [
+      "GF_Hallway_Heating"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Switch",
+    "function": {
+      "name": "OR",
+      "params": [
+        "ON",
+        "OFF"
+      ]
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/F2_Kidsroom_Window",
+    "state": "OFF",
+    "metadata": {
+      "semantics": {
+        "value": "Equipment_Window",
+        "config": {
+          "hasPoint": "F2_Kidsroom_Window_Sensor",
+          "hasLocation": "F2_KidsRoom"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "F2_Kidsroom_Window",
+    "label": "Kinderzimmer Fenster",
+    "category": "window",
+    "tags": [
+      "Window"
+    ],
+    "groupNames": [
+      "F2_KidsRoom"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/FF_Bathroom_Heating_Temperature",
+    "state": "23.22 °C",
+    "stateDescription": {
+      "pattern": "%.1f %unit%",
+      "readOnly": true,
+      "options": []
+    },
+    "unitSymbol": "°C",
+    "metadata": {
+      "alexa": {
+        "value": "Thermostat.CurrentTemperature"
+      },
+      "semantics": {
+        "value": "Point",
+        "config": {
+          "relatesTo": "Property_Temperature",
+          "isPointOf": "FF_Bathroom_Heating"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Number:Temperature",
+    "name": "FF_Bathroom_Heating_Temperature",
+    "label": "Bad 1. OG Temperature",
+    "category": "HVAC",
+    "tags": [
+      "Temperature",
+      "Point"
+    ],
+    "groupNames": [
+      "FF_Bathroom_Heating"
+    ]
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/Globals",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Equipment",
+        "config": {
+          "hasPoint": "global_homeState"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "Globals",
+    "label": "",
+    "category": "",
+    "tags": [
+      "Equipment"
+    ],
+    "groupNames": []
+  },
+  {
+    "members": [],
+    "groupType": "Switch",
+    "function": {
+      "name": "OR",
+      "params": [
+        "ON",
+        "OFF"
+      ]
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/FF_Office_Window",
+    "state": "OFF",
+    "stateDescription": {
+      "pattern": "%s",
+      "readOnly": true,
+      "options": []
+    },
+    "metadata": {
+      "semantics": {
+        "value": "Equipment_Window",
+        "config": {
+          "hasPoint": "FF_Office_Window_Sensor",
+          "hasLocation": "FF_Office"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "FF_Office_Window",
+    "label": "Büro Fenster",
+    "category": "window",
+    "tags": [
+      "Window"
+    ],
+    "groupNames": [
+      "FF_Office"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Switch",
+    "function": {
+      "name": "OR",
+      "params": [
+        "ON",
+        "OFF"
+      ]
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/FF_Hallway_Window",
+    "state": "OFF",
+    "metadata": {
+      "semantics": {
+        "value": "Equipment_Window",
+        "config": {
+          "hasPoint": "FF_Hallway_Window_Sensor",
+          "hasLocation": "FF_Hallway"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "FF_Hallway_Window",
+    "label": "Flur 1.OG Fenster",
+    "category": "window",
+    "tags": [
+      "Window"
+    ],
+    "groupNames": [
+      "FF_Hallway"
+    ]
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/Barn_Garage",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Indoor_Building_Garage",
+        "config": {
+          "isPartOf": "Barn"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "Barn_Garage",
+    "label": "Garage Scheune",
+    "category": "garage_detached",
+    "tags": [
+      "Garage"
+    ],
+    "groupNames": [
+      "Barn"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/FF_Hallway_Window_Sensor",
+    "state": "OFF",
+    "stateDescription": {
+      "pattern": "%s",
+      "readOnly": true,
+      "options": []
+    },
+    "metadata": {
+      "semantics": {
+        "value": "Point",
+        "config": {
+          "relatesTo": "Property_Opening",
+          "isPointOf": "FF_Hallway_Window"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "FF_Hallway_Window_Sensor",
+    "label": "Flur 1.OG Fenster Kontakt",
+    "category": "contact",
+    "tags": [
+      "Opening",
+      "Point"
+    ],
+    "groupNames": [
+      "FF_Hallway_Window"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/LocalWeatherAndForecast_Current_WeatherCondition",
+    "state": "Klarer Himmel",
+    "stateDescription": {
+      "pattern": "%s",
+      "readOnly": true,
+      "options": []
+    },
+    "metadata": {
+      "semantics": {
+        "value": "Point_Status_OpenLevel",
+        "config": {
+          "isPointOf": "Wetter"
+        }
+      },
+      "autoupdate": {
+        "value": "true"
+      }
+    },
+    "editable": true,
+    "type": "String",
+    "name": "LocalWeatherAndForecast_Current_WeatherCondition",
+    "label": "Weather Condition",
+    "category": "Sun_Clouds",
+    "tags": [
+      "OpenLevel"
+    ],
+    "groupNames": [
+      "Wetter"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_LightSwitch",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Control_Switch",
+        "config": {
+          "relatesTo": "Property_Light",
+          "hasLocation": "GF_LivingRoom"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "GF_LivingRoom_LightSwitch",
+    "label": "Licht Wohnzimmer",
+    "category": "wallswitch",
+    "tags": [
+      "Switch",
+      "Light"
+    ],
+    "groupNames": [
+      "GF_LivingRoom"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Switch",
+    "function": {
+      "name": "OR",
+      "params": [
+        "ON",
+        "OFF"
+      ]
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/GF_Hallway_FrontDoor",
+    "state": "OFF",
+    "metadata": {
+      "semantics": {
+        "value": "Equipment_Door_FrontDoor",
+        "config": {
+          "hasPoint": "GF_Hallway_FrontDoor_Sensor",
+          "hasLocation": "GF_Hallway"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "GF_Hallway_FrontDoor",
+    "label": "Eingangstüre",
+    "category": "frontdoor",
+    "tags": [
+      "FrontDoor"
+    ],
+    "groupNames": [
+      "GF_Hallway"
+    ]
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_Window",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Equipment_Window",
+        "config": {
+          "hasPoint": "GF_LivingRoom_Window_Sensor",
+          "hasLocation": "GF_LivingRoom"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "GF_LivingRoom_Window",
+    "label": "Fenster Wohnzimmer",
+    "category": "window",
+    "tags": [
+      "Window"
+    ],
+    "groupNames": [
+      "GF_LivingRoom"
+    ]
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/GF_Hallway_FrontDoor_RemoteControl",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Equipment_RemoteControl",
+        "config": {
+          "isPartOf": "GF_Hallway_FrontDoor",
+          "hasPoint": "GF_Hallway_FrontDoor_RemoteControl_Battery"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "GF_Hallway_FrontDoor_RemoteControl",
+    "label": "Fernbedinung Haus",
+    "category": "mediacontrol",
+    "tags": [
+      "RemoteControl"
+    ],
+    "groupNames": [
+      "GF_Hallway_FrontDoor"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_LightBar2",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Control",
+        "config": {
+          "relatesTo": "Property_ColorTemperature"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Color",
+    "name": "GF_LivingRoom_LightBar2",
+    "label": "Lampe Rechts",
+    "category": "colorlight",
+    "tags": [
+      "Control",
+      "ColorTemperature"
+    ],
+    "groupNames": [
+      "TV_Lights"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/F2_Kidsroom_Heating_Setpoint",
+    "state": "21 °C",
+    "stateDescription": {
+      "pattern": "%.1f %unit%",
+      "readOnly": false,
+      "options": []
+    },
+    "unitSymbol": "°C",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Setpoint",
+        "config": {
+          "relatesTo": "Property_Temperature",
+          "isPointOf": "F2_Kidsroom_Heating"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Number:Temperature",
+    "name": "F2_Kidsroom_Heating_Setpoint",
+    "label": "Kinderzimmer Thermostat",
+    "category": "radiator",
+    "tags": [
+      "Temperature",
+      "Setpoint"
+    ],
+    "groupNames": [
+      "F2_Kidsroom_Heating"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/FF_Bathroom_Window_Sensor",
+    "state": "OFF",
+    "stateDescription": {
+      "pattern": "%s",
+      "readOnly": true,
+      "options": []
+    },
+    "metadata": {
+      "semantics": {
+        "value": "Point",
+        "config": {
+          "relatesTo": "Property_Opening",
+          "isPointOf": "FF_Bathroom_Window"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "FF_Bathroom_Window_Sensor",
+    "label": "Fenster Bad Kontakt",
+    "category": "contact",
+    "tags": [
+      "Opening",
+      "Point"
+    ],
+    "groupNames": [
+      "FF_Bathroom_Window"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_LightBar1",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Control",
+        "config": {
+          "relatesTo": "Property_ColorTemperature"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Color",
+    "name": "GF_LivingRoom_LightBar1",
+    "label": "Lampe Links",
+    "category": "colorlight",
+    "tags": [
+      "Control",
+      "ColorTemperature"
+    ],
+    "groupNames": [
+      "TV_Lights"
+    ]
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/FF_Office_Heating",
+    "state": "21 °C",
+    "stateDescription": {
+      "pattern": "%.0f",
+      "readOnly": false,
+      "options": []
+    },
+    "metadata": {
+      "semantics": {
+        "value": "Equipment_HVAC",
+        "config": {
+          "hasPoint": "FF_Office_Heating_Setpoint",
+          "hasLocation": "FF_Office"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "FF_Office_Heating",
+    "label": "Büro Heizkörper",
+    "category": "heating",
+    "tags": [
+      "HVAC"
+    ],
+    "groupNames": [
+      "FF_Office"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/TVUE46ES7090_ChannelName",
+    "state": "SAT.1",
+    "stateDescription": {
+      "pattern": "%s",
+      "readOnly": true,
+      "options": []
+    },
+    "metadata": {
+      "semantics": {
+        "value": "Point_Status_OpenState",
+        "config": {
+          "relatesTo": "Property_Current",
+          "isPointOf": "GF_LivingRoom_TV"
+        }
+      },
+      "autoupdate": {
+        "value": "true"
+      }
+    },
+    "editable": true,
+    "type": "String",
+    "name": "TVUE46ES7090_ChannelName",
+    "label": "TV Channel Name",
+    "category": "network",
+    "tags": [
+      "OpenState",
+      "Current"
+    ],
+    "groupNames": [
+      "GF_LivingRoom_TV"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/FF_Bedroom_Heating_Setpoint",
+    "state": "21 °C",
+    "stateDescription": {
+      "minimum": 4,
+      "maximum": 28,
+      "step": 0.5,
+      "pattern": "%.0f",
+      "readOnly": false,
+      "options": []
+    },
+    "unitSymbol": "°C",
+    "metadata": {
+      "alexa": {
+        "value": "Thermostat.TargetTemperature"
+      },
+      "semantics": {
+        "value": "Point_Setpoint",
+        "config": {
+          "relatesTo": "Property_Temperature",
+          "isPointOf": "FF_Bedroom_Heating"
+        }
+      },
+      "stateDescription": {
+        "value": " ",
+        "config": {
+          "step": "0.5",
+          "min": "4",
+          "max": "28"
+        }
+      },
+      "autoupdate": {
+        "value": " "
+      }
+    },
+    "editable": true,
+    "type": "Number:Temperature",
+    "name": "FF_Bedroom_Heating_Setpoint",
+    "label": "Schlafzimmer Thermostat",
+    "category": "radiator",
+    "tags": [
+      "Temperature",
+      "Setpoint"
+    ],
+    "groupNames": [
+      "FF_Bedroom_Heating"
+    ]
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/BA_StorageRoom",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Indoor_Room",
+        "config": {
+          "isPartOf": "Basement"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "BA_StorageRoom",
+    "label": "Lagerraum",
+    "category": "pantry",
+    "tags": [
+      "Room"
+    ],
+    "groupNames": [
+      "Basement"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_SonosOne_CurrentAlbum",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Point",
+        "config": {
+          "isPointOf": "GF_LivingRoom_SonosOne"
+        }
+      }
+    },
+    "editable": true,
+    "type": "String",
+    "name": "GF_LivingRoom_SonosOne_CurrentAlbum",
+    "label": "Current Album",
+    "category": "",
+    "tags": [
+      "Point"
+    ],
+    "groupNames": [
+      "GF_LivingRoom_SonosOne"
+    ]
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/TV_Lights",
+    "state": "NULL",
+    "metadata": {
+      "alexa": {
+        "value": "Light"
+      },
+      "semantics": {
+        "value": "Point_Control",
+        "config": {
+          "relatesTo": "Property_ColorTemperature",
+          "hasLocation": "GF_LivingRoom"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "TV_Lights",
+    "label": "TV Licht",
+    "category": "lightbulb",
+    "tags": [
+      "ColorTemperature",
+      "Control"
+    ],
+    "groupNames": [
+      "GF_LivingRoom"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/GF_LightsSwitch",
+    "state": "NULL",
+    "metadata": {
+      "synonyms": {
+        "value": "Lichter unten,Lichter EG"
+      },
+      "alexa": {
+        "value": "Light"
+      },
+      "semantics": {
+        "value": "Point_Control_Switch",
+        "config": {
+          "relatesTo": "Property_Light",
+          "hasLocation": "GF"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "GF_LightsSwitch",
+    "label": "EG Lampen",
+    "category": "Light",
+    "tags": [
+      "Switch",
+      "Light"
+    ],
+    "groupNames": [
+      "GF"
+    ]
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/GF_Bathroom_Window",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Equipment_Window",
+        "config": {
+          "hasPoint": "GF_Bathroom_Window_Sensor",
+          "hasLocation": "GF_Bathroom"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "GF_Bathroom_Window",
+    "label": "EG Bad Fenster",
+    "category": "window",
+    "tags": [
+      "Window"
+    ],
+    "groupNames": [
+      "GF_Bathroom"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/GF_Kitchen_LightsSwitch",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Control_Switch",
+        "config": {
+          "relatesTo": "Property_Light",
+          "hasLocation": "GF_Kitchen"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "GF_Kitchen_LightsSwitch",
+    "label": "Küche Lampen",
+    "category": "wallswitch",
+    "tags": [
+      "Switch",
+      "Light"
+    ],
+    "groupNames": [
+      "GF_Kitchen"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/F2_Hallway_LightSwitch",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Control_Switch",
+        "config": {
+          "relatesTo": "Property_Power",
+          "hasLocation": "F2_Hallway"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "F2_Hallway_LightSwitch",
+    "label": "Flur 2.OG Lampen",
+    "category": "Switch",
+    "tags": [
+      "Switch",
+      "Power"
+    ],
+    "groupNames": [
+      "F2_Hallway"
+    ]
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/GF_Kitchen",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Indoor_Room_Kitchen",
+        "config": {
+          "isPartOf": "GF"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "GF_Kitchen",
+    "label": "Küche",
+    "category": "kitchen",
+    "tags": [
+      "Kitchen"
+    ],
+    "groupNames": [
+      "GF"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Number:Temperature",
+    "function": {
+      "name": "AVG"
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/F2_KidsRoom",
+    "state": "21.02 °C",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Indoor_Room_Bedroom",
+        "config": {
+          "isPartOf": "F2"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "F2_KidsRoom",
+    "label": "Kinderzimmer",
+    "category": "boy_1",
+    "tags": [
+      "Bedroom"
+    ],
+    "groupNames": [
+      "F2"
+    ]
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/HSE_AT",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Indoor_Floor_Attic",
+        "config": {
+          "isPartOf": "Home"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "HSE_AT",
+    "label": "Dachgeschoss",
+    "category": "attic",
+    "tags": [
+      "Attic"
+    ],
+    "groupNames": [
+      "Home"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/F2_Bedroom_Heating_Setpoint",
+    "state": "20 °C",
+    "stateDescription": {
+      "pattern": "%.1f %unit%",
+      "readOnly": false,
+      "options": []
+    },
+    "unitSymbol": "°C",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Setpoint",
+        "config": {
+          "relatesTo": "Property_Temperature",
+          "isPointOf": "F2_Bedroom_Heating"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Number:Temperature",
+    "name": "F2_Bedroom_Heating_Setpoint",
+    "label": "Hinteres Zimmer Thermostat",
+    "category": "HVAC",
+    "tags": [
+      "Temperature",
+      "Setpoint"
+    ],
+    "groupNames": [
+      "F2_Bedroom_Heating"
+    ]
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_TV",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Equipment_Screen_Television",
+        "config": {
+          "hasPoint": "TVUE46ES7090_ProgramTitle",
+          "hasLocation": "GF_LivingRoom"
+        }
+      },
+      "autoupdate": {
+        "value": "false"
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "GF_LivingRoom_TV",
+    "label": "Samsung TV",
+    "category": "screen",
+    "tags": [
+      "Television"
+    ],
+    "groupNames": [
+      "GF_LivingRoom"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Number:Temperature",
+    "function": {
+      "name": "AVG"
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/FF_Bedroom",
+    "state": "21 °C",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Indoor_Room_Bedroom",
+        "config": {
+          "isPartOf": "FF"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "FF_Bedroom",
+    "label": "Schlafzimmer",
+    "category": "bedroom",
+    "tags": [
+      "Bedroom"
+    ],
+    "groupNames": [
+      "FF"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Number:Temperature",
+    "function": {
+      "name": "AVG"
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/GF_Bathroom_Heating",
+    "state": "21 °C",
+    "stateDescription": {
+      "pattern": "%.0f",
+      "readOnly": false,
+      "options": []
+    },
+    "metadata": {
+      "semantics": {
+        "value": "Equipment",
+        "config": {
+          "hasPoint": "GF_Bathroom_Heating_Setpoint",
+          "hasLocation": "GF_Bathroom"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "GF_Bathroom_Heating",
+    "label": "Heizung Bad EG",
+    "category": "heating",
+    "tags": [
+      "Equipment"
+    ],
+    "groupNames": [
+      "GF_Bathroom"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/HoffeMobileUniFiWirelessClient_Online",
+    "state": "OFF",
+    "stateDescription": {
+      "readOnly": true,
+      "options": []
+    },
+    "metadata": {
+      "semantics": {
+        "value": "Point_Status",
+        "config": {
+          "relatesTo": "Property_Current",
+          "isPointOf": "global_mobiles"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "HoffeMobileUniFiWirelessClient_Online",
+    "label": "Hoffe-Mobile State",
+    "category": "",
+    "tags": [
+      "Status",
+      "Current"
+    ],
+    "groupNames": [
+      "global_mobiles"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Number:Temperature",
+    "function": {
+      "name": "AVG"
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom",
+    "state": "21 °C",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Indoor_Room_LivingRoom",
+        "config": {
+          "isPartOf": "GF"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "GF_LivingRoom",
+    "label": "Wohnzimmer",
+    "category": "sofa",
+    "tags": [
+      "LivingRoom"
+    ],
+    "groupNames": [
+      "GF"
+    ]
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/Basement",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Indoor_Floor_Basement",
+        "config": {
+          "isPartOf": "Home"
+        }
+      },
+      "autoupdate": {
+        "value": "true"
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "Basement",
+    "label": "Keller",
+    "category": "cellar",
+    "tags": [
+      "Basement"
+    ],
+    "groupNames": [
+      "Home"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/TVUE46ES7090_Power",
+    "state": "OFF",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Control",
+        "config": {
+          "relatesTo": "Property_Current",
+          "isPointOf": "GF_LivingRoom_TV"
+        }
+      },
+      "autoupdate": {
+        "value": "true"
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "TVUE46ES7090_Power",
+    "label": "TV Power",
+    "category": "switch",
+    "tags": [
+      "Control",
+      "Current"
+    ],
+    "groupNames": [
+      "GF_LivingRoom_TV"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/LocalWeatherAndForecast_Current_WindSpeed",
+    "state": "9.252 km/h",
+    "stateDescription": {
+      "pattern": "%.1f %unit%",
+      "readOnly": true,
+      "options": []
+    },
+    "unitSymbol": "km/h",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Status_OpenLevel",
+        "config": {
+          "relatesTo": "Property_Wind",
+          "isPointOf": "Wetter"
+        }
+      },
+      "autoupdate": {
+        "value": "true"
+      }
+    },
+    "editable": true,
+    "type": "Number:Speed",
+    "name": "LocalWeatherAndForecast_Current_WindSpeed",
+    "label": "Wind Speed",
+    "category": "Wind",
+    "tags": [
+      "OpenLevel",
+      "Wind"
+    ],
+    "groupNames": [
+      "Wetter"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/F2_Kidsroom_Heating_Temperatur",
+    "state": "21.04 °C",
+    "stateDescription": {
+      "pattern": "%.1f %unit%",
+      "readOnly": true,
+      "options": []
+    },
+    "unitSymbol": "°C",
+    "metadata": {
+      "semantics": {
+        "value": "Point",
+        "config": {
+          "isPointOf": "F2_Kidsroom_Heating"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Number:Temperature",
+    "name": "F2_Kidsroom_Heating_Temperatur",
+    "label": "Kinderzimmer Temperatur",
+    "category": "temperature",
+    "tags": [
+      "Point"
+    ],
+    "groupNames": [
+      "F2_Kidsroom_Heating"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Number:Temperature",
+    "function": {
+      "name": "AVG"
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/GF_Hallway",
+    "state": "22.545 °C",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Indoor_Corridor",
+        "config": {
+          "isPartOf": "GF"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "GF_Hallway",
+    "label": "Flur EG",
+    "category": "corridor",
+    "tags": [
+      "Corridor"
+    ],
+    "groupNames": [
+      "GF"
+    ]
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_SonosOne",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Equipment",
+        "config": {
+          "hasPoint": "GF_LivingRoom_SonosOne_CurrentAlbumCoverArt",
+          "hasLocation": "GF_LivingRoom"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "GF_LivingRoom_SonosOne",
+    "label": "Wohzimmer SonosOne Box",
+    "category": "mediacontrol",
+    "tags": [
+      "Equipment"
+    ],
+    "groupNames": [
+      "GF_LivingRoom"
+    ]
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/Garden",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Outdoor_Garden",
+        "config": {
+          "isPartOf": "Outside"
+        }
+      },
+      "autoupdate": {
+        "value": "true"
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "Garden",
+    "label": "Garten",
+    "category": "Garden",
+    "tags": [
+      "Garden"
+    ],
+    "groupNames": [
+      "Outside"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Number:Temperature",
+    "function": {
+      "name": "AVG"
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/FF_Bedroom_Heating",
+    "state": "21 °C",
+    "metadata": {
+      "semantics": {
+        "value": "Equipment_HVAC",
+        "config": {
+          "hasPoint": "FF_Bedroom_Heating_Setpoint",
+          "hasLocation": "FF_Bedroom"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "FF_Bedroom_Heating",
+    "label": "Heizkörper Schlafzimmer",
+    "category": "radiator",
+    "tags": [
+      "HVAC"
+    ],
+    "groupNames": [
+      "FF_Bedroom"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Switch",
+    "function": {
+      "name": "OR",
+      "params": [
+        "ON",
+        "OFF"
+      ]
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/GF_Hallway_Window",
+    "state": "OFF",
+    "metadata": {
+      "semantics": {
+        "value": "Equipment_Window",
+        "config": {
+          "hasPoint": "GF_Hallway_Window_Sensor",
+          "hasLocation": "GF_Hallway"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "GF_Hallway_Window",
+    "label": "Flur EG Fenster",
+    "category": "window",
+    "tags": [
+      "Window"
+    ],
+    "groupNames": [
+      "GF_Hallway"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/F2_Bedroom_Heating_Temperature",
+    "state": "20.06 °C",
+    "stateDescription": {
+      "pattern": "%.1f %unit%",
+      "readOnly": true,
+      "options": []
+    },
+    "unitSymbol": "°C",
+    "metadata": {
+      "semantics": {
+        "value": "Point",
+        "config": {
+          "relatesTo": "Property_Temperature",
+          "isPointOf": "F2_Bedroom_Heating"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Number:Temperature",
+    "name": "F2_Bedroom_Heating_Temperature",
+    "label": "Hinteres Zimmer Temperatur",
+    "category": "HVAC",
+    "tags": [
+      "Temperature",
+      "Point"
+    ],
+    "groupNames": [
+      "F2_Bedroom_Heating"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/HomeAlLight_Switch",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Control_Switch",
+        "config": {
+          "relatesTo": "Property_Light",
+          "hasLocation": "Home"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "HomeAlLight_Switch",
+    "label": "Alle Lampen",
+    "category": "Light",
+    "tags": [
+      "Switch",
+      "Light"
+    ],
+    "groupNames": [
+      "Home"
+    ]
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/global_mobiles",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Equipment",
+        "config": {
+          "isPartOf": "Globals",
+          "hasPoint": "iPhonevatharinaUniFiWirelessClient_Online"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "global_mobiles",
+    "label": "Mobile Devices",
+    "category": "camera",
+    "tags": [
+      "Equipment"
+    ],
+    "groupNames": [
+      "Globals"
+    ]
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/F2",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Indoor_Floor_SecondFloor",
+        "config": {
+          "isPartOf": "Home"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "F2",
+    "label": "Zweiter Stock",
+    "category": "attic",
+    "tags": [
+      "SecondFloor"
+    ],
+    "groupNames": [
+      "Home"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Number:Temperature",
+    "function": {
+      "name": "AVG"
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/FF_Bathroom_Heating",
+    "state": "23.11 °C",
+    "stateDescription": {
+      "pattern": "%.1f %unit%",
+      "readOnly": false,
+      "options": []
+    },
+    "metadata": {
+      "semantics": {
+        "value": "Equipment_HVAC",
+        "config": {
+          "hasPoint": "FF_Bathroom_Heating_Temperature",
+          "hasLocation": "FF_Bathroom"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "FF_Bathroom_Heating",
+    "label": "Heizkörper Bad 1. OG",
+    "category": "heating",
+    "tags": [
+      "HVAC"
+    ],
+    "groupNames": [
+      "FF_Bathroom"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_SonosOne_MediaArtist",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Status",
+        "config": {
+          "isPointOf": "GF_LivingRoom_SonosOne"
+        }
+      }
+    },
+    "editable": true,
+    "type": "String",
+    "name": "GF_LivingRoom_SonosOne_MediaArtist",
+    "label": "Media Artist",
+    "category": "",
+    "tags": [
+      "Status"
+    ],
+    "groupNames": [
+      "GF_LivingRoom_SonosOne"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_SonosOne_Volume",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Control",
+        "config": {
+          "relatesTo": "Property_SoundVolume",
+          "isPointOf": "GF_LivingRoom_SonosOne"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Dimmer",
+    "name": "GF_LivingRoom_SonosOne_Volume",
+    "label": "Volume",
+    "category": "SoundVolume",
+    "tags": [
+      "Control",
+      "SoundVolume"
+    ],
+    "groupNames": [
+      "GF_LivingRoom_SonosOne"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/FF_Office_LightCupboard",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Point",
+        "config": {
+          "hasLocation": "FF_Office"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Color",
+    "name": "FF_Office_LightCupboard",
+    "label": "Schranklicht",
+    "category": "ColorLight",
+    "tags": [
+      "Point"
+    ],
+    "groupNames": [
+      "FF_Office"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_SonosOne_Mute",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Control_Switch",
+        "config": {
+          "relatesTo": "Property_SoundVolume",
+          "isPointOf": "GF_LivingRoom_SonosOne"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "GF_LivingRoom_SonosOne_Mute",
+    "label": "Mute",
+    "category": "SoundVolume",
+    "tags": [
+      "Switch",
+      "SoundVolume"
+    ],
+    "groupNames": [
+      "GF_LivingRoom_SonosOne"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/GF_Hallway_FrontDoor_Sensor",
+    "state": "OFF",
+    "stateDescription": {
+      "pattern": "%s",
+      "readOnly": true,
+      "options": []
+    },
+    "metadata": {
+      "semantics": {
+        "value": "Point",
+        "config": {
+          "relatesTo": "Property_Opening",
+          "isPointOf": "GF_Hallway_FrontDoor"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "GF_Hallway_FrontDoor_Sensor",
+    "label": "Flur EG Eingangstüre Kontakt",
+    "category": "contact",
+    "tags": [
+      "Opening",
+      "Point"
+    ],
+    "groupNames": [
+      "GF_Hallway_FrontDoor"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/iPhonevatharinaUniFiWirelessClient_Online",
+    "state": "ON",
+    "stateDescription": {
+      "readOnly": true,
+      "options": []
+    },
+    "metadata": {
+      "semantics": {
+        "value": "Point_Status",
+        "config": {
+          "relatesTo": "Property_Current",
+          "isPointOf": "global_mobiles"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "iPhonevatharinaUniFiWirelessClient_Online",
+    "label": "iPhonevatharina State",
+    "category": "",
+    "tags": [
+      "Status",
+      "Current"
+    ],
+    "groupNames": [
+      "global_mobiles"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Number:Temperature",
+    "function": {
+      "name": "AVG"
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/FF",
+    "state": "22.0275 °C",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Indoor_Floor_FirstFloor",
+        "config": {
+          "isPartOf": "Home"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "FF",
+    "label": "Erster Stock",
+    "category": "firstfloor",
+    "tags": [
+      "FirstFloor"
+    ],
+    "groupNames": [
+      "Home"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/GF_LivingRoom_SonosOne_MediaControl",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Control",
+        "config": {
+          "isPointOf": "GF_LivingRoom_SonosOne"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Player",
+    "name": "GF_LivingRoom_SonosOne_MediaControl",
+    "label": "Media Control",
+    "category": "MediaControl",
+    "tags": [
+      "Control"
+    ],
+    "groupNames": [
+      "GF_LivingRoom_SonosOne"
+    ]
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/Barn",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Indoor_Building_Shed"
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "Barn",
+    "label": "Scheune",
+    "category": "greenhouse",
+    "tags": [
+      "Shed"
+    ],
+    "groupNames": []
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/TVUE46ES7090_Mute",
+    "state": "OFF",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Status_OpenLevel",
+        "config": {
+          "relatesTo": "Property_SoundVolume",
+          "isPointOf": "GF_LivingRoom_TV"
+        }
+      },
+      "autoupdate": {
+        "value": "true"
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "TVUE46ES7090_Mute",
+    "label": "TV Mute",
+    "category": "soundvolume",
+    "tags": [
+      "OpenLevel",
+      "SoundVolume"
+    ],
+    "groupNames": [
+      "GF_LivingRoom_TV"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/GF_Bathroom_Heating_Setpoint",
+    "state": "21 °C",
+    "stateDescription": {
+      "pattern": "%.0f",
+      "readOnly": false,
+      "options": []
+    },
+    "unitSymbol": "°C",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Setpoint",
+        "config": {
+          "relatesTo": "Property_Temperature",
+          "isPointOf": "GF_Bathroom_Heating"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Number:Temperature",
+    "name": "GF_Bathroom_Heating_Setpoint",
+    "label": "Bad EG Thermostat",
+    "category": "radiator",
+    "tags": [
+      "Temperature",
+      "Setpoint"
+    ],
+    "groupNames": [
+      "GF_Bathroom_Heating"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/TVUE46ES7090_ProgramTitle",
+    "state": "Sister Act 2 - In göttlicher Mission",
+    "stateDescription": {
+      "pattern": "%s",
+      "readOnly": true,
+      "options": []
+    },
+    "metadata": {
+      "semantics": {
+        "value": "Point_Status_OpenLevel",
+        "config": {
+          "relatesTo": "Property_Current",
+          "isPointOf": "GF_LivingRoom_TV"
+        }
+      },
+      "autoupdate": {
+        "value": "true"
+      }
+    },
+    "editable": true,
+    "type": "String",
+    "name": "TVUE46ES7090_ProgramTitle",
+    "label": "TV Program Title",
+    "category": "video",
+    "tags": [
+      "OpenLevel",
+      "Current"
+    ],
+    "groupNames": [
+      "GF_LivingRoom_TV"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Number:Temperature",
+    "function": {
+      "name": "AVG"
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/gHeating",
+    "state": "20.98 °C",
+    "metadata": {
+      "semantics": {
+        "value": "Equipment_HVAC",
+        "config": {
+          "isPartOf": "Globals",
+          "hasPoint": "GF_Hallway_Heating_Setpoint"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "gHeating",
+    "label": "Heizkörper",
+    "category": "heating",
+    "tags": [
+      "HVAC"
+    ],
+    "groupNames": [
+      "Globals"
+    ]
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/Outside",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Outdoor"
+      },
+      "autoupdate": {
+        "value": "true"
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "Outside",
+    "label": "Draussen",
+    "category": "garden",
+    "tags": [
+      "Outdoor"
+    ],
+    "groupNames": []
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/F2_Hallway",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Indoor_Corridor",
+        "config": {
+          "isPartOf": "F2"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "F2_Hallway",
+    "label": "Flur 2.OG",
+    "category": "corridor",
+    "tags": [
+      "Corridor"
+    ],
+    "groupNames": [
+      "F2"
+    ]
+  },
+  {
+    "members": [],
+    "link": "https://home.myopenhab.org:443/rest/items/BA_LaundryRoom",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Indoor_Room_LaundryRoom",
+        "config": {
+          "isPartOf": "Basement"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "BA_LaundryRoom",
+    "label": "Waschküche",
+    "category": "washingmachine",
+    "tags": [
+      "LaundryRoom"
+    ],
+    "groupNames": [
+      "Basement"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/FF_Hallway_Heating_Setpoint",
+    "state": "23 °C",
+    "stateDescription": {
+      "pattern": "%.0f",
+      "readOnly": false,
+      "options": []
+    },
+    "unitSymbol": "°C",
+    "metadata": {
+      "semantics": {
+        "value": "Point",
+        "config": {
+          "isPointOf": "FF_Hallway_Heating"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Number:Temperature",
+    "name": "FF_Hallway_Heating_Setpoint",
+    "label": "Flur 1.OG Thermostat",
+    "category": "Heating",
+    "tags": [
+      "Point"
+    ],
+    "groupNames": [
+      "FF_Hallway_Heating"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/FF_LightsSwitch",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Control_Switch",
+        "config": {
+          "relatesTo": "Property_Light",
+          "hasLocation": "FF"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "FF_LightsSwitch",
+    "label": "1.OG Lampen",
+    "category": "Light",
+    "tags": [
+      "Switch",
+      "Light"
+    ],
+    "groupNames": [
+      "FF"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/GF_Hallway_FrontDoor_RemoteControl_Battery",
+    "state": "NULL",
+    "stateDescription": {
+      "minimum": 0,
+      "maximum": 100,
+      "step": 1,
+      "pattern": "%.0f %%",
+      "readOnly": true,
+      "options": []
+    },
+    "metadata": {
+      "semantics": {
+        "value": "Point_Measurement",
+        "config": {
+          "relatesTo": "Property_Energy",
+          "isPointOf": "GF_Hallway_FrontDoor_RemoteControl"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Number",
+    "name": "GF_Hallway_FrontDoor_RemoteControl_Battery",
+    "label": "Fernbedienung Battery Level",
+    "category": "Battery",
+    "tags": [
+      "Measurement",
+      "Energy"
+    ],
+    "groupNames": [
+      "GF_Hallway_FrontDoor_RemoteControl"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/FF_Hallway_LightsSwitch",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Control_Switch",
+        "config": {
+          "relatesTo": "Property_Light",
+          "hasLocation": "FF_Hallway"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "FF_Hallway_LightsSwitch",
+    "label": "Lampen Flur 1.OG",
+    "category": "Switch",
+    "tags": [
+      "Switch",
+      "Light"
+    ],
+    "groupNames": [
+      "FF_Hallway"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/Outside_LightsSwitch",
+    "state": "NULL",
+    "metadata": {
+      "semantics": {
+        "value": "Point_Control_Switch",
+        "config": {
+          "relatesTo": "Property_Light",
+          "hasLocation": "Outside"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Switch",
+    "name": "Outside_LightsSwitch",
+    "label": "Hof & Garten Lampen",
+    "category": "lightbulb",
+    "tags": [
+      "Switch",
+      "Light"
+    ],
+    "groupNames": [
+      "Outside"
+    ]
+  },
+  {
+    "link": "https://home.myopenhab.org:443/rest/items/LocalWeatherAndForecast_Current_AtmosphericHumidity",
+    "state": "84 %",
+    "stateDescription": {
+      "pattern": "%.0f %%",
+      "readOnly": true,
+      "options": []
+    },
+    "unitSymbol": "%",
+    "metadata": {
+      "unit": {
+        "value": "%"
+      },
+      "semantics": {
+        "value": "Point_Status_OpenState",
+        "config": {
+          "relatesTo": "Property_Humidity",
+          "isPointOf": "Wetter"
+        }
+      },
+      "autoupdate": {
+        "value": "true"
+      }
+    },
+    "editable": true,
+    "type": "Number:Dimensionless",
+    "name": "LocalWeatherAndForecast_Current_AtmosphericHumidity",
+    "label": "Atmospheric Humidity",
+    "category": "Humidity",
+    "tags": [
+      "OpenState",
+      "Humidity"
+    ],
+    "groupNames": [
+      "Wetter"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Number:Temperature",
+    "function": {
+      "name": "AVG"
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/GF_Hallway_Heating",
+    "state": "22.545 °C",
+    "metadata": {
+      "semantics": {
+        "value": "Equipment",
+        "config": {
+          "hasPoint": "GF_Hallway_Heating_Temperature",
+          "hasLocation": "GF_Hallway"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "GF_Hallway_Heating",
+    "label": "Heizung Flug EG",
+    "category": "heating",
+    "tags": [
+      "Equipment"
+    ],
+    "groupNames": [
+      "GF_Hallway"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Number:Temperature",
+    "function": {
+      "name": "AVG"
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/GF",
+    "state": "21.515 °C",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Indoor_Floor_GroundFloor",
+        "config": {
+          "isPartOf": "Home"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "GF",
+    "label": "Erdgeschoss",
+    "category": "groundfloor",
+    "tags": [
+      "GroundFloor"
+    ],
+    "groupNames": [
+      "Home"
+    ]
+  },
+  {
+    "members": [],
+    "groupType": "Number:Temperature",
+    "function": {
+      "name": "AVG"
+    },
+    "link": "https://home.myopenhab.org:443/rest/items/GF_Bathroom",
+    "state": "21 °C",
+    "metadata": {
+      "semantics": {
+        "value": "Location_Indoor_Room_Bathroom",
+        "config": {
+          "isPartOf": "GF"
+        }
+      }
+    },
+    "editable": true,
+    "type": "Group",
+    "name": "GF_Bathroom",
+    "label": "Badezimmer",
+    "category": "bath",
+    "tags": [
+      "Bathroom"
+    ],
+    "groupNames": [
+      "GF"
+    ]
+  }
+]

@@ -1,8 +1,8 @@
 using System;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using openHAB.Core.Model.Event;
-using openHAB.Core.Notification.Contracts;
+using openHAB.Core.Client.Event;
+using openHAB.Core.Client.Event.Contracts;
 
 namespace openHAB.Core.Notification
 {

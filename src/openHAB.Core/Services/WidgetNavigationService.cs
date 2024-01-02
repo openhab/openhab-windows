@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using openHAB.Core.Model;
+using openHAB.Core.Client.Models;
 
 namespace openHAB.Core.Services
 {

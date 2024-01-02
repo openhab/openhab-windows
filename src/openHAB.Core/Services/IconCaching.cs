@@ -4,8 +4,10 @@ using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using openHAB.Core.Common;
-using openHAB.Core.Connection;
+using openHAB.Core.Client;
+using openHAB.Core.Client.Connection.Contracts;
+using openHAB.Core.Client.Connection.Models;
+using openHAB.Core.Client.Models;
 using openHAB.Core.Model;
 using openHAB.Core.Services.Contracts;
 
@@ -53,17 +55,17 @@ namespace openHAB.Core.Services
 
                 if (!iconName.Success)
                 {
-                    throw new OpenHABException("Can not resolve icon name from url");
+                    throw new ServiceException("Can not resolve icon name from url");
                 }
 
                 if (!iconState.Success)
                 {
-                    throw new OpenHABException("Can not resolve icon state from url");
+                    throw new ServiceException("Can not resolve icon state from url");
                 }
 
                 if (!iconState.Success)
                 {
-                    throw new OpenHABException("Can not resolve icon state from url");
+                    throw new ServiceException("Can not resolve icon state from url");
                 }
 
                 DirectoryInfo iconDirectory = EnsureIconCacheFolder();
@@ -88,7 +90,9 @@ namespace openHAB.Core.Services
 
         private async Task DownloadAndSaveIconToCache(string iconUrl, string iconFilePath)
         {
-            OpenHABConnection connection = await _connectionService.DetectAndRetriveConnection(_settings).ConfigureAwait(false);
+            bool isRunningInDemoMode = _settings.IsRunningInDemoMode.HasValue && _settings.IsRunningInDemoMode.Value;
+            Connection connection = await _connectionService.DetectAndRetriveConnection(_settings.LocalConnection, _settings.RemoteConnection, isRunningInDemoMode)
+                .ConfigureAwait(false);
             if (connection == null)
             {
                 _logger.LogError("Failed to retrieve connection details to download icon");

@@ -6,11 +6,14 @@ using NLog.Config;
 using NLog.Extensions.Logging;
 using NLog.Layouts;
 using NLog.Targets;
-using openHAB.Core.Common;
+using openHAB.Core.Client;
+using openHAB.Core.Client.Connection;
+using openHAB.Core.Client.Connection.Contracts;
+using openHAB.Core.Client.Contracts;
+using openHAB.Core.Client.Event.Contracts;
 using openHAB.Core.Model;
 using openHAB.Core.Notification;
 using openHAB.Core.Notification.Contracts;
-using openHAB.Core.SDK;
 using openHAB.Core.Services;
 using openHAB.Core.Services.Contracts;
 using openHAB.Windows.ViewModel;
@@ -51,7 +54,7 @@ namespace openHAB.Windows.Services
              });
 
             services.AddSingleton<IMessenger>(StrongReferenceMessenger.Default);
-            services.AddSingleton<IOpenHAB, OpenHABClient>();
+            services.AddSingleton<IOpenHABClient, OpenHABClient>();
             services.AddSingleton<ISettingsService, SettingsService>();
             services.AddTransient<Settings>(x =>
             {
@@ -68,6 +71,7 @@ namespace openHAB.Windows.Services
             services.AddSingleton<IItemManager, ItemManager>();
             services.AddSingleton<INotificationManager, NotificationManager>();
             services.AddSingleton<IOpenHABEventParser, OpenHABEventParser>();
+            services.AddSingleton<SitemapService>();
         }
 
         private void RegisterViewModels(IServiceCollection services)

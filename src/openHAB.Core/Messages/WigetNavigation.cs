@@ -1,4 +1,5 @@
-﻿using openHAB.Core.Model;
+﻿using openHAB.Core.Client.Models;
+using openHAB.Core.Model;
 
 /// <summary>
 /// Represents a navigation between two OpenHAB widgets.

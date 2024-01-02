@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
+using openHAB.Core.Client.Messages;
 using openHAB.Core.Messages;
 using openHAB.Windows.Services;
 using Windows.UI;

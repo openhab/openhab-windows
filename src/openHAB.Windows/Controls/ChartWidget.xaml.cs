@@ -2,7 +2,9 @@ using System;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Imaging;
+using openHAB.Core.Client.Connection.Contracts;
 using openHAB.Core.Common;
+using openHAB.Windows.Services;
 
 namespace openHAB.Windows.Controls
 {
@@ -46,7 +48,8 @@ namespace openHAB.Windows.Controls
 
         internal override void SetState()
         {
-            var serverUrl = OpenHABHttpClient.BaseUrl;
+            IConnectionService connectionService = DIService.Instance.GetService<IConnectionService>();
+            var serverUrl = connectionService.CurrentConnection.Url;
 
             if (!serverUrl.EndsWith("/"))
             {

@@ -1,3 +1,4 @@
+using openHAB.Core.Client.Models;
 using openHAB.Core.Model;
 
 namespace openHAB.Core.Services.Contracts

@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml;
+using openHAB.Core.Client.Messages;
 using openHAB.Core.Messages;
 using openHAB.Core.Model;
 

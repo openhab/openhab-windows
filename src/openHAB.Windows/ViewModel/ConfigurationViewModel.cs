@@ -4,7 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.WinUI;
 using Microsoft.Extensions.Logging;
-using openHAB.Core.Connection;
+using openHAB.Core.Client.Connection.Contracts;
+using openHAB.Core.Client.Connection.Models;
 using openHAB.Core.Model;
 using openHAB.Core.Services.Contracts;
 
@@ -43,10 +44,10 @@ namespace openHAB.Windows.ViewModel
             _settings = settings;
             _appManager = appManager;
 
-            _localConnection = new ConnectionDialogViewModel(_settings.LocalConnection, connectionService, OpenHABHttpClientType.Local);
+            _localConnection = new ConnectionDialogViewModel(_settings.LocalConnection, connectionService, HttpClientType.Local);
             _localConnection.PropertyChanged += ConnectionPropertyChanged;
 
-            _remoteConnection = new ConnectionDialogViewModel(_settings.RemoteConnection, connectionService, OpenHABHttpClientType.Remote);
+            _remoteConnection = new ConnectionDialogViewModel(_settings.RemoteConnection, connectionService, HttpClientType.Remote);
             _remoteConnection.PropertyChanged += ConnectionPropertyChanged;
 
             _isRunningInDemoMode = _settings.IsRunningInDemoMode;

@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using openHAB.Core.Client.Models;
 using openHAB.Core.Model;
 
 namespace openHAB.Windows.Controls

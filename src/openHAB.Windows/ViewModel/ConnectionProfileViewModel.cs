@@ -1,5 +1,5 @@
-using openHAB.Core.Connection;
-using openHAB.Core.Connection.Contracts;
+using openHAB.Core.Client.Connection.Contracts;
+using openHAB.Core.Client.Connection.Models;
 using openHAB.Windows.ViewModel;
 
 namespace openHAB.Core.Contracts
@@ -43,6 +43,6 @@ namespace openHAB.Core.Contracts
 
         /// <summary>Gets the profile type.</summary>
         /// <value>The type.</value>
-        public OpenHABHttpClientType Type => Model.Type;
+        public HttpClientType Type => Model.Type;
     }
 }

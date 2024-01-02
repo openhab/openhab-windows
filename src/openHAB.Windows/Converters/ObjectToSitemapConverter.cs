@@ -1,5 +1,6 @@
 using System;
 using Microsoft.UI.Xaml.Data;
+using openHAB.Core.Client.Models;
 using openHAB.Core.Model;
 
 namespace openHAB.Windows.Converters

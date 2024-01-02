@@ -5,8 +5,8 @@
 				  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 				  xmlns:local="using:openHAB.Windows.Controls"
 				  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-				  xmlns:model="using:openHAB.Core.Model"
-				  d:DesignHeight="150"
+                  xmlns:model="using:openHAB.Core.Client.Models"
+                  d:DesignHeight="150"
 				  d:DesignWidth="300"
 				  mc:Ignorable="d"
 				  Visibility="{x:Bind Widget.Visibility, Converter={StaticResource BooleanToVisibilityConverter}}">

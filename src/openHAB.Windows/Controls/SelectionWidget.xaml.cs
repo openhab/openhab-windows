@@ -3,6 +3,8 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Controls;
+using openHAB.Core.Client.Messages;
+using openHAB.Core.Client.Models;
 using openHAB.Core.Messages;
 using openHAB.Core.Model;
 

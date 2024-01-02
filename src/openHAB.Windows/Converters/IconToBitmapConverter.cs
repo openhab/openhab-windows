@@ -6,6 +6,8 @@ using Microsoft.SqlServer.Server;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media.Imaging;
+using openHAB.Core.Client.Connection.Contracts;
+using openHAB.Core.Client.Models;
 using openHAB.Core.Model;
 using openHAB.Core.Services.Contracts;
 using openHAB.Windows.Services;
@@ -27,7 +29,9 @@ namespace openHAB.Windows.Converters
             OpenHABWidget widget = value as OpenHABWidget;
             string state = widget.Item?.State ?? "ON";
 
-            var serverUrl = Core.Common.OpenHABHttpClient.BaseUrl;
+            IConnectionService connectionService = DIService.Instance.GetService<IConnectionService>();
+            string serverUrl = connectionService.CurrentConnection.Url;
+
             string iconFormat = settings.UseSVGIcons ? "svg" : "png";
             string url = openHABVersion == OpenHABVersion.Two || openHABVersion == OpenHABVersion.Three || openHABVersion == OpenHABVersion.Four ?
                 $"{serverUrl}icon/{widget.Icon}?state={state}&format={iconFormat}" :

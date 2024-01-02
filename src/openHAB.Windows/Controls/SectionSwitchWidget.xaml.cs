@@ -5,8 +5,8 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
-using openHAB.Core.Messages;
-using openHAB.Core.Model;
+using openHAB.Core.Client.Messages;
+using openHAB.Core.Client.Models;
 
 namespace openHAB.Windows.Controls
 {

@@ -1,4 +1,4 @@
-using openHAB.Core.Model;
+using openHAB.Core.Client.Connection.Models;
 
 namespace openHAB.Core.Messages
 {

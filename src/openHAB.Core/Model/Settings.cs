@@ -1,6 +1,7 @@
 using System.Collections.Generic;
-using openHAB.Core.Connection;
-using openHAB.Core.Connection.Contracts;
+using openHAB.Core.Client.Connection;
+using openHAB.Core.Client.Connection.Contracts;
+using openHAB.Core.Client.Connection.Models;
 
 namespace openHAB.Core.Model
 {
@@ -74,7 +75,7 @@ namespace openHAB.Core.Model
         /// <summary>
         /// Gets or sets the configuration to the OpenHAB remote instance.
         /// </summary>
-        public OpenHABConnection LocalConnection
+        public Connection LocalConnection
         {
             get;
             set;
@@ -93,7 +94,7 @@ namespace openHAB.Core.Model
         /// <summary>
         /// Gets or sets the configuration to the OpenHAB remote instance.
         /// </summary>
-        public OpenHABConnection RemoteConnection
+        public Connection RemoteConnection
         {
             get;
             set;

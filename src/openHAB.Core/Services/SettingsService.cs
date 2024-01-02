@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using openHAB.Core.Client.Models;
 using openHAB.Core.Model;
 using openHAB.Core.Services.Contracts;
 using Windows.System.UserProfile;

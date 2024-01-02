@@ -25,50 +25,6 @@
 		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-		<OutputPath>bin\x86\Debug\</OutputPath>
-		<DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UWP;CODE_ANALYSIS</DefineConstants>
-		<NoWarn>;2008</NoWarn>
-		<UseVSHostingProcess>false</UseVSHostingProcess>
-		<DocumentationFile>bin\x86\Debug\OpenHAB.Windows.XML</DocumentationFile>
-		<UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
-		<EnableGatekeeperAnalysis>false</EnableGatekeeperAnalysis>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-		<OutputPath>bin\x86\Release\</OutputPath>
-		<DefineConstants>TRACE;RELEASE;NETFX_CORE;WINDOWS_UWP;CODE_ANALYSIS</DefineConstants>
-		<NoWarn>;2008</NoWarn>
-		<UseVSHostingProcess>false</UseVSHostingProcess>
-		<UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
-		<OutputPath>bin\ARM\Debug\</OutputPath>
-		<DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
-		<NoWarn>;2008</NoWarn>
-		<UseVSHostingProcess>false</UseVSHostingProcess>
-		<UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
-		<OutputPath>bin\ARM\Release\</OutputPath>
-		<DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
-		<NoWarn>;2008</NoWarn>
-		<UseVSHostingProcess>false</UseVSHostingProcess>
-		<UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-		<OutputPath>bin\x64\Debug\</OutputPath>
-		<DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
-		<NoWarn>;2008</NoWarn>
-		<UseVSHostingProcess>false</UseVSHostingProcess>
-		<UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-		<OutputPath>bin\x64\Release\</OutputPath>
-		<DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
-		<NoWarn>;2008</NoWarn>
-		<UseVSHostingProcess>false</UseVSHostingProcess>
-		<UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
-	</PropertyGroup>
 	<ItemGroup>
 		<PRIResource Include="..\Openhab.Core\Strings\de-DE\Resources.resw">
 			<Link>Strings\de-DE\Resources.resw</Link>
@@ -115,7 +71,7 @@
 		</PackageReference>
 		<PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
 		<PackageReference Include="NLog.Extensions.Logging">
-			<Version>5.3.7</Version>
+			<Version>5.3.8</Version>
 		</PackageReference>
 		<PackageReference Include="StyleCop.Analyzers">
 			<Version>1.1.118</Version>

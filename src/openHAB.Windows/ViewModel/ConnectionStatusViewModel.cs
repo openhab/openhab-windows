@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Dispatching;
-using openHAB.Core.Common;
-using openHAB.Core.Connection;
+using openHAB.Core.Client.Common;
+using openHAB.Core.Client.Connection.Contracts;
+using openHAB.Core.Client.Connection.Models;
+using openHAB.Core.Client.Models;
 using openHAB.Core.Messages;
-using openHAB.Core.Model;
-using openHAB.Core.Services.Contracts;
 
 namespace openHAB.Windows.ViewModel
 {
@@ -16,8 +16,8 @@ namespace openHAB.Windows.ViewModel
     /// </summary>
     public class ConnectionStatusViewModel : ViewModelBase<object>
     {
+        private readonly IConnectionService _connectionService;
         private ConnectionState _connectionState;
-        private IConnectionService _connectionService;
         private string _runtimeVersion;
         private string _build;
 
@@ -61,7 +61,7 @@ namespace openHAB.Windows.ViewModel
         /// <summary>Checks the connection settings.</summary>
         /// <param name="url">The URL.</param>
         /// <param name="connection">The connection.</param>
-        public void CheckConnectionSettings(string url, OpenHABConnection connection)
+        public void CheckConnectionSettings(string url, Connection connection)
         {
             Task<HttpResponseResult<ServerInfo>> result = _connectionService.GetOpenHABServerInfo(connection);
             result.ContinueWith(async (task) =>

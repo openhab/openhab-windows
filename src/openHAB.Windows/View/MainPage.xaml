@@ -11,7 +11,7 @@
       xmlns:viewModel="using:openHAB.Windows.ViewModel"
       xmlns:controls="using:openHAB.Windows.Controls"
       xmlns:media="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:model="using:openHAB.Core.Model"
+      xmlns:model="using:openHAB.Core.Client.Models"
       mc:Ignorable="d"
       Name="Page"> 
     <Page.Resources>
@@ -279,7 +279,7 @@
                                     x:Uid="InfoAppBarSettingsButton">
                                 <interactivity:Interaction.Behaviors>
                                     <core:EventTriggerBehavior EventName="Tapped">
-                                        <core:NavigateToPageAction TargetPage="OpenHAB.Windows.View.SettingsPage" />
+                                        <core:NavigateToPageAction TargetPage="openHAB.Windows.View.SettingsPage" />
                                     </core:EventTriggerBehavior>
                                 </interactivity:Interaction.Behaviors>
                             </Button>

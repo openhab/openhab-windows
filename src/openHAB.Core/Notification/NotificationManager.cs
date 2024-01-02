@@ -3,8 +3,11 @@ using System.Globalization;
 using System.Web;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Toolkit.Uwp.Notifications;
+using openHAB.Common;
+using openHAB.Core.Client;
+using openHAB.Core.Client.Messages;
+using openHAB.Core.Client.Models;
 using openHAB.Core.Common;
-using openHAB.Core.Messages;
 using openHAB.Core.Model;
 using openHAB.Core.Notification.Contracts;
 using openHAB.Core.Services.Contracts;
@@ -21,6 +24,7 @@ namespace openHAB.Core.Notification
 
         /// <summary>Initializes a new instance of the <see cref="NotificationManager" /> class.</summary>
         /// <param name="itemStateManager">The item state manager.</param>
+        /// <param name="iconCaching">Service for Icon caching</param>
         /// <param name="settingsService">Setting service.</param>
         /// <param name="settings">Application Settings.</param>
         public NotificationManager(IItemManager itemStateManager, IIconCaching iconCaching, ISettingsService settingsService, Settings settings)
@@ -35,9 +39,14 @@ namespace openHAB.Core.Notification
         private async void HandleUpdateItemMessage(object receipts, ItemStateChangedMessage obj)
         {
             Settings settings = _settingsService.Load();
+            if (settings.NotificationsEnable.HasValue && !settings.NotificationsEnable.Value)
+            {
+                return;
+            }
 
             string itemName = obj.ItemName;
             string itemImage = string.Empty;
+            string itemPath = string.Empty;
             if (_itemManager.TryGetItem(obj.ItemName, out OpenHABItem item))
             {
                 itemName = item?.Label ?? "NA";
@@ -46,11 +55,6 @@ namespace openHAB.Core.Notification
 
                 itemImage = $"{OpenHABHttpClient.BaseUrl}icon/{item?.Category?.ToLower()}?state={state}&format={_iconFormat}";
                 itemImage = await _iconCaching.ResolveIconPath(itemImage, _iconFormat);
-            }
-
-            if (settings.NotificationsEnable.HasValue && !settings.NotificationsEnable.Value)
-            {
-                return;
             }
 
             TriggerToastNotificationForItem(itemName, itemImage, obj.Value, obj.OldValue);
@@ -73,10 +77,12 @@ namespace openHAB.Core.Notification
                 .AddText("openHAB for Windows")
                 .AddText(message);
 
-            if (!string.IsNullOrEmpty(image))
+            if (string.IsNullOrEmpty(image))
             {
-                toastContentBuilder = toastContentBuilder.AddAppLogoOverride(new Uri(image), ToastGenericAppLogoCrop.Circle);
+                image = "ms-appx:///Assets/openhab-logo-square.png";
             }
+
+            toastContentBuilder = toastContentBuilder.AddAppLogoOverride(new Uri(image), ToastGenericAppLogoCrop.Circle);
 
             return toastContentBuilder;
         }
