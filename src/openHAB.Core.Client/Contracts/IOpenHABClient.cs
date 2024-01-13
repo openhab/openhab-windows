@@ -33,13 +33,12 @@ namespace openHAB.Core.Client.Contracts
         /// <returns>A list of sitemaps.</returns>
         Task<ICollection<OpenHABSitemap>> LoadSitemaps(OpenHABVersion version, List<Func<OpenHABSitemap, bool>> filters);
 
-        /// <summary>
-        /// Loads all the items in a sitemap.
-        /// </summary>
-        /// <param name="sitemap">The sitemap to load the items from.</param>
-        /// <param name="version">The version of OpenHAB running on the server.</param>
-        /// <returns>A list of items in the selected sitemap.</returns>
-        Task<ICollection<OpenHABWidget>> LoadItemsFromSitemap(OpenHABSitemap sitemap, OpenHABVersion version);
+
+        /// <summary>Loads the items from sitemap.</summary>
+        /// <param name="sitemapLink">The sitemap link.</param>
+        /// <param name="version">The openHab server version.</param>
+        /// <returns>Returns loaded sitemap</returns>
+        Task<ICollection<OpenHABWidget>> LoadItemsFromSitemap(string sitemapLink, OpenHABVersion version);
 
         /// <summary>
         /// Sends a command to an item.

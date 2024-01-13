@@ -67,7 +67,7 @@
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Services.Store.SDK" Version="10.1705.16001" />
 		<PackageReference Include="Microsoft.WindowsAppSDK">
-			<Version>1.4.231115000</Version>
+			<Version>1.4.231219000</Version>
 		</PackageReference>
 		<PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
 		<PackageReference Include="NLog.Extensions.Logging">
@@ -85,9 +85,21 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <None Remove="Controls\MapViewWidget.xaml" />
+	  <None Remove="View\SitemapPage.xaml" />
+	  <None Remove="View\WinUIPage.xaml" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\openHAB.Core\openHAB.Core.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="View\SitemapPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="View\WinUIPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Controls\MapViewWidget.xaml">

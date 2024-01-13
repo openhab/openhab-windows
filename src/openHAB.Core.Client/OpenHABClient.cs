@@ -61,13 +61,13 @@ namespace openHAB.Core.Client
         }
 
         /// <inheritdoc />
-        public async Task<ICollection<OpenHABWidget>> LoadItemsFromSitemap(OpenHABSitemap sitemap, OpenHABVersion version)
+        public async Task<ICollection<OpenHABWidget>> LoadItemsFromSitemap(string sitemapLink, OpenHABVersion version)
         {
             try
             {
-                _logger.LogInformation($"Load sitemaps items for sitemap '{sitemap.Name}'");
+                _logger.LogInformation($"Load sitemaps items for sitemap '{sitemapLink}'");
 
-                HttpResponseMessage result = await _openHABHttpClient.Client(_connection).GetAsync(sitemap.Link).ConfigureAwait(false);
+                HttpResponseMessage result = await _openHABHttpClient.Client(_connection).GetAsync(sitemapLink).ConfigureAwait(false);
                 if (!result.IsSuccessStatusCode)
                 {
                     _logger.LogError($"Http request for loading sitemaps items failed, ErrorCode:'{result.StatusCode}'");

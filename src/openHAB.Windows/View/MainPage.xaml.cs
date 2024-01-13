@@ -121,11 +121,6 @@ namespace openHAB.Windows.View
             }
         }
 
-        private void MasterListView_OnItemClick(object sender, ItemClickEventArgs e)
-        {
-            StrongReferenceMessenger.Default.Send(new WidgetClickedMessage(e.ClickedItem as OpenHABWidget));
-        }
-
         private void SitemapNavigation_SelectionChanged(
             Microsoft.UI.Xaml.Controls.NavigationView sender,
             Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)

@@ -75,7 +75,7 @@ namespace openHAB.Core.Services
 
         public async Task<ICollection<OpenHABWidget>> LoadItemsFromSitemapAsync(OpenHABSitemap model)
         {
-            ICollection<OpenHABWidget> widgetModels = await _openHABClient.LoadItemsFromSitemap(model, _serverInfo.Version).ConfigureAwait(false);
+            ICollection<OpenHABWidget> widgetModels = await _openHABClient.LoadItemsFromSitemap(model.Link, _serverInfo.Version).ConfigureAwait(false);
             return widgetModels;
         }
 
