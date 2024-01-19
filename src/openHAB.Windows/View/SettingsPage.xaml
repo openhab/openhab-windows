@@ -7,14 +7,44 @@
       xmlns:core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+      xmlns:media="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       mc:Ignorable="d"
+      Background="Transparent"
       x:Name="SettingsView">
-    <Page.Background>
-        <ImageBrush ImageSource="/Assets/background.jpg"
-                    Stretch="UniformToFill" />
-    </Page.Background>
     <Page.Resources>
         <converters:ReverseBoolConverter x:Key="ReverseBoolConverter" />
+        <media:AcrylicBrush x:Key="NavigationViewDefaultPaneBackground"
+                            TintOpacity="0.7"
+                            FallbackColor="{StaticResource DarkColor}"
+                            TintColor="{StaticResource DarkColor}" />
+        <media:AcrylicBrush x:Key="NavigationViewExpandedPaneBackground"
+                            TintOpacity="0.7"
+                            FallbackColor="{StaticResource DarkColor}"
+                            TintColor="{StaticResource DarkColor}" />
+        <media:AcrylicBrush x:Key="NavigationViewTopPaneBackground"
+                            TintOpacity="0.7"
+                            FallbackColor="{StaticResource DarkColor}"
+                            TintColor="{StaticResource DarkColor}" />
+        <SolidColorBrush x:Key="NavigationViewItemForeground"
+                         Color="White" />
+        <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver"
+                         Color="#FFFF5722" />
+        <SolidColorBrush x:Key="NavigationViewItemForegroundPressed"
+                         Color="White" />
+        <SolidColorBrush x:Key="NavigationViewItemForegroundChecked"
+                         Color="#FFFF5722" />
+        <SolidColorBrush x:Key="NavigationViewItemForegroundCheckedPressed"
+                         Color="#FFFF5722" />
+        <SolidColorBrush x:Key="NavigationViewItemForegroundCheckedPointerOver"
+                         Color="White" />
+        <SolidColorBrush x:Key="NavigationViewItemForegroundSelected"
+                         Color="#FFFF5722" />
+        <SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPressed"
+                         Color="#FFFF5722" />
+        <SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPointerOver"
+                         Color="White" />
+        <SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground"
+                         Color="#FFFF5722" />
         <Style x:Name="SettingsMenuItem"
                TargetType="ListViewItem">
             <Setter Property="Foreground"
@@ -52,13 +82,7 @@
             </Setter>
         </Style>
     </Page.Resources>
-    <Grid>
-        <SplitView IsPaneOpen="True"
-                   DisplayMode="CompactInline"
-                   OpenPaneLength="256"
-                   PaneBackground="{ThemeResource DarkAcrylicColor}">
-            <SplitView.Pane>
-                <Grid>
+    <!--<Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="100*" />
@@ -111,149 +135,166 @@
                             </interactivity:Interaction.Behaviors>
                         </AppBarButton>
                     </CommandBar>
-                </Grid>
-            </SplitView.Pane>
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <Grid Margin="20,20,50,50">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0"
-                                Orientation="Vertical">
-                        <!-- App Settings -->
-                        <StackPanel x:Name="AppSettings">
-                            <StackPanel Margin="0,0,0,25"
-                                        Padding="12"
-                                        Background="{ThemeResource OpenHABLightColor}">
-                                <TextBlock x:Uid="AppSettings"
-                                           Style="{StaticResource TitleTextBlockStyle}"
-                                           Margin="0,0,0,10" />
-                                <TextBlock x:Uid="AppAutostart"
-                                           Margin="0,0,0,10" />
-                                <ToggleSwitch x:Name="AppAutostartSwitch"
-                                              Margin="0,0,0,12"
-                                              HorizontalAlignment="Stretch"
-                                              VerticalAlignment="Stretch"
-                                              IsEnabled="{Binding Settings.CanAppAutostartEnabled, Mode=TwoWay}"
-                                              IsOn="{Binding Settings.IsAppAutostartEnabled, Mode=TwoWay}" />
-                                <TextBlock x:Uid="StartAppMinimized"
-                                           Margin="0,0,0,10" />
-                                <ToggleSwitch x:Name="StartAppMinimizedSwitch"
-                                              Margin="0,0,0,12"
-                                              HorizontalAlignment="Stretch"
-                                              VerticalAlignment="Stretch"
-                                              IsOn="{Binding Settings.StartAppMinimized, Mode=TwoWay}" />
-                                <TextBlock x:Uid="AppLanguage"
-                                           Margin="0,0,0,10" />
-                                <ComboBox Margin="0,0,0,12"
-                                          ItemsSource="{Binding Settings.AppLanguages}"
-                                          DisplayMemberPath="Name"
-                                          SelectedItem="{Binding Settings.SelectedAppLanguage, Mode=TwoWay}" />
-                            </StackPanel>
-                            <StackPanel Margin="0,0,0,25"
-                                        Padding="12"
-                                        Background="{ThemeResource OpenHABLightColor}">
-                                <TextBlock x:Uid="NotificationSetting"
-                                           Style="{StaticResource TitleTextBlockStyle}"
-                                           Margin="0,0,0,10" />
-                                <TextBlock x:Uid="EnableWindowsNotifications"
-                                           Margin="0,0,0,10" />
-                                <ToggleSwitch Margin="0,0,0,12"
-                                              HorizontalAlignment="Stretch"
-                                              VerticalAlignment="Stretch"
-                                              IsOn="{Binding Settings.NotificationsEnable, Mode=TwoWay}" />
-                            </StackPanel>
-                            <StackPanel Margin="0,0,0,25"
-                                        Padding="12"
-                                        Background="{ThemeResource OpenHABLightColor}">
-                                <TextBlock x:Uid="SitemapSetting"
-                                           Style="{StaticResource TitleTextBlockStyle}"
-                                           Margin="0,0,0,10" />
-                                <TextBlock x:Uid="ShowDefaultSitemap"
-                                           Margin="0,0,0,10" />
-                                <ToggleSwitch x:Name="CheckBoxHideDefaultSitemap"
-                                              Margin="0,0,0,12"
-                                              HorizontalAlignment="Stretch"
-                                              VerticalAlignment="Stretch"
-                                              IsOn="{Binding Settings.ShowDefaultSitemap, Mode=TwoWay}" />
-                                <TextBlock x:Uid="SVGIcons"
-                                           Margin="0,0,0,10" />
-                                <ToggleSwitch x:Name="CheckBoxSVGIcons"
-                                              Margin="0,0,0,12"
-                                              HorizontalAlignment="Stretch"
-                                              VerticalAlignment="Stretch"
-                                              IsOn="{Binding Settings.UseSVGIcons, Mode=TwoWay}" />
-                                <TextBlock x:Uid="ClearIconCache"
-                                           Margin="0,0,0,10" />
-                                <Button x:Uid="ClearIconCacheButton"
-                                        Margin="0,0,0,12"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Command="{x:Bind Vm.ClearIconCacheCommand}" />
-                            </StackPanel>
+                </Grid>-->
+    <NavigationView IsPaneOpen="True"
+                    PaneDisplayMode="Top"
+                    IsBackEnabled="False"
+                    IsBackButtonVisible="Collapsed"
+                    IsSettingsVisible="False"
+                    Background="{ThemeResource DarkAcrylicColor}">
+        <NavigationView.MenuItems>
+            <NavigationViewItem x:Uid="MenuAppSettings"
+                                Tapped="AppSettingsListViewItem_Tapped" />
+            <NavigationViewItem x:Uid="MenuConnectionSettings"
+                                Tapped="ConnectionSettingsListViewItem_Tapped" />
+            <NavigationViewItem x:Uid="MenuLogsView">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Tapped">
+                        <core:NavigateToPageAction TargetPage="openHAB.Windows.View.LogViewerPage" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </NavigationViewItem>
+        </NavigationView.MenuItems>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <Grid Margin="20,20,50,50">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0"
+                            Orientation="Vertical">
+                    <!-- App Settings -->
+                    <StackPanel x:Name="AppSettings">
+                        <StackPanel Margin="0,0,0,25"
+                                    Padding="12"
+                                    Background="{ThemeResource OpenHABLightColor}">
+                            <TextBlock x:Uid="AppSettings"
+                                       Style="{StaticResource TitleTextBlockStyle}"
+                                       Margin="0,0,0,10" />
+                            <TextBlock x:Uid="AppAutostart"
+                                       Margin="0,0,0,10" />
+                            <ToggleSwitch x:Name="AppAutostartSwitch"
+                                          Margin="0,0,0,12"
+                                          HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Stretch"
+                                          IsEnabled="{Binding Settings.CanAppAutostartEnabled, Mode=TwoWay}"
+                                          IsOn="{Binding Settings.IsAppAutostartEnabled, Mode=TwoWay}" />
+                            <TextBlock x:Uid="StartAppMinimized"
+                                       Margin="0,0,0,10" />
+                            <ToggleSwitch x:Name="StartAppMinimizedSwitch"
+                                          Margin="0,0,0,12"
+                                          HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Stretch"
+                                          IsOn="{Binding Settings.StartAppMinimized, Mode=TwoWay}" />
+                            <TextBlock x:Uid="AppLanguage"
+                                       Margin="0,0,0,10" />
+                            <ComboBox Margin="0,0,0,12"
+                                      ItemsSource="{Binding Settings.AppLanguages}"
+                                      DisplayMemberPath="Name"
+                                      SelectedItem="{Binding Settings.SelectedAppLanguage, Mode=TwoWay}" />
                         </StackPanel>
-                        <!-- Connection Settings -->
-                        <Grid x:Name="ConnectionSettings"
-                              Margin="0,0,0,25"
-                              Padding="12"
-                              Background="{ThemeResource OpenHABLightColor}"
-                              Visibility="Collapsed">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <StackPanel Grid.Row="0">
-                                <TextBlock x:Uid="ConnectionSettings"
-                                           Style="{StaticResource TitleTextBlockStyle}"
-                                           Margin="0,0,0,10" />
-                                <TextBlock x:Uid="DemoModeHeader" />
-                                <ToggleSwitch x:Name="CheckBoxDemoMode"
-                                              Margin="0,0,0,12"
-                                              HorizontalAlignment="Stretch"
-                                              VerticalAlignment="Stretch"
-                                              IsOn="{Binding Settings.IsRunningInDemoMode, Mode=TwoWay}" />
-                            </StackPanel>
-                            <StackPanel Grid.Row="1">
-                                <Button Margin="10"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Stretch"
-                                        HorizontalContentAlignment="Left"
-                                        DataContext="{Binding Path=Settings.LocalConnection}"
-                                        IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-                                        Click="OpenLocalConnectionButton_Click">
-                                    <StackPanel HorizontalAlignment="Left">
-                                        <TextBlock x:Uid="LocalSettings"
-                                                   FontSize="16" />
-                                        <TextBlock Text="{Binding Subtitle}" />
-                                    </StackPanel>
-                                </Button>
-                                <Button Margin="10"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Stretch"
-                                        HorizontalContentAlignment="Left"
-                                        DataContext="{Binding Path=Settings.RemoteConnection}"
-                                        IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-                                        Click="OpenRemoteConnectionButton_Click">
-                                    <StackPanel>
-                                        <TextBlock x:Uid="RemoteSettings"
-                                                   FontSize="16" />
-                                        <TextBlock Text="{Binding Subtitle}" />
-                                    </StackPanel>
-                                </Button>
-                            </StackPanel>
-                        </Grid>
+                        <StackPanel Margin="0,0,0,25"
+                                    Padding="12"
+                                    Background="{ThemeResource OpenHABLightColor}">
+                            <TextBlock x:Uid="NotificationSetting"
+                                       Style="{StaticResource TitleTextBlockStyle}"
+                                       Margin="0,0,0,10" />
+                            <TextBlock x:Uid="EnableWindowsNotifications"
+                                       Margin="0,0,0,10" />
+                            <ToggleSwitch Margin="0,0,0,12"
+                                          HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Stretch"
+                                          IsOn="{Binding Settings.NotificationsEnable, Mode=TwoWay}" />
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,25"
+                                    Padding="12"
+                                    Background="{ThemeResource OpenHABLightColor}">
+                            <TextBlock x:Uid="SitemapSetting"
+                                       Style="{StaticResource TitleTextBlockStyle}"
+                                       Margin="0,0,0,10" />
+                            <TextBlock x:Uid="ShowDefaultSitemap"
+                                       Margin="0,0,0,10" />
+                            <ToggleSwitch x:Name="CheckBoxHideDefaultSitemap"
+                                          Margin="0,0,0,12"
+                                          HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Stretch"
+                                          IsOn="{Binding Settings.ShowDefaultSitemap, Mode=TwoWay}" />
+                            <TextBlock x:Uid="SVGIcons"
+                                       Margin="0,0,0,10" />
+                            <ToggleSwitch x:Name="CheckBoxSVGIcons"
+                                          Margin="0,0,0,12"
+                                          HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Stretch"
+                                          IsOn="{Binding Settings.UseSVGIcons, Mode=TwoWay}" />
+                            <TextBlock x:Uid="ClearIconCache"
+                                       Margin="0,0,0,10" />
+                            <Button x:Uid="ClearIconCacheButton"
+                                    Margin="0,0,0,12"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Command="{x:Bind Vm.ClearIconCacheCommand}" />
+                        </StackPanel>
                     </StackPanel>
-                    <muxc:InfoBar x:Name="SettingsNotification"
-                                  Grid.Row="1"
-                                  Margin="10"
-                                  IsClosable="True"
-                                  Severity="Error"
-                                  HorizontalAlignment="Stretch"
-                                  VerticalAlignment="Center" />
-                </Grid>
-            </ScrollViewer>
-        </SplitView>
-    </Grid>
+                    <!-- Connection Settings -->
+                    <Grid x:Name="ConnectionSettings"
+                          Margin="0,0,0,25"
+                          Padding="12"
+                          Background="{ThemeResource OpenHABLightColor}"
+                          Visibility="Collapsed">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0">
+                            <TextBlock x:Uid="ConnectionSettings"
+                                       Style="{StaticResource TitleTextBlockStyle}"
+                                       Margin="0,0,0,10" />
+                            <TextBlock x:Uid="DemoModeHeader" />
+                            <ToggleSwitch x:Name="CheckBoxDemoMode"
+                                          Margin="0,0,0,12"
+                                          HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Stretch"
+                                          IsOn="{Binding Settings.IsRunningInDemoMode, Mode=TwoWay}" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="1">
+                            <Button Margin="10"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalContentAlignment="Left"
+                                    DataContext="{Binding Path=Settings.LocalConnection}"
+                                    IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
+                                    Click="OpenLocalConnectionButton_Click">
+                                <StackPanel HorizontalAlignment="Left">
+                                    <TextBlock x:Uid="LocalSettings"
+                                               FontSize="16" />
+                                    <TextBlock Text="{Binding Subtitle}" />
+                                </StackPanel>
+                            </Button>
+                            <Button Margin="10"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalContentAlignment="Left"
+                                    DataContext="{Binding Path=Settings.RemoteConnection}"
+                                    IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
+                                    Click="OpenRemoteConnectionButton_Click">
+                                <StackPanel>
+                                    <TextBlock x:Uid="RemoteSettings"
+                                               FontSize="16" />
+                                    <TextBlock Text="{Binding Subtitle}" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+                <muxc:InfoBar x:Name="SettingsNotification"
+                              Grid.Row="1"
+                              Margin="10"
+                              IsClosable="True"
+                              Severity="Error"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Center" />
+            </Grid>
+        </ScrollViewer>
+    </NavigationView>
 </Page>

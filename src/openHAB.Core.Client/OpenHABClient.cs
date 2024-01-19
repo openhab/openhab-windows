@@ -80,7 +80,18 @@ namespace openHAB.Core.Client
                 if (version == OpenHABVersion.Two || version == OpenHABVersion.Three || version == OpenHABVersion.Four)
                 {
                     JObject jsonObject = JObject.Parse(resultString);
-                    items = JsonConvert.DeserializeObject<List<OpenHABWidget>>(jsonObject["homepage"]["widgets"].ToString());
+
+                    string content = string.Empty;
+                    if (jsonObject["homepage"] == null)
+                    {
+                        content = jsonObject["widgets"].ToString();
+                    }
+                    else
+                    {
+                        content = jsonObject["homepage"]["widgets"].ToString();
+                    }
+
+                    items = JsonConvert.DeserializeObject<List<OpenHABWidget>>(content);
                 }
                 else
                 {
@@ -104,6 +115,51 @@ namespace openHAB.Core.Client
                 throw new OpenHABException("Invalid call", ex);
             }
         }
+
+        public async Task<OpenHABSitemap> GetSitemap(string sitemapLink, OpenHABVersion version)
+        {
+            try
+            {
+                _logger.LogInformation($"Get sitemap by link '{sitemapLink}'");
+
+                HttpResponseMessage result = await _openHABHttpClient.Client(_connection).GetAsync(sitemapLink).ConfigureAwait(false);
+                if (!result.IsSuccessStatusCode)
+                {
+                    _logger.LogError($"Http request for loading sitemap failed, ErrorCode:'{result.StatusCode}'");
+                    throw new OpenHABException($"{result.StatusCode} received from server");
+                }
+
+                string resultString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                OpenHABSitemap sitemap = null;
+                if (version == OpenHABVersion.Two || version == OpenHABVersion.Three || version == OpenHABVersion.Four)
+                {
+                    JObject jsonObject = JObject.Parse(resultString);
+                    sitemap = JsonConvert.DeserializeObject<OpenHABSitemap>(jsonObject["homepage"].ToString());
+                }
+                else
+                {
+                    string message = "openHAB version is not supported.";
+                    _logger.LogError(message);
+                    throw new OpenHABException(message);
+                }
+
+                _logger.LogInformation($"Loaded '{sitemap.Name}' sitemap successfully from server");
+
+                return sitemap;
+            }
+            catch (ArgumentNullException ex)
+            {
+                _logger.LogError(ex, "GetSitemap failed.");
+                throw new OpenHABException("Invalid call", ex);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "GetSitemap failed.");
+                throw new OpenHABException("Invalid call", ex);
+            }
+        }
+
 
         /// <inheritdoc />
         public async Task<OpenHABItem> GetItemByName(string itemName)

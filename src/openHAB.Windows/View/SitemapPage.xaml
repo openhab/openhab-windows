@@ -1,25 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Page
-    x:Class="openHAB.Windows.View.SitemapPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:openHAB.Windows.View"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Page.Resources>
-        
-    </Page.Resources>
+<Page x:Class="openHAB.Windows.View.SitemapPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      Background="Transparent">
+    <Page.Resources></Page.Resources>
     <Grid x:Name="MainContentGrid"
           Margin="35,0,0,0"
           VerticalAlignment="Stretch"
           Background="Transparent">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <TextBlock Grid.Column="0"
+                   Foreground="Black">Sitempap</TextBlock>
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto">
             <GridView x:Name="MasterListView"
                       Margin="12,0,0,0"
                       HorizontalAlignment="Stretch"
@@ -30,7 +28,7 @@
                       IsTapEnabled="True"
                       ItemClick="MasterListView_OnItemClick"
                       ItemTemplateSelector="{StaticResource WidgetTemplateSelector}"
-                      ItemsSource="{x:Bind ViewModel.CurrentWidgets, Mode=OneWay}"
+                      ItemsSource="{Binding CurrentWidgets, Mode=OneWay}"
                       SelectionMode="None">
                 <GridView.ItemsPanel>
                     <ItemsPanelTemplate>

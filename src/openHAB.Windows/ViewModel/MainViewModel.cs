@@ -121,7 +121,7 @@ namespace openHAB.Windows.ViewModel
                         settings.LastSitemap = _selectedSitemap.Name;
                         _settingsService.Save(settings);
 
-                        StrongReferenceMessenger.Default.Send<SitemapChanged>(new SitemapChanged(value.Model));
+                        //StrongReferenceMessenger.Default.Send<SitemapChanged>(new SitemapChanged(value.Model));
                     }
 
                     SelectedMenuItem = value;
@@ -206,7 +206,7 @@ namespace openHAB.Windows.ViewModel
                     return;
                 }
 
-                List<OpenHABSitemap> sitemaps = await _sitemapManager.GetSitemaps(loadCancellationToken);
+                List<OpenHABSitemap> sitemaps = await _sitemapManager.GetSitemapsAsync(loadCancellationToken);
                 if (sitemaps == null)
                 {
                     StrongReferenceMessenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));

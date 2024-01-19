@@ -37,8 +37,6 @@ namespace openHAB.Windows.View
             _appManager = DIService.Instance.GetService<IAppManager>();
 
             DataContext = _settingsViewModel;
-
-            SettingOptionsListView.SelectedIndex = 0;
         }
 
         #region Page Navigation

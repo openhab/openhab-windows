@@ -14,13 +14,22 @@ using openHAB.Core.Services.Contracts;
 
 namespace openHAB.Core.Services
 {
+    /// <summary>
+    /// Service for managing sitemaps in openHAB.
+    /// </summary>
     public class SitemapService
     {
-        private readonly ISettingsService _settingsService;
-        private readonly IOpenHABClient _openHABClient;
         private readonly ILogger<SitemapService> _logger;
+        private readonly IOpenHABClient _openHABClient;
+        private readonly ISettingsService _settingsService;
         private ServerInfo _serverInfo;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SitemapService"/> class.
+        /// </summary>
+        /// <param name="settingsService">The settings service.</param>
+        /// <param name="openHABClient">The openHAB client.</param>
+        /// <param name="logger">The logger.</param>
         public SitemapService(ISettingsService settingsService, IOpenHABClient openHABClient, ILogger<SitemapService> logger)
         {
             _settingsService = settingsService;
@@ -28,7 +37,45 @@ namespace openHAB.Core.Services
             _logger = logger;
         }
 
-        public async Task<List<OpenHABSitemap>> GetSitemaps(CancellationToken loadCancellationToken)
+        /// <summary>
+        /// Gets the sitemap by URL.
+        /// </summary>
+        /// <param name="sitemapUrl">The sitemap URL.</param>
+        /// <returns>The <see cref="OpenHABSitemap"/> object representing the sitemap.</returns>
+        public async Task<OpenHABSitemap> GetSitemapByUrlAsync(string sitemapUrl)
+        {
+            try
+            {
+                _serverInfo = await InitalizeConnectionAsync();
+                if (_serverInfo == null)
+                {
+                    return null;
+                }
+                _settingsService.ServerVersion = _serverInfo.Version;
+
+                OpenHABSitemap sitemap = await _openHABClient.GetSitemap(sitemapUrl, _serverInfo.Version).ConfigureAwait(false);
+                return sitemap;
+            }
+            catch (OpenHABException ex)
+            {
+                _logger.LogError(ex, $"Loading sitemap {sitemapUrl} failed.");
+                StrongReferenceMessenger.Default.Send(new ConnectionErrorMessage(ex.Message));
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Load sitemap data failed.");
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the list of sitemaps.
+        /// </summary>
+        /// <param name="loadCancellationToken">The cancellation token for the load operation.</param>
+        /// <returns>The list of <see cref="OpenHABSitemap"/> objects representing the sitemaps.</returns>
+        public async Task<List<OpenHABSitemap>> GetSitemapsAsync(CancellationToken loadCancellationToken)
         {
             try
             {
@@ -73,10 +120,27 @@ namespace openHAB.Core.Services
             return null;
         }
 
+        /// <summary>
+        /// Loads the items from a sitemap.
+        /// </summary>
+        /// <param name="model">The sitemap model.</param>
+        /// <returns>The collection of <see cref="OpenHABWidget"/> objects representing the items.</returns>
         public async Task<ICollection<OpenHABWidget>> LoadItemsFromSitemapAsync(OpenHABSitemap model)
         {
             ICollection<OpenHABWidget> widgetModels = await _openHABClient.LoadItemsFromSitemap(model.Link, _serverInfo.Version).ConfigureAwait(false);
             return widgetModels;
+        }
+
+        /// <summary>
+        /// Sends a command to an item.
+        /// </summary>
+        /// <param name="item">The item to send the command to.</param>
+        /// <param name="command">The command to send.</param>
+        /// <returns>The <see cref="HttpResponseResult{T}"/> object representing the result of the command.</returns>
+        public async Task<HttpResponseResult<bool>> SendItemCommand(OpenHABItem item, string command)
+        {
+            HttpResponseResult<bool> result = await _openHABClient.SendCommand(item, command).ConfigureAwait(false);
+            return result;
         }
 
         private async Task<ServerInfo> InitalizeConnectionAsync()
@@ -107,12 +171,6 @@ namespace openHAB.Core.Services
             }
 
             return serverInfo;
-        }
-
-        public async Task<HttpResponseResult<bool>> SendItemCommand(OpenHABItem item, string command)
-        {
-            HttpResponseResult<bool> result = await _openHABClient.SendCommand(item, command).ConfigureAwait(false);
-            return result;
         }
     }
 }

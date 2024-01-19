@@ -61,5 +61,6 @@ namespace openHAB.Core.Client.Contracts
         /// Starts listening to server events.
         /// </summary>
         void StartItemUpdates(System.Threading.CancellationToken token);
+        Task<OpenHABSitemap> GetSitemap(string sitemapLink, OpenHABVersion version);
     }
 }

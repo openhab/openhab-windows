@@ -5,6 +5,7 @@ using Microsoft.Toolkit.Uwp.Notifications;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using Microsoft.Windows.AppLifecycle;
 using openHAB.Core.Notification.Contracts;
 using openHAB.Core.Services.Contracts;
@@ -81,21 +82,21 @@ namespace openHAB.Windows
 
             // Initialize MainWindow here
             MainWindow = new MainWindow();
+            //Frame rootFrame = MainWindow.RootFrame;
 
-            Frame rootFrame = MainWindow.Content as Frame;
-            if (rootFrame == null)
-            {
-                // Create a Frame to act as the navigation context and navigate to the first page
-                rootFrame = new Frame();
+            //if (rootFrame == null)
+            //{
+            //    // Create a Frame to act as the navigation context and navigate to the first page
+            //    rootFrame = new Frame();
 
-                // Place the frame in the current Window
-                MainWindow.Content = rootFrame;
-            }
+            //    // Place the frame in the current Window
+            //    MainWindow.Content = rootFrame;
+            //}
 
-            if (rootFrame.Content == null)
-            {
-                rootFrame.Navigate(typeof(MainPage), e.Arguments);
-            }
+            //if (rootFrame.Content == null)
+            //{
+            //    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+            //}
 
             MainWindow.Activate();
         }
