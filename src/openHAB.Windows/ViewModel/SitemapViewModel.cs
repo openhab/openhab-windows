@@ -58,6 +58,8 @@ namespace openHAB.Windows.ViewModel
 
             StrongReferenceMessenger.Default.Register<DataOperation>(this, (obj, operation)
                 => DataOperationState(operation));
+
+            SetWidgetsOnScreen(Widgets.ToList());
         }
 
         #endregion
@@ -284,7 +286,9 @@ namespace openHAB.Windows.ViewModel
             await App.DispatcherQueue.EnqueueAsync(() =>
             {
                 CurrentWidgets.Clear();
-                CurrentWidgets.AddRange(widgets);
+                //CurrentWidgets.AddRange(widgets);
+                CurrentWidgets = new ObservableCollection<OpenHABWidget>(widgets);
+                OnPropertyChanged(nameof(CurrentWidgets));
             });
         }
 
@@ -292,7 +296,7 @@ namespace openHAB.Windows.ViewModel
         /// Navigate backwards between linked pages.
         /// </summary>
         public void WidgetGoBack(OpenHABWidget widget)
-        {
+         {
             OpenHABWidget lastWidget = null;
             while (lastWidget == null || lastWidget.WidgetId != widget.WidgetId)
             {
@@ -337,7 +341,7 @@ namespace openHAB.Windows.ViewModel
             {
                 OpenHABWidget lastWidget = SelectedWidget;
                 SelectedWidget = widget;
-                if (SelectedWidget?.LinkedPage == null || !SelectedWidget.LinkedPage.Widgets.Any())
+                if (SelectedWidget.LinkedPage == null || !SelectedWidget.LinkedPage.Widgets.Any())
                 {
                     return;
                 }

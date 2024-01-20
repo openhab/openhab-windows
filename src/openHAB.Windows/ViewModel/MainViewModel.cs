@@ -220,12 +220,6 @@ namespace openHAB.Windows.ViewModel
                 _openHABClient.StartItemUpdates(loadCancellationToken);
 
                 SelectedSitemap = OpenLastOrDefaultSitemap();
-
-                if (SelectedSitemap != null)
-                {
-                    await SelectedSitemap.SelectWidget().ConfigureAwait(false);
-                    SelectedSitemap.ReloadSitemapCommand.InvokeCanExecuteChanged(null);
-                }
             }
             catch (OpenHABException ex)
             {

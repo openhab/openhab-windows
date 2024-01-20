@@ -63,7 +63,6 @@ namespace openHAB.Windows.View
             await dispatcherQueue.EnqueueAsync(async () =>
             {
                 DataContext = _viewModel;
-                await ViewModel.LoadWidgetsAsync();
                 WidgetNavigationService.ClearWidgetNavigation();
             });
         }

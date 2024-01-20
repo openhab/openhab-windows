@@ -117,11 +117,12 @@
                                 Orientation="Horizontal">
                         <TextBlock Style="{StaticResource SitemapHeader}"
                                    Text="{Binding Vm.SelectedSitemap.Label, ElementName=Window, Mode=OneWay}">
-                         <interactivity:Interaction.Behaviors>
-                        <core:EventTriggerBehavior EventName="Tapped">
-                            <core:InvokeCommandAction Command="{Binding Vm.SelectedSitemap.NavigateToSitemapRoot, ElementName=Window, Mode=OneWay}" />
-                        </core:EventTriggerBehavior>
-                    </interactivity:Interaction.Behaviors></TextBlock>
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="Tapped">
+                                    <core:InvokeCommandAction Command="{Binding Vm.SelectedSitemap.NavigateToSitemapRoot, ElementName=Window, Mode=OneWay}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                        </TextBlock>
                         <Button Margin="10,0,0,0"
                                 Command="{Binding Vm.SelectedSitemap.ReloadSitemapCommand, ElementName=Window}">
                             <SymbolIcon Symbol="Refresh"
