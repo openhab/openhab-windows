@@ -82,6 +82,7 @@ namespace openHAB.Windows
 
             // Initialize MainWindow here
             MainWindow = new MainWindow();
+            MainWindow.ExtendsContentIntoTitleBar = true;
             //Frame rootFrame = MainWindow.RootFrame;
 
             //if (rootFrame == null)

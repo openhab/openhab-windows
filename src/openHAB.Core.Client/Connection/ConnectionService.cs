@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.WinUI.Connectivity;
+using CommunityToolkit.WinUI.Helpers;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using openHAB.Common;

@@ -8,6 +8,7 @@ using openHAB.Core.Client.Connection.Contracts;
 using openHAB.Core.Client.Connection.Models;
 using openHAB.Core.Model;
 using openHAB.Core.Services.Contracts;
+using ConnectionState = openHAB.Core.Client.Connection.Models.ConnectionState;
 
 namespace openHAB.Windows.ViewModel
 {

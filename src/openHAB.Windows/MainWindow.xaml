@@ -45,10 +45,6 @@
                         Value="Black" />
             </Style>
             <!-- Navigation View Styling -->
-            <!--<SolidColorBrush x:Key="NavigationViewDefaultPaneBackground"
-                             Color="{StaticResource DarkColor}" />
-            <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground"
-                             Color="{StaticResource DarkColor}" />-->
             <media:AcrylicBrush x:Key="NavigationViewDefaultPaneBackground"
                                 TintOpacity="0.7"
                                 FallbackColor="{StaticResource DarkColor}"
@@ -121,8 +117,7 @@
                                 <core:EventTriggerBehavior EventName="Tapped">
                                     <core:InvokeCommandAction Command="{Binding Vm.SelectedSitemap.NavigateToSitemapRoot, ElementName=Window, Mode=OneWay}" />
                                 </core:EventTriggerBehavior>
-                            </interactivity:Interaction.Behaviors>
-                        </TextBlock>
+                            </interactivity:Interaction.Behaviors></TextBlock>
                         <Button Margin="10,0,0,0"
                                 Command="{Binding Vm.SelectedSitemap.ReloadSitemapCommand, ElementName=Window}">
                             <SymbolIcon Symbol="Refresh"
@@ -198,10 +193,10 @@
                              IsBackButtonVisible="Collapsed"
                              AlwaysShowHeader="True"
                              IsSettingsVisible="True"
-                             OpenPaneLength="200"
+                             OpenPaneLength="250"
                              CompactPaneLength="45"
-                             PaneDisplayMode="Auto"
-                             IsPaneOpen="False"
+                             PaneDisplayMode="Left"
+                             IsPaneOpen="True"
                              SelectionChanged="SitemapNavigation_SelectionChanged">
             <muxc:NavigationView.PaneCustomContent>
                 <StackPanel Orientation="Vertical"
@@ -274,47 +269,16 @@
                 </muxc:InfoBar.ActionButton>
             </muxc:InfoBar>
         </StackPanel>
-        <community:Loading x:Name="LoadingControl"
-                           IsLoading="{x:Bind Vm.IsDataLoading, Mode=TwoWay}"
-                           HorizontalContentAlignment="Center"
-                           VerticalContentAlignment="Center">
-            <community:Loading.Background>
+        <ProgressRing x:Name="LoadingControl"
+                      IsIndeterminate="True"
+                      IsActive="{x:Bind Vm.IsDataLoading, Mode=TwoWay}"
+                      HorizontalContentAlignment="Center"
+                      VerticalContentAlignment="Center"
+                      >
+            <ProgressRing.Background>
                 <SolidColorBrush Color="Black"
                                  Opacity="0.7" />
-            </community:Loading.Background>
-            <ContentControl x:Name="LoadingContentControl"
-                            ContentTemplate="{StaticResource WaitListTemplate}" />
-        </community:Loading>
-        <!--<VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <controls:DeviceFamilyStateTrigger TargetDeviceFamily="Desktop" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="SitemapNavigation.PaneDisplayMode"
-                                Value="Left" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <controls:DeviceFamilyStateTrigger TargetDeviceFamily="Mobile" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="SitemapNavigation.PaneDisplayMode"
-                                Value="LeftCompact" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <controls:DeviceFamilyStateTrigger TargetDeviceFamily="Xbox" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="SitemapNavigation.PaneDisplayMode"
-                                Value="LeftMinimal" />
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>-->
+            </ProgressRing.Background>
+        </ProgressRing>
     </Grid>
 </Window>

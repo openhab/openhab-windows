@@ -126,10 +126,10 @@
   <data name="ConnectionCheck.Text" xml:space="preserve">
     <value>Connection Check:</value>
   </data>
-  <data name="ConnectionSettings.Text" xml:space="preserve">
+  <data name="ConnectionSettingsSection.Text" xml:space="preserve">
     <value>Connection Settings</value>
   </data>
-  <data name="DemoModeHeader.Text" xml:space="preserve">
+  <data name="DemoModeHeader.Header" xml:space="preserve">
     <value>Demo mode</value>
   </data>
   <data name="MessageError" xml:space="preserve">
@@ -144,7 +144,7 @@
   <data name="IgnoreSSLCertHostErrors.Text" xml:space="preserve">
     <value>Ignore SSL hostname errors</value>
   </data>
-  <data name="LocalSettings.Text" xml:space="preserve">
+  <data name="LocalSettings.Header" xml:space="preserve">
     <value>Local Settings</value>
   </data>
   <data name="LocalUrl.ToolTipService.ToolTip" xml:space="preserve">
@@ -164,7 +164,7 @@ Go to app settings (gear icon) to check the connection configuration.</value>
   <data name="PasswordHeader.Text" xml:space="preserve">
     <value>Password</value>
   </data>
-  <data name="RemoteSettings.Text" xml:space="preserve">
+  <data name="RemoteSettings.Header" xml:space="preserve">
     <value>Remote Settings</value>
   </data>
   <data name="RemoteUrl.ToolTipService.ToolTip" xml:space="preserve">
@@ -201,7 +201,7 @@ Go to app settings (gear icon) to check the connection configuration.</value>
     <value>Connection settings are invalid.
 Please select demo mode or configure local/remote connection.</value>
   </data>
-  <data name="AppLanguage.Text" xml:space="preserve">
+  <data name="AppLanguage.Header" xml:space="preserve">
     <value>App Language</value>
   </data>
   <data name="ConnectionDialog.PrimaryButtonText" xml:space="preserve">
@@ -221,9 +221,6 @@ Please select demo mode or configure local/remote connection.</value>
   </data>
   <data name="UnencryptedConnection" xml:space="preserve">
     <value>Unsecured connected to</value>
-  </data>
-  <data name="ConnectionNotConfigured" xml:space="preserve">
-    <value>Not configured</value>
   </data>
   <data name="LocalDefaultConnection" xml:space="preserve">
     <value>Default Connection Profile</value>
@@ -267,25 +264,25 @@ Please select demo mode or configure local/remote connection.</value>
   <data name="MenuConnectionSettings.Content" xml:space="preserve">
     <value>Connection Settings</value>
   </data>
-  <data name="ShowDefaultSitemap.Text" xml:space="preserve">
+  <data name="ShowDefaultSitemap.Description" xml:space="preserve">
     <value>Show default sitemaps</value>
   </data>
-  <data name="SVGIcons.Text" xml:space="preserve">
+  <data name="SVGIcons.Description" xml:space="preserve">
     <value>Use high resolution charts for sitemap tiles</value>
   </data>
-  <data name="ClearIconCache.Text" xml:space="preserve">
-    <value>Clear local chart cache</value>
+  <data name="ClearIconCache.Description" xml:space="preserve">
+    <value>Clear local icon cache</value>
   </data>
   <data name="ClearIconCacheButton.Content" xml:space="preserve">
     <value>Clear</value>
   </data>
-  <data name="AppAutostart.Text" xml:space="preserve">
+  <data name="AppAutostart.Description" xml:space="preserve">
     <value>Launch app when system starts</value>
   </data>
   <data name="SitemapSetting.Text" xml:space="preserve">
     <value>Sitemap</value>
   </data>
-  <data name="StartAppMinimized.Text" xml:space="preserve">
+  <data name="StartAppMinimized.Header" xml:space="preserve">
     <value>Start app minimized</value>
   </data>
   <data name="NotificationTile" xml:space="preserve">
@@ -303,7 +300,7 @@ Please select demo mode or configure local/remote connection.</value>
   <data name="InfoAppBarSettingsButton.Content" xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="EnableWindowsNotifications.Text" xml:space="preserve">
+  <data name="EnableWindowsNotifications.Description" xml:space="preserve">
     <value>Enable notifications for openHAB events.</value>
   </data>
   <data name="NotificationSetting.Text" xml:space="preserve">
@@ -320,5 +317,35 @@ Please select demo mode or configure local/remote connection.</value>
   </data>
   <data name="AppDisplayName" xml:space="preserve">
     <value>openHAB</value>
+  </data>
+  <data name="AppAutostart.Header" xml:space="preserve">
+    <value>Autostart</value>
+  </data>
+  <data name="AppLanguage.Description" xml:space="preserve">
+    <value>Set the default app language.</value>
+  </data>
+  <data name="ClearIconCache.Header" xml:space="preserve">
+    <value>Icon Cache</value>
+  </data>
+  <data name="ConnectionSettings.Description" xml:space="preserve">
+    <value>Configuration of the local and remote connection to openHAB server.</value>
+  </data>
+  <data name="ConnectionSettings.Header" xml:space="preserve">
+    <value>Local and remote connection</value>
+  </data>
+  <data name="ConnectionSettingsButton.Content" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="DemoModeHeader.Description" xml:space="preserve">
+    <value>Use app with data from openHAB demo instance.</value>
+  </data>
+  <data name="EnableWindowsNotifications.Header" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="ShowDefaultSitemap.Header" xml:space="preserve">
+    <value>Default sitemaps</value>
+  </data>
+  <data name="SVGIcons.Header" xml:space="preserve">
+    <value>High resolution icons</value>
   </data>
 </root>

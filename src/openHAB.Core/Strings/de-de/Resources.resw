@@ -126,10 +126,10 @@
   <data name="ConnectionCheck.Text" xml:space="preserve">
     <value>Verbindungscheck:</value>
   </data>
-  <data name="ConnectionSettings.Text" xml:space="preserve">
+  <data name="ConnectionSettingsSection.Text" xml:space="preserve">
     <value>Verbindungseinstellungen</value>
   </data>
-  <data name="DemoModeHeader.Text" xml:space="preserve">
+  <data name="DemoModeHeader.Header" xml:space="preserve">
     <value>Demomodus</value>
   </data>
   <data name="MessageError" xml:space="preserve">
@@ -144,7 +144,7 @@
   <data name="IgnoreSSLCertHostErrors.Text" xml:space="preserve">
     <value>Ignoriere SSL-Hostname-Fehler</value>
   </data>
-  <data name="LocalSettings.Text" xml:space="preserve">
+  <data name="LocalSettings.Header" xml:space="preserve">
     <value>Lokale Einstellungen</value>
   </data>
   <data name="LocalUrl.ToolTipService.ToolTip" xml:space="preserve">
@@ -163,7 +163,7 @@ Gehen Sie in die App-Einstellungen (Zahnrad-Icon) um die Verbindungseinstellunge
   <data name="PasswordHeader.Text" xml:space="preserve">
     <value>Passwort</value>
   </data>
-  <data name="RemoteSettings.Text" xml:space="preserve">
+  <data name="RemoteSettings.Header" xml:space="preserve">
     <value>Remote-Einstellungen</value>
   </data>
   <data name="RemoteUrl.ToolTipService.ToolTip" xml:space="preserve">
@@ -200,7 +200,7 @@ Gehen Sie in die App-Einstellungen (Zahnrad-Icon) um die Verbindungseinstellunge
     <value>Verbindungseinstellungen sind nicht korrekt.
 Bitte wählen Sie den Demomodus oder die Lokale-/Remote-Verbindungsinformation zu Ihrem openHAB-Server.</value>
   </data>
-  <data name="AppLanguage.Text" xml:space="preserve">
+  <data name="AppLanguage.Header" xml:space="preserve">
     <value>Anwendungssprache</value>
   </data>
   <data name="ConnectionDialog.PrimaryButtonText" xml:space="preserve">
@@ -260,25 +260,22 @@ Bitte wählen Sie den Demomodus oder die Lokale-/Remote-Verbindungsinformation z
   <data name="MenuConnectionSettings.Content" xml:space="preserve">
     <value>Verbindungseinstellungen</value>
   </data>
-  <data name="ShowDefaultSitemap.Text" xml:space="preserve">
+  <data name="ShowDefaultSitemap.Description" xml:space="preserve">
     <value>Standard-Sitemaps einblenden</value>
   </data>
-  <data name="SVGIcons.Text" xml:space="preserve">
+  <data name="SVGIcons.Description" xml:space="preserve">
     <value>Verwenden von Icons mit hoher Auflösung für Sitemapkacheln</value>
-  </data>
-  <data name="ClearIconCache.Text" xml:space="preserve">
-    <value>Lokalen Zwischenspeicher für Icons löschen</value>
   </data>
   <data name="ClearIconCacheButton.Content" xml:space="preserve">
     <value>Löschen</value>
   </data>
-  <data name="AppAutostart.Text" xml:space="preserve">
+  <data name="AppAutostart.Description" xml:space="preserve">
     <value>Starte App beim Systemstart</value>
   </data>
   <data name="SitemapSetting.Text" xml:space="preserve">
     <value>Sitemap</value>
   </data>
-  <data name="StartAppMinimized.Text" xml:space="preserve">
+  <data name="StartAppMinimized.Header" xml:space="preserve">
     <value>Starte App minimiert</value>
   </data>
   <data name="NotificationTile" xml:space="preserve">
@@ -296,7 +293,7 @@ Bitte wählen Sie den Demomodus oder die Lokale-/Remote-Verbindungsinformation z
   <data name="InfoAppBarSettingsButton.Content" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
-  <data name="EnableWindowsNotifications.Text" xml:space="preserve">
+  <data name="EnableWindowsNotifications.Description" xml:space="preserve">
     <value>Einschalten der Benachrichtigungen für openHAB-Events.</value>
   </data>
   <data name="NotificationSetting.Text" xml:space="preserve">
@@ -313,5 +310,35 @@ Bitte wählen Sie den Demomodus oder die Lokale-/Remote-Verbindungsinformation z
   </data>
   <data name="AppDisplayName" xml:space="preserve">
     <value>openHAB</value>
+  </data>
+  <data name="AppAutostart.Header" xml:space="preserve">
+    <value>Autostart</value>
+  </data>
+  <data name="ClearIconCache.Description" xml:space="preserve">
+    <value>Löschen des lokalen Icon Speichers.</value>
+  </data>
+  <data name="ClearIconCache.Header" xml:space="preserve">
+    <value>Icon Cache</value>
+  </data>
+  <data name="ConnectionSettings.Description" xml:space="preserve">
+    <value>Konfigurieration der lokalen und remote Verbindung zu openHAB Server.</value>
+  </data>
+  <data name="ConnectionSettings.Header" xml:space="preserve">
+    <value>Lokale und Remote Verbindung</value>
+  </data>
+  <data name="ConnectionSettingsButton.Content" xml:space="preserve">
+    <value>Bearbeiten</value>
+  </data>
+  <data name="DemoModeHeader.Description" xml:space="preserve">
+    <value>Verwende Beispieldaten der openHAB Demo Instanz.</value>
+  </data>
+  <data name="EnableWindowsNotifications.Header" xml:space="preserve">
+    <value>Benachrichtigungen</value>
+  </data>
+  <data name="ShowDefaultSitemap.Header" xml:space="preserve">
+    <value>Standard-Sitemaps</value>
+  </data>
+  <data name="SVGIcons.Header" xml:space="preserve">
+    <value>Hochauflösende Icons</value>
   </data>
 </root>
