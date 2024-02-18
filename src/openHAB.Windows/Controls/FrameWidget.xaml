@@ -11,8 +11,7 @@
                   d:DesignHeight="300"
                   d:DesignWidth="400"
                   mc:Ignorable="d"
-                  Visibility="{x:Bind Widget.Visibility, Converter={StaticResource BooleanToVisibilityConverter}}"
-                  Background="{StaticResource DarkAcrylicColor}">
+                  Visibility="{x:Bind Widget.Visibility, Converter={StaticResource BooleanToVisibilityConverter}}">
 
     <local:WidgetBase.Resources>
         <Style TargetType="GridViewItem">
@@ -25,17 +24,18 @@
         </Style>
         <converters:IconToBitmapConverter x:Key="IconToBitmapConverter" />
     </local:WidgetBase.Resources>
-
-    <StackPanel VerticalAlignment="Stretch">
-        <StackPanel.Background>
+    <StackPanel VerticalAlignment="Stretch"
+                Background="{StaticResource SolidBackgroundFillColorBaseAltBrush}">
+        <!--<StackPanel.Background>
             <AcrylicBrush  TintOpacity="0.1"
-                           FallbackColor="{StaticResource DarkColor}"
-                           TintColor="{StaticResource DarkColor}" />
-        </StackPanel.Background>
-        <StackPanel HorizontalAlignment="Stretch"
+                           FallbackColor="{StaticResource SolidBackgroundFillColorTertiaryBrush}"
+                           TintColor="{StaticResource SolidBackgroundFillColorTertiaryBrush}" />
+        </StackPanel.Background>-->
+        <StackPanel Margin="5,5,0,0"
+                    HorizontalAlignment="Stretch"
                     Orientation="Horizontal">
             <Image x:Name="Icon"
-                   Height="40"
+                   Height="35"
                    VerticalAlignment="Center"
                    Source="{x:Bind Widget, Mode=OneWay, Converter={StaticResource IconToBitmapConverter}}"
                    Stretch="UniformToFill" />

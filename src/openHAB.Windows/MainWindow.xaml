@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="using:openHAB.Windows.Converters"
         xmlns:core="using:Microsoft.Xaml.Interactions.Core"
-        xmlns:community="using:CommunityToolkit.WinUI.UI.Controls"
         xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
         xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
         xmlns:viewModel="using:openHAB.Windows.ViewModel"
@@ -35,42 +34,26 @@
                 <Setter Property="FontSize"
                         Value="42" />
                 <Setter Property="Foreground"
-                        Value="Black" />
+                        Value="{StaticResource TextFillColorPrimaryBrush}" />
             </Style>
             <Style x:Key="BreakcrumbItemText"
                    TargetType="TextBlock">
                 <Setter Property="FontSize"
                         Value="21" />
                 <Setter Property="Foreground"
-                        Value="Black" />
+                        Value="{StaticResource TextFillColorPrimaryBrush}" />
             </Style>
             <!-- Navigation View Styling -->
-            <media:AcrylicBrush x:Key="NavigationViewDefaultPaneBackground"
-                                TintOpacity="0.7"
-                                FallbackColor="{StaticResource DarkColor}"
-                                TintColor="{StaticResource DarkColor}" />
-            <media:AcrylicBrush x:Key="NavigationViewExpandedPaneBackground"
-                                TintOpacity="0.7"
-                                FallbackColor="{StaticResource DarkColor}"
-                                TintColor="{StaticResource DarkColor}" />
-            <SolidColorBrush x:Key="NavigationViewItemForeground"
-                             Color="White" />
             <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver"
                              Color="#FFFF5722" />
-            <SolidColorBrush x:Key="NavigationViewItemForegroundPressed"
-                             Color="White" />
             <SolidColorBrush x:Key="NavigationViewItemForegroundChecked"
                              Color="#FFFF5722" />
             <SolidColorBrush x:Key="NavigationViewItemForegroundCheckedPressed"
                              Color="#FFFF5722" />
-            <SolidColorBrush x:Key="NavigationViewItemForegroundCheckedPointerOver"
-                             Color="White" />
             <SolidColorBrush x:Key="NavigationViewItemForegroundSelected"
                              Color="#FFFF5722" />
             <SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPressed"
                              Color="#FFFF5722" />
-            <SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPointerOver"
-                             Color="White" />
             <SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground"
                              Color="#FFFF5722" />
             <!-- Converters -->
@@ -149,7 +132,7 @@
                             Margin="10">
                     <Button Command="{Binding Vm.SelectedSitemap.ReloadSitemapCommand, ElementName=Window}">
                         <SymbolIcon Symbol="Refresh"
-                                    Foreground="Black"
+                                    Foreground="{StaticResource TextFillColorPrimaryBrush}"
                                     VerticalAlignment="Center" />
                     </Button>
                     <BreadcrumbBar ItemsSource="{Binding Vm.BreadcrumbItems, ElementName=Window, Mode=TwoWay}">
@@ -167,29 +150,72 @@
                     </BreadcrumbBar>
                 </StackPanel>
             </DataTemplate>
-            <DataTemplate x:Key="WaitListTemplate">
+            <!--<DataTemplate x:Key="WaitListTemplate">
                 <StackPanel Orientation="Horizontal"
                             Padding="12">
                     <ProgressRing IsActive="True"
                                   Margin="0,0,12,0"
-                                  Foreground="{ThemeResource OpenHABMenuColor}" />
+                                  Foreground="{StaticResource TextFillColorPrimaryBrush}" />
                     <TextBlock x:Uid="Loading"
                                VerticalAlignment="Center"
-                               Foreground="White" />
+                               Foreground="{StaticResource TextFillColorPrimaryBrush}" />
                 </StackPanel>
-            </DataTemplate>
+            </DataTemplate>-->
         </Grid.Resources>
-        <Grid.Background>
-            <ImageBrush ImageSource="ms-appx:///Assets/background.jpg"
-                        Stretch="UniformToFill" />
-        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid x:Name="AppTitleBar"
+              Grid.Row="0"
+              Height="48">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="LeftPaddingColumn"
+                                  Width="0" />
+                <ColumnDefinition x:Name="IconColumn"
+                                  Width="Auto" />
+                <ColumnDefinition x:Name="TitleColumn"
+                                  Width="Auto" />
+                <ColumnDefinition x:Name="LeftDragColumn"
+                                  Width="*" />
+                <ColumnDefinition x:Name="SearchColumn"
+                                  Width="4*"
+                                  MinWidth="220" />
+                <ColumnDefinition x:Name="RightDragColumn"
+                                  Width="*"
+                                  MinWidth="48" />
+                <ColumnDefinition x:Name="AccountColumn"
+                                  Width="Auto" />
+                <ColumnDefinition x:Name="RightPaddingColumn"
+                                  Width="0" />
+            </Grid.ColumnDefinitions>
+            <Image x:Name="TitleBarIcon"
+                   Source="ms-appx:///Assets/openhab.png"
+                   Grid.Column="1"
+                   Width="16"
+                   Height="16"
+                   Margin="8,0,4,0" />
+            <TextBlock x:Name="TitleBarTextBlock"
+                       Text="App title"
+                       Style="{StaticResource CaptionTextBlockStyle}"
+                       Grid.Column="2"
+                       VerticalAlignment="Center"></TextBlock>
+            <AutoSuggestBox x:Name="TitleBarSearchBox"
+                            Grid.Column="4"
+                            QueryIcon="Find"
+                            PlaceholderText="Search"
+                            VerticalAlignment="Center"
+                            MaxWidth="600" />
+        </Grid>
         <muxc:NavigationView x:Name="SitemapNavigation"
+                             Grid.Row="1"
                              MenuItemsSource="{x:Bind Vm.Sitemaps, Mode=OneWay}"
                              MenuItemTemplateSelector="{StaticResource Selector}"
                              Header="{x:Bind Vm}"
                              HeaderTemplate="{StaticResource NavMenuHeaderTemplate}"
                              SelectedItem="{x:Bind Vm.SelectedMenuItem, Mode=TwoWay}"
-                             Foreground="White"
+                             Foreground="{StaticResource TextFillColorPrimaryBrush}"
+                             Background="{StaticResource AcrylicBackgroundFillColorBaseBrush}"
                              IsBackButtonVisible="Collapsed"
                              AlwaysShowHeader="True"
                              IsSettingsVisible="True"
@@ -211,14 +237,14 @@
                                    Margin="5,-3,0,0"
                                    VerticalAlignment="Center"
                                    Style="{StaticResource MenuSubHeader}"
-                                   Foreground="{StaticResource OpenHABMenuColor}"
+                                   Foreground="{StaticResource TextFillColorPrimaryBrush}"
                                    Text="Sitemaps" />
                         <Button Grid.Column="1"
                                 Margin="0,0,10,0"
                                 HorizontalAlignment="Right"
                                 Command="{Binding Vm.RefreshCommand, ElementName=Window}">
                             <SymbolIcon Symbol="Refresh"
-                                        Foreground="White"
+                                        Foreground="{StaticResource TextFillColorPrimaryBrush}"
                                         VerticalAlignment="Center" />
                         </Button>
                     </Grid>
@@ -270,11 +296,11 @@
             </muxc:InfoBar>
         </StackPanel>
         <ProgressRing x:Name="LoadingControl"
+                      Grid.Row="1"
                       IsIndeterminate="True"
                       IsActive="{x:Bind Vm.IsDataLoading, Mode=TwoWay}"
                       HorizontalContentAlignment="Center"
-                      VerticalContentAlignment="Center"
-                      >
+                      VerticalContentAlignment="Center">
             <ProgressRing.Background>
                 <SolidColorBrush Color="Black"
                                  Opacity="0.7" />

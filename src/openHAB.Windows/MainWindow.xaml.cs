@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
 using Microsoft.Extensions.Logging;
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using openHAB.Common;
@@ -12,6 +14,7 @@ using openHAB.Core.Messages;
 using openHAB.Windows.Services;
 using openHAB.Windows.View;
 using openHAB.Windows.ViewModel;
+using Windows.ApplicationModel;
 
 namespace openHAB.Windows
 {
@@ -38,6 +41,10 @@ namespace openHAB.Windows
             _logger = DIService.Instance.GetService<ILogger<MainPage>>();
 
             this.InitializeComponent();
+            this.ExtendsContentIntoTitleBar = true;
+            this.AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Tall;
+            this.AppWindow.TitleBar.ButtonForegroundColor = Colors.Black;
+            TitleBarTextBlock.Text = AppInfo.Current.DisplayInfo.DisplayName;
 
             Vm = DIService.Instance.GetService<MainViewModel>();
             Root.DataContext = Vm;

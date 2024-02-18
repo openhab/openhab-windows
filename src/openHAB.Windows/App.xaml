@@ -92,6 +92,8 @@
                                                MapViewTemplate="{StaticResource MapViewTemplate}"
                                                WebViewTemplate="{StaticResource WebViewTemplate}"
                                                TextTemplate="{StaticResource TextItemTemplate}" />
+            
         </ResourceDictionary>
     </Application.Resources>
+    
 </Application>

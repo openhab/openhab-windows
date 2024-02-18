@@ -4,13 +4,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
-      Background="Transparent"
       DataContext="{x:Bind ViewModel}">
     <Page.Resources></Page.Resources>
     <Grid x:Name="MainContentGrid"
           Margin="35,0,0,0"
-          VerticalAlignment="Stretch"
-          Background="Transparent">
+          VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />

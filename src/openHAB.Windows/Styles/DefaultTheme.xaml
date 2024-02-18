@@ -1,58 +1,43 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:media="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-
     <!-- Base colors -->
     <Color x:Key="OpenHABLightOrange">#FFFF5722</Color>
     <Color x:Key="OpenHABLightGrey">#EEEEEE</Color>
     <Color x:Key="DarkColor">#344040</Color>
-
     <!-- Control base colors -->
-    
-
     <SolidColorBrush x:Key="OpenHABLightGreyBrush"
                      Color="{StaticResource OpenHABLightGrey}" />
-    
     <SolidColorBrush x:Key="OpenHABLightOrangeBrush"
                      Color="{StaticResource OpenHABLightOrange}" />
-
     <SolidColorBrush x:Key="OpenHABMenuColor"
                      Color="White" />
-
     <!-- Acryl colors -->
-
     <media:AcrylicBrush x:Key="DarkAcrylicColor"
                         TintOpacity="0.7"
                         FallbackColor="{StaticResource DarkColor}"
                         TintColor="{StaticResource DarkColor}" />
-
     <media:AcrylicBrush x:Key="OpenHABLightColor"
-                        
                         TintOpacity="0.5"
                         FallbackColor="{StaticResource OpenHABLightGrey}"
                         TintColor="{StaticResource OpenHABLightGrey}"
                         AlwaysUseFallback="False" />
-
     <media:AcrylicBrush x:Key="ErrorNotificationBackground"
                         TintOpacity="0.5"
                         FallbackColor="Red"
                         TintColor="Red"
                         AlwaysUseFallback="False" />
-
     <media:AcrylicBrush x:Key="NotificationBackground"
                         TintOpacity="0.5"
                         FallbackColor="Silver"
                         TintColor="Silver"
                         AlwaysUseFallback="False" />
-
     <Style x:Key="OpenHABGroupHeader"
+           BasedOn="{StaticResource SubtitleTextBlockStyle}"
            TargetType="TextBlock">
         <Setter Property="Foreground"
-                Value="{ThemeResource SystemAccentColor}" />
-        <Setter Property="FontSize"
-                Value="24" />
+                Value="{StaticResource AccentTextFillColorPrimaryBrush}" />
     </Style>
-    
     <Style x:Key="HeaderText"
            TargetType="TextBlock">
         <Setter Property="Foreground"
@@ -60,25 +45,22 @@
         <Setter Property="FontSize"
                 Value="24" />
     </Style>
-
-	<Style x:Key="MenuSubHeader"
-		   TargetType="TextBlock">
-		<Setter Property="Foreground"
-				Value="{StaticResource OpenHABMenuColor}" />
-		<Setter Property="FontSize"
-				Value="21" />
-	</Style>
-
-	<Style x:Key="Widget"
+    <Style x:Key="MenuSubHeader"
+           TargetType="TextBlock">
+        <Setter Property="Foreground"
+                Value="{StaticResource OpenHABMenuColor}" />
+        <Setter Property="FontSize"
+                Value="21" />
+    </Style>
+    <Style x:Key="Widget"
            TargetType="Grid">
         <Setter Property="Width"
                 Value="300" />
         <Setter Property="Height"
                 Value="100" />
         <Setter Property="Background"
-                Value="{StaticResource OpenHABLightColor}" />
+                Value="{StaticResource SolidBackgroundFillColorSecondaryBrush}" />
     </Style>
-
     <Style x:Key="SplitViewTogglePaneButtonStyle"
            TargetType="ToggleButton">
         <Setter Property="FontSize"
@@ -207,7 +189,12 @@
             </Setter.Value>
         </Setter>
     </Style>
-	
-	
-	
+    
+    <!-- Text Styles -->
+    <Style x:Key="TitleStyle"
+           BasedOn="{StaticResource TitleTextBlockStyle}"
+           TargetType="TextBlock">
+        <Setter Property="Foreground"
+                Value="{StaticResource TextFillColorPrimaryBrush}" />
+    </Style>
 </ResourceDictionary>

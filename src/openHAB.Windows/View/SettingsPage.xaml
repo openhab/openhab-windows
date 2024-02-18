@@ -148,11 +148,11 @@
                         Orientation="Vertical">
                 <!-- App Settings -->
                 <StackPanel x:Name="AppSettings">
-                    <StackPanel Margin="0,0,0,25"
+                    <StackPanel Margin="0,0,0,10"
                                 Padding="12"
                                 Background="{ThemeResource OpenHABLightColor}">
                         <TextBlock x:Uid="AppSettings"
-                                   Style="{StaticResource TitleTextBlockStyle}"
+                                   Style="{StaticResource TitleStyle}"
                                    Margin="0,0,0,10" />
                         <controls:SettingsCard x:Uid="AppAutostart"
                                                Margin="0,0,0,10"
@@ -182,11 +182,11 @@
                                       SelectedItem="{Binding Settings.SelectedAppLanguage, Mode=TwoWay}" />
                         </controls:SettingsCard>
                     </StackPanel>
-                    <StackPanel Margin="0,0,0,25"
+                    <StackPanel Margin="0,0,0,10"
                                 Padding="12"
                                 Background="{ThemeResource OpenHABLightColor}">
                         <TextBlock x:Uid="NotificationSetting"
-                                   Style="{StaticResource TitleTextBlockStyle}"
+                                   Style="{StaticResource TitleStyle}"
                                    Margin="0,0,0,10" />
                         <controls:SettingsCard x:Uid="EnableWindowsNotifications"
                                                Margin="0,0,0,10"
@@ -197,11 +197,11 @@
                                           IsOn="{Binding Settings.NotificationsEnable, Mode=TwoWay}" />
                         </controls:SettingsCard>
                     </StackPanel>
-                    <StackPanel Margin="0,0,0,25"
+                    <StackPanel Margin="0,0,0,10"
                                 Padding="12"
                                 Background="{ThemeResource OpenHABLightColor}">
                         <TextBlock x:Uid="SitemapSetting"
-                                   Style="{StaticResource TitleTextBlockStyle}"
+                                   Style="{StaticResource TitleStyle}"
                                    Margin="0,0,0,10" />
                         <controls:SettingsCard x:Uid="ShowDefaultSitemap"
                                                Margin="0,0,0,10"
@@ -234,7 +234,7 @@
                 </StackPanel>
                 <!-- Connection Settings -->
                 <Grid x:Name="ConnectionSettings"
-                      Margin="0,0,0,25"
+                      Margin="0,0,0,10"
                       Padding="12"
                       Background="{ThemeResource OpenHABLightColor}">
                     <Grid.RowDefinitions>
@@ -244,7 +244,7 @@
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0">
                         <TextBlock x:Uid="ConnectionSettingsSection"
-                                   Style="{StaticResource TitleTextBlockStyle}"
+                                   Style="{StaticResource TitleStyle}"
                                    Margin="0,0,0,10" />
                         <controls:SettingsCard x:Uid="DemoModeHeader"
                                                HeaderIcon="{ui:FontIcon Glyph=&#xE81E;}" 
