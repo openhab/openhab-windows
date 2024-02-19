@@ -1,5 +1,6 @@
 using System;
 using Microsoft.UI;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Markup;
 using Microsoft.UI.Xaml.Media;
@@ -23,7 +24,7 @@ namespace openHAB.Windows.Converters
             string colorString = value as string;
             if (string.IsNullOrEmpty(colorString))
             {
-                return new SolidColorBrush(Colors.Black);
+                return (SolidColorBrush)Application.Current.Resources["TextFillColorPrimaryBrush"];
             }
 
             Color color = (Color)XamlBindingHelper.ConvertValue(typeof(Color), colorString);

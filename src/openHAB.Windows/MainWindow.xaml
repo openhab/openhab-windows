@@ -104,7 +104,7 @@
                         <Button Margin="10,0,0,0"
                                 Command="{Binding Vm.SelectedSitemap.ReloadSitemapCommand, ElementName=Window}">
                             <SymbolIcon Symbol="Refresh"
-                                        Foreground="Black"
+                                        Foreground="{StaticResource TextFillColorPrimaryBrush}"
                                         VerticalAlignment="Center" />
                         </Button>
                     </StackPanel>
@@ -252,7 +252,7 @@
                                x:Uid="NoItemsOrOpenHabNotAvailable"
                                Visibility="{Binding Path=Sitemaps.Count, Converter={StaticResource ZeroToVisibility}, Mode=OneWay}"
                                TextWrapping="Wrap"
-                               Foreground="{StaticResource OpenHABMenuColor}"
+                               Foreground="{StaticResource TextFillColorPrimaryBrush}"
                                Style="{StaticResource FlyoutPickerTitleTextBlockStyle}" />
                 </StackPanel>
             </muxc:NavigationView.PaneCustomContent>
@@ -295,16 +295,23 @@
                 </muxc:InfoBar.ActionButton>
             </muxc:InfoBar>
         </StackPanel>
-        <ProgressRing x:Name="LoadingControl"
-                      Grid.Row="1"
-                      IsIndeterminate="True"
-                      IsActive="{x:Bind Vm.IsDataLoading, Mode=TwoWay}"
-                      HorizontalContentAlignment="Center"
-                      VerticalContentAlignment="Center">
-            <ProgressRing.Background>
-                <SolidColorBrush Color="Black"
-                                 Opacity="0.7" />
-            </ProgressRing.Background>
-        </ProgressRing>
+        <Border x:Name="LoadingControl"
+                Grid.Row="1"
+                Padding="25"
+                BorderThickness="2"
+                CornerRadius="10"
+                BorderBrush="{StaticResource CardBackgroundFillColorDefaultBrush}"
+                Background="{StaticResource CardBackgroundFillColorSecondaryBrush}"
+                Visibility="{Binding IsDataLoading, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+            <ProgressRing IsIndeterminate="True"
+                          IsActive="{x:Bind Vm.IsDataLoading, Mode=TwoWay}"
+                          HorizontalContentAlignment="Center"
+                          VerticalContentAlignment="Center">
+                <ProgressRing.Background>
+                    <SolidColorBrush Color="Black"
+                                     Opacity="0.7" />
+                </ProgressRing.Background>
+            </ProgressRing>
+        </Border>
     </Grid>
 </Window>

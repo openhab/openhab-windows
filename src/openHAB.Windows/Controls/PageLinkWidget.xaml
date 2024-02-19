@@ -24,7 +24,7 @@
                           VerticalAlignment="Center"
                           IconPath="{x:Bind Widget, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
                           LabelText="{x:Bind Widget.Label, Mode=OneWay}"
-						  LabelForeground="{x:Bind Widget.LabelColor,Converter={StaticResource StringToColorConverter}, Mode=OneWay}"/>
+						  LabelForeground="{x:Bind Widget.LabelColor, Converter={StaticResource StringToColorConverter}, Mode=OneWay}"/>
 
         <TextBlock Grid.Column="1"
                    Margin="0,0,10,10"

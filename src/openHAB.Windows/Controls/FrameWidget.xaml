@@ -5,8 +5,7 @@
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                   xmlns:local="using:openHAB.Windows.Controls"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                  Width="310"
-                  HorizontalAlignment="Stretch"
+                  HorizontalAlignment="Center"
                   VerticalAlignment="Stretch"
                   d:DesignHeight="300"
                   d:DesignWidth="400"
@@ -24,13 +23,9 @@
         </Style>
         <converters:IconToBitmapConverter x:Key="IconToBitmapConverter" />
     </local:WidgetBase.Resources>
-    <StackPanel VerticalAlignment="Stretch"
+    <StackPanel VerticalAlignment="Top"
+                CornerRadius="10"
                 Background="{StaticResource SolidBackgroundFillColorBaseAltBrush}">
-        <!--<StackPanel.Background>
-            <AcrylicBrush  TintOpacity="0.1"
-                           FallbackColor="{StaticResource SolidBackgroundFillColorTertiaryBrush}"
-                           TintColor="{StaticResource SolidBackgroundFillColorTertiaryBrush}" />
-        </StackPanel.Background>-->
         <StackPanel Margin="5,5,0,0"
                     HorizontalAlignment="Stretch"
                     Orientation="Horizontal">
@@ -45,7 +40,7 @@
                        Text="{x:Bind Widget.Label, Mode=OneWay}"
                        TextWrapping="Wrap" />
         </StackPanel>
-        <GridView HorizontalContentAlignment="Stretch"
+        <GridView HorizontalContentAlignment="Center"
                   VerticalContentAlignment="Stretch"
                   IsItemClickEnabled="True"
                   IsSwipeEnabled="True"
@@ -56,21 +51,9 @@
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <VariableSizedWrapGrid ItemHeight="100"
-                                           ItemWidth="300"
-                                           Margin="10" />
+                                           Margin="5" />
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
         </GridView>
     </StackPanel>
-
-
-    <!--<StackPanel Margin="8, 4, 8, 4" Background="{StaticResource OpenHABLightGreyBrush}">
-		<local:ImageLabel IconPath="{x:Bind Widget, Mode=OneWay, Converter={StaticResource IconToPathConverter}}"
-						  LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
-
-		<ItemsControl IsTapEnabled="False"
-					  Margin="0, 8, 0, 0"
-					  ItemTemplateSelector="{StaticResource WidgetTemplateSelector}"
-					  ItemsSource="{x:Bind Widget.Children, Mode=OneWay}" />
-	</StackPanel>-->
 </local:WidgetBase>
