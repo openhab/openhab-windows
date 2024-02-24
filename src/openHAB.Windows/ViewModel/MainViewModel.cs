@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
 using Microsoft.Extensions.Logging;
-using Microsoft.UI.Dispatching;
 using openHAB.Core.Client.Contracts;
 using openHAB.Core.Client.Messages;
 using openHAB.Core.Client.Models;
@@ -51,8 +50,8 @@ namespace openHAB.Windows.ViewModel
             _breadcrumbItems = new ObservableCollection<OpenHABWidget>();
             _sitemapManager = sitemapManager;
 
-            StrongReferenceMessenger.Default.Register<DataOperation>(this, (obj, operation)
-                => DataOperationStateAsync(operation));
+            StrongReferenceMessenger.Default.Register<DataOperation>(this, async (obj, operation)
+                => await DataOperationStateAsync(operation));
 
             StrongReferenceMessenger.Default.Register<WigetNavigation>(this, (obj, operation)
                 => WidgetNavigatedEvent());
@@ -214,7 +213,7 @@ namespace openHAB.Windows.ViewModel
                 }
 
                 Sitemaps = new ObservableCollection<OpenHABSitemap>(sitemaps);
-                //_openHABClient.StartItemUpdates(loadCancellationToken);
+                _openHABClient.StartItemUpdates(loadCancellationToken);
 
                 SelectedSitemap = OpenLastOrDefaultSitemap();
             }

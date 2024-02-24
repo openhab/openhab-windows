@@ -13,6 +13,11 @@
         /// <summary>
         /// The navigation trigger is from a widget.
         /// </summary>
-        Widget
+        Widget,
+
+        /// <summary>
+        /// The navigation trigger is from the root.
+        /// </summary>
+        Root
     }
 }

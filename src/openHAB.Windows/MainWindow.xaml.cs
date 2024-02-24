@@ -1,7 +1,6 @@
-using System;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
+using Mapsui.Widgets;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
@@ -14,6 +13,8 @@ using openHAB.Core.Messages;
 using openHAB.Windows.Services;
 using openHAB.Windows.View;
 using openHAB.Windows.ViewModel;
+using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 
 namespace openHAB.Windows
@@ -23,19 +24,11 @@ namespace openHAB.Windows
     /// </summary>
     public sealed partial class MainWindow : Window
     {
-        private ILogger<MainPage> _logger;
+        private readonly ILogger<MainPage> _logger;
 
         /// <summary>
-        /// Gets the data context, for use in compiled bindings.
+        /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
-        public MainViewModel Vm
-        {
-            get;
-            private set;
-        }
-
-        public Frame RootFrame => ContentFrame;
-
         public MainWindow()
         {
             _logger = DIService.Instance.GetService<ILogger<MainPage>>();
@@ -53,6 +46,29 @@ namespace openHAB.Windows
             StrongReferenceMessenger.Default.Register<FireInfoMessage>(this, async (recipient, msg) => await ShowInfoMessage(recipient, msg));
 
             Vm.LoadSitemapsAndItemData();
+        }
+
+        /// <summary>
+        /// Gets the root frame.
+        /// </summary>
+        /// <value>
+        /// The root frame.
+        /// </value>
+        public Frame RootFrame => ContentFrame;
+
+        /// <summary>
+        /// Gets the data context, for use in compiled bindings.
+        /// </summary>
+        public MainViewModel Vm
+        {
+            get;
+            private set;
+        }
+
+        private void BreadcrumbBar_ItemClicked(BreadcrumbBar sender, BreadcrumbBarItemClickedEventArgs args)
+        {
+            OpenHABWidget widget = args.Item as OpenHABWidget;
+            StrongReferenceMessenger.Default.Send<WigetNavigation>(new WigetNavigation(null, widget, EventTriggerSource.Breadcrumb));
         }
 
         private async Task ShowErrorMessage(object recipient, ConnectionErrorMessage message)
@@ -132,12 +148,9 @@ namespace openHAB.Windows
             }
         }
 
-        private void BreadcrumbBar_ItemClicked(BreadcrumbBar sender, BreadcrumbBarItemClickedEventArgs args)
+        private void SitemapTextBlock_Tapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            OpenHABWidget widget = args.Item as OpenHABWidget;
-            StrongReferenceMessenger.Default.Send<WigetNavigation>(new WigetNavigation(null, widget, EventTriggerSource.Breadcrumb));
-
-            //this.Vm.SelectedSitemap.WidgetGoBack(widget);
+            StrongReferenceMessenger.Default.Send<WigetNavigation>(new WigetNavigation(null, null, EventTriggerSource.Root));
         }
     }
 }

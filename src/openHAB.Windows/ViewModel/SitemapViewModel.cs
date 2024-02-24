@@ -17,7 +17,7 @@ using openHAB.Windows.Services;
 namespace openHAB.Windows.ViewModel
 {
     /// <summary>
-    /// ViewModel class for the Sitemap view.
+    /// ViewModel class for the sitemap view.
     /// </summary>
     public class SitemapViewModel : ViewModelBase<OpenHABSitemap>, IDisposable
     {
@@ -63,6 +63,10 @@ namespace openHAB.Windows.ViewModel
                 if (msg.Trigger == EventTriggerSource.Breadcrumb)
                 {
                     WidgetGoBack(msg.TargetWidget);
+                }
+                else if (msg.Trigger == EventTriggerSource.Root)
+                {
+                    ExecuteNavigateToSitemapRootCommand(null);
                 }
             });
 
@@ -186,7 +190,7 @@ namespace openHAB.Windows.ViewModel
             SetWidgetsOnScreen(Widgets);
             SelectedWidget = null;
 
-            StrongReferenceMessenger.Default.Send<WigetNavigation>(new WigetNavigation(SelectedWidget, null, EventTriggerSource.Breadcrumb));
+            StrongReferenceMessenger.Default.Send<WigetNavigation>(new WigetNavigation(SelectedWidget, null, EventTriggerSource.Widget));
         }
 
         #endregion
