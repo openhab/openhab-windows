@@ -32,8 +32,8 @@ namespace openHAB.Windows.ViewModel
         private ObservableCollection<OpenHABWidget> _breadcrumbItems;
         private bool _isDataLoading;
         private object _selectedMenuItem;
-        private SitemapViewModel _selectedSitemap;
-        private ObservableCollection<SitemapViewModel> _sitemaps;
+        private OpenHABSitemap _selectedSitemap;
+        private ObservableCollection<OpenHABSitemap> _sitemaps;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
@@ -91,10 +91,10 @@ namespace openHAB.Windows.ViewModel
 
             set
             {
-                SitemapViewModel sitemapViewModel = value as SitemapViewModel;
-                if (sitemapViewModel != null && SelectedSitemap != value)
+                OpenHABSitemap sitemapInfo = value as OpenHABSitemap;
+                if (sitemapInfo != null && SelectedSitemap != value)
                 {
-                    SelectedSitemap = sitemapViewModel;
+                    SelectedSitemap = sitemapInfo;
                 }
 
                 Set(ref _selectedMenuItem, value);
@@ -104,7 +104,7 @@ namespace openHAB.Windows.ViewModel
         /// <summary>
         /// Gets or sets the sitemap currently selected by the user.
         /// </summary>
-        public SitemapViewModel SelectedSitemap
+        public OpenHABSitemap SelectedSitemap
         {
             get
             {
@@ -132,7 +132,7 @@ namespace openHAB.Windows.ViewModel
         /// <summary>
         /// Gets or sets a collection of OpenHAB sitemaps.
         /// </summary>
-        public ObservableCollection<SitemapViewModel> Sitemaps
+        public ObservableCollection<OpenHABSitemap> Sitemaps
         {
             get => _sitemaps;
             set => Set(ref _sitemaps, value);
@@ -180,7 +180,7 @@ namespace openHAB.Windows.ViewModel
             await App.DispatcherQueue.EnqueueAsync(() =>
             {
                 Sitemaps?.Clear();
-                SelectedSitemap.CurrentWidgets?.Clear();
+                SelectedSitemap = null;
                 StrongReferenceMessenger.Default.Send<DataOperation>(new DataOperation(OperationState.Completed));
             });
         }
@@ -213,11 +213,8 @@ namespace openHAB.Windows.ViewModel
                     return;
                 }
 
-                List<SitemapViewModel> sitemapViewModels = new List<SitemapViewModel>();
-                sitemaps.ToList().ForEach(model => sitemapViewModels.Add(new SitemapViewModel(model)));
-
-                Sitemaps = new ObservableCollection<SitemapViewModel>(sitemapViewModels);
-                _openHABClient.StartItemUpdates(loadCancellationToken);
+                Sitemaps = new ObservableCollection<OpenHABSitemap>(sitemaps);
+                //_openHABClient.StartItemUpdates(loadCancellationToken);
 
                 SelectedSitemap = OpenLastOrDefaultSitemap();
             }
@@ -237,7 +234,7 @@ namespace openHAB.Windows.ViewModel
             }
         }
 
-        private SitemapViewModel OpenLastOrDefaultSitemap()
+        private OpenHABSitemap OpenLastOrDefaultSitemap()
         {
             Settings settings = _settingsService.Load();
             string sitemapName = settings.LastSitemap;
@@ -249,7 +246,7 @@ namespace openHAB.Windows.ViewModel
                 return Sitemaps.FirstOrDefault();
             }
 
-            SitemapViewModel selectedSitemap = Sitemaps.FirstOrDefault(x => x.Name == sitemapName);
+            OpenHABSitemap selectedSitemap = Sitemaps.FirstOrDefault(x => x.Name == sitemapName);
             if (SelectedSitemap == null)
             {
                 _logger.LogInformation($"Unable to find sitemap '{sitemapName}' -> Pick first entry from list");

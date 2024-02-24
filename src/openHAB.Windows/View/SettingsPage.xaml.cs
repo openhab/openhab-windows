@@ -74,17 +74,6 @@ namespace openHAB.Windows.View
             return connectionDialog;
         }
 
-        private void AppSettingsListViewItem_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            AppSettings.Visibility = Visibility.Visible;
-            ConnectionSettings.Visibility = Visibility.Collapsed;
-        }
-
-        private void ConnectionSettingsListViewItem_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            AppSettings.Visibility = Visibility.Collapsed;
-            ConnectionSettings.Visibility = Visibility.Visible;
-        }
 
 #pragma warning disable S1172 // Unused method parameters should be removed
         private void HandleSettingsUpdate(object recipient, SettingsUpdatedMessage msg)

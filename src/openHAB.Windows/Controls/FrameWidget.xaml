@@ -6,7 +6,7 @@
                   xmlns:local="using:openHAB.Windows.Controls"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   HorizontalAlignment="Center"
-                  VerticalAlignment="Stretch"
+                  VerticalAlignment="Top"
                   d:DesignHeight="300"
                   d:DesignWidth="400"
                   mc:Ignorable="d"
@@ -46,12 +46,12 @@
                   IsSwipeEnabled="True"
                   ItemClick="OnItemClick"
                   ItemTemplateSelector="{StaticResource WidgetTemplateSelector}"
-                  ItemsSource="{x:Bind Widget.Children, Mode=OneWay}"
+                  ItemsSource="{x:Bind Widget.Children, Mode=TwoWay}"
                   SelectionMode="None">
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <VariableSizedWrapGrid ItemHeight="100"
-                                           Margin="5" />
+                                           Margin="10"/>
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
         </GridView>

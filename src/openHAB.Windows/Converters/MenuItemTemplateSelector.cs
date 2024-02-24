@@ -1,6 +1,7 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Markup;
+using openHAB.Core.Client.Models;
 using openHAB.Windows.ViewModel;
 
 namespace openHAB.Windows.Converters
@@ -27,7 +28,7 @@ namespace openHAB.Windows.Converters
         /// <inheritdoc/>
         protected override DataTemplate SelectTemplateCore(object item)
         {
-            SitemapViewModel sitemapMenuItem = item as SitemapViewModel;
+            OpenHABSitemap sitemapMenuItem = item as OpenHABSitemap;
 
             if (sitemapMenuItem != null)
             {

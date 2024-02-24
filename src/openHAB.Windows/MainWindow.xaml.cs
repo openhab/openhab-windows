@@ -127,7 +127,7 @@ namespace openHAB.Windows
             else
             {
                 sender.AlwaysShowHeader = true;
-                SitemapViewModel sitemap = args.SelectedItem as SitemapViewModel;
+                OpenHABSitemap sitemap = args.SelectedItem as OpenHABSitemap;
                 ContentFrame.Navigate(typeof(SitemapPage), sitemap.Link);
             }
         }
@@ -135,7 +135,9 @@ namespace openHAB.Windows
         private void BreadcrumbBar_ItemClicked(BreadcrumbBar sender, BreadcrumbBarItemClickedEventArgs args)
         {
             OpenHABWidget widget = args.Item as OpenHABWidget;
-            this.Vm.SelectedSitemap.WidgetGoBack(widget);
+            StrongReferenceMessenger.Default.Send<WigetNavigation>(new WigetNavigation(null, widget, EventTriggerSource.Breadcrumb));
+
+            //this.Vm.SelectedSitemap.WidgetGoBack(widget);
         }
     }
 }

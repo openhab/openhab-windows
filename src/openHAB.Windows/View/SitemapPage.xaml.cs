@@ -1,6 +1,5 @@
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
-using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -44,6 +43,9 @@ namespace openHAB.Windows.View
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
+
+            StrongReferenceMessenger.Default.Unregister<SitemapChanged>(this);
+            ViewModel?.Dispose();
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)

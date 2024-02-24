@@ -146,147 +146,130 @@
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0"
                         Orientation="Vertical">
-                <!-- App Settings -->
-                <StackPanel x:Name="AppSettings">
-                    <StackPanel Margin="0,0,0,10"
-                                Padding="12"
-                                Background="{ThemeResource OpenHABLightColor}">
-                        <TextBlock x:Uid="AppSettings"
-                                   Style="{StaticResource TitleStyle}"
-                                   Margin="0,0,0,10" />
-                        <controls:SettingsCard x:Uid="AppAutostart"
-                                               Margin="0,0,0,10"
-                                               HeaderIcon="{ui:FontIcon Glyph=&#xE80F;}">
-                            <ToggleSwitch x:Name="AppAutostartSwitch"
-                                          Margin="0,0,0,12"
-                                          HorizontalAlignment="Stretch"
-                                          VerticalAlignment="Stretch"
-                                          IsEnabled="{Binding Settings.CanAppAutostartEnabled, Mode=TwoWay}"
-                                          IsOn="{Binding Settings.IsAppAutostartEnabled, Mode=TwoWay}" />
-                        </controls:SettingsCard>
-                        <controls:SettingsCard x:Uid="StartAppMinimized"
-                                               Margin="0,0,0,10"
-                                               HeaderIcon="{ui:FontIcon Glyph=&#xE7F4;g}">
-                            <ToggleSwitch x:Name="StartAppMinimizedSwitch"
-                                          Margin="0,0,0,12"
-                                          HorizontalAlignment="Stretch"
-                                          VerticalAlignment="Stretch"
-                                          IsOn="{Binding Settings.StartAppMinimized, Mode=TwoWay}" />
-                        </controls:SettingsCard>
-                        <controls:SettingsCard x:Uid="AppLanguage"
-                                               Margin="0,0,0,10"
-                                               HeaderIcon="{ui:FontIcon Glyph=&#xF2B7;}">
-                            <ComboBox Margin="0,0,0,12"
-                                      ItemsSource="{Binding Settings.AppLanguages}"
-                                      DisplayMemberPath="Name"
-                                      SelectedItem="{Binding Settings.SelectedAppLanguage, Mode=TwoWay}" />
-                        </controls:SettingsCard>
-                    </StackPanel>
-                    <StackPanel Margin="0,0,0,10"
-                                Padding="12"
-                                Background="{ThemeResource OpenHABLightColor}">
-                        <TextBlock x:Uid="NotificationSetting"
-                                   Style="{StaticResource TitleStyle}"
-                                   Margin="0,0,0,10" />
-                        <controls:SettingsCard x:Uid="EnableWindowsNotifications"
-                                               Margin="0,0,0,10"
-                                               HeaderIcon="{ui:FontIcon Glyph=&#xED0C;}">
-                            <ToggleSwitch Margin="0,0,0,12"
-                                          HorizontalAlignment="Stretch"
-                                          VerticalAlignment="Stretch"
-                                          IsOn="{Binding Settings.NotificationsEnable, Mode=TwoWay}" />
-                        </controls:SettingsCard>
-                    </StackPanel>
-                    <StackPanel Margin="0,0,0,10"
-                                Padding="12"
-                                Background="{ThemeResource OpenHABLightColor}">
-                        <TextBlock x:Uid="SitemapSetting"
-                                   Style="{StaticResource TitleStyle}"
-                                   Margin="0,0,0,10" />
-                        <controls:SettingsCard x:Uid="ShowDefaultSitemap"
-                                               Margin="0,0,0,10"
-                                               HeaderIcon="{ui:FontIcon Glyph=&#xF22C;}">
-                            <ToggleSwitch x:Name="CheckBoxHideDefaultSitemap"
-                                          Margin="0,0,0,12"
-                                          HorizontalAlignment="Stretch"
-                                          VerticalAlignment="Stretch"
-                                          IsOn="{Binding Settings.ShowDefaultSitemap, Mode=TwoWay}" />
-                        </controls:SettingsCard>
-                        <controls:SettingsCard x:Uid="SVGIcons"
-                                               Margin="0,0,0,10"
-                                               HeaderIcon="{ui:FontIcon Glyph=&#xE91B;}">
-                            <ToggleSwitch x:Name="CheckBoxSVGIcons"
-                                          Margin="0,0,0,12"
-                                          HorizontalAlignment="Stretch"
-                                          VerticalAlignment="Stretch"
-                                          IsOn="{Binding Settings.UseSVGIcons, Mode=TwoWay}" />
-                        </controls:SettingsCard>
-                        <controls:SettingsCard x:Uid="ClearIconCache"
-                                               Margin="0,0,0,10"
-                                               HeaderIcon="{ui:FontIcon Glyph=&#xF12B;}">
-                            <Button x:Uid="ClearIconCacheButton"
-                                    Margin="0,0,0,12"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Command="{x:Bind Vm.ClearIconCacheCommand}" />
-                        </controls:SettingsCard>
-                    </StackPanel>
+                <StackPanel Margin="0,0,0,10"
+                            Padding="12">
+                    <TextBlock x:Uid="AppSettings"
+                               Style="{StaticResource TitleStyle}"
+                               Margin="0,0,0,10" />
+                    <controls:SettingsCard x:Uid="AppAutostart"
+                                           Margin="0,0,0,10"
+                                           HeaderIcon="{ui:FontIcon Glyph=&#xE80F;}">
+                        <ToggleSwitch x:Name="AppAutostartSwitch"
+                                      Margin="0,0,0,12"
+                                      HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Stretch"
+                                      IsEnabled="{Binding Settings.CanAppAutostartEnabled, Mode=TwoWay}"
+                                      IsOn="{Binding Settings.IsAppAutostartEnabled, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+                    <controls:SettingsCard x:Uid="StartAppMinimized"
+                                           Margin="0,0,0,10"
+                                           HeaderIcon="{ui:FontIcon Glyph=&#xE7F4;g}">
+                        <ToggleSwitch x:Name="StartAppMinimizedSwitch"
+                                      Margin="0,0,0,12"
+                                      HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Stretch"
+                                      IsOn="{Binding Settings.StartAppMinimized, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+                    <controls:SettingsCard x:Uid="AppLanguage"
+                                           Margin="0,0,0,10"
+                                           HeaderIcon="{ui:FontIcon Glyph=&#xF2B7;}">
+                        <ComboBox Margin="0,0,0,12"
+                                  ItemsSource="{Binding Settings.AppLanguages}"
+                                  DisplayMemberPath="Name"
+                                  SelectedItem="{Binding Settings.SelectedAppLanguage, Mode=TwoWay}" />
+                    </controls:SettingsCard>
                 </StackPanel>
-                <!-- Connection Settings -->
-                <Grid x:Name="ConnectionSettings"
-                      Margin="0,0,0,10"
-                      Padding="12"
-                      Background="{ThemeResource OpenHABLightColor}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0">
-                        <TextBlock x:Uid="ConnectionSettingsSection"
-                                   Style="{StaticResource TitleStyle}"
-                                   Margin="0,0,0,10" />
-                        <controls:SettingsCard x:Uid="DemoModeHeader"
-                                               HeaderIcon="{ui:FontIcon Glyph=&#xE81E;}" 
-                                               Margin="0,0,0,10">
-                            <ToggleSwitch x:Name="CheckBoxDemoMode"
-                                          Margin="0,0,0,12"
-                                          HorizontalAlignment="Stretch"
-                                          VerticalAlignment="Stretch"
-                                          IsOn="{Binding Settings.IsRunningInDemoMode, Mode=TwoWay}" />
-                        </controls:SettingsCard>
-                        <controls:SettingsExpander x:Uid="ConnectionSettings"
-                                                   HeaderIcon="{ui:FontIcon Glyph=&#xE839;}">
-                            <controls:SettingsExpander.Items>
-                                <controls:SettingsCard x:Uid="LocalSettings"
-                                                       DataContext="{Binding Path=Settings.LocalConnection}"
-                                                       Description="{Binding Subtitle}"
-                                                       HeaderIcon="{ui:FontIcon Glyph=&#xEC27;}">
-                                    <Button x:Uid="ConnectionSettingsButton"
-                                            Margin="10"
-                                            HorizontalAlignment="Stretch"
-                                            VerticalAlignment="Stretch"
-                                            HorizontalContentAlignment="Left"
-                                            IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-                                            Click="OpenLocalConnectionButton_Click" />
-                                </controls:SettingsCard>
-                                <controls:SettingsCard x:Uid="RemoteSettings"
-                                                       DataContext="{Binding Path=Settings.RemoteConnection}"
-                                                       Description="{Binding Subtitle}"
-                                                       HeaderIcon="{ui:FontIcon Glyph=&#xE909;}">
-                                    <Button x:Uid="ConnectionSettingsButton"
-                                            Margin="10"
-                                            HorizontalAlignment="Stretch"
-                                            VerticalAlignment="Stretch"
-                                            HorizontalContentAlignment="Left"
-                                            IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
-                                            Click="OpenRemoteConnectionButton_Click" />
-                                </controls:SettingsCard>
-                            </controls:SettingsExpander.Items>
-                        </controls:SettingsExpander>
-                    </StackPanel>
-                    <StackPanel Grid.Row="1"></StackPanel>
-                </Grid>
+                <StackPanel Margin="0,0,0,10"
+                            Padding="12">
+                    <TextBlock x:Uid="NotificationSetting"
+                               Style="{StaticResource TitleStyle}"
+                               Margin="0,0,0,10" />
+                    <controls:SettingsCard x:Uid="EnableWindowsNotifications"
+                                           Margin="0,0,0,10"
+                                           HeaderIcon="{ui:FontIcon Glyph=&#xED0C;}">
+                        <ToggleSwitch Margin="0,0,0,12"
+                                      HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Stretch"
+                                      IsOn="{Binding Settings.NotificationsEnable, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+                </StackPanel>
+                <StackPanel Margin="0,0,0,10"
+                            Padding="12">
+                    <TextBlock x:Uid="SitemapSetting"
+                               Style="{StaticResource TitleStyle}"
+                               Margin="0,0,0,10" />
+                    <controls:SettingsCard x:Uid="ShowDefaultSitemap"
+                                           Margin="0,0,0,10"
+                                           HeaderIcon="{ui:FontIcon Glyph=&#xF22C;}">
+                        <ToggleSwitch x:Name="CheckBoxHideDefaultSitemap"
+                                      Margin="0,0,0,12"
+                                      HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Stretch"
+                                      IsOn="{Binding Settings.ShowDefaultSitemap, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+                    <controls:SettingsCard x:Uid="SVGIcons"
+                                           Margin="0,0,0,10"
+                                           HeaderIcon="{ui:FontIcon Glyph=&#xE91B;}">
+                        <ToggleSwitch x:Name="CheckBoxSVGIcons"
+                                      Margin="0,0,0,12"
+                                      HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Stretch"
+                                      IsOn="{Binding Settings.UseSVGIcons, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+                    <controls:SettingsCard x:Uid="ClearIconCache"
+                                           Margin="0,0,0,10"
+                                           HeaderIcon="{ui:FontIcon Glyph=&#xF12B;}">
+                        <Button x:Uid="ClearIconCacheButton"
+                                Margin="0,0,0,12"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Command="{x:Bind Vm.ClearIconCacheCommand}" />
+                    </controls:SettingsCard>
+                </StackPanel>
+                <StackPanel Margin="0,0,0,10"
+                            Padding="12">
+                    <TextBlock x:Uid="ConnectionSettingsSection"
+                               Style="{StaticResource TitleStyle}"
+                               Margin="0,0,0,10" />
+                    <controls:SettingsCard x:Uid="DemoModeHeader"
+                                           HeaderIcon="{ui:FontIcon Glyph=&#xE81E;}"
+                                           Margin="0,0,0,10">
+                        <ToggleSwitch x:Name="CheckBoxDemoMode"
+                                      Margin="0,0,0,12"
+                                      HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Stretch"
+                                      IsOn="{Binding Settings.IsRunningInDemoMode, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+                    <controls:SettingsExpander x:Uid="ConnectionSettings"
+                                               HeaderIcon="{ui:FontIcon Glyph=&#xE839;}">
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="LocalSettings"
+                                                   DataContext="{Binding Path=Settings.LocalConnection}"
+                                                   Description="{Binding Subtitle}"
+                                                   HeaderIcon="{ui:FontIcon Glyph=&#xEC27;}">
+                                <Button x:Uid="ConnectionSettingsButton"
+                                        Margin="10"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
+                                        Click="OpenLocalConnectionButton_Click" />
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="RemoteSettings"
+                                                   DataContext="{Binding Path=Settings.RemoteConnection}"
+                                                   Description="{Binding Subtitle}"
+                                                   HeaderIcon="{ui:FontIcon Glyph=&#xE909;}">
+                                <Button x:Uid="ConnectionSettingsButton"
+                                        Margin="10"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        IsEnabled="{x:Bind CheckBoxDemoMode.IsOn, Converter={StaticResource ReverseBoolConverter}, Mode=OneWay}"
+                                        Click="OpenRemoteConnectionButton_Click" />
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
+                </StackPanel>
             </StackPanel>
             <muxc:InfoBar x:Name="SettingsNotification"
                           Grid.Row="1"

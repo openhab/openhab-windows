@@ -7,9 +7,6 @@
         xmlns:core="using:Microsoft.Xaml.Interactions.Core"
         xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
         xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-        xmlns:viewModel="using:openHAB.Windows.ViewModel"
-        xmlns:controls="using:openHAB.Windows.Controls"
-        xmlns:media="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:model="using:openHAB.Core.Client.Models"
         mc:Ignorable="d"
         Title="openHab"
@@ -68,8 +65,8 @@
                     </DataTemplate>
                 </converters:MenuItemTemplateSelector.DefaultItemTemlate>
                 <converters:MenuItemTemplateSelector.SiteMapMenuItemTemplate>
-                    <DataTemplate x:DataType="viewModel:SitemapViewModel">
-                        <muxc:NavigationViewItem Content="{x:Bind Label, Mode=OneWay}">
+                    <DataTemplate x:DataType="model:OpenHABSitemap">
+                        <muxc:NavigationViewItem Content="{Binding Label, Mode=OneWay}">
                             <muxc:NavigationViewItem.Icon>
                                 <muxc:ImageIcon Source="ms-appx:///Assets/openhab.png"
                                                 Width="48"
@@ -78,7 +75,7 @@
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Tapped">
                                     <core:NavigateToPageAction TargetPage="openHAB.Windows.View.SitemapPage"
-                                                               Parameter="{x:Bind Link, Mode=OneWay}" />
+                                                               Parameter="{Binding Link, Mode=OneWay}" />
                                 </core:EventTriggerBehavior>
                             </interactivity:Interaction.Behaviors>
                         </muxc:NavigationViewItem>
@@ -96,13 +93,14 @@
                                 Orientation="Horizontal">
                         <TextBlock Style="{StaticResource SitemapHeader}"
                                    Text="{Binding Vm.SelectedSitemap.Label, ElementName=Window, Mode=OneWay}">
-                            <interactivity:Interaction.Behaviors>
+                            <!--<interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Tapped">
                                     <core:InvokeCommandAction Command="{Binding Vm.SelectedSitemap.NavigateToSitemapRoot, ElementName=Window, Mode=OneWay}" />
                                 </core:EventTriggerBehavior>
-                            </interactivity:Interaction.Behaviors></TextBlock>
-                        <Button Margin="10,0,0,0"
-                                Command="{Binding Vm.SelectedSitemap.ReloadSitemapCommand, ElementName=Window}">
+                            </interactivity:Interaction.Behaviors>--></TextBlock>
+                        <!--<Button Margin="10,0,0,0"
+                                Command="{Binding Vm.SelectedSitemap.ReloadSitemapCommand, ElementName=Window}">-->
+                        <Button Margin="10,0,0,0">
                             <SymbolIcon Symbol="Refresh"
                                         Foreground="{StaticResource TextFillColorPrimaryBrush}"
                                         VerticalAlignment="Center" />
@@ -130,7 +128,8 @@
             <DataTemplate x:Key="NavHeaderTemplate">
                 <StackPanel Orientation="Horizontal"
                             Margin="10">
-                    <Button Command="{Binding Vm.SelectedSitemap.ReloadSitemapCommand, ElementName=Window}">
+                    <!--<Button Command="{Binding Vm.SelectedSitemap.ReloadSitemapCommand, ElementName=Window}">-->
+                    <Button>
                         <SymbolIcon Symbol="Refresh"
                                     Foreground="{StaticResource TextFillColorPrimaryBrush}"
                                     VerticalAlignment="Center" />

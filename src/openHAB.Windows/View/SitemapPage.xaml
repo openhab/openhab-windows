@@ -5,7 +5,6 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
       DataContext="{x:Bind ViewModel}">
-    <Page.Resources></Page.Resources>
     <Grid x:Name="MainContentGrid"
           Margin="35,0,0,0"
           VerticalAlignment="Stretch">
@@ -17,10 +16,6 @@
                       VerticalScrollBarVisibility="Auto">
             <GridView x:Name="MasterListView"
                       Margin="12,0,0,0"
-                      HorizontalAlignment="Stretch"
-                      VerticalAlignment="Stretch"
-                      HorizontalContentAlignment="Stretch"
-                      VerticalContentAlignment="Stretch"
                       IsItemClickEnabled="True"
                       IsTapEnabled="True"
                       ItemClick="MasterListView_OnItemClick"
@@ -30,6 +25,7 @@
                 <GridView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VariableSizedWrapGrid ItemWidth="335"
+                                               ItemHeight="106"
                                                Orientation="Horizontal" />
                     </ItemsPanelTemplate>
                 </GridView.ItemsPanel>
