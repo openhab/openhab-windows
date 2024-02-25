@@ -84,14 +84,18 @@ jobs:
   
   publish_beta:
     uses: ./.github/workflows/publish.yml
-    needs: build
+    needs: 
+      - build
+      - configure
     with:
       environment: BETA
-      package_name: ""
+      package_name: "openHAB.Windows_${{needs.configure.outputs.buildNumber}}_x86_x64_arm_bundle"
 
   publish_prod:
     uses: ./.github/workflows/publish.yml
-    needs: publish_beta
+    needs: 
+      - publish_beta
+      - configure
     with:
       environment: PROD
-      package_name: ""
+      package_name: "openHAB.Windows_${{needs.configure.outputs.buildNumber}}_x86_x64_arm_bundle"

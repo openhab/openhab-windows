@@ -42,4 +42,4 @@ jobs:
           client-id: ${{ secrets.AZURE_AD_APPLICATION_CLIENT_ID }}
           client-secret: ${{ secrets.AZURE_AD_APPLICATION_SECRET }}
           app-id: ${{ secrets.STORE_APP_ID }}
-          package-path: "${{ github.workspace }}/${{inputs.artifact_directory}}/${{inputs.package_name}}.appxupload"
+          package-path: "${{ github.workspace }}/${{inputs.artifact_directory}}/${{inputs.package_name}}.msixupload"
