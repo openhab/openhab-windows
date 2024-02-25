@@ -10,7 +10,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using openHAB.Core.Client.Common;
 using openHAB.Core.Client.Connection.Contracts;
-using openHAB.Core.Client.Connection.Models;
 using openHAB.Core.Client.Contracts;
 using openHAB.Core.Client.Event;
 using openHAB.Core.Client.Event.Contracts;

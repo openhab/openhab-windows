@@ -26,6 +26,7 @@ namespace openHAB.Windows.ViewModel
         private ObservableCollection<OpenHABWidget> _currentWidgets;
         private OpenHABWidget _selectedWidget;
         private ObservableCollection<OpenHABWidget> _widgets;
+        private bool disposedValue;
 
         #region Constructors
 
@@ -175,9 +176,9 @@ namespace openHAB.Windows.ViewModel
 
         private bool _canExecuteReloadSitemap;
         private ActionCommand _navigateToSitemapRootCommand;
-        private bool disposedValue;
 
-        public ActionCommand NavigateToSitemapRoot => _navigateToSitemapRootCommand ?? (_navigateToSitemapRootCommand = new ActionCommand(ExecuteNavigateToSitemapRootCommand, CanExecuteNavigateToSitemapRootCommand));
+        public ActionCommand NavigateToSitemapRoot => 
+            _navigateToSitemapRootCommand ?? (_navigateToSitemapRootCommand = new ActionCommand(ExecuteNavigateToSitemapRootCommand, CanExecuteNavigateToSitemapRootCommand));
 
         private bool CanExecuteNavigateToSitemapRootCommand(object arg)
         {
@@ -210,11 +211,6 @@ namespace openHAB.Windows.ViewModel
             }
         }
 
-        private async void OnWidgetClickedAction(OpenHABWidget widget)
-        {
-            await OnWidgetClickedAsync(widget);
-        }
-
         private async Task TriggerItemCommand(TriggerCommandMessage message)
         {
             HttpResponseResult<bool> result = await _sitemapService.SendItemCommand(message.Item, message.Command).ConfigureAwait(false);
@@ -229,11 +225,7 @@ namespace openHAB.Windows.ViewModel
 
         #endregion
 
-        /// <summary>
-        /// Loads widgets for sitemap.
-        /// </summary>W
-        /// <returns>Task for async processing.</returns>
-        public async Task LoadWidgetsAsync()
+        private async Task LoadWidgetsAsync()
         {
             this.Widgets = new ObservableCollection<OpenHABWidget>();
             CurrentWidgets?.Clear();
@@ -244,7 +236,7 @@ namespace openHAB.Windows.ViewModel
             SetWidgetsOnScreen(this.Widgets);
         }
 
-        public async Task ReloadSitemap()
+        private async Task ReloadSitemap()
         {
             CurrentWidgets?.Clear();
             StrongReferenceMessenger.Default.Send<DataOperation>(new DataOperation(OperationState.Started));
@@ -272,56 +264,7 @@ namespace openHAB.Windows.ViewModel
             ReloadSitemapCommand.InvokeCanExecuteChanged(null);
         }
 
-        //public async Task SelectWidget()
-        //{
-        //    if (SelectedWidget != null)
-        //    {
-        //        await LoadWidgetsAsync().ConfigureAwait(false);
-        //        OpenHABWidget widget = FindWidget(SelectedWidget.WidgetId, Widgets);
-        //        if (widget != null)
-        //        {
-        //            await OnWidgetClickedAsync(widget);
-        //        }
-        //        else
-        //        {
-        //            SelectedWidget = null;
-        //            WidgetNavigationService.ClearWidgetNavigation();
-        //        }
-        //    }
-        //    else
-        //    {
-        //        await LoadWidgetsAsync().ConfigureAwait(false);
-        //    }
-        //}
-
-        public async void SetWidgetsOnScreen(ICollection<OpenHABWidget> widgets)
-        {
-            await App.DispatcherQueue.EnqueueAsync(() =>
-            {
-                CurrentWidgets.Clear();
-                CurrentWidgets.AddRange(widgets);
-            });
-        }
-
-        /// <summary>
-        /// Navigate backwards between linked pages.
-        /// </summary>
-        public void WidgetGoBack(OpenHABWidget widget)
-        {
-            OpenHABWidget lastWidget = SelectedWidget;
-            OpenHABWidget widgetFromStack = null;
-
-            while (widgetFromStack == null || widgetFromStack.WidgetId != widget.WidgetId)
-            {
-                widgetFromStack = WidgetNavigationService.GoBack();
-            }
-
-            SelectedWidget = widgetFromStack;
-            WidgetNavigationService.Navigate(SelectedWidget);
-            StrongReferenceMessenger.Default.Send<WigetNavigation>(new WigetNavigation(lastWidget, SelectedWidget, EventTriggerSource.Widget));
-
-            SetWidgetsOnScreen(SelectedWidget.LinkedPage.Widgets);
-        }
+        #region Widget interaction
 
         private OpenHABWidget FindWidget(string widgetId, ICollection<OpenHABWidget> widgets)
         {
@@ -367,7 +310,40 @@ namespace openHAB.Windows.ViewModel
             });
         }
 
+        private async void SetWidgetsOnScreen(ICollection<OpenHABWidget> widgets)
+        {
+            await App.DispatcherQueue.EnqueueAsync(() =>
+            {
+                CurrentWidgets.Clear();
+                CurrentWidgets.AddRange(widgets);
+            });
+        }
+
+        private void WidgetGoBack(OpenHABWidget widget)
+        {
+            OpenHABWidget lastWidget = SelectedWidget;
+            OpenHABWidget widgetFromStack = null;
+
+            while (widgetFromStack == null || widgetFromStack.WidgetId != widget.WidgetId)
+            {
+                widgetFromStack = WidgetNavigationService.GoBack();
+            }
+
+            SelectedWidget = widgetFromStack;
+            WidgetNavigationService.Navigate(SelectedWidget);
+            StrongReferenceMessenger.Default.Send<WigetNavigation>(new WigetNavigation(lastWidget, SelectedWidget, EventTriggerSource.Widget));
+
+            SetWidgetsOnScreen(SelectedWidget.LinkedPage.Widgets);
+        }
+        #endregion
+
         #region Dispose
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
 
         protected virtual void Dispose(bool disposing)
         {
@@ -390,14 +366,6 @@ namespace openHAB.Windows.ViewModel
                 disposedValue = true;
             }
         }
-
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
         #endregion
     }
 }
