@@ -32,82 +32,8 @@ jobs:
   build:
     name: 'Build openHAB Windows App'
     runs-on: windows-latest
-
     steps:
-    - name: Checkout main code
-      uses: actions/checkout@v2
-      with:
-        path: repo
-        clean: true
-
-    - name: Update Version Number in app files
-      id: update-packageverion
-      shell: pwsh
-      run: | 
-            Set-Location ${{github.action_path}}/
-            $version = [System.Version]::Parse('${{inputs.build_number}}')       
-            ./Set-Version.ps1 -SourceDirectory '${{github.workspace}}\repo\src\' -Major $version.Major -Minor $version.Minor -Build  $version.Build -Revision 0 -SetVersion
-
-    - name: Setup NuGet.exe for use with actions
-      uses: NuGet/setup-nuget@v1.0.5
-      with:
-        nuget-version: 'latest'
-    
-    - name: setup-msbuild
-      uses: microsoft/setup-msbuild@v2
-
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: 17
-        distribution: 'zulu'
-
-    - name: Cache SonarCloud packages
-      uses: actions/cache@v3
-      with:
-        path: ~\sonar\cache
-        key: ${{ runner.os }}-sonar
-        restore-keys: ${{ runner.os }}-sonar
-
-    - name: Cache SonarCloud scanner
-      id: cache-sonar-scanner
-      uses: actions/cache@v3
-      with:
-        path: .\.sonar\scanner
-        key: ${{ runner.os }}-sonar-scanner
-        restore-keys: ${{ runner.os }}-sonar-scanner
-
-    - name: Install SonarCloud scanner
-      if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
-      shell: powershell
-      run: |
-        New-Item -Path .\.sonar\scanner -ItemType Directory
-        dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
-
-    - name: Begin SonarQube analyze
-      env:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
+    - name: script
       shell: pwsh
       run: |
-        .\.sonar\scanner\dotnet-sonarscanner begin /k:"openhab_openhab-windows" /o:"openhab" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-
-    - name: Build OpenHab Windows App
-      shell: pwsh
-      run: |
-          Write-Host "==== Build app package ====" -ForegroundColor Green
-          msbuild.exe ${{github.workspace}}\repo\OpenHAB.Windows.sln /p:Platform="x86" /p:AppxBundlePlatforms="${{inputs.bundle_Platforms}}" /p:AppxPackageDir="${{inputs.output_directory}}" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="${{inputs.build_configuration}}" /t:rebuild
-    
-    - name: End SonarQube analyze
-      env:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
-      shell: pwsh
-      run: |
-        .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
-
-    - name: Upload App Package
-      uses: actions/upload-artifact@v2
-      with:
-        name: app
-        path: ${{env.BuildDirectory}}
+        Write-Host "Hello, world! The build number is $env:BUILD_NUMBER"

@@ -25,16 +25,7 @@ jobs:
       runs-on: ubuntu-latest 
       if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/releases/beta'
       steps:
-        - name: Download a App Package from Build Artifacts
-          uses: actions/download-artifact@v2.0.8
-          with:
-            name: app
-            path: '${{env.BuildDirectory}}'
-
-        - name: Create a Release
-          id: create_release
-          uses: "marvinpinto/action-automatic-releases@latest"
-          with:
-            repo_token: ${{ secrets.GITHUB_TOKEN }}
-            automatic_release_tag: ${{inputs.build_number}}
-            title: ${{inputs.build_number}}
+        - name: script
+          shell: pwsh
+          run: |
+            Write-Host "Hello, world! The build number is $env:BUILD_NUMBER"

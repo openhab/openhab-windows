@@ -73,4 +73,7 @@ jobs:
     needs: build
     uses: ./.github/workflows/release.yml
     with:
+      BetaRelease: false
+      BuildConfiguration: ${{needs.configure.outputs.build_configuration}}
+      build_number: ${{needs.configure.outputs.build_number}}
       
