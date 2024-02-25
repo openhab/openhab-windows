@@ -28,7 +28,7 @@ on:
 
 jobs:
   build:
-    name: 'Build openHAB Windows App'
+    name: 'Build App Package'
     runs-on: windows-latest
 
     steps:
@@ -42,7 +42,7 @@ jobs:
       id: update-packageverion
       shell: pwsh
       run: | 
-            Set-Location ${{github.action_path}}/
+            ls -l ${{github.workspace}}
             $version = [System.Version]::Parse('${{inputs.build_number}}')       
             ${{github.workspace}}\.github\workflows\scripts\Set-Version.ps1 -SourceDirectory '${{github.workspace}}/repo/src/' -Major $version.Major -Minor $version.Minor -Build  $version.Build -Revision 0 -SetVersion
 
