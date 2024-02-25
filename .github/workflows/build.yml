@@ -1,0 +1,39 @@
+name: 'Build App Package'
+
+env:
+  BUILD_NUMBER: '1970.1.1'
+  BuildDirectory: '${{github.workspace}}\build'
+  ACTIONS_RUNNER_DEBUG: true
+
+on:
+  workflow_call:
+    inputs:
+      build_configuration:
+        description: 'The build configuration to use'
+        type: string
+        required: true
+        default: 'Release'
+      bundle_Platforms: 
+        type: string
+        description: 'Defines the platforms for the app package.'
+        required: false
+        default: ' x86|x64|ARM'
+      output_directory:
+        type: string
+        description: 'Defines the output directory for the app package'
+        required: false
+        default: '${{github.workspace}}\build'
+      build_number:
+        type: string
+        description: 'The build number to use'
+        required: true
+
+jobs:
+  build:
+    name: 'Build openHAB Windows App'
+    runs-on: windows-latest
+    steps:
+    - name: script
+      shell: pwsh
+      run: |
+        Write-Host "Hello, world! The build number is $env:BUILD_NUMBER"

@@ -1,0 +1,31 @@
+name: App Release
+ 
+env:
+  BuildDirectory: '${{github.workspace}}\build'
+
+on: 
+  workflow_dispatch:
+    inputs:
+      BetaRelease:
+        description: 'Specifices if a beta release should be created.'
+        default: 'false'
+        required: false
+      BuildConfiguration:
+        description: 'Specifices if a release or debug package should be created.'
+        default: 'release'
+        required: false
+      build_number:
+        type: string
+        description: 'The build number to use'
+        required: true
+    
+jobs:
+  release:
+      name: 'Creates an app release'
+      runs-on: ubuntu-latest 
+      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/releases/beta'
+      steps:
+        - name: script
+          shell: pwsh
+          run: |
+            Write-Host "Hello, world! The build number is $env:BUILD_NUMBER"

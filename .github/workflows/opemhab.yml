@@ -1,0 +1,79 @@
+name: 'openHAB Build and Release app'
+run-name: app-${{github.run_id }}
+
+env:
+  BUILD_NUMBER: '1970.1.1'
+  BuildDirectory: '${{github.workspace}}\build'
+  ACTIONS_RUNNER_DEBUG: true
+
+on:
+  workflow_dispatch:
+    inputs:
+      BetaRelease:
+        description: 'Specifices if a beta release should be created.'
+        default: 'false'
+        required: false
+      BuildConfiguration:
+        description: 'Specifices if a release or debug package should be created.'
+        default: 'release'
+        required: false
+      IsBetaRelease:
+        description: 'Specifices if a beta release should be created.'
+        default: 'false'
+        required: false
+
+jobs:
+  configure:
+    runs-on: ubuntu-latest
+    outputs:
+      build_configuration: ${{ steps.detect-build-configuration.outputs.BuildConfiguration }}
+      bundle_Platforms: ${{ steps.detect-build-configuration.outputs.BundlePlatforms }}
+      build_number: ${{ steps.set-buildnumbe.outputs.BUILD_NUMBER }}
+      release_name: ${{ steps.set-buildnumbe.outputs.ReleaseName }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Detect Build Configuration
+        id: detect-build-configuration
+        shell: pwsh
+        run: |
+          if ($env:github.ref -eq 'refs/heads/main') {
+            echo "BuildConfiguration=release" >> $GITHUB_OUTPUT
+            echo "BundlePlatforms=x86|x64|ARM" >> $GITHUB_OUTPUT
+          } else {
+            echo "BuildConfiguration=debug" >> $GITHUB_OUTPUT
+            echo "BundlePlatforms=x86" >> $GITHUB_OUTPUT
+          }
+       
+      - name: Set build number and release name
+        id: set-buildnumbe
+        shell: pwsh
+        run: |
+          $CURRENTDATE = Get-Date -Format "yyyy.MM.dd"
+          Write-Host "BUILD_NUMBER=${CURRENTDATE}.${{github.run_number}}" >> $env:GITHUB_OUTPUT
+
+          $IS_BETA_RELEASE = ${{ inputs.IsBetaRelease }}
+          if ($IS_BETA_RELEASE) {
+            Write-Host "ReleaseName=Beta:${CURRENTDATE}.${{github.run_number}}" >> $env:GITHUB_OUTPUT
+          } else {
+            Write-Host "ReleaseName=${CURRENTDATE}.${{github.run_number}}" >> $env:GITHUB_OUTPUT
+          }
+    
+  build:
+    uses: ./.github/workflows/build.yml
+    needs: configure
+    with:
+      build_configuration: ${{needs.configure.outputs.build_configuration}}
+      bundle_Platforms: ${{ needs.configure.outputs.bundle_Platforms}}
+      build_number: ${{ needs.configure.outputs.build_number}}
+    secrets: inherit
+
+  create_release:
+    needs: build
+    uses: ./.github/workflows/release.yml
+    with:
+      BetaRelease: false
+      BuildConfiguration: ${{needs.configure.outputs.build_configuration}}
+      build_number: ${{needs.configure.outputs.build_number}}
+      
