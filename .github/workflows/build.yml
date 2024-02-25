@@ -44,7 +44,7 @@ jobs:
       run: | 
             Set-Location ${{github.action_path}}/
             $version = [System.Version]::Parse('${{inputs.build_number}}')       
-            & "${{github.workspace}}\.github\workflows\scripts\Set-Version.ps1" -SourceDirectory '${{github.workspace}}/repo/src/' -Major $version.Major -Minor $version.Minor -Build  $version.Build -Revision 0 -SetVersion
+            ${{github.workspace}}\.github\workflows\scripts\Set-Version.ps1 -SourceDirectory '${{github.workspace}}/repo/src/' -Major $version.Major -Minor $version.Minor -Build  $version.Build -Revision 0 -SetVersion
 
     - name: Setup NuGet.exe for use with actions
       uses: NuGet/setup-nuget@v1.0.5
