@@ -48,13 +48,13 @@ jobs:
         shell: pwsh
         run: |
           $CURRENTDATE = Get-Date -Format "yyyy.MM.dd"
-          Write-Host "BUILD_NUMBER=${CURRENTDATE}" >> $env:GITHUB_ENV
+          Write-Host "BUILD_NUMBER=${CURRENTDATE}" >> $env:GITHUB_OUTPUT
 
           $IS_BETA_RELEASE = ${{ inputs.IsBetaRelease }}
           if ($IS_BETA_RELEASE -eq 'true') {
-            Write-Host "RELEASE_NAME=Beta:${CURRENTDATE}.${{github.run_number}}" >> $env:GITHUB_ENV
+            Write-Host "RELEASE_NAME=Beta:${CURRENTDATE}.${{github.run_number}}" >> $env:GITHUB_OUTPUT
           } else {
-            Write-Host "RELEASE_NAME=${CURRENTDATE}" >> $env:GITHUB_ENV
+            Write-Host "RELEASE_NAME=${CURRENTDATE}" >> $env:GITHUB_OUTPUT
           }
     
   build:
