@@ -65,6 +65,7 @@ jobs:
     
   build:
     uses: ./.github/workflows/build.yml
+    name: Build App Package
     needs: configure
     with:
       build_configuration: ${{needs.configure.outputs.buildConfiguration}}
