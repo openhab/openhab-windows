@@ -25,7 +25,7 @@ jobs:
       buildConfiguration: ${{ steps.configuration.outputs.BuildConfiguration }}
       bundlePlatforms: ${{ steps.configuration.outputs.BundlePlatforms }}
       buildNumber: ${{ steps.buildnumber.outputs.BUILD_NUMBER }}
-      releaseName: ${{ steps.buildnumber.outputs.Release_Name }}
+      releaseName: ${{ steps.buildnumber.outputs.RELEASE_NAME }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
