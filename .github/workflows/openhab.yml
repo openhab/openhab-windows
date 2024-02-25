@@ -81,3 +81,17 @@ jobs:
     with:
       beta_release: ${{ inputs.IsBetaRelease }}
       build_number: ${{needs.configure.outputs.buildNumber}}
+  
+  publish_beta:
+    needs: build
+    uses: ./.github/workflows/publish.yml
+    with:
+      environment: BETA
+      package_name: ""
+
+  publish_prod:
+    needs: publish_beta
+    uses: ./.github/workflows/publish.yml
+    with:
+      environment: PROD
+      package_name: ""

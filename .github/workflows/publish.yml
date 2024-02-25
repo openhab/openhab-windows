@@ -1,0 +1,45 @@
+name: 'Deploy App Package'
+
+env:
+  BuildDirectory: '${{github.workspace}}\build'
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        description: 'Defines the environment for the app package'
+        required: true
+      package_name:
+        type: string
+        description: 'The name of the app package'
+        required: true  
+      artifact_name: 
+        type: string
+        description: 'The name of the artifact to download'
+        default: 'app'
+      artifact_directory:
+        type: string
+        description: 'Defines the output directory for the app package'
+        default: '${{github.workspace}}\packages\'
+     
+jobs:
+  deploy:
+    name: 'Deploy App Package'
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+    steps:
+      - name: Download a App Package from Build Artifacts
+        uses: actions/download-artifact@v2.0.8
+        with:
+          name: ${{inputs.artifact_name}}
+          path: '${{env.BuildDirectory}}/${{inputs.artifact_directory}}/'
+
+      - uses: isaacrlevin/windows-store-action
+        name: Publish to Store
+        with:
+          tenant-id: ${{ secrets.AZURE_AD_TENANT_ID }}
+          client-id: ${{ secrets.AZURE_AD_APPLICATION_CLIENT_ID }}
+          client-secret: ${{ secrets.AZURE_AD_APPLICATION_SECRET }}
+          app-id: ${{ secrets.STORE_APP_ID }}
+          package-path: "${{ github.workspace }}/${{inputs.artifact_directory}}/${{inputs.package_name}}.appxupload"
