@@ -2,7 +2,6 @@ name: 'openHAB Build and Release app'
 run-name: app-${{github.run_id }}
 
 env:
-  BUILD_NUMBER: '1970.1.1'
   BuildDirectory: '${{github.workspace}}\build'
   ACTIONS_RUNNER_DEBUG: true
 
@@ -23,16 +22,16 @@ jobs:
     name: Configure Build
     runs-on: ubuntu-latest
     outputs:
-      build_configuration: ${{ steps.detect-build-configuration.outputs.BuildConfiguration }}
-      bundle_Platforms: ${{ steps.detect-build-configuration.outputs.BundlePlatforms }}
-      build_number: ${{ steps.set-buildnumber.outputs.BUILD_NUMBER }}
-      release_name: ${{ steps.set-buildnumber.outputs.Release_Name }}
+      build_configuration: ${{ steps.configuration.outputs.BuildConfiguration }}
+      bundle_Platforms: ${{ steps.configuration.outputs.BundlePlatforms }}
+      build_number: ${{ steps.buildnumber.outputs.BUILD_NUMBER }}
+      release_name: ${{ steps.buildnumber.outputs.Release_Name }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Detect Build Configuration
-        id: detect-build-configuration
+        id: configuration
         shell: pwsh
         run: |
           if ($env:github.ref -eq 'refs/heads/main') {
@@ -44,7 +43,7 @@ jobs:
           }
        
       - name: Set build number and release name
-        id: set-buildnumber
+        id: buildnumber
         shell: pwsh
         run: |
           $CURRENTDATE = Get-Date -Format "yyyy.MM.dd"
