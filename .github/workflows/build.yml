@@ -1,11 +1,32 @@
-name: 'CI Build'
+name: 'Build App Package'
 
 env:
   BUILD_NUMBER: '1970.1.1'
   BuildDirectory: '${{github.workspace}}\build'
   ACTIONS_RUNNER_DEBUG: true
 
-on: [push, pull_request]
+on:
+  workflow_call:
+    inputs:
+      build_configuration:
+        description: 'The build configuration to use'
+        type: string
+        required: true
+        default: 'Release'
+      bundle_Platforms: 
+        type: string
+        description: 'Defines the platforms for the app package.'
+        required: false
+        default: ' x86|x64|ARM'
+      output_directory:
+        type: string
+        description: 'Defines the output directory for the app package'
+        required: false
+        default: '${{github.workspace}}\build'
+      build_number:
+        type: string
+        description: 'The build number to use'
+        required: true
 
 jobs:
   build:
@@ -19,13 +40,21 @@ jobs:
         path: repo
         clean: true
 
+    - name: Update Version Number in app files
+      id: update-packageverion
+      shell: pwsh
+      run: | 
+            Set-Location ${{github.action_path}}/
+            $version = [System.Version]::Parse('${{inputs.build_number}}')       
+            ./Set-Version.ps1 -SourceDirectory '${{github.workspace}}\repo\src\' -Major $version.Major -Minor $version.Minor -Build  $version.Build -Revision 0 -SetVersion
+
     - name: Setup NuGet.exe for use with actions
       uses: NuGet/setup-nuget@v1.0.5
       with:
         nuget-version: 'latest'
     
     - name: setup-msbuild
-      uses: microsoft/setup-msbuild@v1
+      uses: microsoft/setup-msbuild@v2
 
     - name: Set up JDK 17
       uses: actions/setup-java@v3
@@ -63,15 +92,11 @@ jobs:
       run: |
         .\.sonar\scanner\dotnet-sonarscanner begin /k:"openhab_openhab-windows" /o:"openhab" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
 
-    - name: Build App
-      id: create_app_package
-      uses: ./repo/.github/workflows/actions/app-build
-      with:
-        build_configuration: 'debug'
-        output_directory: '${{env.BuildDirectory}}'
-        bundle_Platforms: 'x86'
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
+    - name: Build OpenHab Windows App
+      shell: pwsh
+      run: |
+          Write-Host "==== Build app package ====" -ForegroundColor Green
+          msbuild.exe ${{github.workspace}}\repo\OpenHAB.Windows.sln /p:Platform="x86" /p:AppxBundlePlatforms="${{inputs.bundle_Platforms}}" /p:AppxPackageDir="${{inputs.output_directory}}" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:configuration="${{inputs.build_configuration}}" /t:rebuild
     
     - name: End SonarQube analyze
       env:
@@ -80,3 +105,9 @@ jobs:
       shell: pwsh
       run: |
         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+
+    - name: Upload App Package
+      uses: actions/upload-artifact@v2
+      with:
+        name: app
+        path: ${{env.BuildDirectory}}
