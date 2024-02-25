@@ -10,12 +10,13 @@ on:
     inputs:
       BuildConfiguration:
         description: 'Specifices if a release or debug package should be created.'
+        type: choice
+        options: ['release', 'debug']
         default: 'release'
-        required: false
       IsBetaRelease:
         description: 'Specifices if a beta release should be created.'
-        default: 'false'
-        required: false
+        type: 'boolean'
+        default: false
 
 jobs:
   configure:
