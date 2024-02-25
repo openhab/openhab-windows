@@ -21,7 +21,7 @@ on:
       artifact_directory:
         type: string
         description: 'Defines the output directory for the app package'
-        default: '${{github.workspace}}\packages\'
+        default: '${{github.workspace}}/packages/'
      
 jobs:
   deploy:

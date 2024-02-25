@@ -83,15 +83,15 @@ jobs:
       build_number: ${{needs.configure.outputs.buildNumber}}
   
   publish_beta:
-    needs: build
     uses: ./.github/workflows/publish.yml
+    needs: build
     with:
       environment: BETA
       package_name: ""
 
   publish_prod:
-    needs: publish_beta
     uses: ./.github/workflows/publish.yml
+    needs: publish_beta
     with:
       environment: PROD
       package_name: ""
