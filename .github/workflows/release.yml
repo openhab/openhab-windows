@@ -1,0 +1,40 @@
+name: App Release
+ 
+env:
+  BuildDirectory: '${{github.workspace}}\build'
+
+on: 
+  workflow_dispatch:
+    inputs:
+      BetaRelease:
+        description: 'Specifices if a beta release should be created.'
+        default: 'false'
+        required: false
+      BuildConfiguration:
+        description: 'Specifices if a release or debug package should be created.'
+        default: 'release'
+        required: false
+      build_number:
+        type: string
+        description: 'The build number to use'
+        required: true
+    
+jobs:
+  release:
+      name: 'Creates an app release'
+      runs-on: ubuntu-latest 
+      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/releases/beta'
+      steps:
+        - name: Download a App Package from Build Artifacts
+          uses: actions/download-artifact@v2.0.8
+          with:
+            name: app
+            path: '${{env.BuildDirectory}}'
+
+        - name: Create a Release
+          id: create_release
+          uses: "marvinpinto/action-automatic-releases@latest"
+          with:
+            repo_token: ${{ secrets.GITHUB_TOKEN }}
+            automatic_release_tag: ${{inputs.build_number}}
+            title: ${{inputs.build_number}}
