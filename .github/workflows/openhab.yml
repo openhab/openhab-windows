@@ -22,10 +22,10 @@ jobs:
     name: Configure Build
     runs-on: ubuntu-latest
     outputs:
-      build_configuration: ${{ steps.configuration.outputs.BuildConfiguration }}
-      bundle_Platforms: ${{ steps.configuration.outputs.BundlePlatforms }}
-      build_number: ${{ steps.buildnumber.outputs.BUILD_NUMBER }}
-      release_name: ${{ steps.buildnumber.outputs.Release_Name }}
+      buildConfiguration: ${{ steps.configuration.outputs.BuildConfiguration }}
+      bundlePlatforms: ${{ steps.configuration.outputs.BundlePlatforms }}
+      buildNumber: ${{ steps.buildnumber.outputs.BUILD_NUMBER }}
+      releaseName: ${{ steps.buildnumber.outputs.Release_Name }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -66,9 +66,9 @@ jobs:
     uses: ./.github/workflows/build.yml
     needs: configure
     with:
-      build_configuration: ${{needs.configure.outputs.build_configuration}}
-      bundle_Platforms: ${{ needs.configure.outputs.bundle_Platforms}}
-      build_number: ${{ needs.configure.outputs.build_number}}
+      build_configuration: ${{needs.configure.outputs.buildConfiguration}}
+      bundle_Platforms: ${{ needs.configure.outputs.bundlePlatforms}}
+      build_number: ${{ needs.configure.outputs.buildNumber}}
     secrets: inherit
 
   create_release:
@@ -78,4 +78,4 @@ jobs:
     uses: ./.github/workflows/release.yml
     with:
       beta_release: ${{ inputs.IsBetaRelease }}
-      build_number: ${{needs.configure.outputs.build_number}}
+      build_number: ${{needs.configure.outputs.buildNumber}}

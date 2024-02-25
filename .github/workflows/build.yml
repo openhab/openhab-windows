@@ -1,9 +1,7 @@
 name: 'Build App Package'
 
 env:
-  BUILD_NUMBER: '1970.1.1'
   BuildDirectory: '${{github.workspace}}\build'
-  ACTIONS_RUNNER_DEBUG: true
 
 on:
   workflow_call:
