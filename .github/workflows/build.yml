@@ -89,6 +89,12 @@ jobs:
       run: |
         .\.sonar\scanner\dotnet-sonarscanner begin /k:"openhab_openhab-windows" /o:"openhab" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
 
+    - name: Restore nuget packages
+      shell: pwsh
+      run: |
+            Write-Host "==== Restore Nuget packages ====" -ForegroundColor Green
+            nuget restore ${{github.workspace}}\repo\OpenHAB.Windows.sln    
+
     - name: Build OpenHab Windows App
       shell: pwsh
       run: |
