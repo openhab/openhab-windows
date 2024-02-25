@@ -67,7 +67,9 @@ jobs:
     secrets: inherit
 
   create_release:
-    needs: build
+    needs: 
+      - build
+      - configure
     uses: ./.github/workflows/release.yml
     with:
       beta_release: ${{ inputs.IsBetaRelease }}
