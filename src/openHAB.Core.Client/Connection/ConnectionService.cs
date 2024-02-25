@@ -34,9 +34,9 @@ namespace openHAB.Core.Client.Connection
         }
 
         /// <inheritdoc/>
-        public Models.Connection CurrentConnection 
+        public Models.Connection CurrentConnection
         {
-            get => _connection; 
+            get => _connection;
         }
 
         /// <inheritdoc/>
@@ -167,7 +167,7 @@ namespace openHAB.Core.Client.Connection
                     return new HttpResponseResult<ServerInfo>(serverInfo, result.StatusCode);
                 }
 
-                string runtimeversion = Regex.Replace(apiInfo?.RuntimeInfo.Version, "[^.0-9]", string.Empty);
+                string runtimeversion = Regex.Replace(apiInfo?.RuntimeInfo.Version, "[^.0-9]", string.Empty, RegexOptions.CultureInvariant, TimeSpan.FromSeconds(1));
                 if (!Version.TryParse(runtimeversion, out Version serverVersion))
                 {
                     string message = "Not able to parse runtime version from openHAB server";
