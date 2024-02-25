@@ -35,9 +35,13 @@ jobs:
         shell: pwsh
         run: |
           if ($env:github.ref -eq 'refs/heads/main') {
+            Write-Host "Set build configuration to release"
+
             Write-Host "BuildConfiguration=release" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
             Write-Host "BundlePlatforms=x86|x64|ARM" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
           } else {
+            Write-Host "Set build configuration to debug"
+
             Write-Host "BuildConfiguration=debug" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
             Write-Host "BundlePlatforms=x86" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
           }
