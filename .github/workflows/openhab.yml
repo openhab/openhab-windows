@@ -20,12 +20,13 @@ on:
 
 jobs:
   configure:
+    name: Configure Build
     runs-on: ubuntu-latest
     outputs:
       build_configuration: ${{ steps.detect-build-configuration.outputs.BuildConfiguration }}
       bundle_Platforms: ${{ steps.detect-build-configuration.outputs.BundlePlatforms }}
       build_number: ${{ steps.set-buildnumbe.outputs.BUILD_NUMBER }}
-      release_name: ${{ steps.set-buildnumbe.outputs.ReleaseName }}
+      release_name: ${{ steps.set-buildnumbe.outputs.Release_Name }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -51,9 +52,9 @@ jobs:
 
           $IS_BETA_RELEASE = ${{ inputs.IsBetaRelease }}
           if ($IS_BETA_RELEASE) {
-            Write-Host "ReleaseName=Beta:${CURRENTDATE}.${{github.run_number}}" >> $env:GITHUB_OUTPUT
+            Write-Host "RELEASE_NAME=Beta:${CURRENTDATE}.${{github.run_number}}" >> $env:GITHUB_OUTPUT
           } else {
-            Write-Host "ReleaseName=${CURRENTDATE}.${{github.run_number}}" >> $env:GITHUB_OUTPUT
+            Write-Host "RELEASE_NAME=${CURRENTDATE}" >> $env:GITHUB_OUTPUT
           }
     
   build:
