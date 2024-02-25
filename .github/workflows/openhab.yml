@@ -55,8 +55,10 @@ jobs:
 
           $IS_BETA_RELEASE = '${{ inputs.IsBetaRelease }}'
           if ($IS_BETA_RELEASE -eq 'true') {
+            Write-Host "Set release name to Beta:$CURRENTDATE.${{github.run_number}}"
             Write-Host "RELEASE_NAME=Beta:$CURRENTDATE.${{github.run_number}}" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
           } else {
+            Write-Host "Set release name to $CURRENTDATE"
             Write-Host "RELEASE_NAME=$CURRENTDATE" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
           }
     
