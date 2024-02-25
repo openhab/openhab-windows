@@ -4,15 +4,12 @@ env:
   BuildDirectory: '${{github.workspace}}\build'
 
 on: 
-  workflow_dispatch:
+  workflow_call:
     inputs:
-      BetaRelease:
+      beta_release:
         description: 'Specifices if a beta release should be created.'
-        default: 'false'
-        required: false
-      BuildConfiguration:
-        description: 'Specifices if a release or debug package should be created.'
-        default: 'release'
+        type: boolean
+        default: false
         required: false
       build_number:
         type: string
@@ -36,5 +33,6 @@ jobs:
           uses: "marvinpinto/action-automatic-releases@latest"
           with:
             repo_token: ${{ secrets.GITHUB_TOKEN }}
+            prerelease: ${{inputs.beta_release}}
             automatic_release_tag: ${{inputs.build_number}}
             title: ${{inputs.build_number}}

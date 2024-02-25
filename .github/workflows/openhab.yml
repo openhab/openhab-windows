@@ -9,10 +9,6 @@ env:
 on:
   workflow_dispatch:
     inputs:
-      BetaRelease:
-        description: 'Specifices if a beta release should be created.'
-        default: 'false'
-        required: false
       BuildConfiguration:
         description: 'Specifices if a release or debug package should be created.'
         default: 'release'
@@ -73,4 +69,5 @@ jobs:
     needs: build
     uses: ./.github/workflows/release.yml
     with:
-      
+      beta_release: ${{ inputs.IsBetaRelease }}
+      build_number: ${{needs.configure.outputs.build_number}}
