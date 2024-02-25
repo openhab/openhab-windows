@@ -1,4 +1,5 @@
 name: 'Deploy App Package'
+run-name: 'Deploy App Package: ${{ github.event.inputs.environment }}'
 
 env:
   BuildDirectory: '${{github.workspace}}\build'
@@ -25,7 +26,7 @@ on:
      
 jobs:
   deploy:
-    name: 'Deploy App Package'
+    name: 'Deploy App Package to ${{ github.event.inputs.environment }} channel'
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment }}
     steps:
