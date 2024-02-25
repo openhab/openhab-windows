@@ -42,7 +42,6 @@ jobs:
       id: update-packageverion
       shell: pwsh
       run: | 
-            ls -l ${{github.workspace}}\repo\
             $version = [System.Version]::Parse('${{inputs.build_number}}')       
             ${{github.workspace}}\repo\.github\workflows\scripts\Set-Version.ps1 -SourceDirectory '${{github.workspace}}/repo/src/' -Major $version.Major -Minor $version.Minor -Build  $version.Build -Revision 0 -SetVersion
 
