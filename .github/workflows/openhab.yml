@@ -50,7 +50,7 @@ jobs:
           $CURRENTDATE = Get-Date -Format "yyyy.MM.dd"
           Write-Host "BUILD_NUMBER=$CURRENTDATE" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
 
-          $IS_BETA_RELEASE = '${{ inputs.IsBetaRelease }}''
+          $IS_BETA_RELEASE = '${{ inputs.IsBetaRelease }}'
           if ($IS_BETA_RELEASE -eq 'true') {
             Write-Host "RELEASE_NAME=Beta:$CURRENTDATE.${{github.run_number}}" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
           } else {
