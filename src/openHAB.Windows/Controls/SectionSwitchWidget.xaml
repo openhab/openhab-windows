@@ -9,7 +9,7 @@
                   d:DesignHeight="150"
                   d:DesignWidth="300"
                   mc:Ignorable="d"
-                  Visibility="{x:Bind Widget.Visibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+                  Visibility="{x:Bind Widget.Visibility}">
     <Grid Style="{StaticResource Widget}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -18,9 +18,9 @@
         <local:ImageLabel Margin="8,0,0,0"
                           HorizontalAlignment="Left"
                           VerticalAlignment="Center"
-                          IconPath="{x:Bind Widget, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
+                          IconPath="{x:Bind Widget.IconPath, Mode=OneWay}"
                           LabelText="{x:Bind Widget.Label, Mode=OneWay}"
-                          LabelForeground="{x:Bind Widget.LabelColor, Converter={StaticResource StringToColorConverter}, Mode=OneWay}" />
+                          LabelForeground="{x:Bind Widget.LabelColor, Mode=OneWay}" />
         <ItemsControl x:Name="SectionsList"
                       Grid.Column="1"
                       Margin="2,2,8,2"
@@ -28,7 +28,7 @@
                       VerticalAlignment="Center"
                       HorizontalContentAlignment="Center"
                       VerticalContentAlignment="Center"
-                      Foreground="{x:Bind Widget.ValueColor,Converter={StaticResource StringToColorConverter}, Mode=OneWay}"
+                      Foreground="{x:Bind Widget.ValueColor, Mode=OneWay}"
                       Background="{StaticResource OpenHABLightColor}"
                       ItemsSource="{x:Bind Widget.Mappings}">
             <ItemsControl.ItemTemplate>

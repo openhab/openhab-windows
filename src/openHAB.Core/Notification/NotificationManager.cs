@@ -4,10 +4,8 @@ using System.Web;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Toolkit.Uwp.Notifications;
 using openHAB.Common;
-using openHAB.Core.Client;
 using openHAB.Core.Client.Messages;
 using openHAB.Core.Client.Models;
-using openHAB.Core.Common;
 using openHAB.Core.Model;
 using openHAB.Core.Notification.Contracts;
 using openHAB.Core.Services.Contracts;
@@ -53,8 +51,8 @@ namespace openHAB.Core.Notification
                 string state = item?.State ?? "ON";
                 state = HttpUtility.UrlEncode(state);
 
-                itemImage = $"{OpenHABHttpClient.BaseUrl}icon/{item?.Category?.ToLower()}?state={state}&format={_iconFormat}";
-                itemImage = await _iconCaching.ResolveIconPath(itemImage, _iconFormat);
+                string icon = item?.Category?.ToLower();
+                itemImage = await _iconCaching.ResolveIconPath(icon, state, _iconFormat);
             }
 
             TriggerToastNotificationForItem(itemName, itemImage, obj.Value, obj.OldValue);

@@ -1,16 +1,10 @@
 using System;
-using System.DirectoryServices.ActiveDirectory;
-using System.Threading.Tasks;
-using Mapsui.Widgets;
-using Microsoft.SqlServer.Server;
-using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media.Imaging;
-using openHAB.Core.Client.Connection.Contracts;
-using openHAB.Core.Client.Models;
 using openHAB.Core.Model;
 using openHAB.Core.Services.Contracts;
 using openHAB.Windows.Services;
+using openHAB.Windows.ViewModel;
 
 namespace openHAB.Windows.Converters
 {
@@ -23,31 +17,21 @@ namespace openHAB.Windows.Converters
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             ISettingsService settingsService = (ISettingsService)DIService.Instance.GetService<ISettingsService>();
-            OpenHABVersion openHABVersion = settingsService.ServerVersion;
             Settings settings = settingsService.Load();
 
-            OpenHABWidget widget = value as OpenHABWidget;
-            string state = widget.Item?.State ?? "ON";
-
-            IConnectionService connectionService = DIService.Instance.GetService<IConnectionService>();
-            string serverUrl = connectionService.CurrentConnection.Url;
-
-            string iconFormat = settings.UseSVGIcons ? "svg" : "png";
-            string url = openHABVersion == OpenHABVersion.Two || openHABVersion == OpenHABVersion.Three || openHABVersion == OpenHABVersion.Four ?
-                $"{serverUrl}icon/{widget.Icon}?state={state}&format={iconFormat}" :
-                $"{serverUrl}images/{widget.Icon}.png";
-
-            IIconCaching iconCaching = DIService.Instance.GetService<IIconCaching>();
-            var iconPathTask = iconCaching.ResolveIconPath(url, iconFormat).ConfigureAwait(false);
-            string iconPath = iconPathTask.GetAwaiter().GetResult();
+            WidgetViewModel widget = value as WidgetViewModel;
+            if (widget == null)
+            {
+                return string.Empty;
+            }
 
             if (settings.UseSVGIcons)
             {
-                return new SvgImageSource(new Uri(iconPath));
+                return new SvgImageSource(new Uri(widget.IconPath));
             }
             else
             {
-                return new BitmapImage(new Uri(iconPath));
+                return new BitmapImage(new Uri(widget.IconPath));
             }
         }
 

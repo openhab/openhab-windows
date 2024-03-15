@@ -93,12 +93,7 @@
                                 Orientation="Horizontal">
                         <TextBlock Style="{StaticResource SitemapHeader}"
                                    Text="{Binding Vm.SelectedSitemap.Label, ElementName=Window, Mode=OneWay}"
-                                   Tapped="SitemapTextBlock_Tapped">
-                            <!--<interactivity:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="Tapped">
-                                    <core:InvokeCommandAction Command="{Binding Vm.SelectedSitemap.NavigateToSitemapRoot, ElementName=Window, Mode=OneWay}" />
-                                </core:EventTriggerBehavior>
-                            </interactivity:Interaction.Behaviors>--></TextBlock>
+                                   Tapped="SitemapTextBlock_Tapped" />
                         <!--<Button Margin="10,0,0,0"
                                 Command="{Binding Vm.SelectedSitemap.ReloadSitemapCommand, ElementName=Window}">-->
                         <Button Margin="10,0,0,0">
@@ -259,7 +254,7 @@
             <muxc:NavigationView.FooterMenuItems>
                 <NavigationViewItem Icon="Home"
                                     Content="MainUI"
-                                    Tag="openHAB.Windows.View.SettingsPage">
+                                    Tag="openHAB.Windows.View.WinUIPage">
                     <interactivity:Interaction.Behaviors>
                         <core:EventTriggerBehavior EventName="Tapped">
                             <core:NavigateToPageAction TargetPage="openHAB.Windows.View.SettingsPage" />
@@ -296,22 +291,30 @@
             </muxc:InfoBar>
         </StackPanel>
         <Border x:Name="LoadingControl"
+                MaxHeight="150"
+                MaxWidth="150"
                 Grid.Row="1"
                 Padding="25"
                 BorderThickness="2"
                 CornerRadius="10"
-                BorderBrush="{StaticResource CardBackgroundFillColorDefaultBrush}"
-                Background="{StaticResource CardBackgroundFillColorSecondaryBrush}"
+                BorderBrush="{StaticResource SolidBackgroundFillColorBaseBrush}"
+                Background="{StaticResource SolidBackgroundFillColorBaseAltBrush}"
                 Visibility="{Binding IsDataLoading, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
-            <ProgressRing IsIndeterminate="True"
-                          IsActive="{x:Bind Vm.IsDataLoading, Mode=TwoWay}"
-                          HorizontalContentAlignment="Center"
-                          VerticalContentAlignment="Center">
-                <ProgressRing.Background>
-                    <SolidColorBrush Color="Black"
-                                     Opacity="0.7" />
-                </ProgressRing.Background>
-            </ProgressRing>
+            <StackPanel Orientation="Vertical"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <ProgressRing IsIndeterminate="True"
+                              IsActive="{x:Bind Vm.IsDataLoading, Mode=TwoWay}"
+                              Margin="20"
+                              HorizontalContentAlignment="Stretch"
+                              VerticalContentAlignment="Stretch">
+                    <ProgressRing.Background>
+                        <SolidColorBrush Color="Black"
+                                         Opacity="0.7" />
+                    </ProgressRing.Background>
+                </ProgressRing>
+                <TextBlock x:Uid="Loading" />
+            </StackPanel>
         </Border>
     </Grid>
 </Window>

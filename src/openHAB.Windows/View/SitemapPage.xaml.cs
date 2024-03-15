@@ -58,6 +58,8 @@ namespace openHAB.Windows.View
                 return;
             }
 
+            StrongReferenceMessenger.Default.Send<DataOperation>(new DataOperation(OperationState.Started));
+
             OpenHABSitemap sitemap = await _sitemapService.GetSitemapByUrlAsync(sitemapUrl);
             _viewModel = new SitemapViewModel(sitemap);
 
@@ -67,16 +69,24 @@ namespace openHAB.Windows.View
                 DataContext = _viewModel;
                 WidgetNavigationService.ClearWidgetNavigation();
             });
+
+            StrongReferenceMessenger.Default.Send<DataOperation>(new DataOperation(OperationState.Completed));
         }
 
         private void MasterListView_OnItemClick(object sender, ItemClickEventArgs e)
         {
-            StrongReferenceMessenger.Default.Send(new WidgetClickedMessage(e.ClickedItem as OpenHABWidget));
+            WidgetViewModel widgetViewModel = e.ClickedItem as WidgetViewModel;
+            if (widgetViewModel == null)
+            {
+                return;
+            }
+
+            StrongReferenceMessenger.Default.Send(new WidgetClickedMessage(widgetViewModel.Model));
         }
 
         private void OnSitemapChangedEvent(SitemapChanged message)
         {
-            if(message.Sitemap == null)
+            if (message.Sitemap == null)
             {
                 return;
             }

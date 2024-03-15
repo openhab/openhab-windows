@@ -2,15 +2,14 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Markup;
 using openHAB.Core.Client.Models;
-using openHAB.Windows.ViewModel;
 
 namespace openHAB.Windows.Converters
 {
-    /// <summary>Template selector to differeniate between sitemaps and general menu items.</summary>
+    /// <summary>Template selector to differentiate between sitemaps and general menu items.</summary>
     [ContentProperty(Name = "SiteMapMenuItemTemplate")]
     public class MenuItemTemplateSelector : DataTemplateSelector
     {
-        /// <summary>Gets or sets the sitemap menuitem template.</summary>
+        /// <summary>Gets or sets the sitemap menu item template.</summary>
         /// <value>The site map menu item template.</value>
         public DataTemplate SiteMapMenuItemTemplate
         {
@@ -18,8 +17,8 @@ namespace openHAB.Windows.Converters
             set;
         }
 
-        /// <summary>Gets or sets the item temlate for default menuitems.</summary>
-        /// <value>The default item temlate.</value>
+        /// <summary>Gets or sets the item template for default menu items.</summary>
+        /// <value>The default item template.</value>
         public DataTemplate DefaultItemTemlate
         {
             get; set;

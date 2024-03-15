@@ -7,7 +7,7 @@
 				  d:DesignHeight="150"
 				  d:DesignWidth="300"
 				  mc:Ignorable="d" 
-				  Visibility="{x:Bind Widget.Visibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+				  Visibility="{x:Bind Widget.Visibility}">
 
 	<Grid Style="{StaticResource Widget}"
 		  Tapped="OnTapped">

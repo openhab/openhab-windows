@@ -9,12 +9,7 @@
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <ResourceDictionary Source="Styles/DefaultTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
             <converters:StateToBoolConverter x:Key="StateToBoolConverter" />
-            <converters:IconToPathConverter x:Key="IconToPathConverter" />
-            <converters:StringToColorBrushConverter x:Key="StringToColorConverter" />
-            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-
             <DataTemplate x:Key="FrameTemplate">
                 <controls:FrameWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>

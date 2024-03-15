@@ -1,7 +1,6 @@
 ﻿<local:WidgetBase x:Class="openHAB.Windows.Controls.ColorWidget"
 				  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 				  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-				  xmlns:controls="using:WinRTXamlToolkit.Controls"
 				  xmlns:converters="using:openHAB.Windows.Converters"
 				  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 				  xmlns:local="using:openHAB.Windows.Controls"
@@ -10,7 +9,7 @@
 				  d:DesignWidth="400"
 				  VariableSizedWrapGrid.ColumnSpan="2"
 				  mc:Ignorable="d"
-				  Visibility="{x:Bind Widget.Visibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+				  Visibility="{x:Bind Widget.Visibility}">
 
     <Grid Style="{StaticResource Widget}">
         <Grid.ColumnDefinitions>
@@ -19,9 +18,9 @@
         </Grid.ColumnDefinitions>
 
         <local:ImageLabel VerticalAlignment="Center"
-						  IconPath="{x:Bind Widget, Converter={StaticResource IconToPathConverter}, Mode=OneWay}"
-						  LabelText="{x:Bind Widget.Label, Mode=OneWay}"
-						  LabelForeground="{x:Bind Widget.LabelColor,Converter={StaticResource StringToColorConverter}, Mode=OneWay}"/>
+                          IconPath="{x:Bind Widget.IconPath, Mode=OneWay}"
+                          LabelText="{x:Bind Widget.Label, Mode=OneWay}"
+						  LabelForeground="{x:Bind Widget.LabelColor, Mode=OneWay}"/>
 
         <Grid Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,10,0">
             <Grid.ColumnDefinitions>

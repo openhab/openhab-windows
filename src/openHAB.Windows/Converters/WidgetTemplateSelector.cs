@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Controls;
 using openHAB.Core.Client.Models;
 using openHAB.Core.Common;
 using openHAB.Core.Model;
+using openHAB.Windows.ViewModel;
 
 namespace openHAB.Windows.Converters
 {
@@ -15,8 +16,8 @@ namespace openHAB.Windows.Converters
         /// <inheritdoc/>
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
-            var widget = item as OpenHABWidget;
-            var uiElement = container as UIElement;
+            WidgetViewModel widget = item as WidgetViewModel;
+            UIElement uiElement = container as UIElement;
 
             if (widget == null)
             {
@@ -139,23 +140,23 @@ namespace openHAB.Windows.Converters
         /// </summary>
         public DataTemplate WebViewTemplate { get; set; }
 
-        private WidgetTypeEnum GetItemViewType(OpenHABWidget openHABWidget)
+        private WidgetTypeEnum GetItemViewType(WidgetViewModel widget)
         {
-            if (openHABWidget.Type.Equals("Switch"))
+            if (widget.Type.Equals("Switch"))
             {
-                if (openHABWidget.Mappings != null && openHABWidget.Mappings.Any())
+                if (widget.Mappings != null && widget.Mappings.Any())
                 {
                     return WidgetTypeEnum.SectionSwitch;
                 }
 
-                if (openHABWidget.Item != null)
+                if (widget.Item != null)
                 {
-                    if (openHABWidget.Item.Type != null)
+                    if (widget.Item.Type != null)
                     {
                         // RollerShutterItem changed to RollerShutter in later builds of OH2
-                        if ("RollershutterItem".Equals(openHABWidget.Item.Type) ||
-                            "Rollershutter".Equals(openHABWidget.Item.Type) ||
-                            "Rollershutter".Equals(openHABWidget.Item.GroupType))
+                        if ("RollershutterItem".Equals(widget.Item.Type) ||
+                            "Rollershutter".Equals(widget.Item.Type) ||
+                            "Rollershutter".Equals(widget.Item.GroupType))
                         {
                             return WidgetTypeEnum.RollerShutter;
                         }
@@ -169,11 +170,11 @@ namespace openHAB.Windows.Converters
                 return WidgetTypeEnum.Switch;
             }
 
-            if (openHABWidget.Type.Equals("Video"))
+            if (widget.Type.Equals("Video"))
             {
-                if (openHABWidget.Encoding != null)
+                if (widget.Encoding != null)
                 {
-                    if (openHABWidget.Encoding.Equals("mjpeg"))
+                    if (widget.Encoding.Equals("mjpeg"))
                     {
                         return WidgetTypeEnum.VideoMjpeg;
                     }
@@ -186,7 +187,7 @@ namespace openHAB.Windows.Converters
 
             try
             {
-                return Enum<WidgetTypeEnum>.Parse(openHABWidget.Type);
+                return Enum<WidgetTypeEnum>.Parse(widget.Type);
             }
             catch (System.Exception ex)
             {

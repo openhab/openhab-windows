@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "openHAB.Windows", "src\open
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "openHAB.Core.Client", "src\openHAB.Core.Client\openHAB.Core.Client.csproj", "{3B8F31DD-1AF2-47CF-B7DB-3B732FE4EC5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "openHAB.Common", "src\openHAB.Common\openHAB.Common.csproj", "{E53B599D-4BDB-40B1-86E4-47FB90420138}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "openHAB.Common", "src\openHAB.Common\openHAB.Common.csproj", "{E53B599D-4BDB-40B1-86E4-47FB90420138}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

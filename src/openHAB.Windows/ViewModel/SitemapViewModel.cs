@@ -23,9 +23,9 @@ namespace openHAB.Windows.ViewModel
     {
         private readonly SitemapService _sitemapService;
 
-        private ObservableCollection<OpenHABWidget> _currentWidgets;
-        private OpenHABWidget _selectedWidget;
-        private ObservableCollection<OpenHABWidget> _widgets;
+        private ObservableCollection<WidgetViewModel> _currentWidgets;
+        private WidgetViewModel _selectedWidget;
+        private ObservableCollection<WidgetViewModel> _widgets;
         private bool disposedValue;
 
         #region Constructors
@@ -46,12 +46,21 @@ namespace openHAB.Windows.ViewModel
         public SitemapViewModel(OpenHABSitemap model)
              : base(model)
         {
-            _widgets = new ObservableCollection<OpenHABWidget>(model.Widgets ?? new List<OpenHABWidget>());
+            List<WidgetViewModel> widgetViewModels = GetWidgetViewModels(model.Widgets).Result;
+            _widgets = new ObservableCollection<WidgetViewModel>(widgetViewModels ?? new List<WidgetViewModel>());
             _sitemapService = DIService.Instance.GetService<SitemapService>();
-            _currentWidgets = new ObservableCollection<OpenHABWidget>();
+            _currentWidgets = new ObservableCollection<WidgetViewModel>();
 
             StrongReferenceMessenger.Default.Register<WidgetClickedMessage>(this, async (recipient, msg)
-                => await OnWidgetClickedAsync(msg.Widget));
+                =>
+            {
+                if (msg.Widget == null)
+                {
+                    return;
+                }
+
+                await OnWidgetClickedAsync(new WidgetViewModel(msg.Widget));
+            });
 
             StrongReferenceMessenger.Default.Register<TriggerCommandMessage>(this, async (recipient, msg)
                 => await TriggerItemCommand(msg).ConfigureAwait(false));
@@ -74,6 +83,19 @@ namespace openHAB.Windows.ViewModel
             SetWidgetsOnScreen(Widgets);
         }
 
+        private async Task<List<WidgetViewModel>> GetWidgetViewModels(ICollection<OpenHABWidget> widgets)
+        {
+
+            List<WidgetViewModel> widgetViewModels = new List<WidgetViewModel>();
+            foreach (OpenHABWidget widget in widgets)
+            {
+                WidgetViewModel viewModel = new WidgetViewModel(widget);
+                widgetViewModels.Add(viewModel);
+            }
+
+            return widgetViewModels;
+        }
+
         #endregion
 
         #region Properties
@@ -81,7 +103,7 @@ namespace openHAB.Windows.ViewModel
         /// <summary>
         /// Gets or sets the widgets currently on screen.
         /// </summary>
-        public ObservableCollection<OpenHABWidget> CurrentWidgets
+        public ObservableCollection<WidgetViewModel> CurrentWidgets
         {
             get => _currentWidgets;
             set => Set(ref _currentWidgets, value);
@@ -123,7 +145,7 @@ namespace openHAB.Windows.ViewModel
         /// <summary>
         /// Gets or sets the selected widget.
         /// </summary>
-        public OpenHABWidget SelectedWidget
+        public WidgetViewModel SelectedWidget
         {
             get => _selectedWidget;
             set => Set(ref _selectedWidget, value);
@@ -132,7 +154,7 @@ namespace openHAB.Windows.ViewModel
         /// <summary>
         /// Gets or sets a collection of widgets of the OpenHAB sitemap.
         /// </summary>
-        public ObservableCollection<OpenHABWidget> Widgets
+        public ObservableCollection<WidgetViewModel> Widgets
         {
             get
             {
@@ -177,7 +199,7 @@ namespace openHAB.Windows.ViewModel
         private bool _canExecuteReloadSitemap;
         private ActionCommand _navigateToSitemapRootCommand;
 
-        public ActionCommand NavigateToSitemapRoot => 
+        public ActionCommand NavigateToSitemapRoot =>
             _navigateToSitemapRootCommand ?? (_navigateToSitemapRootCommand = new ActionCommand(ExecuteNavigateToSitemapRootCommand, CanExecuteNavigateToSitemapRootCommand));
 
         private bool CanExecuteNavigateToSitemapRootCommand(object arg)
@@ -191,7 +213,7 @@ namespace openHAB.Windows.ViewModel
             SetWidgetsOnScreen(Widgets);
             SelectedWidget = null;
 
-            StrongReferenceMessenger.Default.Send<WigetNavigation>(new WigetNavigation(SelectedWidget, null, EventTriggerSource.Widget));
+            StrongReferenceMessenger.Default.Send<WigetNavigation>(new WigetNavigation(SelectedWidget.Model, null, EventTriggerSource.Widget));
         }
 
         #endregion
@@ -227,11 +249,11 @@ namespace openHAB.Windows.ViewModel
 
         private async Task LoadWidgetsAsync()
         {
-            this.Widgets = new ObservableCollection<OpenHABWidget>();
+            this.Widgets = new ObservableCollection<WidgetViewModel>();
             CurrentWidgets?.Clear();
 
             ICollection<OpenHABWidget> widgetModels = await _sitemapService.LoadItemsFromSitemapAsync(Model).ConfigureAwait(false);
-            widgetModels.ToList().ForEach(x => Widgets.Add(x));
+            widgetModels.ToList().ForEach(model => Widgets.Add(new WidgetViewModel(model)));
 
             SetWidgetsOnScreen(this.Widgets);
         }
@@ -244,7 +266,7 @@ namespace openHAB.Windows.ViewModel
             if (SelectedWidget != null)
             {
                 await LoadWidgetsAsync().ConfigureAwait(false);
-                OpenHABWidget widget = FindWidget(SelectedWidget.WidgetId, Widgets);
+                WidgetViewModel widget = FindWidget(SelectedWidget.WidgetId, Widgets);
                 if (widget != null)
                 {
                     await OnWidgetClickedAsync(widget);
@@ -266,22 +288,22 @@ namespace openHAB.Windows.ViewModel
 
         #region Widget interaction
 
-        private OpenHABWidget FindWidget(string widgetId, ICollection<OpenHABWidget> widgets)
+        private WidgetViewModel FindWidget(string widgetId, ICollection<WidgetViewModel> widgets)
         {
-            OpenHABWidget openHABWidget = null;
+            WidgetViewModel openHABWidget = null;
             if (widgets == null || widgets.Count == 0)
             {
                 return openHABWidget;
             }
 
-            foreach (OpenHABWidget widget in widgets)
+            foreach (WidgetViewModel widget in widgets)
             {
                 if (string.CompareOrdinal(widget.WidgetId, widgetId) == 0)
                 {
                     return widget;
                 }
 
-                ICollection<OpenHABWidget> childWidgets = widget.Type.CompareTo("Group") == 0 ? widget.LinkedPage?.Widgets : widget.Children;
+                ICollection<WidgetViewModel> childWidgets = widget.Type.CompareTo("Group") == 0 ? widget.LinkedPage?.Widgets : widget.Children;
                 openHABWidget = FindWidget(widgetId, childWidgets);
                 if (openHABWidget != null)
                 {
@@ -292,25 +314,25 @@ namespace openHAB.Windows.ViewModel
             return openHABWidget;
         }
 
-        private async Task OnWidgetClickedAsync(OpenHABWidget widget)
+        private async Task OnWidgetClickedAsync(WidgetViewModel widget)
         {
             await App.DispatcherQueue.EnqueueAsync(() =>
             {
-                OpenHABWidget lastWidget = SelectedWidget;
+                WidgetViewModel lastWidget = SelectedWidget;
                 SelectedWidget = widget;
                 if (SelectedWidget.LinkedPage == null || !SelectedWidget.LinkedPage.Widgets.Any())
                 {
                     return;
                 }
 
-                WidgetNavigationService.Navigate(SelectedWidget);
-                StrongReferenceMessenger.Default.Send<WigetNavigation>(new WigetNavigation(lastWidget, widget, EventTriggerSource.Widget));
+                WidgetNavigationService.Navigate(SelectedWidget.Model);
+                StrongReferenceMessenger.Default.Send<WigetNavigation>(new WigetNavigation(lastWidget.Model, widget.Model, EventTriggerSource.Widget));
 
                 SetWidgetsOnScreen(SelectedWidget.LinkedPage.Widgets);
             });
         }
 
-        private async void SetWidgetsOnScreen(ICollection<OpenHABWidget> widgets)
+        private async void SetWidgetsOnScreen(ICollection<WidgetViewModel> widgets)
         {
             await App.DispatcherQueue.EnqueueAsync(() =>
             {
@@ -321,17 +343,17 @@ namespace openHAB.Windows.ViewModel
 
         private void WidgetGoBack(OpenHABWidget widget)
         {
-            OpenHABWidget lastWidget = SelectedWidget;
-            OpenHABWidget widgetFromStack = null;
+            WidgetViewModel lastWidget = SelectedWidget;
+            WidgetViewModel widgetFromStack = null;
 
             while (widgetFromStack == null || widgetFromStack.WidgetId != widget.WidgetId)
             {
-                widgetFromStack = WidgetNavigationService.GoBack();
+                widgetFromStack = new WidgetViewModel(WidgetNavigationService.GoBack());
             }
 
             SelectedWidget = widgetFromStack;
-            WidgetNavigationService.Navigate(SelectedWidget);
-            StrongReferenceMessenger.Default.Send<WigetNavigation>(new WigetNavigation(lastWidget, SelectedWidget, EventTriggerSource.Widget));
+            WidgetNavigationService.Navigate(SelectedWidget.Model);
+            StrongReferenceMessenger.Default.Send<WigetNavigation>(new WigetNavigation(lastWidget.Model, SelectedWidget.Model, EventTriggerSource.Widget));
 
             SetWidgetsOnScreen(SelectedWidget.LinkedPage.Widgets);
         }

@@ -10,7 +10,7 @@
                   d:DesignHeight="300"
                   d:DesignWidth="400"
                   mc:Ignorable="d"
-                  Visibility="{x:Bind Widget.Visibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+                  Visibility="{x:Bind Widget.Visibility}">
 
     <local:WidgetBase.Resources>
         <Style TargetType="GridViewItem">

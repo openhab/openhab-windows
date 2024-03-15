@@ -3,6 +3,7 @@ using System.IO;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web.Services.Description;
 using Microsoft.Extensions.Logging;
 using openHAB.Core.Client;
 using openHAB.Core.Client.Connection.Contracts;
@@ -18,6 +19,7 @@ namespace openHAB.Core.Services
     {
         private readonly OpenHABHttpClient _openHABHttpClient;
         private readonly IConnectionService _connectionService;
+        private readonly ISettingsService _settingsService;
         private readonly Settings _settings;
         private readonly AppPaths _applicationContext;
         private readonly ILogger<IconCaching> _logger;
@@ -40,14 +42,22 @@ namespace openHAB.Core.Services
             _logger = logger;
             _openHABHttpClient = openHABHttpClient;
             _connectionService = connectionService;
+            _settingsService = settingsService;
             _settings = settingsService.Load();
 
             _applicationContext = appPaths;
         }
 
         /// <inheritdoc/>
-        public async Task<string> ResolveIconPath(string iconUrl, string iconFormat)
+        public async Task<string> ResolveIconPath(string icon, string state, string iconFormat)
         {
+            string serverUrl = _connectionService.CurrentConnection.Url;
+            OpenHABVersion openHABVersion = _settingsService.ServerVersion;
+
+            string iconUrl = openHABVersion == OpenHABVersion.Two || openHABVersion == OpenHABVersion.Three || openHABVersion == OpenHABVersion.Four ?
+                       $"{serverUrl}icon/{icon}?state={state}&format={iconFormat}" :
+                       $"{serverUrl}images/{icon}.png";
+
             try
             {
                 Match iconName = Regex.Match(iconUrl, "icon/[0-9a-zA-Z]*", RegexOptions.None, TimeSpan.FromMilliseconds(100));
@@ -70,7 +80,8 @@ namespace openHAB.Core.Services
 
                 DirectoryInfo iconDirectory = EnsureIconCacheFolder();
 
-                string iconFileName = $"{iconName.Value.Replace("icon/", string.Empty)}{iconState.Value.Replace("state=", string.Empty)}.{iconFormat}";
+                //string iconFileName = $"{iconName.Value.Replace("icon/", string.Empty)}{iconState.Value.Replace("state=", string.Empty)}.{iconFormat}";
+                string iconFileName = $"{iconName.Value.Replace("icon/", string.Empty)}.{iconFormat}";
                 string iconFilePath = Path.Combine(iconDirectory.FullName, iconFileName).Replace("NULL", string.Empty);
 
                 if (File.Exists(iconFilePath))
@@ -78,8 +89,9 @@ namespace openHAB.Core.Services
                     return iconFilePath;
                 }
 
-                await DownloadAndSaveIconToCache(iconUrl, iconFilePath);
-                return iconFilePath;
+                bool downloadSuccessfull = await DownloadAndSaveIconToCache(iconUrl, iconFilePath);
+
+                return downloadSuccessfull ? iconFilePath : iconUrl;
             }
             catch (Exception ex)
             {
@@ -88,7 +100,7 @@ namespace openHAB.Core.Services
             }
         }
 
-        private async Task DownloadAndSaveIconToCache(string iconUrl, string iconFilePath)
+        private async Task<bool> DownloadAndSaveIconToCache(string iconUrl, string iconFilePath)
         {
             bool isRunningInDemoMode = _settings.IsRunningInDemoMode.HasValue && _settings.IsRunningInDemoMode.Value;
             Connection connection = await _connectionService.DetectAndRetriveConnection(_settings.LocalConnection, _settings.RemoteConnection, isRunningInDemoMode)
@@ -96,7 +108,7 @@ namespace openHAB.Core.Services
             if (connection == null)
             {
                 _logger.LogError("Failed to retrieve connection details to download icon");
-                return;
+                return false;
             }
 
             using (HttpClient httpClient = _openHABHttpClient.DisposableClient(connection))
@@ -106,7 +118,7 @@ namespace openHAB.Core.Services
                 if (!httpResponse.IsSuccessStatusCode)
                 {
                     _logger.LogWarning($"Failed to download icon from '{iconUrl}' with status code '{httpResponse.StatusCode}'");
-                    return;
+                    return false;
                 }
 
                 byte[] iconContent = await httpResponse.Content.ReadAsByteArrayAsync();
@@ -114,6 +126,8 @@ namespace openHAB.Core.Services
                 {
                     await file.WriteAsync(iconContent, 0, iconContent.Length);
                 }
+
+                return true;
             }
         }
 

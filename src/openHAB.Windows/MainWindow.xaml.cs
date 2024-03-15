@@ -144,7 +144,10 @@ namespace openHAB.Windows
             {
                 sender.AlwaysShowHeader = true;
                 OpenHABSitemap sitemap = args.SelectedItem as OpenHABSitemap;
-                ContentFrame.Navigate(typeof(SitemapPage), sitemap.Link);
+                if (sitemap != null)
+                {
+                    ContentFrame.Navigate(typeof(SitemapPage), sitemap.Link);
+                }
             }
         }
 
