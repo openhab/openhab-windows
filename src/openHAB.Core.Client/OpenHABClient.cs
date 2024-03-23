@@ -171,7 +171,13 @@ namespace openHAB.Core.Client
                 }
 
                 string resultString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
-                Item item = JsonSerializer.Deserialize<Item>(resultString);
+
+                JsonSerializerOptions serializerOptions = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                    NumberHandling = JsonNumberHandling.AllowReadingFromString,
+                };
+                Item item = JsonSerializer.Deserialize<Item>(resultString, serializerOptions);
 
                 _logger.LogInformation($"Loaded item '{itemName}' from server");
 

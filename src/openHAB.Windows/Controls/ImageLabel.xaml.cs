@@ -37,8 +37,12 @@ namespace openHAB.Windows.Controls
             }
 
             string iconPath = control.IconPath;
-            Match format = Regex.Match(iconPath, @".svg", RegexOptions.None, TimeSpan.FromMilliseconds(100));
+            if (string.IsNullOrEmpty(iconPath))
+            {
+                return;
+            }
 
+            Match format = Regex.Match(iconPath, @".svg", RegexOptions.None, TimeSpan.FromMilliseconds(100));
             if (format.Success)
             {
                 control.Icon.Source = new SvgImageSource(new Uri(iconPath));
