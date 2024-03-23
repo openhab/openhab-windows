@@ -1,5 +1,3 @@
-using System;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
 using Microsoft.Extensions.Logging;
@@ -15,6 +13,8 @@ using openHAB.Windows.Messages;
 using openHAB.Windows.Services;
 using openHAB.Windows.View;
 using openHAB.Windows.ViewModel;
+using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 
 namespace openHAB.Windows
@@ -74,7 +74,7 @@ namespace openHAB.Windows
                 return;
             }
 
-            StrongReferenceMessenger.Default.Send(new WidgetNavigationMessage(null, widget, EventTriggerSource.Breadcrumb));
+            StrongReferenceMessenger.Default.Send(new WidgetNavigationMessage(null, widget, EventTriggerSource.Breadcrumb), Vm.SelectedSitemap.Name);
         }
 
         private async Task ShowErrorMessage(object recipient, ConnectionErrorMessage message)
@@ -159,7 +159,7 @@ namespace openHAB.Windows
 
         private void SitemapTextBlock_Tapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            StrongReferenceMessenger.Default.Send(new WidgetNavigationMessage(null, null, EventTriggerSource.Root));
+            StrongReferenceMessenger.Default.Send(new WidgetNavigationMessage(null, null, EventTriggerSource.Root), Vm.SelectedSitemap.Name);
         }
     }
 }

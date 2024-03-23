@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
 using openHAB.Common;
@@ -14,6 +9,11 @@ using openHAB.Core.Messages;
 using openHAB.Core.Services;
 using openHAB.Windows.Messages;
 using openHAB.Windows.Services;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace openHAB.Windows.ViewModel
 {
@@ -69,7 +69,7 @@ namespace openHAB.Windows.ViewModel
             StrongReferenceMessenger.Default.Register<DataOperation>(this, (obj, operation)
                 => DataOperationState(operation));
 
-            StrongReferenceMessenger.Default.Register<WidgetNavigationMessage>(this, (recipient, msg) =>
+            StrongReferenceMessenger.Default.Register<WidgetNavigationMessage, string>(this, Model.Name, (recipient, msg) =>
             {
                 if (msg.Trigger == EventTriggerSource.Breadcrumb)
                 {
@@ -369,7 +369,7 @@ namespace openHAB.Windows.ViewModel
                 }
 
                 WidgetNavigationService.Navigate(SelectedWidget);
-                StrongReferenceMessenger.Default.Send(new WidgetNavigationMessage(lastWidget, widget, EventTriggerSource.Widget));
+                StrongReferenceMessenger.Default.Send(new WidgetNavigationMessage(lastWidget, widget, EventTriggerSource.Widget), Model.Name);
 
                 List<WidgetViewModel> widgets = ConvertWidgetToViewModel(SelectedWidget.LinkedPage.Widgets);
                 await SetWidgetsOnScreenAsync(widgets);
@@ -402,7 +402,7 @@ namespace openHAB.Windows.ViewModel
 
             SelectedWidget = widgetFromStack;
             WidgetNavigationService.Navigate(SelectedWidget);
-            StrongReferenceMessenger.Default.Send(new WidgetNavigationMessage(lastWidget, SelectedWidget, EventTriggerSource.Widget));
+            StrongReferenceMessenger.Default.Send(new WidgetNavigationMessage(lastWidget, SelectedWidget, EventTriggerSource.Widget), Model.Name);
 
             List<WidgetViewModel> widgets = ConvertWidgetToViewModel(SelectedWidget.LinkedPage.Widgets);
             await SetWidgetsOnScreenAsync(widgets);

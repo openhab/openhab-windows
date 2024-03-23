@@ -54,9 +54,6 @@ namespace openHAB.Windows.ViewModel
 
             StrongReferenceMessenger.Default.Register<DataOperation>(this, async (obj, operation)
                 => await DataOperationStateAsync(operation));
-
-            StrongReferenceMessenger.Default.Register<WidgetNavigationMessage>(this, (obj, operation)
-                => WidgetNavigatedEvent());
         }
 
         /// <summary>
@@ -116,7 +113,6 @@ namespace openHAB.Windows.ViewModel
             {
                 if (_selectedSitemap != value)
                 {
-
                     StrongReferenceMessenger.Default.Unregister<WidgetNavigationMessage, string>(this, value.Name);
                 }
 
@@ -128,7 +124,8 @@ namespace openHAB.Windows.ViewModel
                         settings.LastSitemap = _selectedSitemap.Name;
                         _settingsService.Save(settings);
 
-                        //StrongReferenceMessenger.Default.Send<SitemapChanged>(new SitemapChanged(value.Model));
+                        StrongReferenceMessenger.Default.Register<WidgetNavigationMessage, string>(this, SelectedSitemap.Name, (obj, operation)
+                             => WidgetNavigatedEvent());
                     }
 
                     SelectedMenuItem = value;
