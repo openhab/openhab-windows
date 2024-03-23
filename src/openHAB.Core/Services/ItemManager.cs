@@ -9,18 +9,18 @@ namespace openHAB.Core.Services
     /// <inheritdoc/>
     public class ItemManager : IItemManager
     {
-        private readonly Dictionary<string, OpenHABItem> _nameToStateDictionary;
+        private readonly Dictionary<string, Item> _nameToStateDictionary;
         private IOpenHABClient _openHABClient;
 
         /// <summary>Initializes a new instance of the <see cref="ItemManager" /> class.</summary>
         public ItemManager(IOpenHABClient openHABClient)
         {
-            _nameToStateDictionary = new Dictionary<string, OpenHABItem>();
+            _nameToStateDictionary = new Dictionary<string, Item>();
             _openHABClient = openHABClient;
         }
 
         /// <inheritdoc/>
-        public bool TryGetItem(string itemName, out OpenHABItem item)
+        public bool TryGetItem(string itemName, out Item item)
         {
             if (!_nameToStateDictionary.TryGetValue(itemName, out item))
             {

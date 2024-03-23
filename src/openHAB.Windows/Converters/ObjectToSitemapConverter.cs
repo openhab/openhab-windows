@@ -13,13 +13,13 @@ namespace openHAB.Windows.Converters
         /// <inheritdoc/>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return value as OpenHABSitemap;
+            return value as Sitemap;
         }
 
         /// <inheritdoc/>
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            return value as OpenHABSitemap;
+            return value as Sitemap;
         }
     }
 }

@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
 using Microsoft.Extensions.Logging;
@@ -15,6 +9,14 @@ using openHAB.Core.Messages;
 using openHAB.Core.Model;
 using openHAB.Core.Services;
 using openHAB.Core.Services.Contracts;
+using openHAB.Windows.Messages;
+using openHAB.Windows.Services;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace openHAB.Windows.ViewModel
 {
@@ -28,11 +30,11 @@ namespace openHAB.Windows.ViewModel
         private readonly ILogger<MainViewModel> _logger;
         private readonly SitemapService _sitemapManager;
 
-        private ObservableCollection<OpenHABWidget> _breadcrumbItems;
+        private ObservableCollection<WidgetViewModel> _breadcrumbItems;
         private bool _isDataLoading;
         private object _selectedMenuItem;
-        private OpenHABSitemap _selectedSitemap;
-        private ObservableCollection<OpenHABSitemap> _sitemaps;
+        private Sitemap _selectedSitemap;
+        private ObservableCollection<Sitemap> _sitemaps;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
@@ -47,13 +49,13 @@ namespace openHAB.Windows.ViewModel
 
             _openHABClient = openHABClient;
             _settingsService = settingsService;
-            _breadcrumbItems = new ObservableCollection<OpenHABWidget>();
+            _breadcrumbItems = new ObservableCollection<WidgetViewModel>();
             _sitemapManager = sitemapManager;
 
             StrongReferenceMessenger.Default.Register<DataOperation>(this, async (obj, operation)
                 => await DataOperationStateAsync(operation));
 
-            StrongReferenceMessenger.Default.Register<WigetNavigation>(this, (obj, operation)
+            StrongReferenceMessenger.Default.Register<WidgetNavigationMessage>(this, (obj, operation)
                 => WidgetNavigatedEvent());
         }
 
@@ -61,7 +63,7 @@ namespace openHAB.Windows.ViewModel
         /// Gets or sets the items for the breadcrumb.
         /// </summary>
         /// <value>The breadcrumb items.</value>
-        public ObservableCollection<OpenHABWidget> BreadcrumbItems
+        public ObservableCollection<WidgetViewModel> BreadcrumbItems
         {
             get => _breadcrumbItems;
             set => Set(ref _breadcrumbItems, value);
@@ -90,7 +92,7 @@ namespace openHAB.Windows.ViewModel
 
             set
             {
-                OpenHABSitemap sitemapInfo = value as OpenHABSitemap;
+                Sitemap sitemapInfo = value as Sitemap;
                 if (sitemapInfo != null && SelectedSitemap != value)
                 {
                     SelectedSitemap = sitemapInfo;
@@ -103,7 +105,7 @@ namespace openHAB.Windows.ViewModel
         /// <summary>
         /// Gets or sets the sitemap currently selected by the user.
         /// </summary>
-        public OpenHABSitemap SelectedSitemap
+        public Sitemap SelectedSitemap
         {
             get
             {
@@ -112,6 +114,12 @@ namespace openHAB.Windows.ViewModel
 
             set
             {
+                if (_selectedSitemap != value)
+                {
+
+                    StrongReferenceMessenger.Default.Unregister<WidgetNavigationMessage, string>(this, value.Name);
+                }
+
                 if (Set(ref _selectedSitemap, value))
                 {
                     if (_selectedSitemap != null)
@@ -131,7 +139,7 @@ namespace openHAB.Windows.ViewModel
         /// <summary>
         /// Gets or sets a collection of OpenHAB sitemaps.
         /// </summary>
-        public ObservableCollection<OpenHABSitemap> Sitemaps
+        public ObservableCollection<Sitemap> Sitemaps
         {
             get => _sitemaps;
             set => Set(ref _sitemaps, value);
@@ -205,14 +213,14 @@ namespace openHAB.Windows.ViewModel
                     return;
                 }
 
-                List<OpenHABSitemap> sitemaps = await _sitemapManager.GetSitemapsAsync(loadCancellationToken);
+                List<Sitemap> sitemaps = await _sitemapManager.GetSitemapsAsync(loadCancellationToken);
                 if (sitemaps == null)
                 {
                     StrongReferenceMessenger.Default.Send(new FireInfoMessage(MessageType.NotConfigured));
                     return;
                 }
 
-                Sitemaps = new ObservableCollection<OpenHABSitemap>(sitemaps);
+                Sitemaps = new ObservableCollection<Sitemap>(sitemaps);
                 _openHABClient.StartItemUpdates(loadCancellationToken);
 
                 SelectedSitemap = OpenLastOrDefaultSitemap();
@@ -233,7 +241,7 @@ namespace openHAB.Windows.ViewModel
             }
         }
 
-        private OpenHABSitemap OpenLastOrDefaultSitemap()
+        private Sitemap OpenLastOrDefaultSitemap()
         {
             Settings settings = _settingsService.Load();
             string sitemapName = settings.LastSitemap;
@@ -245,7 +253,7 @@ namespace openHAB.Windows.ViewModel
                 return Sitemaps.FirstOrDefault();
             }
 
-            OpenHABSitemap selectedSitemap = Sitemaps.FirstOrDefault(x => x.Name == sitemapName);
+            Sitemap selectedSitemap = Sitemaps.FirstOrDefault(x => x.Name == sitemapName);
             if (SelectedSitemap == null)
             {
                 _logger.LogInformation($"Unable to find sitemap '{sitemapName}' -> Pick first entry from list");

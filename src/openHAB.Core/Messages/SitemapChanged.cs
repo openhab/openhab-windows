@@ -7,12 +7,12 @@ namespace openHAB.Core.Messages
     public class SitemapChanged
     {
 
-        public SitemapChanged(OpenHABSitemap sitemap)
+        public SitemapChanged(Sitemap sitemap)
         {
             sitemap = sitemap;
         }
 
-        public OpenHABSitemap Sitemap
+        public Sitemap Sitemap
         {
             get;
             private set;

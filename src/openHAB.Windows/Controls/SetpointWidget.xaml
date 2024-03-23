@@ -6,10 +6,9 @@
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   d:DesignHeight="150"
                   d:DesignWidth="300"
-                  mc:Ignorable="d" 
+                  mc:Ignorable="d"
                   Loaded="SetPointWidget_Loaded"
                   Visibility="{x:Bind Widget.Visibility}">
-
     <Grid Style="{StaticResource Widget}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -19,9 +18,6 @@
                           IconPath="{x:Bind Widget.IconPath, Mode=OneWay}"
                           LabelForeground="{x:Bind Widget.LabelColor, Mode=OneWay}"
                           LabelText="{x:Bind Widget.Label, Mode=OneWay}" />
-
-
-
         <StackPanel Grid.Column="1"
                     Width="100"
                     Margin="0,12,12,12"
@@ -31,54 +27,47 @@
                     BorderThickness="0">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <ComboBox Margin="0,4,0,0"
-                      x:Name="comboBox"
-                      HorizontalAlignment="Stretch"
-                      FontSize="16"
-                      Foreground="{x:Bind Widget.ValueColor, Mode=OneWay}"
-                      Width="Auto" VerticalAlignment="Stretch"/>
-                <Grid Grid.Row="1" Margin="0,3,0,0">
+                          x:Name="comboBox"
+                          HorizontalAlignment="Stretch"
+                          FontSize="16"
+                          Foreground="{x:Bind Widget.ValueColor, Mode=OneWay}"
+                          Width="Auto"
+                          VerticalAlignment="Stretch" />
+                <Grid Grid.Row="1"
+                      Margin="0,3,0,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Button 
-                        Grid.Column="0"
-                        Height="40"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Click="ButtonUp_Click">
+                    <Button Grid.Column="0"
+                            Height="40"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Click="ButtonUp_Click">
                         <TextBlock AutomationProperties.Name="ArrowUp"
-                            FontFamily="Segoe MDL2 Assets"
-                            Text="&#xE74A;" />
+                                   FontFamily="Segoe MDL2 Assets"
+                                   Text="&#xE74A;" />
                     </Button>
-                    <Button 
-                        Grid.Column="1"
-                        Height="40"
-                        Margin="1,0,0,0"                        
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Click="ButtonDown_Click">
-
+                    <Button Grid.Column="1"
+                            Height="40"
+                            Margin="1,0,0,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Click="ButtonDown_Click">
                         <TextBlock AutomationProperties.Name="ArrowDown"
-                               FontFamily="Segoe MDL2 Assets"
-                               RenderTransformOrigin="0.5,0.5"
-                               Text="&#xE74A;">
+                                   FontFamily="Segoe MDL2 Assets"
+                                   RenderTransformOrigin="0.5,0.5"
+                                   Text="&#xE74A;">
                             <TextBlock.RenderTransform>
                                 <RotateTransform Angle="180" />
-                            </TextBlock.RenderTransform>
-                        </TextBlock>
+                            </TextBlock.RenderTransform></TextBlock>
                     </Button>
-
                 </Grid>
-
             </Grid>
-
-
-
         </StackPanel>
     </Grid>
 </local:WidgetBase>

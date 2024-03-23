@@ -65,7 +65,7 @@
                     </DataTemplate>
                 </converters:MenuItemTemplateSelector.DefaultItemTemlate>
                 <converters:MenuItemTemplateSelector.SiteMapMenuItemTemplate>
-                    <DataTemplate x:DataType="model:OpenHABSitemap">
+                    <DataTemplate x:DataType="model:Sitemap">
                         <muxc:NavigationViewItem Content="{Binding Label, Mode=OneWay}">
                             <muxc:NavigationViewItem.Icon>
                                 <muxc:ImageIcon Source="ms-appx:///Assets/openhab.png"
@@ -107,7 +107,7 @@
                                    ItemsSource="{Binding Vm.BreadcrumbItems, ElementName=Window, Mode=TwoWay}"
                                    ItemClicked="BreadcrumbBar_ItemClicked">
                         <BreadcrumbBar.ItemTemplate>
-                            <DataTemplate x:DataType="model:OpenHABWidget">
+                            <DataTemplate x:DataType="model:Widget">
                                 <BreadcrumbBarItem Content="{Binding }">
                                     <BreadcrumbBarItem.ContentTemplate>
                                         <DataTemplate>
@@ -132,7 +132,7 @@
                     </Button>
                     <BreadcrumbBar ItemsSource="{Binding Vm.BreadcrumbItems, ElementName=Window, Mode=TwoWay}">
                         <BreadcrumbBar.ItemTemplate>
-                            <DataTemplate x:DataType="model:OpenHABWidget">
+                            <DataTemplate x:DataType="model:Widget">
                                 <BreadcrumbBarItem Content="{Binding }">
                                     <BreadcrumbBarItem.ContentTemplate>
                                         <DataTemplate>
@@ -160,6 +160,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid x:Name="AppTitleBar"
               Grid.Row="0"
@@ -204,6 +205,7 @@
         </Grid>
         <muxc:NavigationView x:Name="SitemapNavigation"
                              Grid.Row="1"
+                             Grid.RowSpan="2"
                              MenuItemsSource="{x:Bind Vm.Sitemaps, Mode=OneWay}"
                              MenuItemTemplateSelector="{StaticResource Selector}"
                              Header="{x:Bind Vm}"
@@ -265,8 +267,8 @@
             <Frame x:Name="ContentFrame" />
         </muxc:NavigationView>
         <StackPanel Orientation="Vertical"
-                    Grid.Row="1"
-                    Margin="-25,10,10,10">
+                    Grid.Row="2"
+                    Margin="10">
             <muxc:InfoBar x:Name="ErrorNotification"
                           Margin="0,0,0,5"
                           Severity="Error"

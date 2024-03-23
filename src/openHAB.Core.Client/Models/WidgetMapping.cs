@@ -1,9 +1,9 @@
 namespace openHAB.Core.Client.Models
 {
     /// <summary>
-    /// A CommandOptions for commandDescription.
+    /// A mapping for an OpenHAB Widget.
     /// </summary>
-    public class OpenHABCommandOptions
+    public class WidgetMapping
     {
         /// <summary>
         /// Gets or sets the Command of the mapping.
@@ -16,11 +16,11 @@ namespace openHAB.Core.Client.Models
         public string Label { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OpenHABCommandOptions"/> class.
+        /// Initializes a new instance of the <see cref="WidgetMapping"/> class.
         /// </summary>
         /// <param name="command">A command.</param>
         /// <param name="label">A label.</param>
-        public OpenHABCommandOptions(string command, string label)
+        public WidgetMapping(string command, string label)
         {
             Command = command;
             Label = label;

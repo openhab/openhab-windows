@@ -1,13 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using openHAB.Core.Client.Common;
 using openHAB.Core.Client.Connection.Contracts;
 using openHAB.Core.Client.Contracts;
@@ -15,6 +7,14 @@ using openHAB.Core.Client.Event;
 using openHAB.Core.Client.Event.Contracts;
 using openHAB.Core.Client.Messages;
 using openHAB.Core.Client.Models;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 
 namespace openHAB.Core.Client
 {
@@ -60,7 +60,7 @@ namespace openHAB.Core.Client
         }
 
         /// <inheritdoc />
-        public async Task<ICollection<OpenHABWidget>> LoadItemsFromSitemap(string sitemapLink, OpenHABVersion version)
+        public async Task<ICollection<Widget>> LoadItemsFromSitemap(string sitemapLink, OpenHABVersion version)
         {
             try
             {
@@ -75,22 +75,11 @@ namespace openHAB.Core.Client
 
                 string resultString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                ICollection<OpenHABWidget> items = null;
+                ICollection<Widget> items = null;
                 if (version == OpenHABVersion.Two || version == OpenHABVersion.Three || version == OpenHABVersion.Four)
                 {
-                    JObject jsonObject = JObject.Parse(resultString);
-
-                    string content = string.Empty;
-                    if (jsonObject["homepage"] == null)
-                    {
-                        content = jsonObject["widgets"].ToString();
-                    }
-                    else
-                    {
-                        content = jsonObject["homepage"]["widgets"].ToString();
-                    }
-
-                    items = JsonConvert.DeserializeObject<List<OpenHABWidget>>(content);
+                    Sitemap sitemap = JsonSerializer.Deserialize<Sitemap>(resultString);
+                    items = sitemap.Homepage.Widgets;
                 }
                 else
                 {
@@ -115,7 +104,7 @@ namespace openHAB.Core.Client
             }
         }
 
-        public async Task<OpenHABSitemap> GetSitemap(string sitemapLink, OpenHABVersion version)
+        public async Task<Sitemap> GetSitemap(string sitemapLink, OpenHABVersion version)
         {
             try
             {
@@ -130,11 +119,16 @@ namespace openHAB.Core.Client
 
                 string resultString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                OpenHABSitemap sitemap = null;
+                Sitemap sitemap = null;
                 if (version == OpenHABVersion.Two || version == OpenHABVersion.Three || version == OpenHABVersion.Four)
                 {
-                    JObject jsonObject = JObject.Parse(resultString);
-                    sitemap = JsonConvert.DeserializeObject<OpenHABSitemap>(jsonObject["homepage"].ToString());
+                    JsonSerializerOptions serializerOptions = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true,
+                        NumberHandling = JsonNumberHandling.AllowReadingFromString,
+                    };
+
+                    sitemap = JsonSerializer.Deserialize<Sitemap>(resultString, serializerOptions);
                 }
                 else
                 {
@@ -161,7 +155,7 @@ namespace openHAB.Core.Client
 
 
         /// <inheritdoc />
-        public async Task<OpenHABItem> GetItemByName(string itemName)
+        public async Task<Item> GetItemByName(string itemName)
         {
             try
             {
@@ -177,7 +171,7 @@ namespace openHAB.Core.Client
                 }
 
                 string resultString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
-                OpenHABItem item = JsonConvert.DeserializeObject<OpenHABItem>(resultString);
+                Item item = JsonSerializer.Deserialize<Item>(resultString);
 
                 _logger.LogInformation($"Loaded item '{itemName}' from server");
 
@@ -196,7 +190,7 @@ namespace openHAB.Core.Client
         }
 
         /// <inheritdoc />
-        public async Task<ICollection<OpenHABSitemap>> LoadSitemaps(OpenHABVersion version, List<Func<OpenHABSitemap, bool>> filters)
+        public async Task<ICollection<Sitemap>> LoadSitemaps(OpenHABVersion version, List<Func<Sitemap, bool>> filters)
         {
             try
             {
@@ -211,11 +205,11 @@ namespace openHAB.Core.Client
 
                 string resultString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                List<OpenHABSitemap> sitemaps = JsonConvert.DeserializeObject<List<OpenHABSitemap>>(resultString);
+                List<Sitemap> sitemaps = JsonSerializer.Deserialize<List<Sitemap>>(resultString);
                 if (sitemaps == null)
                 {
                     _logger.LogError($"Failed to load sitemaps from server");
-                    return new List<OpenHABSitemap>();
+                    return new List<Sitemap>();
                 }
 
                 _logger.LogInformation($"Loaded '{sitemaps.Count}' sitemaps from server");
@@ -256,7 +250,7 @@ namespace openHAB.Core.Client
         }
 
         /// <inheritdoc />
-        public async Task<HttpResponseResult<bool>> SendCommand(OpenHABItem item, string command)
+        public async Task<HttpResponseResult<bool>> SendCommand(Item item, string command)
         {
             try
             {

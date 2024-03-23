@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Navigation;
 using openHAB.Core.Client.Models;
 using openHAB.Core.Messages;
 using openHAB.Core.Services;
+using openHAB.Windows.Messages;
 using openHAB.Windows.Services;
 using openHAB.Windows.ViewModel;
 
@@ -14,7 +15,7 @@ namespace openHAB.Windows.View
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class SitemapPage : Page
+    public sealed partial class SitemapPage : Microsoft.UI.Xaml.Controls.Page
     {
         private SitemapService _sitemapService;
         private SitemapViewModel _viewModel;
@@ -60,8 +61,8 @@ namespace openHAB.Windows.View
 
             StrongReferenceMessenger.Default.Send<DataOperation>(new DataOperation(OperationState.Started));
 
-            OpenHABSitemap sitemap = await _sitemapService.GetSitemapByUrlAsync(sitemapUrl);
-            _viewModel = new SitemapViewModel(sitemap);
+            Sitemap sitemap = await _sitemapService.GetSitemapByUrlAsync(sitemapUrl);
+            _viewModel = await SitemapViewModel.CreateAsync(sitemap);
 
             DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
             await dispatcherQueue.EnqueueAsync(async () =>
@@ -81,7 +82,7 @@ namespace openHAB.Windows.View
                 return;
             }
 
-            StrongReferenceMessenger.Default.Send(new WidgetClickedMessage(widgetViewModel.Model));
+            StrongReferenceMessenger.Default.Send(new WidgetClickedMessage(widgetViewModel));
         }
 
         private void OnSitemapChangedEvent(SitemapChanged message)

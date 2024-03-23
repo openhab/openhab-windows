@@ -1,6 +1,7 @@
+using System;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
-using Mapsui.Widgets;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
@@ -10,11 +11,10 @@ using openHAB.Common;
 using openHAB.Core.Client.Messages;
 using openHAB.Core.Client.Models;
 using openHAB.Core.Messages;
+using openHAB.Windows.Messages;
 using openHAB.Windows.Services;
 using openHAB.Windows.View;
 using openHAB.Windows.ViewModel;
-using System;
-using System.Threading.Tasks;
 using Windows.ApplicationModel;
 
 namespace openHAB.Windows
@@ -67,8 +67,14 @@ namespace openHAB.Windows
 
         private void BreadcrumbBar_ItemClicked(BreadcrumbBar sender, BreadcrumbBarItemClickedEventArgs args)
         {
-            OpenHABWidget widget = args.Item as OpenHABWidget;
-            StrongReferenceMessenger.Default.Send<WigetNavigation>(new WigetNavigation(null, widget, EventTriggerSource.Breadcrumb));
+            WidgetViewModel widget = args.Item as WidgetViewModel;
+            if (widget == null)
+            {
+                _logger.LogWarning("Breadcrumb item is not a widget.");
+                return;
+            }
+
+            StrongReferenceMessenger.Default.Send(new WidgetNavigationMessage(null, widget, EventTriggerSource.Breadcrumb));
         }
 
         private async Task ShowErrorMessage(object recipient, ConnectionErrorMessage message)
@@ -143,7 +149,7 @@ namespace openHAB.Windows
             else
             {
                 sender.AlwaysShowHeader = true;
-                OpenHABSitemap sitemap = args.SelectedItem as OpenHABSitemap;
+                Sitemap sitemap = args.SelectedItem as Sitemap;
                 if (sitemap != null)
                 {
                     ContentFrame.Navigate(typeof(SitemapPage), sitemap.Link);
@@ -153,7 +159,7 @@ namespace openHAB.Windows
 
         private void SitemapTextBlock_Tapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            StrongReferenceMessenger.Default.Send<WigetNavigation>(new WigetNavigation(null, null, EventTriggerSource.Root));
+            StrongReferenceMessenger.Default.Send(new WidgetNavigationMessage(null, null, EventTriggerSource.Root));
         }
     }
 }

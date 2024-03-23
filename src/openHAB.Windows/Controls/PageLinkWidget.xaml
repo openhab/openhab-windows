@@ -9,11 +9,6 @@
                   d:DesignWidth="400"
                   mc:Ignorable="d"
                   Visibility="{x:Bind Widget.Visibility}">
-
-    <local:WidgetBase.Resources>
-        <converters:IconToBitmapConverter x:Key="IconToBitmapConverter" />
-    </local:WidgetBase.Resources>
-
     <Grid Style="{StaticResource Widget}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -24,8 +19,7 @@
                           VerticalAlignment="Center"
                           IconPath="{x:Bind Widget.IconPath, Mode=OneWay}"
                           LabelText="{x:Bind Widget.Label, Mode=OneWay}"
-                          LabelForeground="{x:Bind Widget.LabelColor, Mode=OneWay}"/>
-
+                          LabelForeground="{x:Bind Widget.LabelColor, Mode=OneWay}" />
         <TextBlock Grid.Column="1"
                    Margin="0,0,10,10"
                    TextWrapping="WrapWholeWords"
@@ -33,7 +27,6 @@
                    HorizontalAlignment="Right"
                    FontSize="18"
                    Text="{x:Bind Widget.Value}" />
-        
         <TextBlock Grid.Column="1"
                    Margin="0,0,12,0"
                    HorizontalAlignment="Right"

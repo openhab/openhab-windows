@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Markup;
@@ -15,21 +15,18 @@ namespace openHAB.Windows.ViewModel
     /// <summary>
     /// Represents the view model for a widget in the openHAB application.
     /// </summary>
-    public class WidgetViewModel : ViewModelBase<OpenHABWidget>
+    public class WidgetViewModel : ViewModelBase<Widget>
     {
+        private ObservableCollection<WidgetViewModel> _children;
+        private string _iconPath;
         /// <summary>
         /// Initializes a new instance of the <see cref="WidgetViewModel"/> class.
         /// </summary>
         /// <param name="model">The underlying model for the widget.</param>
-        public WidgetViewModel(OpenHABWidget model)
+        private WidgetViewModel(Widget model)
             : base(model)
         {
-            List<WidgetViewModel> children = new List<WidgetViewModel>();
-            Model.Children.ToList().ForEach(w => children.Add(new WidgetViewModel(w)));
-            Children = children;
-
-            LinkedPage = Model.LinkedPage != null ? new SitemapViewModel(Model.LinkedPage) : null;
-            IconPath = "C:\\Users\\ChristophHofmann\\AppData\\Local\\openHAB\\icons\\radiator.png"; //CacheAndRetriveLocalIconPath(Model.Icon).Result;
+            Children = new ObservableCollection<WidgetViewModel>();
         }
 
         #region Properties
@@ -37,9 +34,18 @@ namespace openHAB.Windows.ViewModel
         /// <summary>
         /// Gets the collection of child widgets.
         /// </summary>
-        public ICollection<WidgetViewModel> Children
+        public ObservableCollection<WidgetViewModel> Children
         {
-            get; internal set;
+            get => _children;
+            set => Set(ref _children, value);
+        }
+
+        /// <summary>
+        /// Gets the encoding of the widget.
+        /// </summary>
+        public string Encoding
+        {
+            get => Model.Encoding;
         }
 
         /// <summary>
@@ -55,13 +61,14 @@ namespace openHAB.Windows.ViewModel
         /// </summary>
         public string IconPath
         {
-            get; internal set;
+            get => _iconPath;
+            set => Set(ref _iconPath, value);
         }
 
         /// <summary>
         /// Gets the item associated with the widget.
         /// </summary>
-        public OpenHABItem Item
+        public Item Item
         {
             get => Model.Item;
         }
@@ -90,7 +97,7 @@ namespace openHAB.Windows.ViewModel
         /// <summary>
         /// Gets the linked page of the widget.
         /// </summary>
-        public SitemapViewModel LinkedPage
+        public Page LinkedPage
         {
             get; internal set;
         }
@@ -98,7 +105,7 @@ namespace openHAB.Windows.ViewModel
         /// <summary>
         /// Gets the collection of mappings for the widget.
         /// </summary>
-        public ICollection<OpenHABWidgetMapping> Mappings
+        public ICollection<WidgetMapping> Mappings
         {
             get => Model.Mappings;
         }
@@ -119,6 +126,12 @@ namespace openHAB.Windows.ViewModel
             get => Model.MinValue;
         }
 
+        public WidgetViewModel Parent
+        {
+            get;
+            internal set;
+        }
+
         /// <summary>
         /// Gets the period for the widget.
         /// </summary>
@@ -132,17 +145,12 @@ namespace openHAB.Windows.ViewModel
         /// </summary>
         public int Refresh
         {
-            get => Model.Refresh;
+            get => (int)Model.Refresh;
         }
 
         /// <summary>
-        /// Gets the step value for the widget.
+        /// Gets or sets the state of the widget.
         /// </summary>
-        public float Step
-        {
-            get => Model.Step;
-        }
-
         public string State
         {
             get => Model.State;
@@ -156,6 +164,14 @@ namespace openHAB.Windows.ViewModel
                 Model.State = value;
                 OnPropertyChanged(nameof(State));
             }
+        }
+
+        /// <summary>
+        /// Gets the step value for the widget.
+        /// </summary>
+        public float Step
+        {
+            get => Model.Step;
         }
 
         /// <summary>
@@ -205,14 +221,6 @@ namespace openHAB.Windows.ViewModel
         }
 
         /// <summary>
-        /// Gets the ID of the widget.
-        /// </summary>
-        public string WidgetId
-        {
-            get => Model.WidgetId;
-        }
-
-        /// <summary>
         /// Gets the visibility of the widget.
         /// </summary>
         public Visibility Visibility
@@ -220,24 +228,69 @@ namespace openHAB.Windows.ViewModel
             get => Model.Visibility ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        public string Encoding
+        /// <summary>
+        /// Gets the ID of the widget.
+        /// </summary>
+        public string WidgetId
         {
-            get => Model.Encoding;
+            get => Model.WidgetId;
         }
-
         #endregion
 
-        private async Task<string> CacheAndRetriveLocalIconPath(string icon)
+        #region Factory
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="WidgetViewModel"/> class asynchronously.
+        /// </summary>
+        /// <param name="model">The underlying model for the widget.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the created <see cref="WidgetViewModel"/>.</returns>
+        public static async Task<WidgetViewModel> CreateAsync(Widget model)
+        {
+            WidgetViewModel viewModel = new WidgetViewModel(model);
+            viewModel.LoadData();
+
+            return viewModel;
+        }
+
+        /// <summary>
+        /// Loads the data for the widget asynchronously.
+        /// </summary>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        private async Task LoadData()
+        {
+            if (!string.IsNullOrEmpty(Model.Icon))
+            {
+                IconPath = await CacheAndRetrieveLocalIconPath(Model.Icon);
+            }
+
+            if (Model.LinkedPage != null)
+            {
+                LinkedPage = Model.LinkedPage;
+            }
+
+            ObservableCollection<WidgetViewModel> widgets = new ObservableCollection<WidgetViewModel>();
+            foreach (Widget w in Model.Children)
+            {
+                WidgetViewModel viewModel = await WidgetViewModel.CreateAsync(w);
+                widgets.Add(viewModel);
+            }
+
+            Children = widgets;
+        }
+
+        private async Task<string> CacheAndRetrieveLocalIconPath(string icon)
         {
             IIconCaching iconCaching = DIService.Instance.GetService<IIconCaching>();
             ISettingsService settingsService = DIService.Instance.GetService<ISettingsService>();
             Settings setting = settingsService.Load();
 
-            string iconFormat = setting.UseSVGIcons ? "svg" : "png";
+            string iconFormat = setting.UseSVGIcons ? "svg" : "svg";
             string path = await iconCaching.ResolveIconPath(icon, Model.State, iconFormat).ConfigureAwait(false);
 
             return path;
         }
+
+        #endregion
 
         private Color ConvertColorCodeToColor(string value)
         {

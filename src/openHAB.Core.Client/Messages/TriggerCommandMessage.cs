@@ -13,7 +13,7 @@ namespace openHAB.Core.Client.Messages
         /// </summary>
         /// <param name="item">The OpenHAB item that triggered the command.</param>
         /// <param name="command">The command that was triggered.</param>
-        public TriggerCommandMessage(OpenHABItem item, string command)
+        public TriggerCommandMessage(Item item, string command)
         {
             Id = Guid.NewGuid();
             Item = item;
@@ -40,7 +40,7 @@ namespace openHAB.Core.Client.Messages
         /// <summary>
         /// Gets or sets the OpenHAB item that triggered the command.
         /// </summary>
-        public OpenHABItem Item
+        public Item Item
         {
             get;
             set;

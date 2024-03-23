@@ -1,5 +1,5 @@
 using System;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace openHAB.Core.Client.Models
 {
@@ -8,7 +8,7 @@ namespace openHAB.Core.Client.Models
     {
         /// <summary>Gets or sets the type.</summary>
         /// <value>The type.</value>
-        [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public string Type
         {
             get; set;
@@ -16,7 +16,7 @@ namespace openHAB.Core.Client.Models
 
         /// <summary>Gets or sets the URL.</summary>
         /// <value>The URL.</value>
-        [JsonProperty("url")]
+        [JsonPropertyName("url")]
         public Uri Url
         {
             get; set;

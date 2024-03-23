@@ -55,13 +55,13 @@ namespace openHAB.Core.Services
             OpenHABVersion openHABVersion = _settingsService.ServerVersion;
 
             string iconUrl = openHABVersion == OpenHABVersion.Two || openHABVersion == OpenHABVersion.Three || openHABVersion == OpenHABVersion.Four ?
-                       $"{serverUrl}icon/{icon}?state={state}&format={iconFormat}" :
+                       $"{serverUrl}icon/{icon}?state={state}&format={iconFormat}&anyFormat=true&iconset=classic" :
                        $"{serverUrl}images/{icon}.png";
 
             try
             {
-                Match iconName = Regex.Match(iconUrl, "icon/[0-9a-zA-Z]*", RegexOptions.None, TimeSpan.FromMilliseconds(100));
-                Match iconState = Regex.Match(iconUrl, "state=[0-9a-zA-Z=]*", RegexOptions.None, TimeSpan.FromMilliseconds(100));
+                Match iconName = Regex.Match(iconUrl, "icon/[0-9a-zA-Z]*", RegexOptions.None, TimeSpan.FromMilliseconds(1000));
+                Match iconState = Regex.Match(iconUrl, "state=[0-9a-zA-Z=]*", RegexOptions.None, TimeSpan.FromMilliseconds(1000));
 
                 if (!iconName.Success)
                 {
@@ -73,14 +73,8 @@ namespace openHAB.Core.Services
                     throw new ServiceException("Can not resolve icon state from url");
                 }
 
-                if (!iconState.Success)
-                {
-                    throw new ServiceException("Can not resolve icon state from url");
-                }
-
                 DirectoryInfo iconDirectory = EnsureIconCacheFolder();
 
-                //string iconFileName = $"{iconName.Value.Replace("icon/", string.Empty)}{iconState.Value.Replace("state=", string.Empty)}.{iconFormat}";
                 string iconFileName = $"{iconName.Value.Replace("icon/", string.Empty)}.{iconFormat}";
                 string iconFilePath = Path.Combine(iconDirectory.FullName, iconFileName).Replace("NULL", string.Empty);
 

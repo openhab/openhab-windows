@@ -1,16 +1,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using openHAB.Core.Client.Models;
+using openHAB.Windows.ViewModel;
 
-namespace openHAB.Core.Services
+namespace openHAB.Windows.Services
 {
     /// <summary>
-    /// Service that keeps track of navigation between linkedpages.
+    /// Service that keeps track of navigation between linked pages.
     /// </summary>
     public static class WidgetNavigationService
     {
-        private static readonly Stack<OpenHABWidget> WidgetBackStack = new Stack<OpenHABWidget>();
-        private static OpenHABWidget _currentWidget;
+        private static readonly Stack<WidgetViewModel> WidgetBackStack = new Stack<WidgetViewModel>();
+        private static WidgetViewModel _currentWidget;
 
         /// <summary>
         /// Gets a value indicating whether there is a previous widget on the backstack.
@@ -21,7 +22,7 @@ namespace openHAB.Core.Services
         /// Navigates the backstack to the passed in target.
         /// </summary>
         /// <param name="target">The openHAB widget to navigate to.</param>
-        public static void Navigate(OpenHABWidget target)
+        public static void Navigate(WidgetViewModel target)
         {
             if (target == _currentWidget)
             {
@@ -35,8 +36,8 @@ namespace openHAB.Core.Services
         /// <summary>
         /// Go back to the previous openHAB widget.
         /// </summary>
-        /// <returns>The previous visted widget.</returns>
-        public static OpenHABWidget GoBack()
+        /// <returns>The previous visited widget.</returns>
+        public static WidgetViewModel GoBack()
         {
             if (WidgetBackStack.Count == 0)
             {
@@ -52,10 +53,10 @@ namespace openHAB.Core.Services
         /// <summary>
         /// Go back to the previous openHAB widget.
         /// </summary>
-        /// <returns>The previous visted widget.</returns>
-        public static OpenHABWidget GoBackToRoot()
+        /// <returns>The previous visited widget.</returns>
+        public static WidgetViewModel GoBackToRoot()
         {
-            OpenHABWidget widget = GoBack();
+            WidgetViewModel widget = GoBack();
             while (widget != null && widget.Parent != null)
             {
                 widget = GoBack();
@@ -77,6 +78,6 @@ namespace openHAB.Core.Services
 
         /// <summary>Gets the navigated widgets.</summary>
         /// <value>The widgets.</value>
-        public static List<OpenHABWidget> Widgets => WidgetBackStack.Reverse().ToList();
+        public static List<WidgetViewModel> Widgets => WidgetBackStack.Reverse().ToList();
     }
 }

@@ -1,4 +1,6 @@
-using Newtonsoft.Json;
+
+
+using System.Text.Json.Serialization;
 
 namespace openHAB.Core.Client.Models
 {
@@ -7,7 +9,7 @@ namespace openHAB.Core.Client.Models
     {
         /// <summary>Gets or sets the server version.</summary>
         /// <value>The version.</value>
-        [JsonProperty("version")]
+        [JsonPropertyName("version")]
         public string Version
         {
             get; set;
@@ -15,7 +17,7 @@ namespace openHAB.Core.Client.Models
 
         /// <summary>Gets or sets the build version string.</summary>
         /// <value>The build string.</value>
-        [JsonProperty("buildString")]
+        [JsonPropertyName("buildString")]
         public string BuildString
         {
             get; set;

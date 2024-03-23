@@ -1,10 +1,10 @@
 using System;
 using System.Globalization;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
-using Newtonsoft.Json;
 using openHAB.Core.Client.Messages;
 
 namespace openHAB.Core.Client.Models
@@ -12,7 +12,7 @@ namespace openHAB.Core.Client.Models
     /// <summary>
     /// A class that represents an OpenHAB item.
     /// </summary>
-    public class OpenHABItem : ObservableObject
+    public class Item : ObservableObject
     {
         private string _state;
         private string _type;
@@ -106,15 +106,15 @@ namespace openHAB.Core.Client.Models
         /// Gets or sets the CommandDescription of the OpenHAB item.
         /// </summary>
         ///
-        public OpenHABCommandDescription CommandDescription
+        public CommandDescription CommandDescription
         {
             get; set;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OpenHABItem"/> class.
+        /// Initializes a new instance of the <see cref="Item"/> class.
         /// </summary>
-        public OpenHABItem()
+        public Item()
         {
             StrongReferenceMessenger.Default.Register<UpdateItemMessage>(this, HandleUpdateItemMessage);
         }
@@ -130,21 +130,21 @@ namespace openHAB.Core.Client.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OpenHABItem"/> class.
+        /// Initializes a new instance of the <see cref="Item"/> class.
         /// </summary>
         /// <param name="startNode">The XML from the OpenHAB server that represents this OpenHAB item.</param>
-        public OpenHABItem(XElement startNode)
+        public Item(XElement startNode)
         {
             ParseNode(startNode);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OpenHABItem"/> class.
+        /// Initializes a new instance of the <see cref="Item"/> class.
         /// </summary>
         /// <param name="jsonObject">The JSON from the OpenHAB server that represents this OpenHAB item.</param>
-        public OpenHABItem(string jsonObject)
+        public Item(string jsonObject)
         {
-            var item = JsonConvert.DeserializeObject<OpenHABItem>(jsonObject);
+            Item item = JsonSerializer.Deserialize<Item>(jsonObject);
             Name = item.Name;
             Type = item.Type;
             GroupType = item.GroupType;

@@ -1,7 +1,8 @@
 using openHAB.Core.Client.Models;
 using openHAB.Core.Model;
+using openHAB.Windows.ViewModel;
 
-namespace openHAB.Core.Messages
+namespace openHAB.Windows.Messages
 {
     /// <summary>
     /// A message that fires whenever a widget is clicked on a sitemap.
@@ -11,13 +12,16 @@ namespace openHAB.Core.Messages
         /// <summary>
         /// Gets or sets the Widget property.
         /// </summary>
-        public OpenHABWidget Widget { get; set; }
+        public WidgetViewModel Widget
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WidgetClickedMessage"/> class.
         /// </summary>
         /// <param name="widget">The widget that was clicked.</param>
-        public WidgetClickedMessage(OpenHABWidget widget)
+        public WidgetClickedMessage(WidgetViewModel widget)
         {
             Widget = widget;
         }

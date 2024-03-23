@@ -1,20 +1,20 @@
 ﻿using openHAB.Core.Client.Models;
-using openHAB.Core.Model;
-using Windows.Media.PlayTo;
+using openHAB.Core.Messages;
+using openHAB.Windows.ViewModel;
 
-namespace openHAB.Core.Messages
+namespace openHAB.Windows.Messages
 {
     /// <summary>
     /// Represents a navigation between two OpenHAB widgets.
     /// </summary>
-    public class WigetNavigation
+    public class WidgetNavigationMessage
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="WigetNavigation"/> class.
+        /// Initializes a new instance of the <see cref="WidgetNavigationMessage"/> class.
         /// </summary>
         /// <param name="originWidget">The origin widget.</param>
         /// <param name="targetWidget">The target widget.</param>
-        public WigetNavigation(OpenHABWidget originWidget, OpenHABWidget targetWidget, EventTriggerSource trigger)
+        public WidgetNavigationMessage(WidgetViewModel originWidget, WidgetViewModel targetWidget, EventTriggerSource trigger)
         {
             OriginWidget = originWidget;
             TargetWidget = targetWidget;
@@ -24,16 +24,25 @@ namespace openHAB.Core.Messages
         /// <summary>
         /// Gets or sets the trigger source.
         /// </summary>
-        public EventTriggerSource Trigger { get; set; }
+        public EventTriggerSource Trigger
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the origin widget.
         /// </summary>
-        public OpenHABWidget OriginWidget { get; set; }
+        public WidgetViewModel OriginWidget
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the target widget.
         /// </summary>
-        public OpenHABWidget TargetWidget { get; set; }
+        public WidgetViewModel TargetWidget
+        {
+            get; set;
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace openHAB.Windows.View
     /// <summary>
     /// Startup page of the application.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage : Microsoft.UI.Xaml.Controls.Page
     {
 
         /// <summary>
@@ -27,7 +27,5 @@ namespace openHAB.Windows.View
         {
             InitializeComponent();
         }
-
-     
     }
 }

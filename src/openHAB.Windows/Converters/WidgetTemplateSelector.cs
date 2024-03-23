@@ -24,7 +24,7 @@ namespace openHAB.Windows.Converters
                 return null;
             }
 
-            var itemType = GetItemViewType(widget);
+            WidgetTypeEnum itemType = GetItemViewType(widget);
             switch (itemType)
             {
                 case WidgetTypeEnum.ColorPicker:

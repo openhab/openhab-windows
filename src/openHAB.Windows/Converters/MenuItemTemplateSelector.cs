@@ -27,7 +27,7 @@ namespace openHAB.Windows.Converters
         /// <inheritdoc/>
         protected override DataTemplate SelectTemplateCore(object item)
         {
-            OpenHABSitemap sitemapMenuItem = item as OpenHABSitemap;
+            Sitemap sitemapMenuItem = item as Sitemap;
 
             if (sitemapMenuItem != null)
             {

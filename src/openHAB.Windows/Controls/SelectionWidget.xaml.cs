@@ -34,7 +34,7 @@ namespace openHAB.Windows.Controls
             selectionMappings = new System.Collections.Generic.List<SelectionMapping>();
             if (Widget?.Item.CommandDescription?.CommandOptions?.Count > 0)
             {
-                foreach (OpenHABCommandOptions option in Widget.Item.CommandDescription.CommandOptions)
+                foreach (CommandOptions option in Widget.Item.CommandDescription.CommandOptions)
                 {
                     SelectionMapping mapping = new SelectionMapping(option.Command, option.Label);
                     selectionMappings.Add(mapping);
@@ -43,7 +43,7 @@ namespace openHAB.Windows.Controls
 
             if (Widget?.Mappings.Count > 0)
             {
-                foreach (OpenHABWidgetMapping option in Widget.Mappings)
+                foreach (WidgetMapping option in Widget.Mappings)
                 {
                     SelectionMapping mapping = new SelectionMapping(option.Command, option.Label);
                     selectionMappings.Add(mapping);

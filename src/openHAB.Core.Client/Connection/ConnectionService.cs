@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Net.Http;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI.Helpers;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using openHAB.Common;
 using openHAB.Core.Client.Common;
 using openHAB.Core.Client.Connection.Contracts;
@@ -160,8 +161,9 @@ namespace openHAB.Core.Client.Connection
 
                 string responseBody = await result.Content.ReadAsStringAsync();
 
-                APIInfo apiInfo = JsonConvert.DeserializeObject<APIInfo>(responseBody);
-                if (apiInfo.Version < 4)
+                APIInfo apiInfo = JsonSerializer.Deserialize<APIInfo>(responseBody);
+                
+                if (int.TryParse(apiInfo.Version, out int apiVersion) && apiVersion < 4)
                 {
                     serverInfo.Version = OpenHABVersion.Two;
                     return new HttpResponseResult<ServerInfo>(serverInfo, result.StatusCode);

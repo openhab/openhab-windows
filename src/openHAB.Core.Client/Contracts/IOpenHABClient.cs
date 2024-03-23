@@ -23,7 +23,7 @@ namespace openHAB.Core.Client.Contracts
         /// </summary>
         /// <param name="itemName">Name of the item.</param>
         /// <returns>openHab item object. </returns>
-        Task<OpenHABItem> GetItemByName(string itemName);
+        Task<Item> GetItemByName(string itemName);
 
         /// <summary>
         /// Loads all the sitemaps.
@@ -31,14 +31,14 @@ namespace openHAB.Core.Client.Contracts
         /// <param name="version">The version of OpenHAB running on the server.</param>
         /// <param name="filters">Filters for sitemap list.</param>
         /// <returns>A list of sitemaps.</returns>
-        Task<ICollection<OpenHABSitemap>> LoadSitemaps(OpenHABVersion version, List<Func<OpenHABSitemap, bool>> filters);
+        Task<ICollection<Sitemap>> LoadSitemaps(OpenHABVersion version, List<Func<Sitemap, bool>> filters);
 
 
         /// <summary>Loads the items from sitemap.</summary>
         /// <param name="sitemapLink">The sitemap link.</param>
         /// <param name="version">The openHab server version.</param>
         /// <returns>Returns loaded sitemap</returns>
-        Task<ICollection<OpenHABWidget>> LoadItemsFromSitemap(string sitemapLink, OpenHABVersion version);
+        Task<ICollection<Widget>> LoadItemsFromSitemap(string sitemapLink, OpenHABVersion version);
 
         /// <summary>
         /// Sends a command to an item.
@@ -46,7 +46,7 @@ namespace openHAB.Core.Client.Contracts
         /// <param name="item">The item.</param>
         /// <param name="command">The Command.</param>
         /// <returns>Operation result if the command was successful or not.</returns>
-        Task<HttpResponseResult<bool>> SendCommand(OpenHABItem item, string command);
+        Task<HttpResponseResult<bool>> SendCommand(Item item, string command);
 
         /// <summary>
         /// Reset the connection to the OpenHAB server after changing the settings in the App.
@@ -61,6 +61,6 @@ namespace openHAB.Core.Client.Contracts
         /// Starts listening to server events.
         /// </summary>
         void StartItemUpdates(System.Threading.CancellationToken token);
-        Task<OpenHABSitemap> GetSitemap(string sitemapLink, OpenHABVersion version);
+        Task<Sitemap> GetSitemap(string sitemapLink, OpenHABVersion version);
     }
 }

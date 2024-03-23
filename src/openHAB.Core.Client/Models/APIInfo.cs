@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace openHAB.Core.Client.Models
 {
@@ -10,15 +10,15 @@ namespace openHAB.Core.Client.Models
     {
         /// <summary>Gets or sets the version.</summary>
         /// <value>The version.</value>
-        [JsonProperty("version")]
-        public int Version
+        [JsonPropertyName("version")]
+        public string Version
         {
             get; set;
         }
 
         /// <summary>Gets or sets the locale.</summary>
         /// <value>The locale.</value>
-        [JsonProperty("locale")]
+        [JsonPropertyName("locale")]
         public string Locale
         {
             get; set;
@@ -26,7 +26,7 @@ namespace openHAB.Core.Client.Models
 
         /// <summary>Gets or sets the measurement system.</summary>
         /// <value>The measurement system.</value>
-        [JsonProperty("measurementSystem")]
+        [JsonPropertyName("measurementSystem")]
         public string MeasurementSystem
         {
             get; set;
@@ -34,7 +34,7 @@ namespace openHAB.Core.Client.Models
 
         /// <summary>Gets or sets the runtime information.</summary>
         /// <value>The runtime information.</value>
-        [JsonProperty("runtimeInfo")]
+        [JsonPropertyName("runtimeInfo")]
         public RuntimeInfo RuntimeInfo
         {
             get; set;
@@ -42,7 +42,7 @@ namespace openHAB.Core.Client.Models
 
         /// <summary>Gets or sets the links.</summary>
         /// <value>The links.</value>
-        [JsonProperty("links")]
+        [JsonPropertyName("links")]
         public List<Link> Links
         {
             get; set;

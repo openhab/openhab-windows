@@ -37,7 +37,7 @@ namespace openHAB.Windows.Controls
         internal override void SetState()
         {
             UncheckEverything();
-            var currentItem = SectionsList?.Items?.SingleOrDefault(x => ((OpenHABWidgetMapping)x).Command == Widget.Item.State);
+            var currentItem = SectionsList?.Items?.SingleOrDefault(x => ((WidgetMapping)x).Command == Widget.Item.State);
             ContentPresenter presenter = SectionsList?.ContainerFromItem(currentItem) as Microsoft.UI.Xaml.Controls.ContentPresenter;
 
             if (presenter != null && presenter.FindChild(typeof(ToggleButton)) is ToggleButton toggleButton)

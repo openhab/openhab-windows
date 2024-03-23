@@ -12,6 +12,7 @@ using openHAB.Core.Client.Models;
 using openHAB.Core.Common;
 using openHAB.Core.Messages;
 using openHAB.Core.Services;
+using openHAB.Windows.Messages;
 using openHAB.Windows.Services;
 
 namespace openHAB.Windows.ViewModel
@@ -19,7 +20,7 @@ namespace openHAB.Windows.ViewModel
     /// <summary>
     /// ViewModel class for the sitemap view.
     /// </summary>
-    public class SitemapViewModel : ViewModelBase<OpenHABSitemap>, IDisposable
+    public class SitemapViewModel : ViewModelBase<Sitemap>, IDisposable
     {
         private readonly SitemapService _sitemapService;
 
@@ -33,8 +34,8 @@ namespace openHAB.Windows.ViewModel
         /// <summary>
         /// Initializes a new instance of the <see cref="SitemapViewModel"/> class.
         /// </summary>
-        public SitemapViewModel()
-            : base(new OpenHABSitemap())
+        private SitemapViewModel()
+            : base(new Sitemap())
         {
         }
 
@@ -43,10 +44,9 @@ namespace openHAB.Windows.ViewModel
         /// </summary>
         /// <param name="model">Model class for view model.</param>
         /// <param name="serverInfo">openHAB Instance information.</param>
-        public SitemapViewModel(OpenHABSitemap model)
+        private SitemapViewModel(Sitemap model, List<WidgetViewModel> widgetViewModels)
              : base(model)
         {
-            List<WidgetViewModel> widgetViewModels = GetWidgetViewModels(model.Widgets).Result;
             _widgets = new ObservableCollection<WidgetViewModel>(widgetViewModels ?? new List<WidgetViewModel>());
             _sitemapService = DIService.Instance.GetService<SitemapService>();
             _currentWidgets = new ObservableCollection<WidgetViewModel>();
@@ -59,7 +59,8 @@ namespace openHAB.Windows.ViewModel
                     return;
                 }
 
-                await OnWidgetClickedAsync(new WidgetViewModel(msg.Widget));
+                WidgetViewModel viewModel = msg.Widget;
+                await OnWidgetClickedAsync(viewModel);
             });
 
             StrongReferenceMessenger.Default.Register<TriggerCommandMessage>(this, async (recipient, msg)
@@ -68,7 +69,7 @@ namespace openHAB.Windows.ViewModel
             StrongReferenceMessenger.Default.Register<DataOperation>(this, (obj, operation)
                 => DataOperationState(operation));
 
-            StrongReferenceMessenger.Default.Register<WigetNavigation>(this, (recipient, msg) =>
+            StrongReferenceMessenger.Default.Register<WidgetNavigationMessage>(this, (recipient, msg) =>
             {
                 if (msg.Trigger == EventTriggerSource.Breadcrumb)
                 {
@@ -80,23 +81,10 @@ namespace openHAB.Windows.ViewModel
                 }
             });
 
-            SetWidgetsOnScreen(Widgets);
+            SetWidgetsOnScreenAsync(Widgets);
         }
 
-        private async Task<List<WidgetViewModel>> GetWidgetViewModels(ICollection<OpenHABWidget> widgets)
-        {
-
-            List<WidgetViewModel> widgetViewModels = new List<WidgetViewModel>();
-            foreach (OpenHABWidget widget in widgets)
-            {
-                WidgetViewModel viewModel = new WidgetViewModel(widget);
-                widgetViewModels.Add(viewModel);
-            }
-
-            return widgetViewModels;
-        }
-
-        #endregion
+        #endregion Constructors
 
         #region Properties
 
@@ -172,14 +160,18 @@ namespace openHAB.Windows.ViewModel
             }
         }
 
-        #endregion
+        #endregion Properties
 
         #region Reload Command
 
         private ActionCommand _reloadSitemapCommand;
 
-        /// <summary>Gets the command to reload sitemap and widget data.</summary>
-        /// <value>The refresh command.</value>
+        /// <summary>
+        /// Gets the command to reload sitemap and widget data.
+        /// </summary>
+        /// <value>
+        /// The refresh command.
+        /// </value>
         public ActionCommand ReloadSitemapCommand => _reloadSitemapCommand ?? (_reloadSitemapCommand = new ActionCommand(ExecuteReloadSitemapCommand, CanExecuteReloadSitemapCommand));
 
         private bool CanExecuteReloadSitemapCommand(object arg)
@@ -190,72 +182,6 @@ namespace openHAB.Windows.ViewModel
         private async void ExecuteReloadSitemapCommand(object obj)
         {
             await ReloadSitemap().ConfigureAwait(false);
-        }
-
-        #endregion
-
-        #region Navigate To Sitemap Root Command
-
-        private bool _canExecuteReloadSitemap;
-        private ActionCommand _navigateToSitemapRootCommand;
-
-        public ActionCommand NavigateToSitemapRoot =>
-            _navigateToSitemapRootCommand ?? (_navigateToSitemapRootCommand = new ActionCommand(ExecuteNavigateToSitemapRootCommand, CanExecuteNavigateToSitemapRootCommand));
-
-        private bool CanExecuteNavigateToSitemapRootCommand(object arg)
-        {
-            return true;
-        }
-
-        private void ExecuteNavigateToSitemapRootCommand(object obj)
-        {
-            WidgetNavigationService.ClearWidgetNavigation();
-            SetWidgetsOnScreen(Widgets);
-            SelectedWidget = null;
-
-            StrongReferenceMessenger.Default.Send<WigetNavigation>(new WigetNavigation(SelectedWidget.Model, null, EventTriggerSource.Widget));
-        }
-
-        #endregion
-
-        #region Events
-
-        private void DataOperationState(DataOperation operation)
-        {
-            switch (operation.State)
-            {
-                case OperationState.Started:
-                    _canExecuteReloadSitemap = true;
-                    break;
-                case OperationState.Completed:
-                    _canExecuteReloadSitemap = false;
-                    break;
-            }
-        }
-
-        private async Task TriggerItemCommand(TriggerCommandMessage message)
-        {
-            HttpResponseResult<bool> result = await _sitemapService.SendItemCommand(message.Item, message.Command).ConfigureAwait(false);
-            if (!result.Content)
-            {
-                string errorMessage = AppResources.Errors.GetString("CommandFailed");
-                errorMessage = string.Format(errorMessage, message.Command, message.Item?.Name);
-
-                StrongReferenceMessenger.Default.Send<ConnectionErrorMessage>(new ConnectionErrorMessage(errorMessage));
-            }
-        }
-
-        #endregion
-
-        private async Task LoadWidgetsAsync()
-        {
-            this.Widgets = new ObservableCollection<WidgetViewModel>();
-            CurrentWidgets?.Clear();
-
-            ICollection<OpenHABWidget> widgetModels = await _sitemapService.LoadItemsFromSitemapAsync(Model).ConfigureAwait(false);
-            widgetModels.ToList().ForEach(model => Widgets.Add(new WidgetViewModel(model)));
-
-            SetWidgetsOnScreen(this.Widgets);
         }
 
         private async Task ReloadSitemap()
@@ -286,6 +212,123 @@ namespace openHAB.Windows.ViewModel
             ReloadSitemapCommand.InvokeCanExecuteChanged(null);
         }
 
+        #endregion Reload Command
+
+        #region Navigate To Sitemap Root Command
+
+        private bool _canExecuteReloadSitemap;
+        private ActionCommand _navigateToSitemapRootCommand;
+
+        /// <summary>
+        /// Gets the command to navigate to the root of the sitemap.
+        /// </summary>
+        public ActionCommand NavigateToSitemapRoot =>
+            _navigateToSitemapRootCommand ?? (_navigateToSitemapRootCommand = new ActionCommand(ExecuteNavigateToSitemapRootCommand, CanExecuteNavigateToSitemapRootCommand));
+
+        private bool CanExecuteNavigateToSitemapRootCommand(object arg)
+        {
+            return true;
+        }
+
+        private void ExecuteNavigateToSitemapRootCommand(object obj)
+        {
+            WidgetNavigationService.ClearWidgetNavigation();
+            SetWidgetsOnScreenAsync(Widgets);
+            SelectedWidget = null;
+
+            StrongReferenceMessenger.Default.Send(new WidgetNavigationMessage(SelectedWidget, null, EventTriggerSource.Widget), Model.Name);
+        }
+
+        private static async Task<List<WidgetViewModel>> GetWidgetViewModels(ICollection<Widget> widgets)
+        {
+            List<WidgetViewModel> widgetViewModels = new List<WidgetViewModel>();
+            foreach (Widget widget in widgets)
+            {
+                WidgetViewModel viewModel = await WidgetViewModel.CreateAsync(widget).ConfigureAwait(false);
+                widgetViewModels.Add(viewModel);
+            }
+
+            return widgetViewModels;
+        }
+
+        #endregion Navigate To Sitemap Root Command
+
+        #region Events
+
+        private void DataOperationState(DataOperation operation)
+        {
+            switch (operation.State)
+            {
+                case OperationState.Started:
+                    _canExecuteReloadSitemap = true;
+                    break;
+
+                case OperationState.Completed:
+                    _canExecuteReloadSitemap = false;
+                    break;
+            }
+        }
+
+        private async Task TriggerItemCommand(TriggerCommandMessage message)
+        {
+            HttpResponseResult<bool> result = await _sitemapService.SendItemCommand(message.Item, message.Command).ConfigureAwait(false);
+            if (!result.Content)
+            {
+                string errorMessage = AppResources.Errors.GetString("CommandFailed");
+                errorMessage = string.Format(errorMessage, message.Command, message.Item?.Name);
+
+                StrongReferenceMessenger.Default.Send<ConnectionErrorMessage>(new ConnectionErrorMessage(errorMessage));
+            }
+        }
+
+        #endregion Events
+
+        #region Factory
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="SitemapViewModel"/> class asynchronously.
+        /// </summary>
+        /// <param name="sitemap">The OpenHABSitemap object.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the created SitemapViewModel.</returns>
+        public static async Task<SitemapViewModel> CreateAsync(Sitemap sitemap)
+        {
+            if (sitemap.Homepage?.Widgets == null ||
+                sitemap.Homepage.Widgets.Count == 0)
+            {
+                return new SitemapViewModel(sitemap, new List<WidgetViewModel>());
+            }
+
+            List<WidgetViewModel> widgetViewModels = await GetWidgetViewModels(sitemap.Homepage.Widgets).ConfigureAwait(false);
+            SitemapViewModel viewModel = new SitemapViewModel(sitemap, widgetViewModels);
+
+            return viewModel;
+        }
+
+        private async Task LoadWidgetsAsync()
+        {
+            this.Widgets = new ObservableCollection<WidgetViewModel>();
+            CurrentWidgets?.Clear();
+
+            ICollection<Widget> widgetModels = await _sitemapService.LoadItemsFromSitemapAsync(Model).ConfigureAwait(false);
+            Widgets = new ObservableCollection<WidgetViewModel>(ConvertWidgetToViewModel(widgetModels));
+
+            await SetWidgetsOnScreenAsync(this.Widgets);
+        }
+
+        private List<WidgetViewModel> ConvertWidgetToViewModel(ICollection<Widget> widgetModels)
+        {
+            List<WidgetViewModel> widgetViewModels = new List<WidgetViewModel>();
+            widgetModels.ToList().ForEach(async model =>
+            {
+                WidgetViewModel viewModel = await WidgetViewModel.CreateAsync(model).ConfigureAwait(false);
+                widgetViewModels.Add(viewModel);
+            });
+
+            return widgetViewModels;
+        }
+
+        #endregion Factory
+
         #region Widget interaction
 
         private WidgetViewModel FindWidget(string widgetId, ICollection<WidgetViewModel> widgets)
@@ -303,7 +346,7 @@ namespace openHAB.Windows.ViewModel
                     return widget;
                 }
 
-                ICollection<WidgetViewModel> childWidgets = widget.Type.CompareTo("Group") == 0 ? widget.LinkedPage?.Widgets : widget.Children;
+                ICollection<WidgetViewModel> childWidgets = widget.Type.CompareTo("Group") == 0 ? ConvertWidgetToViewModel(widget.LinkedPage?.Widgets) : widget.Children;
                 openHABWidget = FindWidget(widgetId, childWidgets);
                 if (openHABWidget != null)
                 {
@@ -316,7 +359,7 @@ namespace openHAB.Windows.ViewModel
 
         private async Task OnWidgetClickedAsync(WidgetViewModel widget)
         {
-            await App.DispatcherQueue.EnqueueAsync(() =>
+            await App.DispatcherQueue.EnqueueAsync(async () =>
             {
                 WidgetViewModel lastWidget = SelectedWidget;
                 SelectedWidget = widget;
@@ -325,41 +368,51 @@ namespace openHAB.Windows.ViewModel
                     return;
                 }
 
-                WidgetNavigationService.Navigate(SelectedWidget.Model);
-                StrongReferenceMessenger.Default.Send<WigetNavigation>(new WigetNavigation(lastWidget.Model, widget.Model, EventTriggerSource.Widget));
+                WidgetNavigationService.Navigate(SelectedWidget);
+                StrongReferenceMessenger.Default.Send(new WidgetNavigationMessage(lastWidget, widget, EventTriggerSource.Widget));
 
-                SetWidgetsOnScreen(SelectedWidget.LinkedPage.Widgets);
+                List<WidgetViewModel> widgets = ConvertWidgetToViewModel(SelectedWidget.LinkedPage.Widgets);
+                await SetWidgetsOnScreenAsync(widgets);
             });
         }
 
-        private async void SetWidgetsOnScreen(ICollection<WidgetViewModel> widgets)
+        private async Task SetWidgetsOnScreenAsync(ICollection<WidgetViewModel> widgets)
         {
             await App.DispatcherQueue.EnqueueAsync(() =>
             {
-                CurrentWidgets.Clear();
-                CurrentWidgets.AddRange(widgets);
+                CurrentWidgets?.Clear();
+                CurrentWidgets?.AddRange(widgets);
             });
         }
 
-        private void WidgetGoBack(OpenHABWidget widget)
+        private async Task WidgetGoBack(WidgetViewModel widget)
         {
+            if (!WidgetNavigationService.CanGoBack)
+            {
+                return;
+            }
+
             WidgetViewModel lastWidget = SelectedWidget;
             WidgetViewModel widgetFromStack = null;
 
-            while (widgetFromStack == null || widgetFromStack.WidgetId != widget.WidgetId)
+            while (widgetFromStack?.WidgetId != widget.WidgetId)
             {
-                widgetFromStack = new WidgetViewModel(WidgetNavigationService.GoBack());
+                widgetFromStack = WidgetNavigationService.GoBack();
             }
 
             SelectedWidget = widgetFromStack;
-            WidgetNavigationService.Navigate(SelectedWidget.Model);
-            StrongReferenceMessenger.Default.Send<WigetNavigation>(new WigetNavigation(lastWidget.Model, SelectedWidget.Model, EventTriggerSource.Widget));
+            WidgetNavigationService.Navigate(SelectedWidget);
+            StrongReferenceMessenger.Default.Send(new WidgetNavigationMessage(lastWidget, SelectedWidget, EventTriggerSource.Widget));
 
-            SetWidgetsOnScreen(SelectedWidget.LinkedPage.Widgets);
+            List<WidgetViewModel> widgets = ConvertWidgetToViewModel(SelectedWidget.LinkedPage.Widgets);
+            await SetWidgetsOnScreenAsync(widgets);
         }
-        #endregion
+
+        #endregion Widget interaction
 
         #region Dispose
+
+        /// <inheritdoc/>
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
@@ -376,18 +429,17 @@ namespace openHAB.Windows.ViewModel
                     StrongReferenceMessenger.Default.Unregister<WidgetClickedMessage>(this);
                     StrongReferenceMessenger.Default.Unregister<TriggerCommandMessage>(this);
                     StrongReferenceMessenger.Default.Unregister<DataOperation>(this);
-                    StrongReferenceMessenger.Default.Unregister<WigetNavigation>(this);
+                    StrongReferenceMessenger.Default.Unregister<WidgetNavigationMessage, string>(this, Model.Name);
 
                     Widgets = null;
                     CurrentWidgets = null;
                     SelectedWidget = null;
                 }
 
-                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
-                // TODO: set large fields to null
                 disposedValue = true;
             }
         }
-        #endregion
+
+        #endregion Dispose
     }
 }

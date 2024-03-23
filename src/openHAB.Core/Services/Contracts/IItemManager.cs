@@ -12,6 +12,6 @@ namespace openHAB.Core.Services.Contracts
         /// <returns>
         ///   Is true if the item was found in the dictionary or was successfully downloaded from openHAB server, otherwise false.
         /// </returns>
-        bool TryGetItem(string itemName, out OpenHABItem item);
+        bool TryGetItem(string itemName, out Item item);
     }
 }

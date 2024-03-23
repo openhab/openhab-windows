@@ -29,7 +29,7 @@ namespace openHAB.Core.Notification
         {
             StrongReferenceMessenger.Default.Register<ItemStateChangedMessage>(this, HandleUpdateItemMessage);
             _itemManager = itemStateManager;
-            _iconFormat = settings.UseSVGIcons ? "svg" : "png";
+            _iconFormat = settings.UseSVGIcons ? "svg" : "svg";
             _settingsService = settingsService;
             _iconCaching = iconCaching;
         }
@@ -45,7 +45,7 @@ namespace openHAB.Core.Notification
             string itemName = obj.ItemName;
             string itemImage = string.Empty;
             string itemPath = string.Empty;
-            if (_itemManager.TryGetItem(obj.ItemName, out OpenHABItem item))
+            if (_itemManager.TryGetItem(obj.ItemName, out Item item))
             {
                 itemName = item?.Label ?? "NA";
                 string state = item?.State ?? "ON";

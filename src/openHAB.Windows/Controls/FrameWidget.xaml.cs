@@ -1,8 +1,7 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml.Controls;
-using openHAB.Core.Client.Models;
-using openHAB.Core.Messages;
-using openHAB.Core.Model;
+using openHAB.Windows.Messages;
+using openHAB.Windows.ViewModel;
 
 namespace openHAB.Windows.Controls
 {
@@ -21,7 +20,13 @@ namespace openHAB.Windows.Controls
 
         private void OnItemClick(object sender, ItemClickEventArgs e)
         {
-            StrongReferenceMessenger.Default.Send(new WidgetClickedMessage(e.ClickedItem as OpenHABWidget));
+            WidgetViewModel viewModel = e.ClickedItem as WidgetViewModel;
+            if (viewModel == null)
+            {
+                return;
+            }
+
+            StrongReferenceMessenger.Default.Send(new WidgetClickedMessage(viewModel));
         }
 
         internal override void SetState()

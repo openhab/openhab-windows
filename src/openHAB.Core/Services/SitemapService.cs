@@ -41,8 +41,8 @@ namespace openHAB.Core.Services
         /// Gets the sitemap by URL.
         /// </summary>
         /// <param name="sitemapUrl">The sitemap URL.</param>
-        /// <returns>The <see cref="OpenHABSitemap"/> object representing the sitemap.</returns>
-        public async Task<OpenHABSitemap> GetSitemapByUrlAsync(string sitemapUrl)
+        /// <returns>The <see cref="Sitemap"/> object representing the sitemap.</returns>
+        public async Task<Sitemap> GetSitemapByUrlAsync(string sitemapUrl)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace openHAB.Core.Services
                 }
                 _settingsService.ServerVersion = _serverInfo.Version;
 
-                OpenHABSitemap sitemap = await _openHABClient.GetSitemap(sitemapUrl, _serverInfo.Version).ConfigureAwait(false);
+                Sitemap sitemap = await _openHABClient.GetSitemap(sitemapUrl, _serverInfo.Version).ConfigureAwait(false);
                 return sitemap;
             }
             catch (OpenHABException ex)
@@ -74,8 +74,8 @@ namespace openHAB.Core.Services
         /// Gets the list of sitemaps.
         /// </summary>
         /// <param name="loadCancellationToken">The cancellation token for the load operation.</param>
-        /// <returns>The list of <see cref="OpenHABSitemap"/> objects representing the sitemaps.</returns>
-        public async Task<List<OpenHABSitemap>> GetSitemapsAsync(CancellationToken loadCancellationToken)
+        /// <returns>The list of <see cref="Sitemap"/> objects representing the sitemaps.</returns>
+        public async Task<List<Sitemap>> GetSitemapsAsync(CancellationToken loadCancellationToken)
         {
             try
             {
@@ -91,20 +91,20 @@ namespace openHAB.Core.Services
                     return null;
                 }
 
-                Func<OpenHABSitemap, bool> defaultSitemapFilter = (sitemap) =>
+                Func<Sitemap, bool> defaultSitemapFilter = (sitemap) =>
                 {
                     return !sitemap.Name.Equals("_default", StringComparison.InvariantCultureIgnoreCase);
                 };
 
                 Settings settings = _settingsService.Load();
-                List<Func<OpenHABSitemap, bool>> filters = new List<Func<OpenHABSitemap, bool>>();
+                List<Func<Sitemap, bool>> filters = new List<Func<Sitemap, bool>>();
                 if (!settings.ShowDefaultSitemap)
                 {
                     filters.Add(defaultSitemapFilter);
                 }
 
-                ICollection<OpenHABSitemap> sitemaps = await _openHABClient.LoadSitemaps(_serverInfo.Version, filters).ConfigureAwait(false);
-                return new List<OpenHABSitemap>(sitemaps);
+                ICollection<Sitemap> sitemaps = await _openHABClient.LoadSitemaps(_serverInfo.Version, filters).ConfigureAwait(false);
+                return new List<Sitemap>(sitemaps);
             }
             catch (OpenHABException ex)
             {
@@ -124,10 +124,10 @@ namespace openHAB.Core.Services
         /// Loads the items from a sitemap.
         /// </summary>
         /// <param name="model">The sitemap model.</param>
-        /// <returns>The collection of <see cref="OpenHABWidget"/> objects representing the items.</returns>
-        public async Task<ICollection<OpenHABWidget>> LoadItemsFromSitemapAsync(OpenHABSitemap model)
+        /// <returns>The collection of <see cref="Widget"/> objects representing the items.</returns>
+        public async Task<ICollection<Widget>> LoadItemsFromSitemapAsync(Sitemap model)
         {
-            ICollection<OpenHABWidget> widgetModels = await _openHABClient.LoadItemsFromSitemap(model.Link, _serverInfo.Version).ConfigureAwait(false);
+            ICollection<Widget> widgetModels = await _openHABClient.LoadItemsFromSitemap(model.Link, _serverInfo.Version).ConfigureAwait(false);
             return widgetModels;
         }
 
@@ -137,7 +137,7 @@ namespace openHAB.Core.Services
         /// <param name="item">The item to send the command to.</param>
         /// <param name="command">The command to send.</param>
         /// <returns>The <see cref="HttpResponseResult{T}"/> object representing the result of the command.</returns>
-        public async Task<HttpResponseResult<bool>> SendItemCommand(OpenHABItem item, string command)
+        public async Task<HttpResponseResult<bool>> SendItemCommand(Item item, string command)
         {
             HttpResponseResult<bool> result = await _openHABClient.SendCommand(item, command).ConfigureAwait(false);
             return result;
