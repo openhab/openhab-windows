@@ -51,7 +51,6 @@ namespace openHAB.Core.Client.Models
             CommandDescription = item.CommandDescription;
         }
 
-
         /// <summary>
         /// Gets or sets the item category.
         /// </summary>
@@ -71,12 +70,18 @@ namespace openHAB.Core.Client.Models
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the item is editable.
+        /// </summary>
         [JsonPropertyName("editable")]
         public bool Editable
         {
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the group names of the OpenHAB item.
+        /// </summary>
         [JsonPropertyName("groupNames")]
         public List<string> GroupNames
         {
@@ -110,6 +115,9 @@ namespace openHAB.Core.Client.Models
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the metadata of the OpenHAB item.
+        /// </summary>
         [JsonPropertyName("metadata")]
         public Metadata Metadata
         {
@@ -213,7 +221,9 @@ namespace openHAB.Core.Client.Models
             return value;
         }
 
-        /// <summary>Send update message to all subscriber.</summary>
+        /// <summary>
+        /// Send update message to all subscribers.
+        /// </summary>
         /// <param name="value">The value.</param>
         public void UpdateValue(object value)
         {
@@ -234,7 +244,7 @@ namespace openHAB.Core.Client.Models
 
             State = message.Value;
         }
-       
+
         private void ParseNode(XElement startNode)
         {
             if (!startNode.HasElements)

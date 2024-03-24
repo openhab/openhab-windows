@@ -2,9 +2,11 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI;
+using Microsoft.UI.Input;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using openHAB.Common;
 using openHAB.Core.Client.Messages;
 using openHAB.Core.Client.Models;
@@ -16,6 +18,8 @@ using openHAB.Windows.ViewModel;
 using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
+using Windows.Foundation;
+using Windows.Graphics;
 
 namespace openHAB.Windows
 {
@@ -34,9 +38,12 @@ namespace openHAB.Windows
             _logger = DIService.Instance.GetService<ILogger<MainPage>>();
 
             this.InitializeComponent();
+
             this.ExtendsContentIntoTitleBar = true;
             this.AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Tall;
             this.AppWindow.TitleBar.ButtonForegroundColor = Colors.Black;
+            AppTitleBar.Loaded += AppTitleBar_Loaded;
+            AppTitleBar.SizeChanged += AppTitleBar_SizeChanged;
             TitleBarTextBlock.Text = AppInfo.Current.DisplayInfo.DisplayName;
 
             Vm = DIService.Instance.GetService<MainViewModel>();
@@ -47,6 +54,8 @@ namespace openHAB.Windows
 
             Vm.LoadSitemapsAndItemData();
         }
+
+
 
         /// <summary>
         /// Gets the root frame.
@@ -161,5 +170,57 @@ namespace openHAB.Windows
         {
             StrongReferenceMessenger.Default.Send(new WidgetNavigationMessage(null, null, EventTriggerSource.Root), Vm.SelectedSitemap.Name);
         }
+
+        #region App TitleBar
+
+        private void AppTitleBar_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            SetRegionsForCustomTitleBar();
+        }
+
+        private void AppTitleBar_Loaded(object sender, RoutedEventArgs e)
+        {
+            SetRegionsForCustomTitleBar();
+        }
+
+        private void SetRegionsForCustomTitleBar()
+        {
+            // Specify the interactive regions of the title bar.
+
+            double scaleAdjustment = AppTitleBar.XamlRoot.RasterizationScale;
+
+            RightPaddingColumn.Width = new GridLength(this.AppWindow.TitleBar.RightInset / scaleAdjustment);
+            LeftPaddingColumn.Width = new GridLength(this.AppWindow.TitleBar.LeftInset / scaleAdjustment);
+
+            GeneralTransform transform = TitleBarSearchBox.TransformToVisual(null);
+            Rect bounds = transform.TransformBounds(new Rect(0, 0,
+                                                             TitleBarSearchBox.ActualWidth,
+                                                             TitleBarSearchBox.ActualHeight));
+            RectInt32 SearchBoxRect = GetRect(bounds, scaleAdjustment);
+
+            //transform = PersonPic.TransformToVisual(null);
+            //bounds = transform.TransformBounds(new Rect(0, 0,
+            //                                            PersonPic.ActualWidth,
+            //                                            PersonPic.ActualHeight));
+            //RectInt32 PersonPicRect = GetRect(bounds, scaleAdjustment);
+
+            var rectArray = new RectInt32[] { SearchBoxRect/*, PersonPicRect*/ };
+
+            InputNonClientPointerSource nonClientInputSrc =
+                InputNonClientPointerSource.GetForWindowId(this.AppWindow.Id);
+            nonClientInputSrc.SetRegionRects(NonClientRegionKind.Passthrough, rectArray);
+        }
+
+        private RectInt32 GetRect(Rect bounds, double scale)
+        {
+            return new RectInt32(
+                _X: (int)Math.Round(bounds.X * scale),
+                _Y: (int)Math.Round(bounds.Y * scale),
+                _Width: (int)Math.Round(bounds.Width * scale),
+                _Height: (int)Math.Round(bounds.Height * scale)
+            );
+        }
+
+        #endregion
     }
 }

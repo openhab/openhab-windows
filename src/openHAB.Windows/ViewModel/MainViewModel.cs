@@ -251,7 +251,7 @@ namespace openHAB.Windows.ViewModel
             }
 
             Sitemap selectedSitemap = Sitemaps.FirstOrDefault(x => x.Name == sitemapName);
-            if (SelectedSitemap == null)
+            if (selectedSitemap == null)
             {
                 _logger.LogInformation($"Unable to find sitemap '{sitemapName}' -> Pick first entry from list");
                 return Sitemaps.FirstOrDefault();
