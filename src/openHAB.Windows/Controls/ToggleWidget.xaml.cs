@@ -2,8 +2,8 @@ using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using openHAB.Core.Client.Messages;
-using openHAB.Core.Messages;
 using openHAB.Core.Model;
+using openHAB.Windows.ViewModel;
 
 namespace openHAB.Windows.Controls
 {
@@ -22,20 +22,31 @@ namespace openHAB.Windows.Controls
             Loading += ToggleWidget_Loading;
         }
 
+        ///// <summary>
+        ///// A bindable property to bind the State to the control.
+        ///// </summary>
+        //public static readonly DependencyProperty StateProperty = DependencyProperty.Register(
+        //    nameof(State), typeof(string), typeof(ToggleWidget), new PropertyMetadata(default(WidgetViewModel), StatePropertyChangedCallback));
+
+        //private static void StatePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+
+        //}
+
         /// <summary>
         /// Gets or sets a value indicating whether the switch is on or off.
         /// </summary>
         public string State
         {
-            get => Widget.Value;
+            get => Widget.Item.State;
             set
             {
-                if (value.CompareTo(Widget.Value) == 0)
+                if (value.CompareTo(Widget.Item.State) == 0)
                 {
                     return;
                 }
 
-                Widget.Value = value;
+                Widget.Item.State = value;
             }
         }
 
@@ -49,15 +60,15 @@ namespace openHAB.Windows.Controls
             if (string.IsNullOrEmpty(Widget?.Item?.State) ||
                 string.CompareOrdinal(Widget?.Item?.State, "NULL") == 0)
             {
-                Widget.Value = OpenHABCommands.OffCommand;
+                Widget.Item.State = OpenHABCommands.OffCommand;
             }
-            else if (Widget.Value == null)
+            else if (Widget.Item.State == null)
             {
-                Widget.Value = Widget.Item.State;
+                Widget.Item.State = Widget.Item.State;
             }
-            else if (Widget.Item.State != Widget.Value)
+            else if (Widget.Item.State != Widget.Item.State)
             {
-                Widget.Value = Widget.Item.State;
+                Widget.Item.State = Widget.Item.State;
             }
 
             RaisePropertyChanged(nameof(Widget));

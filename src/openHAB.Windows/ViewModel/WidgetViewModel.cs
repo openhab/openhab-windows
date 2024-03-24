@@ -153,15 +153,15 @@ namespace openHAB.Windows.ViewModel
         /// </summary>
         public string State
         {
-            get => Model.State;
+            get => string.Compare(Model.Item?.State, "null", true) != 0 ? Model.Item.State : string.Empty;
             set
             {
-                if (value.CompareTo(Model.State) == 0)
+                if (value.CompareTo(Model.Item?.State) == 0)
                 {
                     return;
                 }
 
-                Model.State = value;
+                Model.Item.State = value;
                 OnPropertyChanged(nameof(State));
             }
         }
@@ -188,24 +188,6 @@ namespace openHAB.Windows.ViewModel
         public string Url
         {
             get => Model.Url;
-        }
-
-        /// <summary>
-        /// Gets or sets the value of the widget.
-        /// </summary>
-        public string Value
-        {
-            get => Model.Value;
-            set
-            {
-                if (value.CompareTo(Model.Value) == 0)
-                {
-                    return;
-                }
-
-                Model.Value = value;
-                OnPropertyChanged(nameof(Value));
-            }
         }
 
         /// <summary>

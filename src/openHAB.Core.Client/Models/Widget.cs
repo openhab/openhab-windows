@@ -114,7 +114,7 @@ namespace openHAB.Core.Client.Models
 
                 if (parts.Length > 1)
                 {
-                    Value = parts[1];
+                    State = parts[1];
                 }
 
                 OnPropertyChanged();
@@ -254,14 +254,6 @@ namespace openHAB.Core.Client.Models
 
         [JsonPropertyName("url")]
         public string Url
-        {
-            get; set;
-        }
-
-        /// <summary>
-        /// Gets or sets the Value of the widget.
-        /// </summary>
-        public string Value
         {
             get; set;
         }

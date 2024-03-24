@@ -20,10 +20,10 @@
                           LabelText="{x:Bind Widget.Label, Mode=OneWay}"
                           LabelForeground="{x:Bind Widget.LabelColor, Mode=OneWay}" />
 
-        <!--<ToggleSwitch  Grid.Column="1"
+        <ToggleSwitch  Grid.Column="1"
                        Toggled="ToggleSwitch_Toggled"
-                       IsOn="{x:Bind State, Mode=TwoWay}"
-                       Foreground="{x:Bind Widget.ValueColor, Mode=OneWay}" />-->
+                       IsOn="{x:Bind State, Mode=TwoWay, Converter={StaticResource StateToBoolConverter}}"
+                       Foreground="{x:Bind Widget.ValueColor, Mode=OneWay}" />
 
     </Grid>
 </local:WidgetBase>
