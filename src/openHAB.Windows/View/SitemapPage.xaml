@@ -3,11 +3,11 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:controls="using:CommunityToolkit.WinUI.Controls"
       mc:Ignorable="d"
       DataContext="{x:Bind ViewModel}">
     <Grid x:Name="MainContentGrid"
-          Margin="35,0,0,0"
-          VerticalAlignment="Stretch">
+          Margin="35,0,0,0" >
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
@@ -24,9 +24,12 @@
                       SelectionMode="None">
                 <GridView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <VariableSizedWrapGrid ItemWidth="335"
+                        <!--<VariableSizedWrapGrid ItemWidth="335"
                                                ItemHeight="106"
-                                               Orientation="Horizontal" />
+                                               Orientation="Horizontal" />-->
+                        <controls:WrapPanel Orientation="Horizontal"
+                                            VerticalSpacing="10"
+                                            HorizontalSpacing="10" />
                     </ItemsPanelTemplate>
                 </GridView.ItemsPanel>
             </GridView>

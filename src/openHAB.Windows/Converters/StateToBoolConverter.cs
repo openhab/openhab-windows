@@ -17,7 +17,7 @@ namespace openHAB.Windows.Converters
                 return false;
             }
 
-            return string.CompareOrdinal(value.ToString(), OpenHABCommands.OnCommand) == 0;
+            return string.Compare(value.ToString(), OpenHABCommands.OnCommand, true) == 0;
         }
 
         /// <inheritdoc/>

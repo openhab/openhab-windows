@@ -19,14 +19,14 @@
                           VerticalAlignment="Center"
                           IconPath="{x:Bind Widget.IconPath, Mode=OneWay}"
                           LabelText="{x:Bind Widget.Label, Mode=OneWay}" 
-                          LabelForeground="{x:Bind Widget.LabelColor, Converter={StaticResource StringToColorConverter}, Mode=OneWay}"/>
+                          LabelForeground="{x:Bind Widget.LabelColor, Mode=OneWay}"/>
 
         <ComboBox x:Name="SelectionComboBox"
                   Grid.Column="1"
                   Margin="0,0,12,0"
                   HorizontalAlignment="Right"
                   VerticalAlignment="Center"
-                  Foreground="{x:Bind Widget.ValueColor, Converter={StaticResource StringToColorConverter}, Mode=OneWay}"
+                  Foreground="{x:Bind Widget.ValueColor, Mode=OneWay}"
                   DisplayMemberPath="Label"/>
     </Grid>
 </local:WidgetBase>

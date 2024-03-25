@@ -19,29 +19,18 @@ namespace openHAB.Windows.Controls
         {
             InitializeComponent();
 
-            Loading += ToggleWidget_Loading;
+            //Loading += ToggleWidget_Loading;
         }
-
-        ///// <summary>
-        ///// A bindable property to bind the State to the control.
-        ///// </summary>
-        //public static readonly DependencyProperty StateProperty = DependencyProperty.Register(
-        //    nameof(State), typeof(string), typeof(ToggleWidget), new PropertyMetadata(default(WidgetViewModel), StatePropertyChangedCallback));
-
-        //private static void StatePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        //{
-
-        //}
 
         /// <summary>
         /// Gets or sets a value indicating whether the switch is on or off.
         /// </summary>
         public string State
         {
-            get => Widget.Item.State;
+            get => Widget.Item?.State;
             set
             {
-                if (value.CompareTo(Widget.Item.State) == 0)
+                if (string.Compare(value, Widget.Item.State, true) == 0)
                 {
                     return;
                 }
@@ -50,26 +39,26 @@ namespace openHAB.Windows.Controls
             }
         }
 
-        private void ToggleWidget_Loading(FrameworkElement sender, object args)
-        {
-            SetState();
-        }
+        //private void ToggleWidget_Loading(FrameworkElement sender, object args)
+        //{
+        //    SetState();
+        //}
 
         internal override void SetState()
         {
-            if (string.IsNullOrEmpty(Widget?.Item?.State) ||
-                string.CompareOrdinal(Widget?.Item?.State, "NULL") == 0)
-            {
-                Widget.Item.State = OpenHABCommands.OffCommand;
-            }
-            else if (Widget.Item.State == null)
-            {
-                Widget.Item.State = Widget.Item.State;
-            }
-            else if (Widget.Item.State != Widget.Item.State)
-            {
-                Widget.Item.State = Widget.Item.State;
-            }
+            //if (string.IsNullOrEmpty(Widget?.Item?.State) ||
+            //    string.CompareOrdinal(Widget?.Item?.State, "NULL") == 0)
+            //{
+            //    Widget.Item.State = OpenHABCommands.OffCommand;
+            //}
+            //else if (Widget.Item.State == null)
+            //{
+            //    Widget.Item.State = Widget.Item.State;
+            //}
+            //else if (Widget.Item.State != Widget.Item.State)
+            //{
+            //    Widget.Item.State = Widget.Item.State;
+            //}
 
             RaisePropertyChanged(nameof(Widget));
             RaisePropertyChanged(nameof(State));

@@ -15,6 +15,7 @@ namespace openHAB.Windows.Controls
 
         internal override void SetState()
         {
+            RaisePropertyChanged(nameof(Widget));
         }
     }
 }

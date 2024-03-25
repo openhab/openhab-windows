@@ -1,13 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Markup;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
 using openHAB.Core.Client.Models;
 using openHAB.Core.Model;
 using openHAB.Core.Services.Contracts;
 using openHAB.Windows.Services;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Windows.UI;
 
 namespace openHAB.Windows.ViewModel
@@ -51,9 +53,9 @@ namespace openHAB.Windows.ViewModel
         /// <summary>
         /// Gets the icon of the widget.
         /// </summary>
-        public string Icon
+        public SvgImageSource Icon
         {
-            get => Model.Icon;
+            get => !string.IsNullOrEmpty(IconPath) ? new SvgImageSource(new Uri(IconPath)) : null;
         }
 
         /// <summary>
@@ -153,7 +155,7 @@ namespace openHAB.Windows.ViewModel
         /// </summary>
         public string State
         {
-            get => string.Compare(Model.Item?.State, "null", true) != 0 ? Model.Item.State : string.Empty;
+            get => Model.Item != null && string.Compare(Model.Item?.State, "null", true) != 0 ? Model.Item.State : string.Empty;
             set
             {
                 if (value.CompareTo(Model.Item?.State) == 0)

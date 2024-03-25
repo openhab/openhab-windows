@@ -125,11 +125,11 @@
                 <StackPanel Orientation="Horizontal"
                             Margin="10">
                     <!--<Button Command="{Binding Vm.SelectedSitemap.ReloadSitemapCommand, ElementName=Window}">-->
-                    <Button>
+                    <!--<Button>
                         <SymbolIcon Symbol="Refresh"
                                     Foreground="{StaticResource TextFillColorPrimaryBrush}"
                                     VerticalAlignment="Center" />
-                    </Button>
+                    </Button>-->
                     <BreadcrumbBar ItemsSource="{Binding Vm.BreadcrumbItems, ElementName=Window, Mode=TwoWay}">
                         <BreadcrumbBar.ItemTemplate>
                             <DataTemplate x:DataType="model:Widget">

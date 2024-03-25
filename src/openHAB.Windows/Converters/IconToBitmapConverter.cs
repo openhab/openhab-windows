@@ -20,9 +20,9 @@ namespace openHAB.Windows.Converters
             Settings settings = settingsService.Load();
 
             WidgetViewModel widget = value as WidgetViewModel;
-            if (widget == null)
+            if (widget == null || string.IsNullOrEmpty(widget?.IconPath))
             {
-                return string.Empty;
+                return null;
             }
 
             if (settings.UseSVGIcons)
