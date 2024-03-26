@@ -128,6 +128,7 @@ namespace openHAB.Windows.ViewModel
                              => WidgetNavigatedEvent());
                     }
 
+                    BreadcrumbItems.Clear();
                     SelectedMenuItem = value;
                 }
             }
