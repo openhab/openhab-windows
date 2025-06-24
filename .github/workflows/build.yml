@@ -90,7 +90,7 @@ jobs:
     - name: Restore nuget packages
       shell: pwsh
       run: |
-            dotnet restore ${{github.workspace}}\repo\OpenHAB.Windows.sln --force --no-cache
+            dotnet restore ${{github.workspace}}\repo\OpenHAB.Windows.sln /p:BuildWithNetFrameworkHostedCompiler=true --force --no-cache
 
     - name: Build OpenHab Windows App
       shell: pwsh
