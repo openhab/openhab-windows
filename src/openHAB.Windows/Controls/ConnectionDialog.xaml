@@ -23,10 +23,10 @@
                       DisplayMemberPath="Name"
                       SelectedItem="{Binding Profile, Mode=TwoWay}">
                 <Interactivity:Interaction.Behaviors>
-                    <Core:EventTriggerBehavior EventName="SelectionChanged">
-                        <Core:InvokeCommandAction Command="{Binding Path=SelectProfile, Mode=TwoWay}"
-                                                  CommandParameter="{Binding ElementName=ProfileSeletion,Path=SelectedValue}" />
-                    </Core:EventTriggerBehavior>
+                    <Interactivity:EventTriggerBehavior EventName="SelectionChanged">
+                        <Interactivity:InvokeCommandAction Command="{Binding Path=SelectProfile, Mode=TwoWay}"
+                                                           CommandParameter="{Binding ElementName=ProfileSeletion,Path=SelectedValue}" />
+                    </Interactivity:EventTriggerBehavior>
                 </Interactivity:Interaction.Behaviors>
             </ComboBox>
             <TextBlock x:Uid="LocalUrlHeader" />
@@ -36,10 +36,10 @@
                      Margin="0,0,12,12"
                      Text="{Binding Url, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <Interactivity:Interaction.Behaviors>
-                    <Core:EventTriggerBehavior EventName="LostFocus">
-                        <Core:InvokeCommandAction Command="{Binding Path=UrlCheckCommand, Mode=TwoWay}"
-                                                  CommandParameter="{Binding ElementName=TextBoxUrl,Path=Text}" />
-                    </Core:EventTriggerBehavior>
+                    <Interactivity:EventTriggerBehavior EventName="LostFocus">
+                        <Interactivity:InvokeCommandAction Command="{Binding Path=UrlCheckCommand, Mode=TwoWay}"
+                                                           CommandParameter="{Binding ElementName=TextBoxUrl,Path=Text}" />
+                    </Interactivity:EventTriggerBehavior>
                 </Interactivity:Interaction.Behaviors>
             </TextBox>
             <TextBlock x:Uid="UsernameHeader" />
@@ -48,10 +48,10 @@
                      IsEnabled="{Binding Profile, Converter={StaticResource NullToBooleanConverter}}"
                      Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <Interactivity:Interaction.Behaviors>
-                    <Core:EventTriggerBehavior EventName="LostFocus">
-                        <Core:InvokeCommandAction Command="{Binding Path=UrlCheckCommand, Mode=TwoWay}"
-                                                  CommandParameter="{Binding ElementName=TextBoxUrl,Path=Text}" />
-                    </Core:EventTriggerBehavior>
+                    <Interactivity:EventTriggerBehavior EventName="LostFocus">
+                        <Interactivity:InvokeCommandAction Command="{Binding Path=UrlCheckCommand, Mode=TwoWay}"
+                                                           CommandParameter="{Binding ElementName=TextBoxUrl,Path=Text}" />
+                    </Interactivity:EventTriggerBehavior>
                 </Interactivity:Interaction.Behaviors>
             </TextBox>
             <TextBlock x:Uid="PasswordHeader" />
@@ -60,10 +60,10 @@
                          IsEnabled="{Binding Profile, Converter={StaticResource NullToBooleanConverter}}"
                          Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <Interactivity:Interaction.Behaviors>
-                    <Core:EventTriggerBehavior EventName="LostFocus">
-                        <Core:InvokeCommandAction Command="{Binding Path=UrlCheckCommand, Mode=TwoWay}"
-                                                  CommandParameter="{Binding ElementName=TextBoxUrl,Path=Text}" />
-                    </Core:EventTriggerBehavior>
+                    <Interactivity:EventTriggerBehavior EventName="LostFocus">
+                        <Interactivity:InvokeCommandAction Command="{Binding Path=UrlCheckCommand, Mode=TwoWay}"
+                                                           CommandParameter="{Binding ElementName=TextBoxUrl,Path=Text}" />
+                    </Interactivity:EventTriggerBehavior>
                 </Interactivity:Interaction.Behaviors>
             </PasswordBox>
             <TextBlock x:Uid="IgnoreSSLCertErrors" />

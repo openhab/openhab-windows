@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="using:openHAB.Windows.Converters"
-        xmlns:core="using:Microsoft.Xaml.Interactions.Core"
         xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
         xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
         xmlns:model="using:openHAB.Core.Client.Models"
@@ -72,9 +71,9 @@
                                                 Height="48" />
                             </muxc:NavigationViewItem.Icon>
                             <interactivity:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="Tapped">
-                                    <core:NavigateToPageAction TargetPage="openHAB.Windows.View.SettingsPage" />
-                                </core:EventTriggerBehavior>
+                                <interactivity:EventTriggerBehavior EventName="Tapped">
+                                    <interactivity:NavigateToPageAction TargetPage="openHAB.Windows.View.SettingsPage" />
+                                </interactivity:EventTriggerBehavior>
                             </interactivity:Interaction.Behaviors>
                         </muxc:NavigationViewItem>
                     </DataTemplate>

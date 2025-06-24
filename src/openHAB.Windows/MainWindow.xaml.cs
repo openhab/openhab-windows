@@ -36,8 +36,6 @@ public sealed partial class MainWindow : Window
         StrongReferenceMessenger.Default.Register<TriggerInfoMessage>(this, async (recipient, msg)
            => await ShowInfoMessage(recipient, msg));
 
-
-
         this.InitializeComponent();
 
         this.ExtendsContentIntoTitleBar = true;

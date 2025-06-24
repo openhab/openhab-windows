@@ -43,11 +43,23 @@ public static partial class Program
         // Taken from the default generated XAML entry point
         XamlCheckProcessRequirements();
         WinRT.ComWrappersSupport.InitializeComWrappers();
+
         Application.Start(_ =>
         {
             try
             {
-                DispatcherQueueSynchronizationContext? context = new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread());
+                DispatcherQueue queue = DispatcherQueue.GetForCurrentThread();
+                if (queue == null)
+                {
+                    throw new InvalidOperationException("Failed to get DispatcherQueue for the current thread.");
+                }
+
+                DispatcherQueueSynchronizationContext? context = new DispatcherQueueSynchronizationContext(queue);
+                if (context == null)
+                {
+                    throw new InvalidOperationException("Failed to create DispatcherQueueSynchronizationContext.");
+                }
+
                 SynchronizationContext.SetSynchronizationContext(context);
 
                 App? app = Host.Services.GetRequiredService<App>();

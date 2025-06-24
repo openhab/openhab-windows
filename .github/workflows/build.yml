@@ -101,6 +101,7 @@ jobs:
               /p:AppxPackageDir="${{env.output_directory}}" `
               /p:AppxBundle=Always `
               /p:UapAppxPackageBuildMode=StoreUpload `
+              /p:GenerateAppxPackageOnBuild=true `
               /p:Configuration="${{inputs.build_configuration}}" `
               /t:Rebuild
 
