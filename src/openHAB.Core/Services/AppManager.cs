@@ -63,12 +63,16 @@ public class AppManager : IAppManager
         if (!string.IsNullOrEmpty(langcode))
         {
             CultureInfo.CurrentCulture = new CultureInfo(langcode);
+            CultureInfo.CurrentUICulture = new CultureInfo(langcode);
         }
         else
         {
-            string userLanguage = GlobalizationPreferences.Languages[0];
-            CultureInfo.CurrentCulture = new CultureInfo(userLanguage);
+            langcode = GlobalizationPreferences.Languages[0];
+            CultureInfo.CurrentCulture = new CultureInfo(langcode);
+            CultureInfo.CurrentUICulture = new CultureInfo(langcode);
         }
+
+        //Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = langcode;
     }
 
     [DllImport("UXTheme.dll", SetLastError = true, EntryPoint = "#138")]

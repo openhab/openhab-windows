@@ -348,7 +348,7 @@ Bitte wählen Sie den Demomodus oder die Lokale-/Remote-Verbindungsinformation z
     <value>Design</value>
   </data>
   <data name="AppTheme.Description" xml:space="preserve">
-    <value>Choose the color for the app</value>
+    <value>Auswählen des Farbstils</value>
   </data>
   <data name="AppThemeSystem" xml:space="preserve">
     <value>Benutze System Einstellung</value>
@@ -358,5 +358,11 @@ Bitte wählen Sie den Demomodus oder die Lokale-/Remote-Verbindungsinformation z
   </data>
   <data name="AppThemeDark" xml:space="preserve">
     <value>Dunkel</value>
+  </data>
+  <data name="Back.Content" xml:space="preserve">
+    <value>Zurück</value>
+  </data>
+  <data name="AppLanguage.Description" xml:space="preserve">
+    <value>Auswäheln der Anwendungssprache</value>
   </data>
 </root>

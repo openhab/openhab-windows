@@ -23,6 +23,10 @@ public class SettingsViewModel : ViewModelBase<object>
     /// <summary>
     /// Initializes a new instance of the <see cref="SettingsViewModel"/> class.
     /// </summary>
+    /// <param name="configurationViewModel">The configuration view model containing user settings.</param>
+    /// <param name="iconCaching">The icon caching service.</param>
+    /// <param name="appManager">The application manager service.</param>
+    /// <param name="logger">The logger instance.</param>
     public SettingsViewModel(
         ConfigurationViewModel configurationViewModel,
         IIconCaching iconCaching,
@@ -41,15 +45,13 @@ public class SettingsViewModel : ViewModelBase<object>
     }
 
     /// <summary>
-    /// Gets the clear icon cache command to persist the settings.
+    /// Gets the command to clear the icon cache.
     /// </summary>
-    /// <value>The save command.</value>
     public ActionCommand ClearIconCacheCommand => _clearIconCacheCommand ?? (_clearIconCacheCommand = new ActionCommand(ClearIcons, CanClearIcons));
 
     /// <summary>
-    /// Gets the save command to persist the settings.
+    /// Gets the command to save and persist the settings.
     /// </summary>
-    /// <value>The save command.</value>
     public ActionCommand SaveCommand => _saveCommand ?? (_saveCommand = new ActionCommand(PersistSettings, CanPersistSettings));
 
     /// <summary>
@@ -64,7 +66,6 @@ public class SettingsViewModel : ViewModelBase<object>
     /// <summary>
     /// Gets the application version number.
     /// </summary>
-    /// <value>The version number.</value>
     public string Version
     {
         get
@@ -80,8 +81,9 @@ public class SettingsViewModel : ViewModelBase<object>
     }
 
     /// <summary>
-    /// Save the user defined settings to the UWP settings storage.
+    /// Saves the user defined settings to the UWP settings storage.
     /// </summary>
+    /// <param name="obj">Optional command parameter (not used).</param>
     public void PersistSettings(object obj)
     {
         _logger.LogInformation("Execute save settings command");
