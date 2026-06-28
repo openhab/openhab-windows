@@ -9,7 +9,21 @@ namespace openHAB.Core;
 /// </summary>
 public class AppPaths
 {
-    private static readonly string _applicationName = AppInfo.Current.DisplayInfo.DisplayName;
+    private static readonly string _applicationName = GetApplicationName();
+
+    private static string GetApplicationName()
+    {
+        try
+        {
+            // For packaged WinUI 3 apps
+            return Package.Current.DisplayName;
+        }
+        catch
+        {
+            // Fallback for unpackaged apps
+            return "openHAB.Windows";
+        }
+    }
 
     /// <summary>
     /// Gets the directory path for application data.

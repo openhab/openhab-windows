@@ -14,8 +14,8 @@ on:
       package_name:
         type: string
         description: 'The name of the app package'
-        required: true  
-      artifact_name: 
+        required: true
+      artifact_name:
         type: string
         description: 'The name of the artifact to download'
         default: 'app'
@@ -23,7 +23,7 @@ on:
         type: string
         description: 'Defines the output directory for the app package'
         default: '${{github.workspace}}/packages/'
-     
+
 jobs:
   deploy:
     name: 'Deploy App Package to ${{ github.event.inputs.environment }} channel'
@@ -36,8 +36,8 @@ jobs:
           name: ${{inputs.artifact_name}}
           path: '${{env.BuildDirectory}}/${{inputs.artifact_directory}}/'
 
-      - uses: isaacrlevin/windows-store-action
-        name: Publish to Store
+      - name: Publish to Store
+        uses: isaacrlevin/windows-store-action
         with:
           tenant-id: ${{ secrets.AZURE_AD_TENANT_ID }}
           client-id: ${{ secrets.AZURE_AD_APPLICATION_CLIENT_ID }}

@@ -3,7 +3,8 @@ using System.Globalization;
 using System.Web;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Options;
-using Microsoft.Toolkit.Uwp.Notifications;
+using Microsoft.Windows.AppNotifications;
+using Microsoft.Windows.AppNotifications.Builder;
 using openHAB.Common;
 using openHAB.Core.Client.Messages;
 using openHAB.Core.Client.Models;
@@ -65,13 +66,15 @@ public class NotificationManager : INotificationManager
     private void TriggerToastNotificationForItem(string itemName, string itemImage, string value, string oldValue)
     {
         string message = GetMessage(itemName, value, oldValue, "NotificationToast", "NotificationToastSimple");
-        ToastContentBuilder contentBuilder = CreateToastMessage(itemName, message, itemImage);
-        contentBuilder.Show();
+        AppNotificationBuilder contentBuilder = CreateAppNotification(itemName, message, itemImage);
+        AppNotification notification = contentBuilder.BuildNotification();
+
+        AppNotificationManager.Default.Show(notification);
     }
 
-    private ToastContentBuilder CreateToastMessage(string itemName, string message, string image)
+    private AppNotificationBuilder CreateAppNotification(string itemName, string message, string image)
     {
-        ToastContentBuilder toastContentBuilder = new ToastContentBuilder()
+        AppNotificationBuilder notificationBuilder = new AppNotificationBuilder()
             .AddArgument("action", "show")
             .AddArgument("item", itemName)
             .AddText("openHAB for Windows")
@@ -82,9 +85,9 @@ public class NotificationManager : INotificationManager
             image = "ms-appx:///Assets/openhab-logo-square.png";
         }
 
-        toastContentBuilder = toastContentBuilder.AddAppLogoOverride(new Uri(image), ToastGenericAppLogoCrop.Circle);
+        notificationBuilder = notificationBuilder.SetAppLogoOverride(new Uri(image), AppNotificationImageCrop.Circle);
 
-        return toastContentBuilder;
+        return notificationBuilder;
     }
 
     #endregion Toast Notification

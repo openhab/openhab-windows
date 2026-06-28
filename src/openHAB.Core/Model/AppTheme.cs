@@ -36,7 +36,9 @@ public static class AppThemeExtension
                 return ApplicationTheme.Dark;
             case AppTheme.System:
             default:
-                throw new InvalidEnumArgumentException(nameof(theme));
+                // For system theme, default to Light as ApplicationTheme doesn't have a System option
+                // The actual system theme handling is done elsewhere in AppManager.SetAppTheme
+                return ApplicationTheme.Light;
         }
     }
 }

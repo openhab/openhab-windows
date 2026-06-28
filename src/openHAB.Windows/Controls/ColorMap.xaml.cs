@@ -15,6 +15,7 @@ using Windows.Foundation;
 using Windows.UI;
 using ColorChangedEventArgs = openHAB.Core.Common.ColorChangedEventArgs;
 using ColorHelper = openHAB.Core.Common.ColorHelper;
+using Point = Windows.Foundation.Point;
 
 namespace openHAB.Windows.Controls;
 

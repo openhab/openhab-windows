@@ -1,11 +1,15 @@
 using System;
+using System.IO;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.Toolkit.Uwp.Notifications;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
+using Microsoft.Windows.AppNotifications;
+using openHAB.Core;
 using openHAB.Core.Model;
 using openHAB.Core.Notification.Contracts;
 using openHAB.Core.Services.Contracts;
@@ -17,31 +21,63 @@ namespace openHAB.Windows;
 /// </summary>
 public partial class App : Application
 {
-    private readonly ILogger<App> _logger;
-    private readonly IAppManager _appManager;
-    private readonly INotificationManager _notificationManager;
+    private IAppManager _appManager;
+    private INotificationManager _notificationManager;
+    private IOptions<SettingOptions> _options;
+    private ILogger<App> _logger;
     private static Window _mainWindow;
-    private readonly IOptions<SettingOptions> _options;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="App" /> class.
     /// </summary>
-    /// <param name="appManager">The application manager.</param>
-    /// <param name="notificationManage">The notification manager.</param>
-    /// <param name="options">The application settings options.</param>
-    /// <param name="logger">The logger instance.</param>
-    public App(IAppManager appManager, INotificationManager notificationManage, IOptions<SettingOptions> options, ILogger<App> logger)
+    public App()
     {
-        _options = options;
-        _logger = logger;
-        _appManager = appManager;
-        _notificationManager = notificationManage;
+        try
+        {
+            this.InitializeComponent();
 
-        InitializeComponent();
+            // Initialize the host here, after XAML initialization
+            InitializeHost();
 
-        RequestedTheme = _options.Value.AppTheme.ConvertToApplicationTheme();
-        UnhandledException += App_UnhandledException;
-        DispatcherQueue = DispatcherQueue.GetForCurrentThread();
+            // Initialize services after host is built
+            InitializeServices();
+
+            // Set up exception handling and theme
+            var appTheme = _options?.Value?.AppTheme ?? AppTheme.System;
+            RequestedTheme = appTheme.ConvertToApplicationTheme();
+            UnhandledException += App_UnhandledException;
+            DispatcherQueue = DispatcherQueue.GetForCurrentThread();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error initializing App: {ex}");
+            throw;
+        }
+    }
+
+    private void InitializeHost()
+    {
+        // Ensure directories exist
+        EnsureDirectoriesExist();
+
+        var builder = new HostApplicationBuilder();
+        builder.Configuration.AddJsonFile(AppPaths.SettingsFilePath, optional: true, reloadOnChange: true);
+        builder.Configuration.AddJsonFile(AppPaths.ConnectionFilePath, optional: true, reloadOnChange: true);
+
+        builder.Services.AddConfiguration(builder.Configuration);
+        builder.Services.AddOpenHABServices();
+        builder.Services.AddOpenHABViewModels();
+        builder.Services.AddViews();
+
+        Program.Host = builder.Build();
+    }
+
+    private void InitializeServices()
+    {
+        _appManager = Program.Host.Services.GetRequiredService<IAppManager>();
+        _notificationManager = Program.Host.Services.GetRequiredService<INotificationManager>();
+        _options = Program.Host.Services.GetRequiredService<IOptions<SettingOptions>>();
+        _logger = Program.Host.Services.GetRequiredService<ILogger<App>>();
     }
 
     /// <summary>
@@ -76,7 +112,8 @@ public partial class App : Application
         DispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
         // Register for toast activation. Requires Microsoft.Toolkit.Uwp.Notifications NuGet package version 7.0 or greater
-        ToastNotificationManagerCompat.OnActivated += ToastNotificationManagerCompat_OnActivated;
+        AppNotificationManager.Default.NotificationInvoked += Default_NotificationInvoked;
+
 
         // If the instance that's executing the OnLaunched handler right now
         // isn't the "main" instance.
@@ -106,16 +143,16 @@ public partial class App : Application
         _logger.LogCritical(e.Exception, "Unhandled Exception");
     }
 
-    private void ToastNotificationManagerCompat_OnActivated(ToastNotificationActivatedEventArgsCompat e)
+    private void Default_NotificationInvoked(AppNotificationManager sender, AppNotificationActivatedEventArgs args)
     {
         // Use the dispatcher from the window if present, otherwise the app dispatcher
         var dispatcherQueue = MainWindow?.DispatcherQueue ?? App.DispatcherQueue;
 
         dispatcherQueue.TryEnqueue(delegate
         {
-            var args = ToastArguments.Parse(e.Argument);
+            var arguments = args.Arguments;
 
-            switch (args["action"])
+            switch (arguments["action"])
             {
                 //// Send a background message
                 //case "show":
@@ -134,7 +171,7 @@ public partial class App : Application
                 // View a message
                 case "show":
 
-                    string itemName = args["item"];
+                    string itemName = arguments["item"];
                     // Launch/bring window to foreground
                     //LaunchAndBringToForegroundIfNeeded();
 
@@ -142,5 +179,31 @@ public partial class App : Application
                     break;
             }
         });
+    }
+
+    private static void EnsureDirectoriesExist()
+    {
+        try
+        {
+            if (!Directory.Exists(AppPaths.ApplicationDataDirectory))
+            {
+                Directory.CreateDirectory(AppPaths.ApplicationDataDirectory);
+            }
+
+            if (!Directory.Exists(AppPaths.LogsDirectory))
+            {
+                Directory.CreateDirectory(AppPaths.LogsDirectory);
+            }
+
+            if (!Directory.Exists(AppPaths.IconCacheDirectory))
+            {
+                Directory.CreateDirectory(AppPaths.IconCacheDirectory);
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Failed to create directories: {ex.Message}");
+            // Don't throw here, let the app continue
+        }
     }
 }
