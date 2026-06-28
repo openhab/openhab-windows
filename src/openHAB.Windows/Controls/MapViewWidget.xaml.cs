@@ -5,7 +5,7 @@ using Mapsui.Extensions;
 using Mapsui.Projections;
 using Mapsui.Tiling;
 using Mapsui.Widgets.ScaleBar;
-using Mapsui.Widgets.Zoom;
+using Mapsui.Widgets.ButtonWidgets;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 
@@ -56,10 +56,8 @@ public sealed partial class MapViewWidget : WidgetBase
 
                 var coordinate = SphericalMercator.FromLonLat(longitude, latitude).ToMPoint();
 
-                Viewport viewport = new Viewport(longitude, latitude, 0, 0, Width, Height);
-
-                MapView.Map.Home = n => n.CenterOnAndZoomTo(coordinate, n.Viewport.Resolution);
-                MapViewFull.Map.Home = n => n.CenterOnAndZoomTo(coordinate, n.Viewport.Resolution);
+                MapView.Map.Navigator.CenterOnAndZoomTo(coordinate, MapView.Map.Navigator.Viewport.Resolution);
+                MapViewFull.Map.Navigator.CenterOnAndZoomTo(coordinate, MapViewFull.Map.Navigator.Viewport.Resolution);
 
                 //TODO: Implement mapicon
                 //MapIcon mapIcon = new MapIcon();
