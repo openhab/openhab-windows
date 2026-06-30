@@ -147,6 +147,7 @@
             </muxc:NavigationView.PaneHeader>
             <muxc:NavigationView.PaneCustomContent>
                 <StackPanel Orientation="Vertical"
+                            Margin="0,16,0,0"
                             FlowDirection="LeftToRight"
                             Visibility="{Binding IsPaneOpen, ElementName=SitemapNavigation}">
                     <Grid>
