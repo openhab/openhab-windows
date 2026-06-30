@@ -24,7 +24,7 @@
                        Title="{x:Bind Widget.Label}"
                        Grid.Column="0"
                        Grid.ColumnSpan="2"
-                       Background="{StaticResource ContentDialog}"
+                       Style="{StaticResource ContentDialog}"
                        IsPrimaryButtonEnabled="True"
                        PrimaryButtonText="Close">
             <Grid CornerRadius="5">

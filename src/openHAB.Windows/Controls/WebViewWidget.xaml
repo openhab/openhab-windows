@@ -22,7 +22,7 @@
 
 		<ContentDialog x:Name="PopupDialog"
 					   Title="{x:Bind Widget.Label}"
-                       Background="{StaticResource ContentDialog}"
+                       Style="{StaticResource ContentDialog}"
 					   IsPrimaryButtonEnabled="True"
 					   PrimaryButtonText="Close">
 			<WebView2 x:Name="WebViewFull" Width="550" Height="300" />
