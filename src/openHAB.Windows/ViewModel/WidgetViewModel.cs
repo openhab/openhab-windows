@@ -4,13 +4,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Markup;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using openHAB.Core.Client.Models;
-using openHAB.Core.Model;
 using openHAB.Core.Services.Contracts;
 using Windows.UI;
 
@@ -22,7 +20,6 @@ namespace openHAB.Windows.ViewModel;
 public class WidgetViewModel : ViewModelBase<Widget>
 {
     private readonly IServiceProvider _serviceProvider;
-    private readonly IOptions<SettingOptions> _settingsOptions;
     private ObservableCollection<WidgetViewModel> _children;
     private string _iconPath;
 
@@ -35,7 +32,6 @@ public class WidgetViewModel : ViewModelBase<Widget>
     {
         Children = new ObservableCollection<WidgetViewModel>();
         _serviceProvider = serviceProvider;
-        _settingsOptions = _serviceProvider.GetRequiredService<IOptions<SettingOptions>>();
     }
 
     #region Properties
@@ -249,10 +245,7 @@ public class WidgetViewModel : ViewModelBase<Widget>
     private async Task<string> CacheAndRetrieveLocalIconPath(string icon)
     {
         IIconCaching iconCaching = _serviceProvider.GetRequiredService<IIconCaching>();
-        SettingOptions setting = _settingsOptions.Value;
-
-        string iconFormat = setting.UseSVGIcons ? "svg" : "svg";
-        string path = await iconCaching.ResolveIconPath(icon, Model.State, iconFormat).ConfigureAwait(false);
+        string path = await iconCaching.ResolveIconPath(icon, Model.State, "svg").ConfigureAwait(false);
 
         return path;
     }

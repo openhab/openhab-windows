@@ -9,7 +9,7 @@ namespace openHAB.Windows.ViewModel;
 /// MVVM ViewModel Base Class.
 /// </summary>
 /// <typeparam name="T">Model type interface.</typeparam>
-public class ViewModelBase<T> : DataErrorInfo, INotifyPropertyChanged, IViewModel<T>
+public class ViewModelBase<T> : DataErrorInfo, INotifyPropertyChanged
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="ViewModelBase&lt;T&gt;"/> class.
