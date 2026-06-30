@@ -191,10 +191,11 @@ public class SitemapViewModel : ViewModelBase<Sitemap>, IDisposable
         CurrentWidgets?.Clear();
         StrongReferenceMessenger.Default.Send<DataOperation>(new DataOperation(OperationState.Started));
 
+        await LoadWidgetsAsync().ConfigureAwait(false);
+
         if (SelectedWidget != null)
         {
-            await LoadWidgetsAsync().ConfigureAwait(false);
-            WidgetViewModel widget = FindWidget(SelectedWidget.WidgetId, Widgets);
+            WidgetViewModel widget = await FindWidgetAsync(SelectedWidget.WidgetId, Widgets).ConfigureAwait(false);
             if (widget != null)
             {
                 await OnWidgetClickedAsync(widget);
@@ -204,10 +205,6 @@ public class SitemapViewModel : ViewModelBase<Sitemap>, IDisposable
                 SelectedWidget = null;
                 WidgetNavigationService.ClearWidgetNavigation();
             }
-        }
-        else
-        {
-            await LoadWidgetsAsync().ConfigureAwait(false);
         }
 
         StrongReferenceMessenger.Default.Send<DataOperation>(new DataOperation(OperationState.Completed));
@@ -241,13 +238,17 @@ public class SitemapViewModel : ViewModelBase<Sitemap>, IDisposable
         StrongReferenceMessenger.Default.Send(new WidgetNavigationMessage(SelectedWidget, null, EventTriggerSource.Widget), Model.Name);
     }
 
-    private static async Task<List<WidgetViewModel>> GetWidgetViewModels(ICollection<Widget> widgets, IServiceProvider serviceProvider)
+    private static async Task<List<WidgetViewModel>> ConvertWidgetsAsync(ICollection<Widget> widgets, IServiceProvider serviceProvider)
     {
         List<WidgetViewModel> widgetViewModels = new List<WidgetViewModel>();
+        if (widgets == null)
+        {
+            return widgetViewModels;
+        }
+
         foreach (Widget widget in widgets)
         {
-            WidgetViewModel viewModel = await WidgetViewModel.CreateAsync(widget, serviceProvider).ConfigureAwait(false);
-            widgetViewModels.Add(viewModel);
+            widgetViewModels.Add(await WidgetViewModel.CreateAsync(widget, serviceProvider).ConfigureAwait(false));
         }
 
         return widgetViewModels;
@@ -294,51 +295,30 @@ public class SitemapViewModel : ViewModelBase<Sitemap>, IDisposable
     /// <returns>A task that represents the asynchronous operation. The task result contains the created SitemapViewModel.</returns>
     public static async Task<SitemapViewModel> CreateAsync(Sitemap sitemap, SitemapService sitemapService, IServiceProvider serviceProvider)
     {
-        if (sitemap.Homepage?.Widgets == null ||
-            sitemap.Homepage.Widgets.Count == 0)
-        {
-            return new SitemapViewModel(sitemap, new List<WidgetViewModel>(), sitemapService, serviceProvider);
-        }
+        List<WidgetViewModel> widgetViewModels = await ConvertWidgetsAsync(sitemap.Homepage?.Widgets, serviceProvider).ConfigureAwait(false);
 
-        List<WidgetViewModel> widgetViewModels = await GetWidgetViewModels(sitemap.Homepage.Widgets, serviceProvider).ConfigureAwait(false);
-        SitemapViewModel viewModel = new SitemapViewModel(sitemap, widgetViewModels, sitemapService, serviceProvider);
-
-        return viewModel;
+        return new SitemapViewModel(sitemap, widgetViewModels, sitemapService, serviceProvider);
     }
 
     private async Task LoadWidgetsAsync()
     {
-        this.Widgets = new ObservableCollection<WidgetViewModel>();
         CurrentWidgets?.Clear();
 
         ICollection<Widget> widgetModels = await _sitemapService.LoadItemsFromSitemapAsync(Model).ConfigureAwait(false);
-        Widgets = new ObservableCollection<WidgetViewModel>(ConvertWidgetToViewModel(widgetModels));
+        Widgets = new ObservableCollection<WidgetViewModel>(await ConvertWidgetsAsync(widgetModels, _serviceProvider).ConfigureAwait(false));
 
         await SetWidgetsOnScreenAsync(this.Widgets);
-    }
-
-    private List<WidgetViewModel> ConvertWidgetToViewModel(ICollection<Widget> widgetModels)
-    {
-        List<WidgetViewModel> widgetViewModels = new List<WidgetViewModel>();
-        widgetModels.ToList().ForEach(async model =>
-        {
-            WidgetViewModel viewModel = await WidgetViewModel.CreateAsync(model, _serviceProvider).ConfigureAwait(false);
-            widgetViewModels.Add(viewModel);
-        });
-
-        return widgetViewModels;
     }
 
     #endregion Factory
 
     #region Widget interaction
 
-    private WidgetViewModel FindWidget(string widgetId, ICollection<WidgetViewModel> widgets)
+    private async Task<WidgetViewModel> FindWidgetAsync(string widgetId, ICollection<WidgetViewModel> widgets)
     {
-        WidgetViewModel openHABWidget = null;
         if (widgets == null || widgets.Count == 0)
         {
-            return openHABWidget;
+            return null;
         }
 
         foreach (WidgetViewModel widget in widgets)
@@ -348,15 +328,18 @@ public class SitemapViewModel : ViewModelBase<Sitemap>, IDisposable
                 return widget;
             }
 
-            ICollection<WidgetViewModel> childWidgets = widget.Type.CompareTo("Group") == 0 ? ConvertWidgetToViewModel(widget.LinkedPage?.Widgets) : widget.Children;
-            openHABWidget = FindWidget(widgetId, childWidgets);
-            if (openHABWidget != null)
+            ICollection<WidgetViewModel> childWidgets = string.CompareOrdinal(widget.Type, "Group") == 0
+                ? await ConvertWidgetsAsync(widget.LinkedPage?.Widgets, _serviceProvider).ConfigureAwait(false)
+                : widget.Children;
+
+            WidgetViewModel match = await FindWidgetAsync(widgetId, childWidgets).ConfigureAwait(false);
+            if (match != null)
             {
-                return openHABWidget;
+                return match;
             }
         }
 
-        return openHABWidget;
+        return null;
     }
 
     private async Task OnWidgetClickedAsync(WidgetViewModel widget)
@@ -373,7 +356,7 @@ public class SitemapViewModel : ViewModelBase<Sitemap>, IDisposable
             WidgetNavigationService.Navigate(SelectedWidget);
             StrongReferenceMessenger.Default.Send(new WidgetNavigationMessage(lastWidget, widget, EventTriggerSource.Widget), Model.Name);
 
-            List<WidgetViewModel> widgets = ConvertWidgetToViewModel(SelectedWidget.LinkedPage.Widgets);
+            List<WidgetViewModel> widgets = await ConvertWidgetsAsync(SelectedWidget.LinkedPage.Widgets, _serviceProvider).ConfigureAwait(false);
             await SetWidgetsOnScreenAsync(widgets);
         });
     }
@@ -389,24 +372,29 @@ public class SitemapViewModel : ViewModelBase<Sitemap>, IDisposable
 
     private async Task WidgetGoBack(WidgetViewModel widget)
     {
-        if (!WidgetNavigationService.CanGoBack)
+        if (widget == null || !WidgetNavigationService.CanGoBack)
         {
             return;
         }
 
         WidgetViewModel lastWidget = SelectedWidget;
-        WidgetViewModel widgetFromStack = null;
+        WidgetViewModel widgetFromStack = WidgetNavigationService.GoBack();
 
-        while (widgetFromStack?.WidgetId != widget.WidgetId)
+        while (widgetFromStack != null && widgetFromStack.WidgetId != widget.WidgetId)
         {
             widgetFromStack = WidgetNavigationService.GoBack();
+        }
+
+        if (widgetFromStack == null)
+        {
+            return;
         }
 
         SelectedWidget = widgetFromStack;
         WidgetNavigationService.Navigate(SelectedWidget);
         StrongReferenceMessenger.Default.Send(new WidgetNavigationMessage(lastWidget, SelectedWidget, EventTriggerSource.Widget), Model.Name);
 
-        List<WidgetViewModel> widgets = ConvertWidgetToViewModel(SelectedWidget.LinkedPage.Widgets);
+        List<WidgetViewModel> widgets = await ConvertWidgetsAsync(SelectedWidget.LinkedPage.Widgets, _serviceProvider).ConfigureAwait(false);
         await SetWidgetsOnScreenAsync(widgets);
     }
 
