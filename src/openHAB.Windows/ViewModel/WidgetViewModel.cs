@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -184,7 +186,12 @@ public class WidgetViewModel : ViewModelBase<Widget>
     /// </summary>
     public string State
     {
-        get => Model.Item != null && string.Compare(Model.Item?.State, "null", true) != 0 ? Model.Item.State : string.Empty;
+        get
+        {
+            string raw = Model.Item != null && string.Compare(Model.Item?.State, "null", true) != 0 ? Model.Item.State : string.Empty;
+            string pattern = !string.IsNullOrEmpty(Model.Pattern) ? Model.Pattern : Model.Item?.StateDescription?.Pattern;
+            return FormatState(raw, pattern, Model.Item?.Unit);
+        }
         set
         {
             if (value.CompareTo(Model.Item?.State) == 0)
@@ -195,6 +202,64 @@ public class WidgetViewModel : ViewModelBase<Widget>
             Model.Item.State = value;
             OnPropertyChanged(nameof(State));
         }
+    }
+
+    private static readonly Regex ConversionRegex = new(@"%([-+,(#0 ]*)(\d+)?(?:\.(\d+))?([a-zA-Z])", RegexOptions.Compiled);
+
+    private static readonly Regex NumberRegex = new(@"-?\d+(?:[.,]\d+)?", RegexOptions.Compiled);
+
+    /// <summary>
+    /// Applies an openHAB display pattern (e.g. <c>%.1f °C</c>) to a raw item state so the value
+    /// is shown with the configured precision instead of full machine precision.
+    /// </summary>
+    /// <param name="state">The raw item state.</param>
+    /// <param name="pattern">The openHAB format pattern, or <see langword="null"/> when none is configured.</param>
+    /// <param name="unit">The item unit used to resolve the <c>%unit%</c> placeholder.</param>
+    /// <returns>The formatted state, or the raw state when no numeric pattern applies.</returns>
+    internal static string FormatState(string state, string pattern, string unit)
+    {
+        if (string.IsNullOrEmpty(pattern) || string.IsNullOrWhiteSpace(state))
+        {
+            return state;
+        }
+
+        string resolved = pattern.Replace("%unit%", unit?.Trim() ?? string.Empty).Replace("%%", "%");
+
+        Match conversion = ConversionRegex.Match(resolved);
+        if (!conversion.Success)
+        {
+            return state;
+        }
+
+        char type = char.ToLowerInvariant(conversion.Groups[4].Value[0]);
+
+        // ponytail: only numeric conversions are reformatted; %s, dates and unknown
+        // specifiers fall back to the raw/server state. Extend here if a date pattern shows up.
+        if (type != 'd' && type != 'f' && type != 'x')
+        {
+            return state;
+        }
+
+        Match number = NumberRegex.Match(state);
+        if (!number.Success || !double.TryParse(number.Value.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out double value))
+        {
+            return state;
+        }
+
+        string formatted;
+        if (type == 'x')
+        {
+            formatted = ((long)value).ToString("x", CultureInfo.InvariantCulture);
+        }
+        else
+        {
+            bool grouping = conversion.Groups[1].Value.Contains(',');
+            int precision = type == 'd' ? 0 : (conversion.Groups[3].Success ? int.Parse(conversion.Groups[3].Value, CultureInfo.InvariantCulture) : 6);
+            string numericFormat = (grouping ? "#,##0" : "0") + (precision > 0 ? "." + new string('0', precision) : string.Empty);
+            formatted = value.ToString(numericFormat, CultureInfo.InvariantCulture);
+        }
+
+        return resolved.Substring(0, conversion.Index) + formatted + resolved.Substring(conversion.Index + conversion.Length);
     }
 
     /// <summary>
