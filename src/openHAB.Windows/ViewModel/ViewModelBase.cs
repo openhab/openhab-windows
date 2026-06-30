@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using openHAB.Core.Common;
 
 namespace openHAB.Windows.ViewModel;
 
@@ -9,7 +8,7 @@ namespace openHAB.Windows.ViewModel;
 /// MVVM ViewModel Base Class.
 /// </summary>
 /// <typeparam name="T">Model type interface.</typeparam>
-public class ViewModelBase<T> : DataErrorInfo, INotifyPropertyChanged
+public class ViewModelBase<T> : INotifyPropertyChanged
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="ViewModelBase&lt;T&gt;"/> class.
