@@ -24,14 +24,8 @@
                            ItemClicked="BreadcrumbBar_ItemClicked">
                 <BreadcrumbBar.ItemTemplate>
                     <DataTemplate>
-                        <BreadcrumbBarItem Content="{Binding}">
-                            <BreadcrumbBarItem.ContentTemplate>
-                                <DataTemplate>
-                                    <TextBlock FontSize="21"
-                                               Text="{Binding Label}" />
-                                </DataTemplate>
-                            </BreadcrumbBarItem.ContentTemplate>
-                        </BreadcrumbBarItem>
+                        <TextBlock FontSize="21"
+                                   Text="{Binding Label}" />
                     </DataTemplate>
                 </BreadcrumbBar.ItemTemplate>
             </BreadcrumbBar>

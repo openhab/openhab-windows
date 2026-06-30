@@ -402,7 +402,7 @@ public class SitemapViewModel : ViewModelBase<Sitemap>, IDisposable
             NavigationPush(SelectedWidget);
             RefreshBreadcrumb();
 
-            List<WidgetViewModel> widgets = await ConvertWidgetsAsync(SelectedWidget.LinkedPage.Widgets, _serviceProvider).ConfigureAwait(false);
+            List<WidgetViewModel> widgets = await ConvertWidgetsAsync(SelectedWidget.LinkedPage.Widgets, _serviceProvider);
             await SetWidgetsOnScreenAsync(widgets);
         });
     }
@@ -443,7 +443,7 @@ public class SitemapViewModel : ViewModelBase<Sitemap>, IDisposable
         NavigationPush(SelectedWidget);
         RefreshBreadcrumb();
 
-        List<WidgetViewModel> widgets = await ConvertWidgetsAsync(SelectedWidget.LinkedPage.Widgets, _serviceProvider).ConfigureAwait(false);
+        List<WidgetViewModel> widgets = await ConvertWidgetsAsync(SelectedWidget.LinkedPage.Widgets, _serviceProvider);
         await SetWidgetsOnScreenAsync(widgets);
     }
 
