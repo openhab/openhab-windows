@@ -48,12 +48,14 @@
                 <converters:MenuItemTemplateSelector.DefaultItemTemlate>
                     <DataTemplate x:DataType="muxc:NavigationViewItem">
                         <muxc:NavigationViewItem Margin="-15,0,0,0"
+                                                 FlowDirection="LeftToRight"
                                                  Content="{Binding}" />
                     </DataTemplate>
                 </converters:MenuItemTemplateSelector.DefaultItemTemlate>
                 <converters:MenuItemTemplateSelector.SiteMapMenuItemTemplate>
                     <DataTemplate x:DataType="model:Sitemap">
-                        <muxc:NavigationViewItem Content="{Binding Label, Mode=OneWay}">
+                        <muxc:NavigationViewItem FlowDirection="LeftToRight"
+                                                 Content="{Binding Label, Mode=OneWay}">
                             <muxc:NavigationViewItem.Icon>
                                 <muxc:ImageIcon Source="ms-appx:///Assets/openhab.png"
                                                 Width="48"
@@ -126,10 +128,26 @@
                              OpenPaneLength="250"
                              CompactPaneLength="55"
                              PaneDisplayMode="Left"
+                             FlowDirection="RightToLeft"
                              IsPaneOpen="True"
                              SelectionChanged="SitemapNavigation_SelectionChanged">
+            <muxc:NavigationView.PaneHeader>
+                <StackPanel Orientation="Vertical"
+                            FlowDirection="LeftToRight"
+                            Visibility="{Binding IsPaneOpen, ElementName=SitemapNavigation}">
+                    <TextBlock Margin="10,0,0,0"
+                               VerticalAlignment="Center"
+                               Style="{StaticResource MenuSubHeader}"
+                               Text="Main" />
+                    <muxc:NavigationViewItem Icon="Home"
+                                             Content="Home"
+                                             Tag="openHAB.Windows.View.MainUIPage"
+                                             Tapped="NavigationViewItemMainUI_Tapped" />
+                </StackPanel>
+            </muxc:NavigationView.PaneHeader>
             <muxc:NavigationView.PaneCustomContent>
                 <StackPanel Orientation="Vertical"
+                            FlowDirection="LeftToRight"
                             Visibility="{Binding IsPaneOpen, ElementName=SitemapNavigation}">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -157,13 +175,7 @@
                                Style="{StaticResource FlyoutPickerTitleTextBlockStyle}" />
                 </StackPanel>
             </muxc:NavigationView.PaneCustomContent>
-            <muxc:NavigationView.FooterMenuItems>
-                <muxc:NavigationViewItem Icon="Home"
-                                         x:Uid="MenuItemMainUI"
-                                         Tag="openHAB.Windows.View.MainUIPage"
-                                         Tapped="NavigationViewItemMainUI_Tapped" />
-            </muxc:NavigationView.FooterMenuItems>
-            <Grid>
+            <Grid FlowDirection="LeftToRight">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
