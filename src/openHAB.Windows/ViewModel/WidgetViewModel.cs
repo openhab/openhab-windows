@@ -148,6 +148,30 @@ public class WidgetViewModel : ViewModelBase<Widget>
     }
 
     /// <summary>
+    /// Gets the chart line interpolation (e.g. "linear", "step").
+    /// </summary>
+    public string Interpolation
+    {
+        get => Model.Interpolation;
+    }
+
+    /// <summary>
+    /// Gets a value indicating whether the command is sent only on release.
+    /// </summary>
+    public bool ReleaseOnly
+    {
+        get => Model.ReleaseOnly;
+    }
+
+    /// <summary>
+    /// Gets a value indicating whether the widget is momentary and does not reflect item state.
+    /// </summary>
+    public bool Stateless
+    {
+        get => Model.Stateless;
+    }
+
+    /// <summary>
     /// Gets the refresh rate for the widget.
     /// </summary>
     public int Refresh

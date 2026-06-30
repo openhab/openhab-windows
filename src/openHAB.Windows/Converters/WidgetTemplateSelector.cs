@@ -57,6 +57,8 @@ public class WidgetTemplateSelector : DataTemplateSelector
                 return MjpegTemplate;
             case WidgetTypeEnum.Mapview:
                 return MapViewTemplate;
+            case WidgetTypeEnum.Buttongrid:
+                return ButtongridTemplate;
             case WidgetTypeEnum.Webview:
                 return WebViewTemplate;
             default:
@@ -180,6 +182,14 @@ public class WidgetTemplateSelector : DataTemplateSelector
     /// Gets or sets the template for a web view control.
     /// </summary>
     public DataTemplate WebViewTemplate
+    {
+        get; set;
+    }
+
+    /// <summary>
+    /// Gets or sets the template for a buttongrid control.
+    /// </summary>
+    public DataTemplate ButtongridTemplate
     {
         get; set;
     }

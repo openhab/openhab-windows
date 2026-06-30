@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace openHAB.Core.Client.Models;
 
 /// <summary>
@@ -17,6 +19,33 @@ public class WidgetMapping
     /// Gets or sets the Label of the mapping.
     /// </summary>
     public string Label
+    {
+        get; set;
+    }
+
+    /// <summary>
+    /// Gets or sets the grid row (1-based) used by Buttongrid widgets.
+    /// </summary>
+    [JsonPropertyName("row")]
+    public int Row
+    {
+        get; set;
+    }
+
+    /// <summary>
+    /// Gets or sets the grid column (1-based) used by Buttongrid widgets.
+    /// </summary>
+    [JsonPropertyName("column")]
+    public int Column
+    {
+        get; set;
+    }
+
+    /// <summary>
+    /// Gets or sets the command sent when a momentary button is released.
+    /// </summary>
+    [JsonPropertyName("releaseCommand")]
+    public string ReleaseCommand
     {
         get; set;
     }

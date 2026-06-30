@@ -57,6 +57,11 @@ public sealed partial class ChartWidget : WidgetBase
 
         // http://demo.openhab.org:8080/chart?groups=Weather_Chart&period=d
         ChartUri = $"{serverUrl}chart?groups={Widget.Item.Name}&period={Widget.Period}";
+
+        if (!string.IsNullOrEmpty(Widget.Interpolation))
+        {
+            ChartUri += $"&interpolation={Widget.Interpolation}";
+        }
     }
 
     private void InitTimer()

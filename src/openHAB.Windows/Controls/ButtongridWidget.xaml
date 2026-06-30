@@ -1,0 +1,28 @@
+﻿<local:WidgetBase x:Class="openHAB.Windows.Controls.ButtongridWidget"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:local="using:openHAB.Windows.Controls"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  d:DesignHeight="200"
+                  d:DesignWidth="300"
+                  mc:Ignorable="d"
+                  Visibility="{x:Bind Widget.Visibility}">
+    <Grid Style="{StaticResource Widget}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <local:ImageLabel Margin="8,0,0,0"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Center"
+                          IconPath="{x:Bind Widget.IconPath, Mode=OneWay}"
+                          LabelText="{x:Bind Widget.Label, Mode=OneWay}"
+                          LabelForeground="{x:Bind Widget.LabelColor, Mode=OneWay}" />
+        <Grid x:Name="ButtonGrid"
+              Grid.Column="1"
+              Margin="2,2,8,2"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center" />
+    </Grid>
+</local:WidgetBase>

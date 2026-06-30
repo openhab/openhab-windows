@@ -60,6 +60,42 @@ public class Widget : INotifyPropertyChanged, IEquatable<Widget>
     }
 
     /// <summary>
+    /// Gets or sets the chart line interpolation (e.g. "linear", "step").
+    /// </summary>
+    [JsonPropertyName("interpolation")]
+    public string Interpolation
+    {
+        get; set;
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the widget is momentary and does not reflect item state.
+    /// </summary>
+    [JsonPropertyName("stateless")]
+    public bool Stateless
+    {
+        get; set;
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the command is sent only on release.
+    /// </summary>
+    [JsonPropertyName("releaseOnly")]
+    public bool ReleaseOnly
+    {
+        get; set;
+    }
+
+    /// <summary>
+    /// Gets or sets the command sent when a momentary control is released.
+    /// </summary>
+    [JsonPropertyName("releaseCommand")]
+    public string ReleaseCommand
+    {
+        get; set;
+    }
+
+    /// <summary>
     /// Gets or sets the Icon of the OpenHAB widget.
     /// </summary>
     [JsonPropertyName("icon")]

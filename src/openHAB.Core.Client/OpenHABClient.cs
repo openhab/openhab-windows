@@ -175,7 +175,13 @@ public class OpenHABClient : IOpenHABClient
                 throw new OpenHABException(message);
             }
 
-            Sitemap sitemap = JsonSerializer.Deserialize<Sitemap>(resultString);
+            JsonSerializerOptions serializerOptions = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                NumberHandling = JsonNumberHandling.AllowReadingFromString,
+            };
+
+            Sitemap sitemap = JsonSerializer.Deserialize<Sitemap>(resultString, serializerOptions);
             ICollection<Widget> items = sitemap?.Homepage?.Widgets ?? new List<Widget>();
 
             _logger.LogInformation("Loaded '{ItemCount}' site map items from server", items.Count);

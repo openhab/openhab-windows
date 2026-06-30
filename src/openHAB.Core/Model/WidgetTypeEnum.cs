@@ -96,6 +96,11 @@ public enum WidgetTypeEnum
     Mapview,
 
     /// <summary>
+    /// Buttongrid
+    /// </summary>
+    Buttongrid,
+
+    /// <summary>
     /// Generic
     /// </summary>
     Generic,
