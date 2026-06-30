@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Net.Http;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -24,6 +26,9 @@ public class IconCaching : IIconCaching
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly IOptions<ConnectionOptions> _connectionOptions;
     private readonly ILogger<IconCaching> _logger;
+
+    // Serializes access per icon file so concurrent widget loads do not write the same file at once.
+    private static readonly ConcurrentDictionary<string, SemaphoreSlim> _iconFileLocks = new ConcurrentDictionary<string, SemaphoreSlim>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="IconCaching" /> class.
@@ -52,8 +57,12 @@ public class IconCaching : IIconCaching
         string serverUrl = _connectionService.CurrentConnection.Url;
         OpenHABVersion openHABVersion = _appManager.ServerVersion;
 
+        // The state can contain characters that are invalid in a URL (e.g. "100%"). It must be
+        // percent-encoded; otherwise the resulting URL is malformed and consumers that strictly
+        // validate URIs (such as the WinRT SvgImageSource/Uri) throw an ArgumentException.
+        string encodedState = Uri.EscapeDataString(state ?? string.Empty);
         string iconUrl = openHABVersion >= OpenHABVersion.Two ?
-                   $"{serverUrl}icon/{icon}?state={state}&format={iconFormat}&anyFormat=true&iconset=classic" :
+                   $"{serverUrl}icon/{icon}?state={encodedState}&format={iconFormat}&anyFormat=true&iconset=classic" :
                    $"{serverUrl}images/{icon}.png";
 
         try
@@ -81,9 +90,27 @@ public class IconCaching : IIconCaching
                 return iconFilePath;
             }
 
-            bool downloadSuccessfull = await DownloadAndSaveIconToCache(iconUrl, iconFilePath);
+            // Multiple widgets frequently share the same icon (e.g. "frame"), and their data is
+            // loaded concurrently. Serialize access per icon file so two tasks never write the same
+            // file at once, which would cause a sharing violation (IOException).
+            SemaphoreSlim fileLock = _iconFileLocks.GetOrAdd(iconFilePath, _ => new SemaphoreSlim(1, 1));
+            await fileLock.WaitAsync().ConfigureAwait(false);
+            try
+            {
+                // Re-check inside the lock: another caller may have downloaded the icon already.
+                if (File.Exists(iconFilePath))
+                {
+                    return iconFilePath;
+                }
 
-            return downloadSuccessfull ? iconFilePath : iconUrl;
+                bool downloadSuccessfull = await DownloadAndSaveIconToCache(iconUrl, iconFilePath).ConfigureAwait(false);
+
+                return downloadSuccessfull ? iconFilePath : iconUrl;
+            }
+            finally
+            {
+                fileLock.Release();
+            }
         }
         catch (Exception ex)
         {
@@ -117,12 +144,15 @@ public class IconCaching : IIconCaching
         if (!httpResponse.IsSuccessStatusCode)
         {
             _logger.LogWarning("Failed to download icon from '{IconUrl}' with status code '{StatusCode}'", iconUrl, httpResponse.StatusCode);
+            return false;
         }
 
-        byte[] iconContent = await httpResponse.Content.ReadAsByteArrayAsync();
-        using (FileStream file = File.Open(iconFilePath, FileMode.OpenOrCreate))
+        byte[] iconContent = await httpResponse.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+
+        // FileMode.Create truncates any stale/partial file; FileShare.Read lets the UI read the icon.
+        using (FileStream file = File.Open(iconFilePath, FileMode.Create, FileAccess.Write, FileShare.Read))
         {
-            await file.WriteAsync(iconContent, 0, iconContent.Length);
+            await file.WriteAsync(iconContent, 0, iconContent.Length).ConfigureAwait(false);
         }
 
         return true;

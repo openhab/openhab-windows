@@ -42,14 +42,23 @@ public sealed partial class ImageLabel : UserControl
             return;
         }
 
-        Match format = Regex.Match(iconPath, @".svg", RegexOptions.None, TimeSpan.FromMilliseconds(100));
-        if (format.Success)
+        try
         {
-            control.Icon.Source = new SvgImageSource(new Uri(iconPath));
+            Match format = Regex.Match(iconPath, @".svg", RegexOptions.None, TimeSpan.FromMilliseconds(100));
+            if (format.Success)
+            {
+                control.Icon.Source = new SvgImageSource(new Uri(iconPath));
+            }
+            else
+            {
+                control.Icon.Source = new BitmapImage(new Uri(iconPath));
+            }
         }
-        else
+        catch (Exception ex)
         {
-            control.Icon.Source = new BitmapImage(new Uri(iconPath));
+            // IconChangedCallback is an async void dependency-property callback, so an unhandled
+            // exception here would crash the app. A malformed or unsupported icon path must not be fatal.
+            System.Diagnostics.Debug.WriteLine($"Failed to set icon source for '{iconPath}': {ex.Message}");
         }
     }
 
