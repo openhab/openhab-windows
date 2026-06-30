@@ -119,7 +119,7 @@ public class OpenHABClient : IOpenHABClient
             string resultString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             Sitemap sitemap = null;
-            if (version == OpenHABVersion.Two || version == OpenHABVersion.Three || version == OpenHABVersion.Four)
+            if (version >= OpenHABVersion.Two)
             {
                 JsonSerializerOptions serializerOptions = new JsonSerializerOptions
                 {
@@ -168,7 +168,7 @@ public class OpenHABClient : IOpenHABClient
 
             string resultString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            if (version != OpenHABVersion.Two && version != OpenHABVersion.Three && version != OpenHABVersion.Four)
+            if (version < OpenHABVersion.Two)
             {
                 string message = "openHAB version is not supported.";
                 _logger.LogError(message);

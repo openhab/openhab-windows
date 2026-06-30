@@ -52,7 +52,7 @@ public class IconCaching : IIconCaching
         string serverUrl = _connectionService.CurrentConnection.Url;
         OpenHABVersion openHABVersion = _appManager.ServerVersion;
 
-        string iconUrl = openHABVersion == OpenHABVersion.Two || openHABVersion == OpenHABVersion.Three || openHABVersion == OpenHABVersion.Four ?
+        string iconUrl = openHABVersion >= OpenHABVersion.Two ?
                    $"{serverUrl}icon/{icon}?state={state}&format={iconFormat}&anyFormat=true&iconset=classic" :
                    $"{serverUrl}images/{icon}.png";
 

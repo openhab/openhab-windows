@@ -1,10 +1,15 @@
 namespace openHAB.Core.Client.Models;
 
 /// <summary>
-/// Enum to differentiate between OpenHAB 1, 2 and 3.
+/// Enum to differentiate between the supported openHAB major versions.
 /// </summary>
 public enum OpenHABVersion
 {
+    /// <summary>
+    /// Used when no connection is available.
+    /// </summary>
+    None = 0,
+
     /// <summary>
     /// OpenHAB V1
     /// </summary>
@@ -26,7 +31,7 @@ public enum OpenHABVersion
     Four = 4,
 
     /// <summary>
-    /// Used when no connection is available
+    /// OpenHAB V5
     /// </summary>
-    None,
+    Five = 5,
 }
