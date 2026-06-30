@@ -57,7 +57,12 @@ public sealed partial class SettingsPage : Page
 
     private void CancelButton_Click(object sender, RoutedEventArgs e)
     {
-        Frame.Navigate(typeof(MainUIPage));
+        Program.Host.Services.GetRequiredService<MainWindow>().NavigateToMainUI();
+    }
+
+    private void LogViewerButton_Click(object sender, RoutedEventArgs e)
+    {
+        Frame.Navigate(typeof(LogViewerPage));
     }
 
     private static ConnectionDialog CreateConnectionDialog()

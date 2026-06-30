@@ -69,9 +69,18 @@ public sealed partial class MainWindow : Window
 
     private void NavigationViewItemMainUI_Tapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e)
     {
+        NavigateToMainUI();
+    }
+
+    /// <summary>
+    /// Navigates to the main UI page and clears the current sitemap and menu selection.
+    /// </summary>
+    public void NavigateToMainUI()
+    {
         SitemapNavigation.IsPaneOpen = false;
 
         Vm.SelectedSitemap = null;
+        Vm.SelectedMenuItem = null;
 
         ContentFrame.Navigate(typeof(MainUIPage));
     }
