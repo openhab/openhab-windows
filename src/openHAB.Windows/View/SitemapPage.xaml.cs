@@ -10,7 +10,6 @@ using openHAB.Core.Client.Models;
 using openHAB.Core.Messages;
 using openHAB.Core.Services;
 using openHAB.Windows.Messages;
-using openHAB.Windows.Services;
 using openHAB.Windows.ViewModel;
 
 namespace openHAB.Windows.View;
@@ -78,10 +77,9 @@ public sealed partial class SitemapPage : Microsoft.UI.Xaml.Controls.Page
         _viewModel = await SitemapViewModel.CreateAsync(sitemap, _sitemapService, _serviceProvider);
 
         DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-        await dispatcherQueue.EnqueueAsync(async () =>
+        await dispatcherQueue.EnqueueAsync(() =>
         {
             DataContext = _viewModel;
-            WidgetNavigationService.ClearWidgetNavigation();
         });
 
         StrongReferenceMessenger.Default.Send<DataOperation>(new DataOperation(OperationState.Completed));
@@ -89,13 +87,23 @@ public sealed partial class SitemapPage : Microsoft.UI.Xaml.Controls.Page
 
     private void MasterListView_OnItemClick(object sender, ItemClickEventArgs e)
     {
-        WidgetViewModel? widgetViewModel = e.ClickedItem as WidgetViewModel;
-        if (widgetViewModel == null)
+        if (e.ClickedItem is WidgetViewModel widgetViewModel)
         {
-            return;
+            StrongReferenceMessenger.Default.Send(new WidgetClickedMessage(widgetViewModel));
         }
+    }
 
-        StrongReferenceMessenger.Default.Send(new WidgetClickedMessage(widgetViewModel));
+    private async void BreadcrumbBar_ItemClicked(BreadcrumbBar sender, BreadcrumbBarItemClickedEventArgs args)
+    {
+        if (args.Item is WidgetViewModel widget)
+        {
+            await ViewModel.GoBackTo(widget);
+        }
+    }
+
+    private void SitemapTextBlock_Tapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e)
+    {
+        ViewModel?.NavigateToRoot();
     }
 
     private void OnSitemapChangedEvent(SitemapChanged message)

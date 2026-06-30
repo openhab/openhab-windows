@@ -16,8 +16,6 @@ using openHAB.Core.Common;
 using openHAB.Core.Messages;
 using openHAB.Core.Model;
 using openHAB.Core.Services;
-using openHAB.Windows.Messages;
-using openHAB.Windows.Services;
 
 namespace openHAB.Windows.ViewModel;
 
@@ -31,7 +29,6 @@ public class MainViewModel : ViewModelBase<object>
     private readonly ILogger<MainViewModel> _logger;
     private readonly SitemapService _sitemapManager;
 
-    private ObservableCollection<WidgetViewModel> _breadcrumbItems;
     private bool _isDataLoading;
     private object _selectedMenuItem;
     private Sitemap? _selectedSitemap;
@@ -54,7 +51,6 @@ public class MainViewModel : ViewModelBase<object>
 
         _openHABClient = openHABClient;
         _settingsOptions = settingsOptions;
-        _breadcrumbItems = new ObservableCollection<WidgetViewModel>();
         _notifications = new ObservableCollection<TriggerInfoMessage>();
         _sitemapManager = sitemapManager;
 
@@ -76,16 +72,6 @@ public class MainViewModel : ViewModelBase<object>
                 break;
 
         }
-    }
-
-    /// <summary>
-    /// Gets or sets the items for the breadcrumb.
-    /// </summary>
-    /// <value>The breadcrumb items.</value>
-    public ObservableCollection<WidgetViewModel> BreadcrumbItems
-    {
-        get => _breadcrumbItems;
-        set => Set(ref _breadcrumbItems, value);
     }
 
     /// <summary>
@@ -133,11 +119,6 @@ public class MainViewModel : ViewModelBase<object>
 
         set
         {
-            if (_selectedSitemap != value && value != null)
-            {
-                StrongReferenceMessenger.Default.Unregister<WidgetNavigationMessage, string>(this, value.Name);
-            }
-
             if (Set(ref _selectedSitemap, value))
             {
                 if (_selectedSitemap != null)
@@ -145,12 +126,8 @@ public class MainViewModel : ViewModelBase<object>
                     SettingOptions settings = _settingsOptions.Value;
                     settings.LastSitemap = _selectedSitemap.Name;
                     settings.Save();
-
-                    StrongReferenceMessenger.Default.Register<WidgetNavigationMessage, string>(this, SelectedSitemap.Name, (obj, operation)
-                         => WidgetNavigatedEvent());
                 }
 
-                BreadcrumbItems.Clear();
                 SelectedMenuItem = value;
             }
 
@@ -312,13 +289,6 @@ public class MainViewModel : ViewModelBase<object>
                     break;
             }
         });
-    }
-
-    private void WidgetNavigatedEvent()
-    {
-        BreadcrumbItems?.Clear();
-        BreadcrumbItems?.AddRange(WidgetNavigationService.Widgets);
-        OnPropertyChanged(nameof(BreadcrumbItems));
     }
 
     #endregion

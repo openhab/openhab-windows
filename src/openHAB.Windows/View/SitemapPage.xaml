@@ -12,6 +12,30 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0"
+                    Orientation="Vertical"
+                    Margin="12,0,0,10">
+            <TextBlock VerticalAlignment="Center"
+                       FontSize="42"
+                       Text="{Binding Label, Mode=OneWay}"
+                       Tapped="SitemapTextBlock_Tapped" />
+            <BreadcrumbBar Margin="0,0,0,10"
+                           ItemsSource="{Binding BreadcrumbItems, Mode=OneWay}"
+                           ItemClicked="BreadcrumbBar_ItemClicked">
+                <BreadcrumbBar.ItemTemplate>
+                    <DataTemplate>
+                        <BreadcrumbBarItem Content="{Binding}">
+                            <BreadcrumbBarItem.ContentTemplate>
+                                <DataTemplate>
+                                    <TextBlock FontSize="21"
+                                               Text="{Binding Label}" />
+                                </DataTemplate>
+                            </BreadcrumbBarItem.ContentTemplate>
+                        </BreadcrumbBarItem>
+                    </DataTemplate>
+                </BreadcrumbBar.ItemTemplate>
+            </BreadcrumbBar>
+        </StackPanel>
         <ScrollViewer Grid.Row="1"
                       VerticalScrollBarVisibility="Auto">
             <GridView x:Name="MasterListView"

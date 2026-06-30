@@ -13,7 +13,6 @@ using openHAB.Core.Common;
 using openHAB.Core.Messages;
 using openHAB.Core.Services;
 using openHAB.Windows.Messages;
-using openHAB.Windows.Services;
 
 namespace openHAB.Windows.ViewModel;
 
@@ -28,7 +27,14 @@ public class SitemapViewModel : ViewModelBase<Sitemap>, IDisposable
     private readonly IServiceProvider _serviceProvider;
     private WidgetViewModel _selectedWidget;
     private ObservableCollection<WidgetViewModel> _widgets;
+    private ObservableCollection<WidgetViewModel> _breadcrumbItems;
     private bool disposedValue;
+
+    // ponytail: instance back-stack guarded by one lock. Replaces the former static
+    // WidgetNavigationService; each sitemap owns its own navigation history.
+    private readonly object _navigationLock = new object();
+    private readonly Stack<WidgetViewModel> _navigationStack = new Stack<WidgetViewModel>();
+    private WidgetViewModel _navigationCurrent;
 
     #region Constructors
 
@@ -52,36 +58,16 @@ public class SitemapViewModel : ViewModelBase<Sitemap>, IDisposable
         _sitemapService = sitemapService;
         _currentWidgets = new ObservableCollection<WidgetViewModel>();
         _serviceProvider = serviceProvider;
-
-        StrongReferenceMessenger.Default.Register<WidgetClickedMessage>(this, async (recipient, msg)
-            =>
-        {
-            if (msg.Widget == null)
-            {
-                return;
-            }
-
-            WidgetViewModel viewModel = msg.Widget;
-            await OnWidgetClickedAsync(viewModel);
-        });
+        _breadcrumbItems = new ObservableCollection<WidgetViewModel>();
 
         StrongReferenceMessenger.Default.Register<TriggerCommandMessage>(this, async (recipient, msg)
             => await TriggerItemCommand(msg).ConfigureAwait(false));
 
+        StrongReferenceMessenger.Default.Register<WidgetClickedMessage>(this, async (recipient, msg)
+            => await OnWidgetClickedAsync(msg.Widget).ConfigureAwait(false));
+
         StrongReferenceMessenger.Default.Register<DataOperation>(this, (obj, operation)
             => DataOperationState(operation));
-
-        StrongReferenceMessenger.Default.Register<WidgetNavigationMessage, string>(this, Model.Name, (recipient, msg) =>
-        {
-            if (msg.Trigger == EventTriggerSource.Breadcrumb)
-            {
-                WidgetGoBack(msg.TargetWidget);
-            }
-            else if (msg.Trigger == EventTriggerSource.Root)
-            {
-                ExecuteNavigateToSitemapRootCommand(null);
-            }
-        });
 
         SetWidgetsOnScreenAsync(Widgets);
     }
@@ -97,6 +83,15 @@ public class SitemapViewModel : ViewModelBase<Sitemap>, IDisposable
     {
         get => _currentWidgets;
         set => Set(ref _currentWidgets, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the breadcrumb trail of navigated widgets (oldest first).
+    /// </summary>
+    public ObservableCollection<WidgetViewModel> BreadcrumbItems
+    {
+        get => _breadcrumbItems;
+        set => Set(ref _breadcrumbItems, value);
     }
 
     /// <summary>
@@ -203,7 +198,7 @@ public class SitemapViewModel : ViewModelBase<Sitemap>, IDisposable
             else
             {
                 SelectedWidget = null;
-                WidgetNavigationService.ClearWidgetNavigation();
+                NavigationClear();
             }
         }
 
@@ -213,29 +208,81 @@ public class SitemapViewModel : ViewModelBase<Sitemap>, IDisposable
 
     #endregion Reload Command
 
-    #region Navigate To Sitemap Root Command
+    #region Navigation
 
     private bool _canExecuteReloadSitemap;
-    private ActionCommand _navigateToSitemapRootCommand;
 
     /// <summary>
-    /// Gets the command to navigate to the root of the sitemap.
+    /// Navigates back to the sitemap root, clearing the navigation history.
     /// </summary>
-    public ActionCommand NavigateToSitemapRoot =>
-        _navigateToSitemapRootCommand ?? (_navigateToSitemapRootCommand = new ActionCommand(ExecuteNavigateToSitemapRootCommand, CanExecuteNavigateToSitemapRootCommand));
-
-    private bool CanExecuteNavigateToSitemapRootCommand(object arg)
+    internal void NavigateToRoot()
     {
-        return true;
+        NavigationClear();
+        SelectedWidget = null;
+        SetWidgetsOnScreenAsync(Widgets);
+        RefreshBreadcrumb();
     }
 
-    private void ExecuteNavigateToSitemapRootCommand(object obj)
+    private void NavigationPush(WidgetViewModel target)
     {
-        WidgetNavigationService.ClearWidgetNavigation();
-        SetWidgetsOnScreenAsync(Widgets);
-        SelectedWidget = null;
+        lock (_navigationLock)
+        {
+            if (target == _navigationCurrent)
+            {
+                return;
+            }
 
-        StrongReferenceMessenger.Default.Send(new WidgetNavigationMessage(SelectedWidget, null, EventTriggerSource.Widget), Model.Name);
+            _navigationStack.Push(target);
+            _navigationCurrent = target;
+        }
+    }
+
+    private WidgetViewModel NavigationGoBack()
+    {
+        lock (_navigationLock)
+        {
+            if (_navigationStack.Count == 0)
+            {
+                return null;
+            }
+
+            _navigationStack.Pop();
+            _navigationCurrent = _navigationStack.Count == 0 ? null : _navigationStack.Peek();
+
+            return _navigationCurrent;
+        }
+    }
+
+    private bool NavigationCanGoBack
+    {
+        get
+        {
+            lock (_navigationLock)
+            {
+                return _navigationCurrent != null;
+            }
+        }
+    }
+
+    private void NavigationClear()
+    {
+        lock (_navigationLock)
+        {
+            _navigationStack.Clear();
+            _navigationCurrent = null;
+        }
+    }
+
+    private void RefreshBreadcrumb()
+    {
+        List<WidgetViewModel> trail;
+        lock (_navigationLock)
+        {
+            trail = _navigationStack.Reverse().ToList();
+        }
+
+        BreadcrumbItems.Clear();
+        BreadcrumbItems.AddRange(trail);
     }
 
     private static async Task<List<WidgetViewModel>> ConvertWidgetsAsync(ICollection<Widget> widgets, IServiceProvider serviceProvider)
@@ -254,7 +301,7 @@ public class SitemapViewModel : ViewModelBase<Sitemap>, IDisposable
         return widgetViewModels;
     }
 
-    #endregion Navigate To Sitemap Root Command
+    #endregion Navigation
 
     #region Events
 
@@ -342,19 +389,18 @@ public class SitemapViewModel : ViewModelBase<Sitemap>, IDisposable
         return null;
     }
 
-    private async Task OnWidgetClickedAsync(WidgetViewModel widget)
+    internal async Task OnWidgetClickedAsync(WidgetViewModel widget)
     {
         await App.DispatcherQueue.EnqueueAsync(async () =>
         {
-            WidgetViewModel lastWidget = SelectedWidget;
             SelectedWidget = widget;
             if (SelectedWidget.LinkedPage == null || !SelectedWidget.LinkedPage.Widgets.Any())
             {
                 return;
             }
 
-            WidgetNavigationService.Navigate(SelectedWidget);
-            StrongReferenceMessenger.Default.Send(new WidgetNavigationMessage(lastWidget, widget, EventTriggerSource.Widget), Model.Name);
+            NavigationPush(SelectedWidget);
+            RefreshBreadcrumb();
 
             List<WidgetViewModel> widgets = await ConvertWidgetsAsync(SelectedWidget.LinkedPage.Widgets, _serviceProvider).ConfigureAwait(false);
             await SetWidgetsOnScreenAsync(widgets);
@@ -370,19 +416,22 @@ public class SitemapViewModel : ViewModelBase<Sitemap>, IDisposable
         });
     }
 
-    private async Task WidgetGoBack(WidgetViewModel widget)
+    /// <summary>
+    /// Navigates back to the given widget on the breadcrumb trail.
+    /// </summary>
+    /// <param name="widget">The breadcrumb widget to return to.</param>
+    internal async Task GoBackTo(WidgetViewModel widget)
     {
-        if (widget == null || !WidgetNavigationService.CanGoBack)
+        if (widget == null || !NavigationCanGoBack)
         {
             return;
         }
 
-        WidgetViewModel lastWidget = SelectedWidget;
-        WidgetViewModel widgetFromStack = WidgetNavigationService.GoBack();
+        WidgetViewModel widgetFromStack = NavigationGoBack();
 
         while (widgetFromStack != null && widgetFromStack.WidgetId != widget.WidgetId)
         {
-            widgetFromStack = WidgetNavigationService.GoBack();
+            widgetFromStack = NavigationGoBack();
         }
 
         if (widgetFromStack == null)
@@ -391,8 +440,8 @@ public class SitemapViewModel : ViewModelBase<Sitemap>, IDisposable
         }
 
         SelectedWidget = widgetFromStack;
-        WidgetNavigationService.Navigate(SelectedWidget);
-        StrongReferenceMessenger.Default.Send(new WidgetNavigationMessage(lastWidget, SelectedWidget, EventTriggerSource.Widget), Model.Name);
+        NavigationPush(SelectedWidget);
+        RefreshBreadcrumb();
 
         List<WidgetViewModel> widgets = await ConvertWidgetsAsync(SelectedWidget.LinkedPage.Widgets, _serviceProvider).ConfigureAwait(false);
         await SetWidgetsOnScreenAsync(widgets);
@@ -416,10 +465,9 @@ public class SitemapViewModel : ViewModelBase<Sitemap>, IDisposable
         {
             if (disposing)
             {
-                StrongReferenceMessenger.Default.Unregister<WidgetClickedMessage>(this);
                 StrongReferenceMessenger.Default.Unregister<TriggerCommandMessage>(this);
+                StrongReferenceMessenger.Default.Unregister<WidgetClickedMessage>(this);
                 StrongReferenceMessenger.Default.Unregister<DataOperation>(this);
-                StrongReferenceMessenger.Default.Unregister<WidgetNavigationMessage, string>(this, Model.Name);
 
                 Widgets = null;
                 CurrentWidgets = null;

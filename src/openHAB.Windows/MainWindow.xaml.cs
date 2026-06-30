@@ -10,7 +10,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using openHAB.Core.Client.Models;
 using openHAB.Core.Messages;
-using openHAB.Windows.Messages;
 using openHAB.Windows.View;
 using openHAB.Windows.ViewModel;
 using Windows.ApplicationModel;
@@ -68,24 +67,11 @@ public sealed partial class MainWindow : Window
         private set;
     }
 
-    private void BreadcrumbBar_ItemClicked(BreadcrumbBar sender, BreadcrumbBarItemClickedEventArgs args)
-    {
-        WidgetViewModel widget = args.Item as WidgetViewModel;
-        if (widget == null)
-        {
-            _logger.LogWarning("Breadcrumb item is not a widget.");
-            return;
-        }
-
-        StrongReferenceMessenger.Default.Send(new WidgetNavigationMessage(null, widget, EventTriggerSource.Breadcrumb), Vm.SelectedSitemap.Name);
-    }
-
     private void NavigationViewItemMainUI_Tapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e)
     {
         SitemapNavigation.IsPaneOpen = false;
 
         Vm.SelectedSitemap = null;
-        SitemapNavigation.AlwaysShowHeader = false;
 
         ContentFrame.Navigate(typeof(MainUIPage));
     }
@@ -98,23 +84,16 @@ public sealed partial class MainWindow : Window
         NavigationViewItem item = args.SelectedItem as NavigationViewItem;
         if (args.IsSettingsSelected)
         {
-            sender.AlwaysShowHeader = false;
             ContentFrame.Navigate(typeof(SettingsPage));
         }
         else if (args.SelectedItem is Sitemap)
         {
-            sender.AlwaysShowHeader = true;
             Sitemap sitemap = args.SelectedItem as Sitemap;
             if (sitemap != null)
             {
                 ContentFrame.Navigate(typeof(SitemapPage), sitemap.Link);
             }
         }
-    }
-
-    private void SitemapTextBlock_Tapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e)
-    {
-        StrongReferenceMessenger.Default.Send(new WidgetNavigationMessage(null, null, EventTriggerSource.Root), Vm.SelectedSitemap.Name);
     }
 
     private async Task ShowInfoMessage(object recipient, TriggerInfoMessage msg)
