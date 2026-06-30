@@ -130,6 +130,7 @@
                              PaneDisplayMode="Left"
                              FlowDirection="RightToLeft"
                              IsPaneOpen="True"
+                             Loaded="SitemapNavigation_Loaded"
                              SelectionChanged="SitemapNavigation_SelectionChanged">
             <muxc:NavigationView.PaneHeader>
                 <StackPanel Orientation="Vertical"

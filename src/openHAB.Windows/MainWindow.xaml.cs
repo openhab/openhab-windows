@@ -85,6 +85,14 @@ public sealed partial class MainWindow : Window
         ContentFrame.Navigate(typeof(MainUIPage));
     }
 
+    private void SitemapNavigation_Loaded(object sender, RoutedEventArgs e)
+    {
+        if (SitemapNavigation.SettingsItem is FrameworkElement settings)
+        {
+            settings.FlowDirection = FlowDirection.LeftToRight;
+        }
+    }
+
     private void SitemapNavigation_SelectionChanged(
             NavigationView sender,
             NavigationViewSelectionChangedEventArgs args)
