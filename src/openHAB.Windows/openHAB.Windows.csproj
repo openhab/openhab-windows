@@ -9,10 +9,21 @@
 		<Nullable>enable</Nullable>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<UseWinUI>true</UseWinUI>
-		<EnableMsixTooling>true</EnableMsixTooling>
 
-		<WindowsPackageType>None</WindowsPackageType>
-		<WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+		<!--
+			openHAB.Windows is a *packaged* app: the MSIX package (and its Package.appxmanifest)
+			is produced by the openHAB.Windows.Package / openHAB.Windows.Package.Beta projects.
+			For that separate-packaging-project model, configure this project as a packaged app:
+			  * Do NOT set WindowsPackageType (absent = packaged). Setting it to None turns on the
+				unpackaged bootstrapper / UndockedRegFreeWinRT auto-initializers, which run before
+				Main and corrupt WinRT activation inside the packaged process - that caused
+				Microsoft.UI.Dispatching.DispatcherQueueController to fail activation with
+				0x80040111 CLASS_E_CLASSNOTAVAILABLE (surfaced as the 0xC000027B stowed exception).
+			  * Do NOT set EnableMsixTooling (that is the single-project MSIX feature; it also fails
+				the no-AppxManifest validation because the manifest lives in the packaging projects).
+			  * Leave WindowsAppSDKSelfContained off (framework-dependent); the Windows App SDK
+				framework dependency is expressed by the generated package manifest.
+		-->
 	</PropertyGroup>
 	<PropertyGroup>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -66,7 +77,6 @@
 		</PackageReference>
 		<PackageReference Include="CommunityToolkit.WinUI.Behaviors" Version="8.2.251219" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="10.0.9" />
-		<PackageReference Include="Microsoft.Extensions.Http.Polly" Version="10.0.9" />
 		<PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.2.251219" />
 		<PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.2.251219" />
 		<PackageReference Include="CommunityToolkit.WinUI.Helpers" Version="8.2.251219" />
@@ -87,9 +97,6 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-	</ItemGroup>
-	<ItemGroup>
-		<Compile Remove="Properties\Annotations.cs" />
 	</ItemGroup>
 	<ItemGroup>
 	  <None Remove="Controls\MapViewWidget.xaml" />

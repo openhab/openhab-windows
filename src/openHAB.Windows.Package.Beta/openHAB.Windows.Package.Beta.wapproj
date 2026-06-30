@@ -223,6 +223,10 @@
     <None Include="Package.StoreAssociation.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\openHAB.Windows\openHAB.Windows.csproj" />
+    <ProjectReference Include="..\openHAB.Windows\openHAB.Windows.csproj">
+      <AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
+      <SkipGetTargetFrameworkProperties>True</SkipGetTargetFrameworkProperties>
+      <PublishProfile>Properties\PublishProfiles\win-$(Platform).pubxml</PublishProfile>
+    </ProjectReference>
   </ItemGroup>
 </Project>

@@ -1,8 +1,5 @@
 using System;
-using System.IO;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.UI.Dispatching;
@@ -36,10 +33,13 @@ public partial class App : Application
         {
             this.InitializeComponent();
 
-            // Initialize the host here, after XAML initialization
-            InitializeHost();
+            // The Generic Host is built in Program.Main, before Application.Start.
+            // Building it inside this constructor runs it within the native WinUI
+            // Application factory callback; any failure is then rethrown across that
+            // native boundary and surfaces as an opaque COMException 0x8000FFFF
+            // (E_UNEXPECTED) instead of the real exception.
 
-            // Initialize services after host is built
+            // Initialize services after the host has been built
             InitializeServices();
 
             // Set up exception handling and theme
@@ -53,23 +53,6 @@ public partial class App : Application
             System.Diagnostics.Debug.WriteLine($"Error initializing App: {ex}");
             throw;
         }
-    }
-
-    private void InitializeHost()
-    {
-        // Ensure directories exist
-        EnsureDirectoriesExist();
-
-        var builder = new HostApplicationBuilder();
-        builder.Configuration.AddJsonFile(AppPaths.SettingsFilePath, optional: true, reloadOnChange: true);
-        builder.Configuration.AddJsonFile(AppPaths.ConnectionFilePath, optional: true, reloadOnChange: true);
-
-        builder.Services.AddConfiguration(builder.Configuration);
-        builder.Services.AddOpenHABServices();
-        builder.Services.AddOpenHABViewModels();
-        builder.Services.AddViews();
-
-        Program.Host = builder.Build();
     }
 
     private void InitializeServices()
@@ -179,31 +162,5 @@ public partial class App : Application
                     break;
             }
         });
-    }
-
-    private static void EnsureDirectoriesExist()
-    {
-        try
-        {
-            if (!Directory.Exists(AppPaths.ApplicationDataDirectory))
-            {
-                Directory.CreateDirectory(AppPaths.ApplicationDataDirectory);
-            }
-
-            if (!Directory.Exists(AppPaths.LogsDirectory))
-            {
-                Directory.CreateDirectory(AppPaths.LogsDirectory);
-            }
-
-            if (!Directory.Exists(AppPaths.IconCacheDirectory))
-            {
-                Directory.CreateDirectory(AppPaths.IconCacheDirectory);
-            }
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine($"Failed to create directories: {ex.Message}");
-            // Don't throw here, let the app continue
-        }
     }
 }
