@@ -55,6 +55,11 @@ public sealed partial class SettingsPage : Page
     /// </summary>
     public SettingsViewModel Vm => DataContext as SettingsViewModel;
 
+    private void CancelButton_Click(object sender, RoutedEventArgs e)
+    {
+        Frame.Navigate(typeof(MainUIPage));
+    }
+
     private static ConnectionDialog CreateConnectionDialog()
     {
         ConnectionDialog connectionDialog = new ConnectionDialog();

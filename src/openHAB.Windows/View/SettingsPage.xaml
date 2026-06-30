@@ -41,13 +41,8 @@
                                   Icon="Save"
                                   Command="{x:Bind Vm.SaveCommand}" />
                     <AppBarButton x:Uid="SettingsCancelButton"
-                                  Icon="Cancel">
-                        <interactivity:Interaction.Behaviors>
-                            <interactivity:EventTriggerBehavior EventName="Tapped">
-                                <interactivity:NavigateToPageAction TargetPage="openHAB.Windows.View.MainPage" />
-                            </interactivity:EventTriggerBehavior>
-                        </interactivity:Interaction.Behaviors>
-                    </AppBarButton>
+                                  Icon="Cancel"
+                                  Click="CancelButton_Click" />
                     <AppBarSeparator />
                     <AppBarButton x:Uid="OpenLogViewerButton"
                                   Icon="Document">
