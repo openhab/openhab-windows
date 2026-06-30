@@ -37,7 +37,7 @@
   <PropertyGroup>
     <ProjectGuid>dc801784-7226-423e-ab0d-c34dfc8ab938</ProjectGuid>
     <TargetPlatformVersion>10.0.26100.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.20348.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.19045.0</TargetPlatformMinVersion>
     <AssetTargetFallback>net8.0-windows$(TargetPlatformVersion);$(AssetTargetFallback)</AssetTargetFallback>
     <DefaultLanguage>en-US</DefaultLanguage>
     <NoWarn>$(NoWarn);NU1702</NoWarn>
