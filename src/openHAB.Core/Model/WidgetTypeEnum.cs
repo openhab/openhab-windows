@@ -91,6 +91,11 @@ public enum WidgetTypeEnum
     Colorpicker,
 
     /// <summary>
+    /// Colortemperaturepicker
+    /// </summary>
+    Colortemperaturepicker,
+
+    /// <summary>
     /// Mapview
     /// </summary>
     Mapview,

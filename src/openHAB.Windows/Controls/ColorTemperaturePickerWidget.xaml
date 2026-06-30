@@ -1,0 +1,45 @@
+﻿<local:WidgetBase x:Class="openHAB.Windows.Controls.ColorTemperaturePickerWidget"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:local="using:openHAB.Windows.Controls"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  d:DesignHeight="100"
+                  d:DesignWidth="300"
+                  mc:Ignorable="d"
+                  Visibility="{x:Bind Widget.Visibility}">
+    <Grid Style="{StaticResource Widget}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <local:ImageLabel Margin="8,0,0,0"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Center"
+                          IconPath="{x:Bind Widget.IconPath, Mode=OneWay}"
+                          LabelText="{x:Bind Widget.Label, Mode=OneWay}"
+                          LabelForeground="{x:Bind Widget.LabelColor, Mode=OneWay}" />
+        <StackPanel Grid.Column="1"
+                    Margin="8,4,8,4"
+                    VerticalAlignment="Center">
+            <Border Height="12"
+                    Margin="0,0,0,2"
+                    CornerRadius="6">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                        <GradientStop Offset="0.0" Color="#FFB46B" />
+                        <GradientStop Offset="0.5" Color="#FFF4E8" />
+                        <GradientStop Offset="1.0" Color="#CDE3FF" />
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+            <Slider x:Name="TempSlider"
+                    ValueChanged="TempSlider_ValueChanged"
+                    PointerCaptureLost="TempSlider_PointerCaptureLost"
+                    KeyUp="TempSlider_KeyUp" />
+            <TextBlock x:Name="ValueText"
+                       HorizontalAlignment="Right"
+                       Style="{ThemeResource CaptionTextBlockStyle}" />
+        </StackPanel>
+    </Grid>
+</local:WidgetBase>

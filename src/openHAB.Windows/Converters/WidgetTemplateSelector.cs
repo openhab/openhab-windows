@@ -28,6 +28,8 @@ public class WidgetTemplateSelector : DataTemplateSelector
         {
             case WidgetTypeEnum.ColorPicker:
                 return ColorTemplate;
+            case WidgetTypeEnum.Colortemperaturepicker:
+                return ColorTemperaturePickerTemplate;
             case WidgetTypeEnum.Group:
                 return PageLinkTemplate;
             case WidgetTypeEnum.Frame:
@@ -194,6 +196,14 @@ public class WidgetTemplateSelector : DataTemplateSelector
         get; set;
     }
 
+    /// <summary>
+    /// Gets or sets the template for a color temperature picker control.
+    /// </summary>
+    public DataTemplate ColorTemperaturePickerTemplate
+    {
+        get; set;
+    }
+
     private WidgetTypeEnum GetItemViewType(WidgetViewModel widget)
     {
         if (widget.Type.Equals("Switch"))
@@ -239,13 +249,15 @@ public class WidgetTemplateSelector : DataTemplateSelector
             return WidgetTypeEnum.Video;
         }
 
-        try
+        // Widget types are provided by the openHAB server and may include values that
+        // are not part of WidgetTypeEnum (e.g. "colortemperaturepicker"). Use the
+        // non-throwing TryParse so unknown types fall back to Generic without the cost
+        // of an ArgumentException being thrown and caught for every unrecognized widget.
+        if (System.Enum.TryParse(widget.Type, true, out WidgetTypeEnum widgetType))
         {
-            return Enum<WidgetTypeEnum>.Parse(widget.Type);
+            return widgetType;
         }
-        catch (System.Exception)
-        {
-            return WidgetTypeEnum.Generic;
-        }
+
+        return WidgetTypeEnum.Generic;
     }
 }

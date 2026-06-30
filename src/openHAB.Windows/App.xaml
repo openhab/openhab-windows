@@ -58,9 +58,13 @@
             <DataTemplate x:Key="ButtongridTemplate">
                 <controls:ButtongridWidget Widget="{Binding Mode=OneWay}" />
             </DataTemplate>
+            <DataTemplate x:Key="ColorTemperaturePickerTemplate">
+                <controls:ColorTemperaturePickerWidget Widget="{Binding Mode=OneWay}" />
+            </DataTemplate>
             <converters:WidgetTemplateSelector x:Key="WidgetTemplateSelector"
                                                ButtongridTemplate="{StaticResource ButtongridTemplate}"
                                                ChartTemplate="{StaticResource ChartTemplate}"
+                                               ColorTemperaturePickerTemplate="{StaticResource ColorTemperaturePickerTemplate}"
                                                ColorTemplate="{StaticResource ColorTemplate}"
                                                FrameTemplate="{StaticResource FrameTemplate}"
                                                ImageTemplate="{StaticResource ImageItemTemplate}"
