@@ -17,10 +17,10 @@
                     Margin="12,0,0,10">
             <TextBlock VerticalAlignment="Center"
                        FontSize="42"
-                       Text="{Binding Label, Mode=OneWay}"
+                       Text="{x:Bind ViewModel.Label, Mode=OneWay}"
                        Tapped="SitemapTextBlock_Tapped" />
             <BreadcrumbBar Margin="0,0,0,10"
-                           ItemsSource="{Binding BreadcrumbItems, Mode=OneWay}"
+                           ItemsSource="{x:Bind ViewModel.BreadcrumbItems, Mode=OneWay}"
                            ItemClicked="BreadcrumbBar_ItemClicked">
                 <BreadcrumbBar.ItemTemplate>
                     <DataTemplate>

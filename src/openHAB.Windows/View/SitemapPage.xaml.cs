@@ -80,6 +80,7 @@ public sealed partial class SitemapPage : Microsoft.UI.Xaml.Controls.Page
         await dispatcherQueue.EnqueueAsync(() =>
         {
             DataContext = _viewModel;
+            Bindings.Update();
         });
 
         StrongReferenceMessenger.Default.Send<DataOperation>(new DataOperation(OperationState.Completed));
