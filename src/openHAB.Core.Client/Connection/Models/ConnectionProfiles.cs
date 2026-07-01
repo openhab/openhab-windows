@@ -17,13 +17,13 @@ public class ConnectionProfiles
         };
 
     /// <summary>
-    /// Gets the connection profile by the specified identifier.
+    /// Gets the connection profile by the specified identifier, or <c>null</c> when no profile matches.
     /// </summary>
     /// <param name="id">The identifier of the connection profile.</param>
-    /// <returns>The connection profile associated with the specified identifier.</returns>
-    public static IConnectionProfile GetProfile(int id)
+    /// <returns>The matching connection profile, or <c>null</c> if the id is unknown.</returns>
+    public static IConnectionProfile TryGetProfile(int id)
     {
-        return _profiles[id];
+        return _profiles.TryGetValue(id, out IConnectionProfile profile) ? profile : null;
     }
 
     /// <summary>

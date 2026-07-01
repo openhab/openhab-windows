@@ -2,7 +2,6 @@ using System;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
-using Microsoft.UI.Dispatching;
 using openHAB.Core.Client.Common;
 using openHAB.Core.Client.Connection.Contracts;
 using openHAB.Core.Client.Connection.Models;
@@ -84,7 +83,6 @@ public class ConnectionStatusViewModel : ViewModelBase<object>
                 connectionState = ConnectionState.Failed;
             }
 
-            DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
             await App.DispatcherQueue.EnqueueAsync(() =>
             {
                 State = connectionState;

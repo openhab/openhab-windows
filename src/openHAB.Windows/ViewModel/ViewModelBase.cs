@@ -58,12 +58,8 @@ public class ViewModelBase<T> : INotifyPropertyChanged
                 OnPropertyChanged(nameof(IsDirty));
             }
 
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(name));
-                return true;
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            return true;
         }
 
         return false;

@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.Json;
-using openHAB.Core.Client.Connection.Contracts;
 
 namespace openHAB.Core.Client.Options;
 
@@ -11,8 +9,6 @@ namespace openHAB.Core.Client.Options;
 /// </summary>
 public class ConnectionOptions
 {
-    private static readonly List<IConnectionProfile> _connectionProfiles = Connection.Models.ConnectionProfiles.GetProfiles();
-
     /// <summary>
     /// Initializes a new instance of the <see cref="ConnectionOptions"/> class.
     /// </summary>
@@ -20,12 +16,6 @@ public class ConnectionOptions
     {
         IsRunningInDemoMode = false;
     }
-
-    /// <summary>
-    /// Gets the list of available connection profiles.
-    /// </summary>
-    /// <value>The connection profiles.</value>
-    public static List<IConnectionProfile> ConnectionProfiles => _connectionProfiles;
 
     /// <summary>
     /// Gets or sets a value indicating whether the application is currently running in demo mode.

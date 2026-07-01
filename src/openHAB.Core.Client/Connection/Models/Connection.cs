@@ -26,11 +26,11 @@ public class Connection
     {
         get
         {
-            return this.Profile.Id;
+            return this.Profile?.Id ?? 0;
         }
         set
         {
-            Profile = ConnectionProfiles.GetProfile(value);
+            Profile = ConnectionProfiles.TryGetProfile(value);
         }
     }
 

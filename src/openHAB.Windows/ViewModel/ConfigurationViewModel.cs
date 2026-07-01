@@ -286,7 +286,7 @@ public class ConfigurationViewModel : ViewModelBase<object>
     ///   <c>true</c> if [is connection configuration valid]; otherwise, <c>false</c>.</returns>
     public bool IsConnectionConfigValid()
     {
-        bool validConfig = IsRunningInDemoMode.Value ||
+        bool validConfig = IsRunningInDemoMode.GetValueOrDefault() ||
                  (!string.IsNullOrEmpty(LocalConnection?.Url) && LocalConnection?.Status.State == ConnectionState.OK) ||
                  (!string.IsNullOrEmpty(RemoteConnection?.Url) && RemoteConnection?.Status.State == ConnectionState.OK);
 

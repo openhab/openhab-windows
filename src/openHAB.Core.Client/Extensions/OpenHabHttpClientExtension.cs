@@ -58,6 +58,11 @@ public static class OpenHabHttpClientExtension
 
     private static void ConfigureHttpClient(HttpClient client, Connection.Models.Connection connection)
     {
+        if (string.IsNullOrEmpty(connection?.Url))
+        {
+            return;
+        }
+
         client.BaseAddress = new Uri(connection.Url);
 
         if (!string.IsNullOrEmpty(connection.Username) && !string.IsNullOrEmpty(connection.Password))
@@ -83,12 +88,12 @@ public static class OpenHabHttpClientExtension
                 bool result = true;
                 if (errors.HasFlag(SslPolicyErrors.RemoteCertificateChainErrors))
                 {
-                    result &= connection.WillIgnoreSSLCertificate.GetValueOrDefault();
+                    result &= connection?.WillIgnoreSSLCertificate.GetValueOrDefault() ?? false;
                 }
 
                 if (errors.HasFlag(SslPolicyErrors.RemoteCertificateNameMismatch))
                 {
-                    result &= connection.WillIgnoreSSLHostname.GetValueOrDefault();
+                    result &= connection?.WillIgnoreSSLHostname.GetValueOrDefault() ?? false;
                 }
 
                 if (errors.HasFlag(SslPolicyErrors.RemoteCertificateNotAvailable))

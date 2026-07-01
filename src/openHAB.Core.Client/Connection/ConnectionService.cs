@@ -161,11 +161,6 @@ public class ConnectionService : IConnectionService
                 Build = apiInfo.RuntimeInfo.BuildString
             }, result.StatusCode);
         }
-        catch (Exception ex) when (ex is ArgumentNullException or InvalidOperationException or HttpRequestException)
-        {
-            _logger.LogError(ex, "GetOpenHABServerInfo failed");
-            return new HttpResponseResult<ServerInfo>(null, null, ex);
-        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "GetOpenHABServerInfo failed.");
