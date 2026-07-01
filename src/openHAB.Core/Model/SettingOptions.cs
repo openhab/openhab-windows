@@ -1,6 +1,7 @@
 using System.IO;
 using System.Text;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 
 namespace openHAB.Core.Model;
 
@@ -17,6 +18,7 @@ public class SettingOptions
         ShowDefaultSitemap = false;
         UseSVGIcons = false;
         NotificationsEnable = false;
+        StartAppMinimized = false;
     }
 
     /// <summary>
@@ -45,7 +47,7 @@ public class SettingOptions
     /// Gets or sets the setting to enable notifications.
     /// </summary>
     /// <value>The enable notifications.</value>
-    public bool? NotificationsEnable
+    public bool NotificationsEnable
     {
         get;
         set;
@@ -63,7 +65,7 @@ public class SettingOptions
 
     /// <summary>Gets or sets the setting to start application minimized.</summary>
     /// <value>The start application minimized.</value>
-    public bool? StartAppMinimized
+    public bool StartAppMinimized
     {
         get;
         set;
@@ -89,20 +91,23 @@ public class SettingOptions
     }
 
     /// <summary>
-    /// Saves the current settings to a file.
+    /// Saves the current settings to the specified file.
     /// </summary>
+    /// <param name="filePath">The full path of the settings file to write.</param>
+    /// <param name="logger">Optional logger used to record a failed save.</param>
     /// <returns><c>true</c> if the settings were saved successfully; otherwise, <c>false</c>.</returns>
-    public bool Save()
+    public bool Save(string filePath, ILogger logger = null)
     {
         try
         {
             string settingsContent = JsonSerializer.Serialize(this);
-            File.WriteAllText(AppPaths.SettingsFilePath, settingsContent, Encoding.UTF8);
+            File.WriteAllText(filePath, settingsContent, Encoding.UTF8);
 
             return true;
         }
-        catch (System.Exception)
+        catch (System.Exception ex)
         {
+            logger?.LogError(ex, "Failed to save settings to '{FilePath}'.", filePath);
             return false;
         }
     }

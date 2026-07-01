@@ -9,6 +9,7 @@ using CommunityToolkit.WinUI;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using openHAB.Common;
+using openHAB.Core;
 using openHAB.Core.Client.Contracts;
 using openHAB.Core.Client.Messages;
 using openHAB.Core.Client.Models;
@@ -125,7 +126,7 @@ public class MainViewModel : ViewModelBase<object>
                 {
                     SettingOptions settings = _settingsOptions.Value;
                     settings.LastSitemap = _selectedSitemap.Name;
-                    settings.Save();
+                    settings.Save(AppPaths.SettingsFilePath, _logger);
                 }
 
                 SelectedMenuItem = value;

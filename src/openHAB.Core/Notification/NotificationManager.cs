@@ -40,7 +40,7 @@ public class NotificationManager : INotificationManager
     private async void HandleUpdateItemMessage(object receipts, ItemStateChangedMessage obj)
     {
         SettingOptions settings = _settingsOption.Value;
-        if (settings.NotificationsEnable.HasValue && !settings.NotificationsEnable.Value)
+        if (!settings.NotificationsEnable)
         {
             return;
         }

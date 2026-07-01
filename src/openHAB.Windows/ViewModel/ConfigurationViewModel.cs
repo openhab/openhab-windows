@@ -28,13 +28,13 @@ public class ConfigurationViewModel : ViewModelBase<object>
     private bool? _isAppAutostartEnabled;
     private bool? _isRunningInDemoMode;
     private ConnectionDialogViewModel _localConnection;
-    private bool? _notificationsEnable;
+    private bool _notificationsEnable;
     private ConnectionDialogViewModel _remoteConnection;
     private LanguageViewModel _selectedAppLanguage;
 
     private ApplicationThemeViewModel _selectedAppTheme;
     private bool _showDefaultSitemap;
-    private bool? _startAppMinimized;
+    private bool _startAppMinimized;
     private bool _useSVGIcons;
     private List<ApplicationThemeViewModel> _appThemes;
 
@@ -172,7 +172,7 @@ public class ConfigurationViewModel : ViewModelBase<object>
     /// Gets or sets the setting if notifications are enabled.
     /// </summary>
     /// <value>The application triggers notification on openHAB events.</value>
-    public bool? NotificationsEnable
+    public bool NotificationsEnable
     {
         get => _notificationsEnable;
         set
@@ -248,7 +248,7 @@ public class ConfigurationViewModel : ViewModelBase<object>
     /// Gets or sets the start application minimized.
     /// </summary>
     /// <value>The start application minimized.</value>
-    public bool? StartAppMinimized
+    public bool StartAppMinimized
     {
         get => _startAppMinimized;
         set
@@ -304,8 +304,8 @@ public class ConfigurationViewModel : ViewModelBase<object>
         _connection.LocalConnection = _localConnection.Model;
         _connection.RemoteConnection = _remoteConnection.Model;
 
-        bool result = _settings.Save();
-        result &= _connection.Save(AppPaths.ConnectionFilePath);
+        bool result = _settings.Save(AppPaths.SettingsFilePath, _logger);
+        result &= _connection.Save(AppPaths.ConnectionFilePath, _logger);
         _appManager.SetProgramLanguage(null);
         _appManager.SetAppTheme(App.MainWindow.Content);
 

@@ -1,6 +1,7 @@
 using System.IO;
 using System.Text;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 
 namespace openHAB.Core.Client.Options;
 
@@ -50,8 +51,16 @@ public class ConnectionOptions
     /// <summary>
     /// Saves the current connection options to a file.
     /// </summary>
+    /// <remarks>
+    /// Written with <see cref="JsonSerializer"/>, but loaded via Microsoft.Extensions.Configuration
+    /// binding (<c>Configure&lt;ConnectionOptions&gt;</c>). The binder ignores
+    /// <see cref="System.Text.Json.Serialization.JsonConverterAttribute"/>, so any read-time
+    /// transformation must live in the property accessors, not a converter.
+    /// </remarks>
+    /// <param name="filePath">The full path of the connection file to write.</param>
+    /// <param name="logger">Optional logger used to record a failed save.</param>
     /// <returns><c>true</c> if the save operation was successful; otherwise, <c>false</c>.</returns>
-    public bool Save(string filePath)
+    public bool Save(string filePath, ILogger logger = null)
     {
         try
         {
@@ -60,8 +69,9 @@ public class ConnectionOptions
 
             return true;
         }
-        catch (System.Exception)
+        catch (System.Exception ex)
         {
+            logger?.LogError(ex, "Failed to save connection options to '{FilePath}'.", filePath);
             return false;
         }
     }
