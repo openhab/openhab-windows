@@ -52,8 +52,10 @@ public class Connection
     }
 
     /// <summary>
-    /// Gets or sets the username for the OpenHAB server connection.
+    /// Gets or sets the username for the OpenHAB server connection. Held in plaintext in memory;
+    /// persisted encrypted via <see cref="EncryptedUsername"/>.
     /// </summary>
+    [JsonIgnore]
     public string Username
     {
         get;
@@ -61,12 +63,32 @@ public class Connection
     }
 
     /// <summary>
-    /// Gets or sets the password for the OpenHAB connection.
+    /// Gets or sets the password for the OpenHAB connection. Held in plaintext in memory;
+    /// persisted encrypted via <see cref="EncryptedPassword"/>.
     /// </summary>
+    [JsonIgnore]
     public string Password
     {
         get;
         set;
+    }
+
+    /// <summary>
+    /// Gets or sets the DPAPI-protected username written to and read from the connection file.
+    /// </summary>
+    public string EncryptedUsername
+    {
+        get => SecretProtector.Protect(Username);
+        set => Username = SecretProtector.Unprotect(value);
+    }
+
+    /// <summary>
+    /// Gets or sets the DPAPI-protected password written to and read from the connection file.
+    /// </summary>
+    public string EncryptedPassword
+    {
+        get => SecretProtector.Protect(Password);
+        set => Password = SecretProtector.Unprotect(value);
     }
 
     /// <summary>
