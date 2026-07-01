@@ -54,6 +54,7 @@ public class DefaultConnectionProfile : IConnectionProfile
     {
         return new Connection()
         {
+            Profile = this,
             Url = Url,
             Type = Type,
             WillIgnoreSSLCertificate = true,

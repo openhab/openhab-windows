@@ -53,6 +53,7 @@ public class LocalConnectionProfile : IConnectionProfile
     {
         return new Connection()
         {
+            Profile = this,
             Type = HttpClientType.Local,
         };
     }

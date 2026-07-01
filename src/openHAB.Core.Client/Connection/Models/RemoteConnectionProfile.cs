@@ -54,6 +54,7 @@ public class RemoteConnectionProfile : IConnectionProfile
     {
         return new Connection()
         {
+            Profile = this,
             Type = HttpClientType.Remote,
         };
     }

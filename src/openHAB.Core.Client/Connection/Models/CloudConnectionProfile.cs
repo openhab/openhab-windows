@@ -55,6 +55,7 @@ public class CloudConnectionProfile : IConnectionProfile
     {
         return new Connection()
         {
+            Profile = this,
             Type = HttpClientType.Remote,
             Url = Url
         };

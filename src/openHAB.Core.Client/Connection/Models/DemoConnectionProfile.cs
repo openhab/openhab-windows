@@ -28,7 +28,7 @@ public class DemoConnectionProfile : IConnectionProfile
     /// <inheritdoc/>
     public int Id
     {
-        get => 4;
+        get => 5;
     }
 
     /// <inheritdoc/>
@@ -54,6 +54,7 @@ public class DemoConnectionProfile : IConnectionProfile
     {
         return new Connection()
         {
+            Profile = this,
             Type = HttpClientType.Remote,
             Url = Url,
             Username = Constants.API.DemoModeUser,

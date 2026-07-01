@@ -110,33 +110,9 @@ public class Connection
     }
 
     /// <summary>
-    /// Gets or sets for openHAB MainUI URL.
+    /// Gets the openHAB MainUI URL for this connection.
     /// </summary>
     [JsonIgnore]
     public string MainUIUrl
-    {
-        get
-        {
-            if (Profile is LocalConnectionProfile)
-            {
-                return Url;
-            }
-            else if (Profile is RemoteConnectionProfile)
-            {
-                return Url;
-            }
-            else if (Profile is CloudConnectionProfile)
-            {
-                return Profile.MainUIUrl;
-            }
-            else if (Profile is DefaultConnectionProfile)
-            {
-                return Profile.MainUIUrl;
-            }
-            else
-            {
-                return Url;
-            }
-        }
-    }
+        => Profile is CloudConnectionProfile or DefaultConnectionProfile ? Profile.MainUIUrl : Url;
 }

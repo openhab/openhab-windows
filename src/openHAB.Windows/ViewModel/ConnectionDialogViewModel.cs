@@ -46,7 +46,7 @@ public class ConnectionDialogViewModel : ViewModelBase<Connection>
 
         _profiles = new ObservableCollection<ConnectionProfileViewModel>(list);
 
-        if (Model != null)
+        if (Model?.Profile != null)
         {
             _profile = list.FirstOrDefault(x => x.Id == Model.Profile.Id);
         }
