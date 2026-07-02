@@ -132,7 +132,7 @@
                              IsPaneOpen="True"
                              Loaded="SitemapNavigation_Loaded"
                              SelectionChanged="SitemapNavigation_SelectionChanged">
-            <muxc:NavigationView.PaneHeader>
+            <muxc:NavigationView.PaneCustomContent>
                 <StackPanel Orientation="Vertical"
                             FlowDirection="LeftToRight"
                             Visibility="{Binding IsPaneOpen, ElementName=SitemapNavigation}">
@@ -144,14 +144,7 @@
                                              Content="Home"
                                              Tag="openHAB.Windows.View.MainUIPage"
                                              Tapped="NavigationViewItemMainUI_Tapped" />
-                </StackPanel>
-            </muxc:NavigationView.PaneHeader>
-            <muxc:NavigationView.PaneCustomContent>
-                <StackPanel Orientation="Vertical"
-                            Margin="0,16,0,0"
-                            FlowDirection="LeftToRight"
-                            Visibility="{Binding IsPaneOpen, ElementName=SitemapNavigation}">
-                    <Grid>
+                    <Grid Margin="0,16,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="70*" />
                             <ColumnDefinition Width="30*" />
