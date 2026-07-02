@@ -43,17 +43,18 @@ public static class OpenHabHttpClientExtension
 
     private static Connection.Models.Connection CreateConnection(Func<ConnectionOptions, Connection.Models.Connection> getConnection, ConnectionOptions options)
     {
-        Connection.Models.Connection connection;
-        if (options.IsRunningInDemoMode.GetValueOrDefault())
+        // ponytail: must stay in sync with ConnectionService.DetectAndRetrieveConnection — both decide
+        // "no connection configured -> demo" and the named HttpClient here must match what the service picks.
+        bool noConnectionConfigured =
+            string.IsNullOrWhiteSpace(options.LocalConnection?.Url) &&
+            string.IsNullOrWhiteSpace(options.RemoteConnection?.Url);
+
+        if (options.IsRunningInDemoMode.GetValueOrDefault() || noConnectionConfigured)
         {
-            connection = new DemoConnectionProfile().CreateConnection();
-        }
-        else
-        {
-            connection = getConnection(options);
+            return new DemoConnectionProfile().CreateConnection();
         }
 
-        return connection;
+        return getConnection(options);
     }
 
     private static void ConfigureHttpClient(HttpClient client, Connection.Models.Connection connection)
