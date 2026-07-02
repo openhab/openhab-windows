@@ -160,12 +160,6 @@ public class SitemapService
     private async Task<ServerInfo> InitalizeConnectionAsync()
     {
         ConnectionOptions settings = _connectionOptions.Value;
-        if (settings.LocalConnection == null && settings.RemoteConnection == null &&
-            (!settings.IsRunningInDemoMode.HasValue || !settings.IsRunningInDemoMode.Value))
-        {
-            StrongReferenceMessenger.Default.Send(new TriggerInfoMessage(MessageSeverity.Error, AppResources.Values.GetString("MessageNotConfigured")));
-            return null;
-        }
 
         bool isSuccessful = await _openHABClient.ResetConnection(settings.LocalConnection, settings.RemoteConnection, settings.IsRunningInDemoMode)
             .ConfigureAwait(false);
