@@ -63,15 +63,13 @@ public class ConnectionService : IConnectionService
         _logger.LogInformation("Validate Connection");
         _logger.LogInformation("APP is running in demo mode: {IsRunningInDemoMode}", isRunningInDemoMode);
 
-        if (string.IsNullOrWhiteSpace(localConnection?.Url) &&
-            string.IsNullOrWhiteSpace(remoteConnection?.Url) &&
-            !isRunningInDemoMode)
-        {
-            return null;
-        }
+        bool noConnectionConfigured =
+            string.IsNullOrWhiteSpace(localConnection?.Url) &&
+            string.IsNullOrWhiteSpace(remoteConnection?.Url);
 
-        if (isRunningInDemoMode)
+        if (isRunningInDemoMode || noConnectionConfigured)
         {
+            _logger.LogInformation("No connection configured or demo mode active -> using demo connection");
             _connection = new DemoConnectionProfile().CreateConnection();
             return _connection;
         }
